@@ -26,7 +26,7 @@ class CreateErrorLogsTable extends Migration
             $table->text('time_history')->nullable();
             $table->timestamps();
 
-            $table->primary(['file', 'line', 'path', 'code', 'message']);
+            $table->primary(['file', 'line', 'path', 'code']);
         });
     }
 

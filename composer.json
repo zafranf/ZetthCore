@@ -30,10 +30,10 @@
     "prefer-stable": true,
     "autoload": {
         "psr-4": {
-            "ZetthCore\\": "src/app/"
+            "ZetthCore\\": "src/"
         },
         "files": [
-            "src/app/helpers.php"
+            "src/helpers.php"
         ]
     },
     "extra": {

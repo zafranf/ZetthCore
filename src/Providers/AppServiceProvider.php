@@ -15,10 +15,17 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $this->loadRoutesFrom(__DIR__ . '/../routes/admin.php');
-
         /* set default varchar */
         Schema::defaultStringLength(191);
+
+        $this->loadRoutesFrom(__DIR__ . '/../../../routes/admin.php');
+        $this->loadMigrationsFrom(__DIR__ . '/../../database/migrations');
+        // $this->loadSeedsFrom(__DIR__ . '/../../../database/seeds');
+        if ($this->app->runningInConsole()) {
+            $this->commands([
+                \ZetthCore\Console\Commands\Install::class,
+            ]);
+        }
 
         /* check config */
         $isCLI = strpos(php_sapi_name(), 'cli') !== false;
