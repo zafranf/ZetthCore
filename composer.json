@@ -39,7 +39,7 @@
     "extra": {
         "laravel": {
             "providers": [
-                "Zafranf\\Providers\\AppServiceProvider"
+                "ZetthCore\\Providers\\AppServiceProvider"
             ]
         }
     }
