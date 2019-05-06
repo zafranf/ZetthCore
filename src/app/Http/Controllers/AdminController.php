@@ -1,0 +1,19 @@
+<?php
+
+namespace ZetthCore\Http\Controllers;
+
+use ZetthCore\hCore\Http\Controllers\Controller;
+
+class AdminController extends Controller
+{
+    public $breadcrumbs;
+
+    public function __construct()
+    {
+        $this->breadcrumbs[] = [
+            'page' => '',
+            'icon' => 'fa fa-home',
+            'url' => url($this->adminPath),
+        ];
+    }
+}
