@@ -2,7 +2,7 @@
 
 namespace ZetthCore\Http\Controllers;
 
-use ZetthCore\hCore\Http\Controllers\Controller;
+use ZetthCore\Http\Controllers\Controller;
 
 class AdminController extends Controller
 {

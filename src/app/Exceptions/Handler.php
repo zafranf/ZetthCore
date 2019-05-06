@@ -8,6 +8,7 @@ use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 class Handler extends ExceptionHandler
 {
     use \ZetthCore\Traits\MainTrait;
+
     /**
      * A list of the exception types that are not reported.
      *

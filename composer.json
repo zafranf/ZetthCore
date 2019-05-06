@@ -35,5 +35,12 @@
         "files": [
             "src/app/helpers.php"
         ]
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Zafranf\\Providers\\AppServiceProvider"
+            ]
+        }
     }
 }
