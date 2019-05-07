@@ -20,7 +20,7 @@ class AppServiceProvider extends ServiceProvider
         }
         $this->loadRoutesFrom(__DIR__ . '/../../routes/routes.php');
         $this->loadViewsFrom(__DIR__ . '/../../resources/views', 'zetthcore');
-        // $this->loadMigrationsFrom(__DIR__ . '/../../database/migrations');
+        $this->loadMigrationsFrom(__DIR__ . '/../../database/migrations');
         // $this->loadSeedsFrom(__DIR__ . '/../../database/seeds');
         if ($this->app->runningInConsole()) {
             $this->commands([
@@ -41,7 +41,7 @@ class AppServiceProvider extends ServiceProvider
         Schema::defaultStringLength(191);
 
         /* check config */
-        if ($this->app->runningInConsole()) {
+        if (!$this->app->runningInConsole()) {
             if (!Schema::hasTable('applications')) {
                 /* sementara, nanti redirect ke halaman install */
                 throw new \Exception("You have to install this app first", 1);
