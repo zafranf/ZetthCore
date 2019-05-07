@@ -13,9 +13,7 @@
         "yajra/laravel-datatables-oracle": "~9.0",
         "zafranf/helpers": "^1.0"
     },
-    "require-dev": {
-        "barryvdh/laravel-debugbar": "^3.1"
-    },
+    "require-dev": {},
     "license": "MIT",
     "authors": [{
         "name": "Zafran Fadilah",
