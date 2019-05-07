@@ -56,7 +56,7 @@ class RoleController extends AdminController
             'page_subtitle' => 'Daftar Peran',
         ];
 
-        return view('admin.AdminSC.setting.roles', $data);
+        return view('zetthcore::AdminSC.setting.roles', $data);
     }
 
     /**
@@ -84,7 +84,7 @@ class RoleController extends AdminController
             'menugroups' => $menugroups,
         ];
 
-        return view('admin.AdminSC.setting.roles_form', $data);
+        return view('zetthcore::AdminSC.setting.roles_form', $data);
     }
 
     /**
@@ -161,7 +161,7 @@ class RoleController extends AdminController
             'data' => $role,
         ];
 
-        return view('admin.AdminSC.setting.roles_form', $data);
+        return view('zetthcore::AdminSC.setting.roles_form', $data);
     }
 
     /**

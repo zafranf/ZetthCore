@@ -42,7 +42,12 @@
         "laravel": {
             "providers": [
                 "ZetthCore\\Providers\\AppServiceProvider"
-            ]
+            ],
+            "aliases": {
+                "Datatables": "Yajra\\Datatables\\Facades\\Datatables",
+                "Image": "Intervention\\Image\\Facades\\Image",
+                "Laratrust": "Laratrust\\LaratrustFacade"
+            }
         }
     }
 }

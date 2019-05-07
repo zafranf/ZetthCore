@@ -52,7 +52,7 @@ class PageController extends AdminController
             'page_subtitle' => 'Daftar Halaman',
         ];
 
-        return view('admin.AdminSC.content.pages', $data);
+        return view('zetthcore::AdminSC.content.pages', $data);
     }
 
     /**
@@ -76,7 +76,7 @@ class PageController extends AdminController
             'page_subtitle' => 'Tambah Halaman',
         ];
 
-        return view('admin.AdminSC.content.pages_form', $data);
+        return view('zetthcore::AdminSC.content.pages_form', $data);
     }
 
     /**
@@ -144,7 +144,7 @@ class PageController extends AdminController
             'data' => $page,
         ];
 
-        return view('admin.AdminSC.content.pages_form', $data);
+        return view('zetthcore::AdminSC.content.pages_form', $data);
     }
 
     /**

@@ -56,7 +56,7 @@ class MenuController extends AdminController
             'page_subtitle' => 'Daftar Menu',
         ];
 
-        return view('admin.AdminSC.setting.menu', $data);
+        return view('zetthcore::AdminSC.setting.menu', $data);
     }
 
     /**
@@ -81,7 +81,7 @@ class MenuController extends AdminController
             'menus' => Menu::where('parent_id', 0)->with('allSubmenu')->orderBy('order')->get(),
         ];
 
-        return view('admin.AdminSC.setting.menu_form', $data);
+        return view('zetthcore::AdminSC.setting.menu_form', $data);
     }
 
     /**
@@ -167,7 +167,7 @@ class MenuController extends AdminController
             'data' => $menu,
         ];
 
-        return view('admin.AdminSC.setting.menu_form', $data);
+        return view('zetthcore::AdminSC.setting.menu_form', $data);
     }
 
     /**

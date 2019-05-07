@@ -7,6 +7,9 @@ Route::get('/', function () {
         return redirect('/login');
     }
 });
+Route::get('/test-connection', function () {
+    return response()->json(['status' => true]);
+});
 Route::get('/login', $prefix . '\Auth\LoginController@showLoginForm');
 Route::post('/login', $prefix . '\Auth\LoginController@login');
 Route::post('/logout', $prefix . '\Auth\LoginController@logout');
@@ -26,7 +29,7 @@ Route::middleware('auth')->group(function () use ($prefix) {
     Route::get('/content/posts/data', $prefix . '\Content\PostController@datatable')->name('posts.data');
     // Route::get('/content/banners/data', $prefix.'\Content\BannerController@datatable')->name('banners.data');
     Route::get('/report/inbox/data', $prefix . '\Report\InboxController@datatable')->name('inbox.data');
-    // Route::get('/report/comments/data', $prefix . '\Report\CommentController@datatable')->name('comments.data');
+    Route::get('/report/comments/data', $prefix . '\Report\CommentController@datatable')->name('comments.data');
     // Route::get('/report/incoming-terms/data', $prefix . '\Report\IntermController@datatable')->name('interms.data');
     // Route::get('/report/subscribers/data', $prefix . '\Report\SubscriberController@datatable')->name('subscribers.data');
     Route::get('/log/activities/data', $prefix . '\Log\ActivityController@datatable')->name('activities.data');
@@ -92,9 +95,9 @@ Route::middleware('auth')->group(function () use ($prefix) {
         Route::prefix('report')->group(function () use ($prefix) {
             Route::resources([
                 '/inbox' => $prefix . '\Report\InboxController',
-                // '/comments' => $prefix . '\Report\CommentController',
-                // '/incoming-terms' => $prefix . '\Report\IntermController',
-                // '/subscribers' => $prefix . '\Report\SubscriberController',
+                '/comments' => $prefix . '\Report\CommentController',
+                '/incoming-terms' => $prefix . '\Report\IntermController',
+                '/subscribers' => $prefix . '\Report\SubscriberController',
             ]);
         });
 

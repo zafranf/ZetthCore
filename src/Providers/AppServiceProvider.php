@@ -13,9 +13,19 @@ class AppServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function boot(\Illuminate\Routing\Router $router)
+    public function boot()
     {
+        $router = $this->app['router'];
         $router->aliasMiddleware('access', \ZetthCore\Http\Middleware\AccessMiddleware::class);
+        $router->middleware([
+            \RenatoMarinho\LaravelPageSpeed\Middleware\InlineCss::class,
+            \RenatoMarinho\LaravelPageSpeed\Middleware\ElideAttributes::class,
+            \RenatoMarinho\LaravelPageSpeed\Middleware\InsertDNSPrefetch::class,
+            \RenatoMarinho\LaravelPageSpeed\Middleware\RemoveComments::class,
+            \RenatoMarinho\LaravelPageSpeed\Middleware\TrimUrls::class,
+            \RenatoMarinho\LaravelPageSpeed\Middleware\RemoveQuotes::class,
+            \RenatoMarinho\LaravelPageSpeed\Middleware\CollapseWhitespace::class,
+        ]);
 
         if (env('APP_DOMAIN') === null) {
             throw new \Exception("Please set your APP_DOMAIN in .env file", 1);

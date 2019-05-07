@@ -53,7 +53,7 @@ class MenuGroupController extends AdminController
             'page_subtitle' => 'Daftar Grup Menu',
         ];
 
-        return view('admin.AdminSC.setting.menu_group', $data);
+        return view('zetthcore::AdminSC.setting.menu_group', $data);
     }
 
     /**
@@ -77,7 +77,7 @@ class MenuGroupController extends AdminController
             'page_subtitle' => 'Tambah Grup Menu',
         ];
 
-        return view('admin.AdminSC.setting.menu_group_form', $data);
+        return view('zetthcore::AdminSC.setting.menu_group_form', $data);
     }
 
     /**
@@ -142,7 +142,7 @@ class MenuGroupController extends AdminController
             'data' => $menugroup->load('allMenu.submenu'),
         ];
 
-        return view('admin.AdminSC.setting.menu_group_form', $data);
+        return view('zetthcore::AdminSC.setting.menu_group_form', $data);
     }
 
     /**

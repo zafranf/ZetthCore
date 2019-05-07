@@ -52,7 +52,7 @@ class TagController extends AdminController
             'page_subtitle' => 'Daftar Label',
         ];
 
-        return view('admin.AdminSC.data.tags', $data);
+        return view('zetthcore::AdminSC.data.tags', $data);
     }
 
     /**
@@ -77,7 +77,7 @@ class TagController extends AdminController
             // 'tags' => Term::where('type', 'tag')->where('parent_id', 0)->with('allSubtag')->orderBy('name')->get(),
         ];
 
-        return view('admin.AdminSC.data.tags_form', $data);
+        return view('zetthcore::AdminSC.data.tags_form', $data);
     }
 
     /**
@@ -144,7 +144,7 @@ class TagController extends AdminController
             'data' => $tag,
         ];
 
-        return view('admin.AdminSC.data.tags_form', $data);
+        return view('zetthcore::AdminSC.data.tags_form', $data);
     }
 
     /**

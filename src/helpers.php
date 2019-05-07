@@ -320,7 +320,7 @@ if (!function_exists('_admin_js')) {
      */
     function _admin_js($file = "", $attributes = [])
     {
-        $path = base_path('vendor/zafranf/zetthcore/resources/themes/' . ltrim($file, '/'));
+        $path = base_path('vendor/zafranf/zetthcore/resources/' . ltrim($file, '/'));
         if (file_exists($path)) {
             $mtime = filemtime($path);
             $attr = ' type="text/javascript"';

@@ -23,7 +23,7 @@
   }
 @endphp
 
-@extends('admin.AdminSC.layouts.main')
+@extends('zetthcore::AdminSC.layouts.main')
 
 @section('content')
   <div class="panel-body">
@@ -132,7 +132,7 @@
 @endsection
 
 @section('scripts')
-  {!! _load_js('themes/admin/AdminSC/plugins/jquery/sortable/0.9.13/jquery-sortable.min.js') !!}
+  {!! _admin_js('themes/AdminSC/plugins/jquery/sortable/0.9.13/jquery-sortable.min.js') !!}
   <script>
     $(function() {
       var group = $('ol.default').sortable({

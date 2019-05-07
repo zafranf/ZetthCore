@@ -59,7 +59,7 @@ class ApplicationController extends AdminController
             'type' => 'config',
         ])->with('socmed')->get();
 
-        return view('admin.AdminSC.setting.application', $data);
+        return view('zetthcore::AdminSC.setting.application', $data);
     }
 
     /**

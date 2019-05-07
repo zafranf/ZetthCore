@@ -52,7 +52,7 @@ class InboxController extends AdminController
             'page_subtitle' => 'Daftar Kotak Masuk',
         ];
 
-        return view('admin.AdminSC.report.inbox', $data);
+        return view('zetthcore::AdminSC.report.inbox', $data);
     }
 
     /**
@@ -103,7 +103,7 @@ class InboxController extends AdminController
         $inbox->read = 1;
         $inbox->save();
 
-        return view('admin.AdminSC.report.inbox_detail', $data);
+        return view('zetthcore::AdminSC.report.inbox_detail', $data);
     }
 
     /**

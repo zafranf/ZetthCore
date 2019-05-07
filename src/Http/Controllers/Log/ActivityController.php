@@ -52,7 +52,7 @@ class ActivityController extends AdminController
             'page_subtitle' => 'Daftar Aktifitas',
         ];
 
-        return view('admin.AdminSC.log.activity', $data);
+        return view('zetthcore::AdminSC.log.activity', $data);
     }
 
     /**

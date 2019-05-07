@@ -1,4 +1,4 @@
-@extends('admin.AdminSC.layouts.main')
+@extends('zetthcore::AdminSC.layouts.main')
 
 @section('content')
 	<div class="panel-body">
@@ -54,7 +54,7 @@
 @endsection
 
 @section('scripts')
-  {!! _load_js('themes/admin/AdminSC/plugins/tinymce/4.3.2/tinymce.min.js') !!}
+  {!! _admin_js('themes/AdminSC/plugins/tinymce/4.3.2/tinymce.min.js') !!}
   <script>
     $(document).ready(function(){
       $('#title').on('keyup blur', function(){

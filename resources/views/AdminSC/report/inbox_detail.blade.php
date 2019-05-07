@@ -1,4 +1,4 @@
-@extends('admin.AdminSC.layouts.main')
+@extends('zetthcore::AdminSC.layouts.main')
 
 @section('content')
   <div class="panel-body">

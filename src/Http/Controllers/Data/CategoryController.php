@@ -52,7 +52,7 @@ class CategoryController extends AdminController
             'page_subtitle' => 'Daftar Kategori',
         ];
 
-        return view('admin.AdminSC.data.categories', $data);
+        return view('zetthcore::AdminSC.data.categories', $data);
     }
 
     /**
@@ -77,7 +77,7 @@ class CategoryController extends AdminController
             'categories' => Term::where('type', 'category')->where('parent_id', 0)->with('allSubcategory')->orderBy('name')->get(),
         ];
 
-        return view('admin.AdminSC.data.categories_form', $data);
+        return view('zetthcore::AdminSC.data.categories_form', $data);
     }
 
     /**
@@ -145,7 +145,7 @@ class CategoryController extends AdminController
             'data' => $category,
         ];
 
-        return view('admin.AdminSC.data.categories_form', $data);
+        return view('zetthcore::AdminSC.data.categories_form', $data);
     }
 
     /**

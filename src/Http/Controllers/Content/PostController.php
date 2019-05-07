@@ -54,7 +54,7 @@ class PostController extends AdminController
             'page_subtitle' => 'Daftar Artikel',
         ];
 
-        return view('admin.AdminSC.content.posts', $data);
+        return view('zetthcore::AdminSC.content.posts', $data);
     }
 
     /**
@@ -86,7 +86,7 @@ class PostController extends AdminController
             'categories' => $categories,
         ];
 
-        return view('admin.AdminSC.content.posts_form', $data);
+        return view('zetthcore::AdminSC.content.posts_form', $data);
     }
 
     /**
@@ -192,7 +192,7 @@ class PostController extends AdminController
             'data' => $post->load('terms'),
         ];
 
-        return view('admin.AdminSC.content.posts_form', $data);
+        return view('zetthcore::AdminSC.content.posts_form', $data);
     }
 
     /**

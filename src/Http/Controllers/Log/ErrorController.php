@@ -52,7 +52,7 @@ class ErrorController extends AdminController
             'page_subtitle' => 'Daftar Galat',
         ];
 
-        return view('admin.AdminSC.log.error', $data);
+        return view('zetthcore::AdminSC.log.error', $data);
     }
 
     /**

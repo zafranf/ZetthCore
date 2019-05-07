@@ -6,7 +6,7 @@
     })->toArray();
   }
 @endphp
-@extends('admin.AdminSC.layouts.main')
+@extends('zetthcore::AdminSC.layouts.main')
 
 @section('content')
   <form class="form-horizontal" action="{{ url($current_url) }}{{ isset($data) ? '/' . $data->id : '' }}" method="post">
@@ -141,7 +141,7 @@
 @endsection
 
 @section('styles')
-  {!! _load_css('themes/admin/AdminSC/plugins/select2/4.0.0/css/select2.min.css') !!}
+  {!! _admin_css('themes/AdminSC/plugins/select2/4.0.0/css/select2.min.css') !!}
   <style>
     #access-list {
       margin: 0;
@@ -183,7 +183,7 @@
 @endsection
 
 @section('scripts')
-  {!! _load_js('themes/admin/AdminSC/plugins/select2/4.0.0/js/select2.min.js') !!}
+  {!! _admin_js('themes/AdminSC/plugins/select2/4.0.0/js/select2.min.js') !!}
   <script>
     var menugroup = {{ isset($data) ? '['. implode(",", $dataMenuGroup) .']' : '[]' }}  
     $('document').ready(function() {

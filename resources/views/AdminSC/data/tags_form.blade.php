@@ -1,4 +1,4 @@
-@extends('admin.AdminSC.layouts.main')
+@extends('zetthcore::AdminSC.layouts.main')
 
 @section('content')
   <div class="panel-body">
@@ -36,11 +36,11 @@
 @endsection
 
 @section('styles')
-  {!! _load_css('themes/admin/AdminSC/plugins/select2/4.0.0/css/select2.min.css') !!}
+  {!! _admin_css('themes/AdminSC/plugins/select2/4.0.0/css/select2.min.css') !!}
 @endsection
 
 @section('scripts')
-  {!! _load_js('themes/admin/AdminSC/plugins/select2/4.0.0/js/select2.min.js') !!}
+  {!! _admin_js('themes/AdminSC/plugins/select2/4.0.0/js/select2.min.js') !!}
   <script>
     $(function(){
       $(".custom-select2").select2({

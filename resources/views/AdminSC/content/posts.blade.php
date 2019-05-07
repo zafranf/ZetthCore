@@ -1,4 +1,4 @@
-@extends('admin.AdminSC.layouts.main')
+@extends('zetthcore::AdminSC.layouts.main')
 
 @section('content')
 	<div class="panel-body no-padding-right-left">
@@ -22,7 +22,7 @@
 @endsection
 
 @section('styles')
-  {!! _load_css('themes/admin/AdminSC/plugins/DataTables/1.10.12/css/jquery.dataTables.min.css') !!}
+  {!! _admin_css('themes/AdminSC/plugins/DataTables/1.10.12/css/jquery.dataTables.min.css') !!}
   <style>
     .twitter-share-button {
       position: relative;
@@ -103,7 +103,7 @@
 @endsection
 
 @section('scripts')
-  {!! _load_js('themes/admin/AdminSC/plugins/DataTables/1.10.12/js/jquery.dataTables.min.js') !!}
+  {!! _admin_js('themes/AdminSC/plugins/DataTables/1.10.12/js/jquery.dataTables.min.js') !!}
   <script>
     $(document).ready(function(){
       var table = $('#table-data').DataTable({
