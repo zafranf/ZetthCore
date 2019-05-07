@@ -32,6 +32,10 @@
         "psr-4": {
             "ZetthCore\\": "src/"
         },
+        "classmap": [
+            "database/seeds",
+            "database/factories"
+        ],
         "files": [
             "src/helpers.php"
         ]
