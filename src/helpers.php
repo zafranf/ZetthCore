@@ -102,30 +102,6 @@ if (!function_exists('_get_image')) {
     }
 }
 
-if (!function_exists('sequence')) {
-    /**
-     * Database sequence number
-     *
-     * @return void
-     */
-    function sequence()
-    {
-        \DB::statement(\DB::raw('set @rownum=0'));
-
-        return \DB::raw('@rownum := @rownum + 1 AS no');
-    }
-}
-
-if (!function_exists('str_sanitize')) {
-    /**
-     * Sanitize string
-     */
-    function str_sanitize($string)
-    {
-        return trim(e($string));
-    }
-}
-
 if (!function_exists('getMenu')) {
     function getMenu($group = 'admin', $cache = false)
     {

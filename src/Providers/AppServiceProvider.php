@@ -18,8 +18,8 @@ class AppServiceProvider extends ServiceProvider
         /* set default varchar */
         Schema::defaultStringLength(191);
 
-        $this->loadRoutesFrom(__DIR__ . '/../../../routes/admin.php');
-        $this->loadMigrationsFrom(__DIR__ . '/../../database/migrations');
+        $this->loadRoutesFrom(__DIR__ . '/../../../routes/routes.php');
+        $this->loadMigrationsFrom(__DIR__ . '/../../../database/migrations');
         // $this->loadSeedsFrom(__DIR__ . '/../../../database/seeds');
         if ($this->app->runningInConsole()) {
             $this->commands([
