@@ -21,7 +21,7 @@ class LaratrustSeeder extends Seeder
 
         foreach ($config as $key => $modules) {
             // Create a new role
-            $role = \App\Models\Role::create([
+            $role = \ZetthCore\Models\Role::create([
                 'name' => $key,
                 'display_name' => ucwords(str_replace('_', ' ', $key)),
                 'description' => 'Peran sebagai ' . ucwords(str_replace('_', ' ', $key)),
@@ -36,7 +36,7 @@ class LaratrustSeeder extends Seeder
                 foreach (explode(',', $value) as $p => $perm) {
                     $permissionValue = $mapPermission->get($perm);
 
-                    $permissions[] = \App\Models\Permission::firstOrCreate([
+                    $permissions[] = \ZetthCore\Models\Permission::firstOrCreate([
                         'name' => $permissionValue . '-' . $module,
                         'display_name' => ucfirst($permissionValue) . ' ' . ucfirst($module),
                         'description' => ucfirst($permissionValue) . ' ' . ucfirst($module),
@@ -57,7 +57,7 @@ class LaratrustSeeder extends Seeder
             $this->command->info("Creating '{$key_info}' user");
 
             // Create default user for each role
-            $user = \App\Models\User::create([
+            $user = \ZetthCore\Models\User::create([
                 'name' => $key,
                 'fullname' => ucwords(str_replace('_', ' ', $key_fullname)),
                 'email' => $key . '@mail.co',
@@ -75,7 +75,7 @@ class LaratrustSeeder extends Seeder
                 foreach ($modules as $module => $value) {
                     // Create default user for each permission set
                     $this->command->info("Creating '{$key}' user (from user permission)");
-                    $user = \App\Models\User::create([
+                    $user = \ZetthCore\Models\User::create([
                         'name' => $key,
                         'fullname' => ucwords(str_replace('_', ' ', $key)),
                         'email' => $key . '@mail.co',
@@ -87,7 +87,7 @@ class LaratrustSeeder extends Seeder
 
                     foreach (explode(',', $value) as $p => $perm) {
                         $permissionValue = $mapPermission->get($perm);
-                        $permissions[] = \App\Models\Permission::firstOrCreate([
+                        $permissions[] = \ZetthCore\Models\Permission::firstOrCreate([
                             'name' => $permissionValue . '-' . $module,
                             'display_name' => ucfirst($permissionValue) . ' ' . ucfirst($module),
                             'description' => ucfirst($permissionValue) . ' ' . ucfirst($module),
@@ -114,9 +114,9 @@ class LaratrustSeeder extends Seeder
         DB::table('role_permission')->truncate();
         DB::table('user_permission')->truncate();
         DB::table('role_user')->truncate();
-        \App\Models\User::truncate();
-        \App\Models\Role::truncate();
-        \App\Models\Permission::truncate();
+        \ZetthCore\Models\User::truncate();
+        \ZetthCore\Models\Role::truncate();
+        \ZetthCore\Models\Permission::truncate();
         Schema::enableForeignKeyConstraints();
     }
 }

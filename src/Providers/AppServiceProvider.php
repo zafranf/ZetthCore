@@ -15,24 +15,35 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        /* set default varchar */
-        Schema::defaultStringLength(191);
-
-        $this->loadRoutesFrom(__DIR__ . '/../../../routes/routes.php');
-        $this->loadMigrationsFrom(__DIR__ . '/../../../database/migrations');
-        // $this->loadSeedsFrom(__DIR__ . '/../../../database/seeds');
+        if (env('APP_DOMAIN') === null) {
+            throw new \Exception("Please set your APP_DOMAIN in .env file", 1);
+        }
+        $this->loadRoutesFrom(__DIR__ . '/../../routes/routes.php');
+        $this->loadMigrationsFrom(__DIR__ . '/../../database/migrations');
+        // $this->loadSeedsFrom(__DIR__ . '/../../database/seeds');
         if ($this->app->runningInConsole()) {
             $this->commands([
                 \ZetthCore\Console\Commands\Install::class,
             ]);
         }
 
+        $this->publishes([
+            __DIR__ . '/../../database' => database_path(),
+        ], 'zetthmigrate');
+        $this->publishes([
+            __DIR__ . '/../../config/laratrust.php' => config_path('laratrust.php'),
+            __DIR__ . '/../../config/laratrust_seeder.php' => config_path('laratrust_seeder.php'),
+        ], 'zetthtrust');
+
+        /* set default varchar */
+        Schema::defaultStringLength(191);
+
         /* check config */
         $isCLI = strpos(php_sapi_name(), 'cli') !== false;
         if (!$isCLI) {
             if (!Schema::hasTable('applications')) {
                 /* sementara, nanti redirect ke halaman install */
-                dd('You need to install this app first');
+                throw new \Exception("You have to install this app first", 1);
                 // redirect(url('/install'))->send();
             }
 

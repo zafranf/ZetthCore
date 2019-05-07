@@ -14,7 +14,7 @@ class Install extends Command
      *
      * @var string
      */
-    protected $signature = 'install';
+    protected $signature = 'install {--fresh}';
 
     /**
      * The console command description.
@@ -48,6 +48,8 @@ class Install extends Command
      */
     public function handle()
     {
+        $this->publishConfig();
+        $this->line('');
         $this->migratingTable();
         $this->line('');
         $this->seedingTable();
@@ -55,10 +57,36 @@ class Install extends Command
         // $this->createRoles();
     }
 
+    public function publishConfig()
+    {
+        $this->info('Publishing package configuration files');
+        $process = new Process('php artisan vendor:publish');
+        $process->setTimeout($this->timeout);
+        $process->run(function ($type, $buffer) {
+            echo $buffer;
+        });
+        /* $process = new Process('php artisan vendor:publish --tag=zetthmigrate --force');
+        $process->setTimeout($this->timeout);
+        $process->run(function ($type, $buffer) {
+        echo $buffer;
+        }); */
+        $process = new Process('php artisan vendor:publish --tag=zetthtrust --force');
+        $process->setTimeout($this->timeout);
+        $process->run(function ($type, $buffer) {
+            echo $buffer;
+        });
+        $this->info('Publish config finished!');
+    }
+
     public function migratingTable()
     {
-        $this->info('Migrating tables');
-        $process = new Process('php artisan migrate');
+        if ($this->option('fresh')) {
+            $this->info('Freshing migration tables');
+            $process = new Process('php artisan migrate:fresh');
+        } else {
+            $this->info('Migrating tables');
+            $process = new Process('php artisan migrate');
+        }
         $process->setTimeout($this->timeout);
         $process->run(function ($type, $buffer) {
             echo $buffer;
