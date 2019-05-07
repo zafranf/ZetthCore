@@ -16,33 +16,29 @@ $page_title = 'Masuk Aplikasi';
             </center>
             <form class="form-horizontal" role="form" method="POST" action="{{ url($adminPath . '/login') }}">
               
-              @if (isset($errors))
-                <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
-                  <label class="col-md-4 control-label">Pengguna</label>
-                  <div class="col-md-6">
-                    <input type="name" class="form-control" name="name" value="{{ old('name') }}" placeholder="Nama atau surel.." autofocus>
-                    @if ($errors->has('name'))
-                      <span class="help-block">
-                        <strong>{{ $errors->first('name') }}</strong>
-                      </span>
-                    @endif
-                  </div>
+              <div class="form-group{{ isset($errors) && $errors->has('name') ? ' has-error' : '' }}">
+                <label class="col-md-4 control-label">Pengguna</label>
+                <div class="col-md-6">
+                  <input type="name" class="form-control" name="name" value="{{ old('name') }}" placeholder="Nama atau surel.." autofocus>
+                  @if (isset($errors) && $errors->has('name'))
+                    <span class="help-block">
+                      <strong>{{ $errors->first('name') }}</strong>
+                    </span>
+                  @endif
                 </div>
-              @endif
+              </div>
 
-              @if (isset($errors))
-                <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
-                  <label class="col-md-4 control-label">Sandi</label>
-                  <div class="col-md-6">
-                    <input type="password" class="form-control" name="password" placeholder="Kata sandi..">
-                    @if ($errors->has('password'))
-                      <span class="help-block">
-                        <strong>{{ $errors->first('password') }}</strong>
-                      </span>
-                    @endif
-                  </div>
+              <div class="form-group{{ isset($errors) && $errors->has('password') ? ' has-error' : '' }}">
+                <label class="col-md-4 control-label">Sandi</label>
+                <div class="col-md-6">
+                  <input type="password" class="form-control" name="password" placeholder="Kata sandi..">
+                  @if (isset($errors) && $errors->has('password'))
+                    <span class="help-block">
+                      <strong>{{ $errors->first('password') }}</strong>
+                    </span>
+                  @endif
                 </div>
-              @endif
+              </div>
 
               {{-- <div class="form-group">
                 <div class="col-md-6 col-md-offset-4">

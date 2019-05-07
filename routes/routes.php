@@ -1,5 +1,8 @@
 
 <?php
+Route::get('/themes/{path}', '\ZetthCore\Http\Controllers\AdminController@themes')->where('path', '.*');
+
+Route::get('assets', ['uses' => '\ZetthCore\Http\Controllers\AdminController@assets', 'as' => 'assets']);
 /* admin routes */
 if (env('ADMIN_ROUTE', 'path') == 'path') {
     Route::prefix('admin')->group(function () {

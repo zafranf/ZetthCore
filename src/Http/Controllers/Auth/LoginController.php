@@ -4,9 +4,9 @@ namespace ZetthCore\Http\Controllers\Auth;
 
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
-use ZetthCore\Http\Controllers\Controller;
+use ZetthCore\Http\Controllers\AdminController;
 
-class LoginController extends Controller
+class LoginController extends AdminController
 {
     /*
     |--------------------------------------------------------------------------
@@ -46,7 +46,7 @@ class LoginController extends Controller
      */
     public function showLoginForm()
     {
-        return view('zetthcore::AdminSC.auth.login');
+        return zview('zetthcore::AdminSC.auth.login');
     }
 
     /**

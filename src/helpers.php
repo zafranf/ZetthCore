@@ -1,4 +1,26 @@
 <?php
+if (!function_exists('adminPath')) {
+    function adminPath()
+    {
+        $adminPath = '/admin';
+        $host = parse_url(url('/'))['host'];
+        if (strpos($host, 'admin') !== false) {
+            $adminPath = '';
+        }
+
+        return $adminPath;
+    }
+}
+
+function zview($name, array $parameters = [])
+{
+    foreach (\Illuminate\Support\Arr::get([], $name, []) as $event) {
+        $event($name, $parameters);
+    }
+
+    return view($name, $parameters);
+}
+
 if (!function_exists('_get_status_text')) {
     /**
      * Undocumented function
@@ -268,5 +290,57 @@ if (!function_exists('isDesktop')) {
     function isDesktop()
     {
         return (new \Jenssegers\Agent\Agent())->isDesktop();
+    }
+}
+
+if (!function_exists('_admin_css')) {
+    /**
+     * Generate link stylesheet tag
+     *
+     * @param string $file
+     * @param array $attributes
+     * @return string
+     */
+    function _admin_css($file = "", $attributes = [])
+    {
+        $path = base_path('vendor/zafranf/zetthcore/resources/' . ltrim($file, '/'));
+        if (file_exists($path)) {
+            $mtime = filemtime($path);
+            $attr = ' rel="stylesheet"';
+            if (!empty($attributes)) {
+                $attr = '';
+                foreach ($attributes as $key => $value) {
+                    $attr .= ' ' . $key . '="' . $value . '"';
+                }
+            }
+
+            return '<link href="' . url($file) . '?' . $mtime . '"' . $attr . '>';
+        }
+    }
+}
+
+if (!function_exists('_admin_js')) {
+    /**
+     * Generate script tag
+     *
+     * @param string $file
+     * @param array $attributes
+     * @return string
+     */
+    function _admin_js($file = "", $attributes = [])
+    {
+        $path = base_path('vendor/zafranf/zetthcore/resources/themes/' . ltrim($file, '/'));
+        if (file_exists($path)) {
+            $mtime = filemtime($path);
+            $attr = ' type="text/javascript"';
+            if (!empty($attributes)) {
+                $attr = '';
+                foreach ($attributes as $key => $value) {
+                    $attr .= ' ' . $key . '="' . $value . '"';
+                }
+            }
+
+            return '<script src="' . url($file) . '?' . $mtime . '"' . $attr . '></script>';
+        }
     }
 }
