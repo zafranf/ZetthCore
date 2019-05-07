@@ -12,15 +12,6 @@ if (!function_exists('adminPath')) {
     }
 }
 
-function zview($name, array $parameters = [])
-{
-    foreach (\Illuminate\Support\Arr::get([], $name, []) as $event) {
-        $event($name, $parameters);
-    }
-
-    return view($name, $parameters);
-}
-
 if (!function_exists('_get_status_text')) {
     /**
      * Undocumented function

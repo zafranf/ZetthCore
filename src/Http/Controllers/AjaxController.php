@@ -3,13 +3,13 @@ namespace ZetthCore\Http\Controllers;
 
 use DB;
 use Illuminate\Http\Request;
-use ZetthCore\Http\Controllers\Controller;
+use ZetthCore\Http\Controllers\AdminController;
 use ZetthCore\Models\Post;
 use ZetthCore\Models\PostComment;
 use ZetthCore\Models\Term;
 use ZetthCore\Models\VisitorLog;
 
-class AjaxController extends Controller
+class AjaxController extends AdminController
 {
     public function term($term)
     {

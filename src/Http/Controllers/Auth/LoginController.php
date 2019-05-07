@@ -46,7 +46,7 @@ class LoginController extends AdminController
      */
     public function showLoginForm()
     {
-        return zview('zetthcore::AdminSC.auth.login');
+        return view('zetthcore::AdminSC.auth.login');
     }
 
     /**

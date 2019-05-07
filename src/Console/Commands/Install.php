@@ -46,7 +46,7 @@ class Install extends Command
      */
     public function handle()
     {
-        $this->process('composer dump-autoload');
+        // $this->process('composer dump-autoload');
 
         $this->publishConfig();
         $this->line('');
@@ -65,6 +65,7 @@ class Install extends Command
         $this->process('php artisan vendor:publish --tag=datatables --force');
         // $this->process('php artisan vendor:publish --tag="laratrust" --force');
         $this->process('php artisan vendor:publish --tag=zetthtrust --force');
+        $this->process('php artisan vendor:publish --tag=zetthauth --force');
         // $this->process('php artisan vendor:publish --tag=zetthmigrate --force');
         $this->info('Publish config finished!');
     }

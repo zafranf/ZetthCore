@@ -13,8 +13,10 @@ class AppServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function boot()
+    public function boot(\Illuminate\Routing\Router $router)
     {
+        $router->aliasMiddleware('access', \ZetthCore\Http\Middleware\AccessMiddleware::class);
+
         if (env('APP_DOMAIN') === null) {
             throw new \Exception("Please set your APP_DOMAIN in .env file", 1);
         }
@@ -36,6 +38,9 @@ class AppServiceProvider extends ServiceProvider
             __DIR__ . '/../../config/laratrust.php' => config_path('laratrust.php'),
             __DIR__ . '/../../config/laratrust_seeder.php' => config_path('laratrust_seeder.php'),
         ], 'zetthtrust');
+        $this->publishes([
+            __DIR__ . '/../../config/auth.php' => config_path('auth.php'),
+        ], 'zetthauth');
 
         /* set default varchar */
         Schema::defaultStringLength(191);
