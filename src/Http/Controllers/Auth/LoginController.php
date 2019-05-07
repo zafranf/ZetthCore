@@ -46,7 +46,7 @@ class LoginController extends Controller
      */
     public function showLoginForm()
     {
-        return view(ltrim(base_path('vendor/zafranf/zetthcore/resources/AdminSC.auth.login'), '/'));
+        return view('zetthcore::AdminSC.auth.login');
     }
 
     /**

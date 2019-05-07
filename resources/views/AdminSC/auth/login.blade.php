@@ -1,7 +1,7 @@
 @php 
 $page_title = 'Masuk Aplikasi';
 @endphp
-@include('admin.AdminSC.layouts.header')
+@include('zetthcore::AdminSC.layouts.header')
   <div class="container">
     <div class="row">
       <div class="col-md-6 col-md-offset-3">
@@ -16,29 +16,33 @@ $page_title = 'Masuk Aplikasi';
             </center>
             <form class="form-horizontal" role="form" method="POST" action="{{ url($adminPath . '/login') }}">
               
-              <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
-                <label class="col-md-4 control-label">Pengguna</label>
-                <div class="col-md-6">
-                  <input type="name" class="form-control" name="name" value="{{ old('name') }}" placeholder="Nama atau surel.." autofocus>
-                  @if ($errors->has('name'))
-                    <span class="help-block">
-                      <strong>{{ $errors->first('name') }}</strong>
-                    </span>
-                  @endif
+              @if (isset($errors))
+                <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
+                  <label class="col-md-4 control-label">Pengguna</label>
+                  <div class="col-md-6">
+                    <input type="name" class="form-control" name="name" value="{{ old('name') }}" placeholder="Nama atau surel.." autofocus>
+                    @if ($errors->has('name'))
+                      <span class="help-block">
+                        <strong>{{ $errors->first('name') }}</strong>
+                      </span>
+                    @endif
+                  </div>
                 </div>
-              </div>
+              @endif
 
-              <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
-                <label class="col-md-4 control-label">Sandi</label>
-                <div class="col-md-6">
-                  <input type="password" class="form-control" name="password" placeholder="Kata sandi..">
-                  @if ($errors->has('password'))
-                    <span class="help-block">
-                      <strong>{{ $errors->first('password') }}</strong>
-                    </span>
-                  @endif
+              @if (isset($errors))
+                <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
+                  <label class="col-md-4 control-label">Sandi</label>
+                  <div class="col-md-6">
+                    <input type="password" class="form-control" name="password" placeholder="Kata sandi..">
+                    @if ($errors->has('password'))
+                      <span class="help-block">
+                        <strong>{{ $errors->first('password') }}</strong>
+                      </span>
+                    @endif
+                  </div>
                 </div>
-              </div>
+              @endif
 
               {{-- <div class="form-group">
                 <div class="col-md-6 col-md-offset-4">
@@ -69,4 +73,4 @@ $page_title = 'Masuk Aplikasi';
   <div class="copyright" style="padding-left: 10px;">
     Powered by <a href="https://porisweb.id" target="_blank">Poris Webdev</a>
   </div>
-@include('admin.AdminSC.layouts.footer')
+@include('zetthcore::AdminSC.layouts.footer')
