@@ -3,6 +3,7 @@
 namespace ZetthCore\Console\Commands;
 
 use Illuminate\Console\Command;
+use Symfony\Component\Process\Process;
 
 class Reinstall extends Command
 {
@@ -46,7 +47,7 @@ class Reinstall extends Command
     public function handle()
     {
         $this->info('Reinstalling application');
-        $process = new Process('php artisan install --fresh"');
+        $process = new Process('php artisan install --fresh');
         $process->setTimeout($this->timeout);
         $process->run(function ($type, $buffer) {
             echo $buffer;

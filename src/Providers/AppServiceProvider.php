@@ -20,17 +20,18 @@ class AppServiceProvider extends ServiceProvider
         }
         $this->loadRoutesFrom(__DIR__ . '/../../routes/routes.php');
         $this->loadViewsFrom(__DIR__ . '/../../resources/views', 'zetthcore');
-        $this->loadMigrationsFrom(__DIR__ . '/../../database/migrations');
+        // $this->loadMigrationsFrom(__DIR__ . '/../../database/migrations');
         // $this->loadSeedsFrom(__DIR__ . '/../../database/seeds');
         if ($this->app->runningInConsole()) {
             $this->commands([
                 \ZetthCore\Console\Commands\Install::class,
+                \ZetthCore\Console\Commands\Reinstall::class,
             ]);
         }
 
-        $this->publishes([
-            __DIR__ . '/../../database' => database_path(),
-        ], 'zetthmigrate');
+        /* $this->publishes([
+        __DIR__ . '/../../database' => database_path(),
+        ], 'zetthmigrate'); */
         $this->publishes([
             __DIR__ . '/../../config/laratrust.php' => config_path('laratrust.php'),
             __DIR__ . '/../../config/laratrust_seeder.php' => config_path('laratrust_seeder.php'),
@@ -40,8 +41,7 @@ class AppServiceProvider extends ServiceProvider
         Schema::defaultStringLength(191);
 
         /* check config */
-        $isCLI = strpos(php_sapi_name(), 'cli') !== false;
-        if (!$isCLI) {
+        if ($this->app->runningInConsole()) {
             if (!Schema::hasTable('applications')) {
                 /* sementara, nanti redirect ke halaman install */
                 throw new \Exception("You have to install this app first", 1);
