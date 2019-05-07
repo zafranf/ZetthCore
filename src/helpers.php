@@ -297,7 +297,7 @@ if (!function_exists('_admin_css')) {
         $path = base_path('vendor/zafranf/zetthcore/resources/' . ltrim($file, '/'));
         if (file_exists($path)) {
             $mtime = filemtime($path);
-            $attr = ' rel="stylesheet"';
+            $attr = ' rel="stylesheet" type="text/css"';
             if (!empty($attributes)) {
                 $attr = '';
                 foreach ($attributes as $key => $value) {
