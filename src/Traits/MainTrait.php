@@ -469,7 +469,7 @@ trait MainTrait
             $collection = $collection->get();
         }
 
-        $make = \Datatables::collection($collection);
+        $make = \DataTables::collection($collection);
         if (bool($escape)) {
             $make = $make->escapeColumns([]);
         }

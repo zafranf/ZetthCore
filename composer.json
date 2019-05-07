@@ -44,7 +44,7 @@
                 "ZetthCore\\Providers\\AppServiceProvider"
             ],
             "aliases": {
-                "Datatables": "Yajra\\Datatables\\Facades\\DataTables",
+                "DataTables": "Yajra\\DataTables\\Facades\\DataTables",
                 "Image": "Intervention\\Image\\Facades\\Image",
                 "Laratrust": "Laratrust\\LaratrustFacade",
                 "Browser": "Jenssegers\\Agent\\Facades\\Agent"
