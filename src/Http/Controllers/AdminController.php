@@ -27,11 +27,10 @@ class AdminController extends BaseController
         ];
     }
 
-    public function themes(\Illuminate\Http\Request $r)
+    public function themes(\Illuminate\Http\Request $r, $path)
     {
-        $path = str_start(str_replace(['../', './'], '', urldecode($r->path)), '/');
+        $path = str_start(str_replace(['../', './'], '', urldecode($path)), '/');
         $path = base_path('vendor/zafranf/zetthcore/resources/themes' . $path);
-        // dd($path);
         if (File::exists($path)) {
             $mime = '';
             if (ends_with($path, '.js')) {
@@ -45,7 +44,7 @@ class AdminController extends BaseController
             } else {
                 $mime = File::mimeType($path);
             }
-            // dd($mime);
+
             $response = response(File::get($path), 200, ['Content-Type' => $mime]);
             $response->setSharedMaxAge(31536000);
             $response->setMaxAge(31536000);
@@ -54,6 +53,6 @@ class AdminController extends BaseController
             return $response;
         }
 
-        return response('', 404);
+        abort(404);
     }
 }

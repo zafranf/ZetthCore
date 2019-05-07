@@ -46,7 +46,7 @@ class Install extends Command
      */
     public function handle()
     {
-        // $this->process('composer dump-autoload');
+        $this->process('composer dump-autoload');
 
         $this->publishConfig();
         $this->line('');
