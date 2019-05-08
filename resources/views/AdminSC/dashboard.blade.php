@@ -112,7 +112,7 @@
 @endsection
 
 @section('styles')
-  {!! _admin_css('themes/AdminSC/plugins/bootstrap/daterangepicker/2.1.24/daterangepicker.css') !!}
+  {!! _admin_css('themes/admin/AdminSC/plugins/bootstrap/daterangepicker/2.1.24/daterangepicker.css') !!}
   <style>
     #content-div {
       display:none;
@@ -167,9 +167,9 @@
 @endsection
 
 @section('scripts')
-  {!! _admin_js('themes/AdminSC/plugins/moment/2.13.0/js/moment.min.js') !!}
-  {!! _admin_js('themes/AdminSC/plugins/bootstrap/daterangepicker/2.1.24/daterangepicker.js') !!}
-  {!! _admin_js('themes/AdminSC/plugins/highcharts/4.2.6/highcharts.js') !!}
+  {!! _admin_js('themes/admin/AdminSC/plugins/moment/2.13.0/js/moment.min.js') !!}
+  {!! _admin_js('themes/admin/AdminSC/plugins/bootstrap/daterangepicker/2.1.24/daterangepicker.js') !!}
+  {!! _admin_js('themes/admin/AdminSC/plugins/highcharts/4.2.6/highcharts.js') !!}
   <script>
   $(function(){
     moment.locale('id', {

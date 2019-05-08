@@ -132,7 +132,7 @@
 @endsection
 
 @section('scripts')
-  {!! _admin_js('themes/AdminSC/plugins/jquery/sortable/0.9.13/jquery-sortable.min.js') !!}
+  {!! _admin_js('themes/admin/AdminSC/plugins/jquery/sortable/0.9.13/jquery-sortable.min.js') !!}
   <script>
     $(function() {
       var group = $('ol.default').sortable({

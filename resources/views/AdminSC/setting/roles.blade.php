@@ -21,11 +21,11 @@
 @endsection
 
 @section('styles')
-  {!! _admin_css('themes/AdminSC/plugins/DataTables/1.10.12/css/jquery.dataTables.min.css') !!}
+  {!! _admin_css('themes/admin/AdminSC/plugins/DataTables/1.10.12/css/jquery.dataTables.min.css') !!}
 @endsection
 
 @section('scripts')
-  {!! _admin_js('themes/AdminSC/plugins/DataTables/1.10.12/js/jquery.dataTables.min.js') !!}
+  {!! _admin_js('themes/admin/AdminSC/plugins/DataTables/1.10.12/js/jquery.dataTables.min.js') !!}
   <script>
     $(document).ready(function() {
       var table = $('#table-data').DataTable({

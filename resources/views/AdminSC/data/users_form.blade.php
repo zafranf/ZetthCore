@@ -155,13 +155,13 @@
 @endsection
 
 @section('styles')
-	{!! _admin_css('themes/AdminSC/plugins/jasny-bootstrap/3.1.3/css/jasny-bootstrap.min.css') !!}
-	{!! _admin_css('themes/AdminSC/plugins/select2/4.0.0/css/select2.min.css') !!}
+	{!! _admin_css('themes/admin/AdminSC/plugins/jasny-bootstrap/3.1.3/css/jasny-bootstrap.min.css') !!}
+	{!! _admin_css('themes/admin/AdminSC/plugins/select2/4.0.0/css/select2.min.css') !!}
 @endsection
 
 @section('scripts')
-{!! _admin_js('themes/AdminSC/plugins/jasny-bootstrap/3.1.3/js/jasny-bootstrap.min.js') !!}
-{!! _admin_js('themes/AdminSC/plugins/select2/4.0.0/js/select2.min.js') !!}
+{!! _admin_js('themes/admin/AdminSC/plugins/jasny-bootstrap/3.1.3/js/jasny-bootstrap.min.js') !!}
+{!! _admin_js('themes/admin/AdminSC/plugins/select2/4.0.0/js/select2.min.js') !!}
   <script>
     $(function(){
       $(".custom-select2").select2({

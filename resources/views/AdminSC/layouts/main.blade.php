@@ -112,10 +112,10 @@
     var CONNECT = true;
     var IS_MOBILE = {{ $isMobile ? 'true' : 'false' }};
   </script>
-  {!! _admin_js('themes/AdminSC/plugins/jquery/2.2.4/js/jquery.min.js') !!}
-  {!! _admin_js('themes/AdminSC/plugins/bootstrap/3.3.6/js/bootstrap.min.js') !!}
-  {!! _admin_js('themes/AdminSC/plugins/sweetalert2/js/sweetalert2.min.js') !!}
+  {!! _admin_js('themes/admin/AdminSC/plugins/jquery/2.2.4/js/jquery.min.js') !!}
+  {!! _admin_js('themes/admin/AdminSC/plugins/bootstrap/3.3.6/js/bootstrap.min.js') !!}
+  {!! _admin_js('themes/admin/AdminSC/plugins/sweetalert2/js/sweetalert2.min.js') !!}
   @yield('scripts')
-  {!! _admin_js('themes/AdminSC/js/app.js') !!}
+  {!! _admin_js('themes/admin/AdminSC/js/app.js') !!}
   <script>_tc();</script>
 @include('zetthcore::AdminSC.layouts.footer')

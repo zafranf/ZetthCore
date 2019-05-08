@@ -13,13 +13,13 @@
 
   {{-- Fonts --}}
   <link href="https://fonts.googleapis.com/css?family=Lato:100,300,400" rel='stylesheet' type='text/css'>
-  {!! _admin_css('themes/AdminSC/plugins/fontawesome/4.6.3/css/font-awesome.min.css') !!}
+  {!! _admin_css('themes/admin/AdminSC/plugins/fontawesome/4.6.3/css/font-awesome.min.css') !!}
 
   {{-- Styles --}}
-  {!! _admin_css('themes/AdminSC/plugins/bootstrap/3.3.6/css/bootstrap.min.css') !!}
-  {!! _admin_css('themes/AdminSC/plugins/sweetalert2/css/sweetalert2.min.css') !!}
+  {!! _admin_css('themes/admin/AdminSC/plugins/bootstrap/3.3.6/css/bootstrap.min.css') !!}
+  {!! _admin_css('themes/admin/AdminSC/plugins/sweetalert2/css/sweetalert2.min.css') !!}
   @yield('styles')
-  {!! _admin_css('themes/AdminSC/css/app.css') !!}
+  {!! _admin_css('themes/admin/AdminSC/css/app.css') !!}
 
 </head>
 

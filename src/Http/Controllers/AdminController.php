@@ -37,14 +37,9 @@ class AdminController extends BaseController
                 $mime = 'text/javascript';
             } elseif (ends_with($path, '.css')) {
                 $mime = 'text/css';
-            } elseif (ends_with($path, '.woff')) {
-                $mime = 'application/font-woff';
-            } elseif (ends_with($path, '.woff2')) {
-                $mime = 'application/font-woff2';
             } else {
                 $mime = File::mimeType($path);
             }
-
             $response = response(File::get($path), 200, ['Content-Type' => $mime]);
             $response->setSharedMaxAge(31536000);
             $response->setMaxAge(31536000);
