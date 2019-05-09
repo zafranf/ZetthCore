@@ -116,5 +116,5 @@
   {!! _admin_js('themes/admin/AdminSC/plugins/bootstrap/3.3.6/js/bootstrap.min.js') !!}
   {!! _admin_js('themes/admin/AdminSC/plugins/sweetalert2/js/sweetalert2.min.js') !!}
   @yield('scripts')
-  {!! _admin_js('themes/admin/AdminSC/js/app.js') !!}
+  {!! _admin_js('themes/admin/AdminSC/js/app.min.js') !!}
 @include('zetthcore::AdminSC.layouts.footer')
