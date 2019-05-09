@@ -59,7 +59,7 @@
     <hr>
     <div class="row">
       <div class="col-sm-12" id="box-pageview-chart">
-        <div class="loading">Loading<img src="{{ url('themes/admin/AdminSC/images/loading-flat.gif') }}"></div>
+        <div class="loading">Memuat<img src="{{ url('themes/admin/AdminSC/images/loading-flat.gif') }}"></div>
         <div id="pageview-chart" style="height:370px;"></div>
       </div>
     </div>
@@ -72,7 +72,7 @@
               <a href="{{ url($adminPath . '/content/article/posts') }}" class="btn btn-default btn-sm pull-right"><i class="fa fa-eye"></i> Semua</a>
             </div>
             <div class="panel-body no-padding">
-              <div class="loading">Loading<img src="{{ url('themes/admin/AdminSC/images/loading-flat.gif') }}"></div>
+              <div class="loading">Memuat<img src="{{ url('themes/admin/AdminSC/images/loading-flat.gif') }}"></div>
               <table id="table-data-popular" class="table table-hover no-margin-bottom">
                 <thead>
                   <tr>
@@ -93,7 +93,7 @@
             <a href="{{ url($adminPath . '/report/comments') }}" class="btn btn-default btn-sm pull-right"><i class="fa fa-eye"></i> Semua</a>
           </div>
           <div class="panel-body no-padding">
-            <div class="loading">Loading<img src="{{ url('themes/admin/AdminSC/images/loading-flat.gif') }}"></div>
+            <div class="loading">Memuat<img src="{{ url('themes/admin/AdminSC/images/loading-flat.gif') }}"></div>
             <table id="table-data-comment" class="table table-hover no-margin-bottom">
               <thead>
                 <tr>
@@ -213,7 +213,7 @@
       @if ($isDesktop)
         var range = start.format('MMMM DD, YYYY') + ' - ' + end.format('MMMM DD, YYYY');
       @else
-      var range = label;
+        var range = label;
       @endif
       $('#z-date-range span').text(range);
 
@@ -227,7 +227,7 @@
         rangetype = 'daily';
       }
 
-      // $('#pageview-chart').html("Loading<img src=\"{{ url('themes/admin/AdminSC/images/loading-flat.gif') }}\">");
+      // $('#pageview-chart').html("Memuat<img src=\"{{ url('themes/admin/AdminSC/images/loading-flat.gif') }}\">");
       // $('#box-popular-post').addClass('hide');
       // $('#box-recent-comment').addClass('hide');
       $('.loading').removeClass('hide');
@@ -333,7 +333,7 @@
           type: 'spline'
         },
         title: {
-          text: 'Pageviews',
+          text: 'Kunjungan',
           align: 'left'
         },
         credits: {
@@ -369,7 +369,7 @@
         },
         series: data,
         tooltip: {
-          headerFormat: 'Time: {point.key}<br>',
+          headerFormat: 'Waktu: {point.key}<br>',
           shared: true,
           crosshairs: true
         },

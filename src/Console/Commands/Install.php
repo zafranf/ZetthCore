@@ -47,20 +47,16 @@ class Install extends Command
     public function handle()
     {
         if (!file_exists(base_path('.env'))) {
-            throw new \Exception("Copy .env.example file as .env first and set the env", 1);
+            throw new \Exception("Salin berkas .env.example sebagai .env kemudian atur semua nilainya", 1);
         } else if (env('APP_DOMAIN') === null) {
-            throw new \Exception("Please set your APP_DOMAIN in .env file", 1);
+            throw new \Exception("Harap atur APP_DOMAIN di dalam berkas .env", 1);
         }
-
-        $this->process('composer dump-autoload');
 
         $this->publishConfig();
         $this->line('');
         $this->migratingTable();
         $this->line('');
         $this->seedingTable();
-        // $this->line('');
-        // $this->createRoles();
     }
 
     public function publishConfig()
@@ -72,6 +68,7 @@ class Install extends Command
         // $this->process('php artisan vendor:publish --tag="laratrust" --force');
         $this->process('php artisan vendor:publish --tag=zetthtrust --force');
         $this->process('php artisan vendor:publish --tag=zetthauth --force');
+        $this->process('php artisan vendor:publish --tag=zetthhandler --force');
         // $this->process('php artisan vendor:publish --tag=zetthmigrate --force');
         $this->info('Publish config finished!');
     }

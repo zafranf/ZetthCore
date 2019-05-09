@@ -40,12 +40,12 @@ class AjaxController extends AdminController
         $res = [
             'rows' => [
                 [
-                    'name' => 'Visits',
+                    'name' => 'Kunjungan',
                     'data' => [],
                     'color' => 'coral',
                 ],
                 [
-                    'name' => 'Unique Visitors',
+                    'name' => 'Pengunjung Unik',
                     'data' => [],
                     'color' => 'grey',
                 ],
