@@ -50,12 +50,12 @@
                   <div class="fileinput-preview fileinput-exists thumbnail" style="width:20px;padding:0;margin-bottom:8px;position:absolute;left:5px;"></div>
 									<span class="fileinput-filename" style="margin-bottom:5px;position:relative;left:20px;"></span>
 								</div>
-								<span class="input-group-addon btn btn-file">
+								<span class="input-group-addon btn btn-default btn-file" style="border-left:1px solid coral;">
 									<span class="fileinput-new">Pilih</span>
 									<span class="fileinput-exists">Ganti</span>
                   <input type="file" id="icon" name="icon" accept="image/*">
 								</span>
-								<a href="#" class="input-group-addon btn fileinput-exists" data-dismiss="fileinput">Batal</a>
+								<a href="#" class="input-group-addon btn btn-default fileinput-exists" data-dismiss="fileinput">Batal</a>
 							</div>
 							<small class="help-block">
 								<label>
@@ -279,6 +279,12 @@
 			padding:3px 5px;
 			text-align:left;
 			font-size: 12px;
+		}
+		.btn.input-group-addon {
+			background: transparent;
+		}
+		.fileinput.input-group > .form-control {
+			border-right: 0;
 		}
 	</style>
 @endsection
