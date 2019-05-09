@@ -42,12 +42,14 @@ class AppServiceProvider extends ServiceProvider
         __DIR__ . '/../../database' => database_path(),
         ], 'zetthmigrate'); */
         $this->publishes([
+            __DIR__ . '/../../publishable/config/auth.php' => config_path('auth.php'),
+            __DIR__ . '/../../publishable/config/image.php' => config_path('image.php'),
             __DIR__ . '/../../publishable/config/laratrust.php' => config_path('laratrust.php'),
             __DIR__ . '/../../publishable/config/laratrust_seeder.php' => config_path('laratrust_seeder.php'),
-        ], 'zetthtrust');
-        $this->publishes([
-            __DIR__ . '/../../publishable/config/auth.php' => config_path('auth.php'),
-        ], 'zetthauth');
+        ], 'zetthconfig');
+        // $this->publishes([
+        //     __DIR__ . '/../../publishable/config/auth.php' => config_path('auth.php'),
+        // ], 'zetthauth');
         $this->publishes([
             __DIR__ . '/../../publishable/Exceptions/Handler.php' => app_path('Exceptions/Handler.php'),
         ], 'zetthhandler');

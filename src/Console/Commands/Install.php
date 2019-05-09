@@ -66,8 +66,8 @@ class Install extends Command
         $this->process('php artisan vendor:publish --provider="RenatoMarinho\LaravelPageSpeed\ServiceProvider" --force');
         $this->process('php artisan vendor:publish --tag=datatables --force');
         // $this->process('php artisan vendor:publish --tag="laratrust" --force');
-        $this->process('php artisan vendor:publish --tag=zetthtrust --force');
-        $this->process('php artisan vendor:publish --tag=zetthauth --force');
+        $this->process('php artisan vendor:publish --tag=zetthconfig --force');
+        // $this->process('php artisan vendor:publish --tag=zetthauth --force');
         $this->process('php artisan vendor:publish --tag=zetthhandler --force');
         // $this->process('php artisan vendor:publish --tag=zetthmigrate --force');
         $this->info('Publish config finished!');
