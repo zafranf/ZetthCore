@@ -15,6 +15,10 @@ class ZetthCreateUsersTable extends Migration
     {
         Schema::dropIfExists('users');
         Schema::create('users', function (Blueprint $table) {
+            $table->engine = 'InnoDB';
+            $table->charset = 'utf8';
+            $table->collation = 'utf8_unicode_ci';
+
             $table->increments('id')->unsigned();
             $table->string('email')->unique();
             $table->string('name')->unique();

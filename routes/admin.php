@@ -1,23 +1,20 @@
 <?php
 $prefix = '\ZetthCore\Http\Controllers';
 Route::get('/', function () {
-    if (env('ADMIN_ROUTE', 'path') == 'path') {
-        return redirect('/admin/login');
-    } else {
-        return redirect('/login');
-    }
-});
-Route::get('/test-connection', function () {
-    return response()->json(['status' => true]);
-});
-Route::get('/login', $prefix . '\Auth\LoginController@showLoginForm');
-Route::post('/login', $prefix . '\Auth\LoginController@login');
-Route::post('/logout', $prefix . '\Auth\LoginController@logout');
-if (env('APP_DEBUG')) {
-    Route::get('/logout', $prefix . '\Auth\LoginController@logout');
-}
+    return redirect(adminPath() . '/login');
+})->name('index');
+Route::get('/login', $prefix . '\Auth\LoginController@showLoginForm')->name('login.form');
+Route::post('/login', $prefix . '\Auth\LoginController@login')->name('login.post');
 
 Route::middleware('auth')->group(function () use ($prefix) {
+    Route::post('/logout', $prefix . '\Auth\LoginController@logout')->name('logout.post');
+    if (env('APP_DEBUG')) {
+        Route::get('/logout', $prefix . '\Auth\LoginController@logout')->name('logout.get');
+    }
+    Route::get('/test/connection', function () {
+        return response()->json(['status' => true]);
+    })->name('test.connection');
+
     /* api datatable */
     Route::get('/setting/menus/data', $prefix . '\Setting\MenuController@datatable')->name('menus.data');
     Route::get('/setting/menu-groups/data', $prefix . '\Setting\MenuGroupController@datatable')->name('menu-groups.data');

@@ -23,7 +23,7 @@ class MenuTableSeeder extends Seeder
         $dash = new Menu;
         $dash->name = 'Dasbor';
         $dash->description = 'Halaman utama aplikasi';
-        $dash->route_name = 'dashboard.index';
+        $dash->route_name = 'admin.dashboard.index';
         // $dash->icon = 'fa fa-dashboard';
         $dash->target = '_self';
         $dash->order = $mainOrder++;
@@ -46,7 +46,7 @@ class MenuTableSeeder extends Seeder
         $setApl = new Menu;
         $setApl->name = 'Aplikasi';
         $setApl->description = 'Menu pengaturan aplikasi';
-        $setApl->route_name = 'application.index';
+        $setApl->route_name = 'admin.application.index';
         // $setApl->icon = 'fa fa-desktop';
         $setApl->order = $setOrder++;
         $setApl->status = 1;
@@ -62,7 +62,7 @@ class MenuTableSeeder extends Seeder
         $setMenu = new Menu;
         $setMenu->name = 'Menu';
         $setMenu->description = 'Menu pengaturan menu grup';
-        $setMenu->route_name = 'menu-groups.index';
+        $setMenu->route_name = 'admin.menu-groups.index';
         // $setMenu->icon = 'fa fa-menu';
         $setMenu->order = $setOrder++;
         $setMenu->status = 1;
@@ -78,7 +78,7 @@ class MenuTableSeeder extends Seeder
         $setRole = new Menu;
         $setRole->name = 'Peran dan Akses';
         $setRole->description = 'Menu pengaturan peran dan akses';
-        $setRole->route_name = 'roles.index';
+        $setRole->route_name = 'admin.roles.index';
         // $setRole->icon = 'fa fa-key';
         $setRole->order = $setOrder++;
         $setRole->status = 1;
@@ -105,7 +105,7 @@ class MenuTableSeeder extends Seeder
         $dataUser = new Menu;
         $dataUser->name = 'Pengguna';
         $dataUser->description = 'Menu pengaturan pengguna';
-        $dataUser->route_name = 'users.index';
+        $dataUser->route_name = 'admin.users.index';
         // $dataUser->icon = 'fa fa-user';
         $dataUser->order = $dataOrder++;
         $dataUser->status = 1;
@@ -121,7 +121,7 @@ class MenuTableSeeder extends Seeder
         $dataCat = new Menu;
         $dataCat->name = 'Kategori';
         $dataCat->description = 'Menu pengaturan kategori';
-        $dataCat->route_name = 'categories.index';
+        $dataCat->route_name = 'admin.categories.index';
         // $dataCat->icon = 'pg-unordered_list';
         $dataCat->order = $dataOrder++;
         $dataCat->status = 1;
@@ -137,7 +137,7 @@ class MenuTableSeeder extends Seeder
         $dataTag = new Menu;
         $dataTag->name = 'Label';
         $dataTag->description = 'Menu pengaturan label';
-        $dataTag->route_name = 'tags.index';
+        $dataTag->route_name = 'admin.tags.index';
         // $dataTag->icon = 'fa fa-list';
         $dataTag->order = $dataOrder++;
         $dataTag->status = 1;
@@ -164,7 +164,7 @@ class MenuTableSeeder extends Seeder
         $contentPage = new Menu;
         $contentPage->name = 'Halaman';
         $contentPage->description = 'Menu pengaturan halaman';
-        $contentPage->route_name = 'pages.index';
+        $contentPage->route_name = 'admin.pages.index';
         // $contentPage->icon = 'fa fa-file-text';
         $contentPage->order = $contentOrder++;
         $contentPage->status = 1;
@@ -181,7 +181,7 @@ class MenuTableSeeder extends Seeder
         /* $post = new Menu;
         $post->name = 'Artikel';
         $post->description = 'Menu pengaturan artikel';
-        // $post->route_name = 'posts.index';
+        // $post->route_name = 'admin.posts.index';
         // $post->icon = 'fa fa-newspaper-o';
         $post->order = $contentOrder++;
         $post->status = 1;
@@ -197,7 +197,7 @@ class MenuTableSeeder extends Seeder
         $contentPost = new Menu;
         $contentPost->name = 'Artikel';
         $contentPost->description = 'Menu pengaturan artikel';
-        $contentPost->route_name = 'posts.index';
+        $contentPost->route_name = 'admin.posts.index';
         // $contentPost->icon = 'fa fa-newspaper-o';
         $contentPost->order = $contentOrder++;
         $contentPost->status = 1;
@@ -213,7 +213,7 @@ class MenuTableSeeder extends Seeder
         /* $contentBanner = new Menu;
         $contentBanner->name = 'Spanduk';
         $contentBanner->description = 'Menu pengaturan spanduk';
-        $contentBanner->route_name = 'banners.index';
+        $contentBanner->route_name = 'admin.banners.index';
         // $contentBanner->icon = 'pg-tablet';
         $contentBanner->order = $contentOrder++;
         $contentBanner->status = 1;
@@ -241,7 +241,7 @@ class MenuTableSeeder extends Seeder
         /* $galPhoto = new Menu;
         $galPhoto->name = 'Foto';
         $galPhoto->description = 'Menu pengaturan foto';
-        $galPhoto->route_name = 'photos.index';
+        $galPhoto->route_name = 'admin.photos.index';
         // $galPhoto->icon = 'fa fa-photo';
         $galPhoto->order = $galOrder++;
         $galPhoto->status = 1;
@@ -257,7 +257,7 @@ class MenuTableSeeder extends Seeder
         /* $galVideo = new Menu;
         $galVideo->name = 'Video';
         $galVideo->description = 'Menu pengaturan video';
-        $galVideo->route_name = 'videos.index';
+        $galVideo->route_name = 'admin.videos.index';
         // $galVideo->icon = 'pg-video';
         $galVideo->order = $galOrder++;
         $galVideo->status = 1;
@@ -285,7 +285,7 @@ class MenuTableSeeder extends Seeder
         /* $prodAll = new Menu;
         $prodAll->name = 'Semua Produk';
         $prodAll->description = 'Menu pengaturan semua produk';
-        $prodAll->route_name = 'products.index';
+        $prodAll->route_name = 'admin.products.index';
         // $prodAll->icon = 'pg-shopping_cart';
         $prodAll->order = $prodOrder++;
         $prodAll->status = 1;
@@ -301,7 +301,7 @@ class MenuTableSeeder extends Seeder
         /* $prodCat = new Menu;
         $prodCat->name = 'Kategori';
         $prodCat->description = 'Menu pengaturan produk kategori';
-        $prodCat->route_name = 'products.categories.index';
+        $prodCat->route_name = 'admin.products.categories.index';
         // $prodCat->icon = 'pg-unordered_list';
         $prodCat->order = $prodOrder++;
         $prodCat->status = 1;
@@ -317,7 +317,7 @@ class MenuTableSeeder extends Seeder
         /* $prodTag = new Menu;
         $prodTag->name = 'Label';
         $prodTag->description = 'Menu pengaturan produk label';
-        $prodTag->route_name = 'products.tags.index';
+        $prodTag->route_name = 'admin.products.tags.index';
         // $prodTag->icon = 'fa fa-list';
         $prodTag->order = $prodOrder++;
         $prodTag->status = 1;
@@ -344,7 +344,7 @@ class MenuTableSeeder extends Seeder
         $repInbox = new Menu;
         $repInbox->name = 'Kotak Masuk';
         $repInbox->description = 'Menu pengaturan kotak masuk';
-        $repInbox->route_name = 'inbox.index';
+        $repInbox->route_name = 'admin.inbox.index';
         // $repInbox->icon = 'pg-mail';
         $repInbox->order = $repOrder++;
         $repInbox->status = 1;
@@ -360,7 +360,7 @@ class MenuTableSeeder extends Seeder
         $repComment = new Menu;
         $repComment->name = 'Komentar';
         $repComment->description = 'Menu pengaturan komentar';
-        $repComment->route_name = 'comments.index';
+        $repComment->route_name = 'admin.comments.index';
         // $repComment->icon = 'fa fa-comments';
         $repComment->order = $repOrder++;
         $repComment->status = 1;
@@ -376,7 +376,7 @@ class MenuTableSeeder extends Seeder
         $repInterm = new Menu;
         $repInterm->name = 'Kata Pencarian';
         $repInterm->description = 'Menu pengaturan kata pencarian';
-        $repInterm->route_name = 'incoming-terms.index';
+        $repInterm->route_name = 'admin.incoming-terms.index';
         // $repInterm->icon = 'pg-search';
         $repInterm->order = $repOrder++;
         $repInterm->status = 1;
@@ -392,7 +392,7 @@ class MenuTableSeeder extends Seeder
         $repSubscriber = new Menu;
         $repSubscriber->name = 'Pelanggan Info';
         $repSubscriber->description = 'Menu laporan pelanggan info';
-        $repSubscriber->route_name = 'subscribers.index';
+        $repSubscriber->route_name = 'admin.subscribers.index';
         // $repSubscriber->icon = 'fa fa-users';
         $repSubscriber->order = $repOrder++;
         $repSubscriber->status = 1;
@@ -419,7 +419,7 @@ class MenuTableSeeder extends Seeder
         $logActivity = new Menu;
         $logActivity->name = 'Aktifitas';
         $logActivity->description = 'Menu catatan aktifitas';
-        $logActivity->route_name = 'activities.index';
+        $logActivity->route_name = 'admin.activities.index';
         // $logActivity->icon = 'fa fa-list';
         $logActivity->order = $logOrder++;
         $logActivity->status = 1;
@@ -435,7 +435,7 @@ class MenuTableSeeder extends Seeder
         $logError = new Menu;
         $logError->name = 'Galat';
         $logError->description = 'Menu catatan galat';
-        $logError->route_name = 'errors.index';
+        $logError->route_name = 'admin.errors.index';
         // $logError->icon = 'fa fa-list-ul';
         $logError->order = $logOrder++;
         $logError->status = 1;
@@ -451,7 +451,7 @@ class MenuTableSeeder extends Seeder
         $logError = new Menu;
         $logError->name = 'Kunjungan';
         $logError->description = 'Menu catatan kunjungan';
-        $logError->route_name = 'visitors.index';
+        $logError->route_name = 'admin.visitors.index';
         // $logError->icon = 'fa fa-list-ul';
         $logError->order = $logOrder++;
         $logError->status = 1;

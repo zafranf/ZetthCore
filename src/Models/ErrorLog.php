@@ -10,7 +10,7 @@ class ErrorLog extends Model
     public $incrementing = false;
 
     protected $primaryKey = [
-        'file', 'line', 'path', 'code', 'message',
+        'code', 'path', 'file', 'line', 'message',
     ];
 
     protected $fillable = [

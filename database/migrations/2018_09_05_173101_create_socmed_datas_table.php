@@ -14,6 +14,10 @@ class CreateSocmedDatasTable extends Migration
     public function up()
     {
         Schema::create('socmed_data', function (Blueprint $table) {
+            $table->engine = 'InnoDB';
+            $table->charset = 'utf8';
+            $table->collation = 'utf8_unicode_ci';
+
             $table->string('username');
             $table->enum('type', ['config', 'user'])->default('user');
             $table->integer('socmed_id')->unsigned();

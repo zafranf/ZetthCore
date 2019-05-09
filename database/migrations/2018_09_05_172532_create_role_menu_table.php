@@ -14,6 +14,10 @@ class CreateRoleMenuTable extends Migration
     public function up()
     {
         Schema::create('role_menu', function (Blueprint $table) {
+            $table->engine = 'InnoDB';
+            $table->charset = 'utf8';
+            $table->collation = 'utf8_unicode_ci';
+
             $table->unsignedInteger('role_id');
             $table->unsignedInteger('menu_group_id');
 

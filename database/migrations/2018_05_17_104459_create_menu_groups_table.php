@@ -14,7 +14,11 @@ class CreateMenuGroupsTable extends Migration
     public function up()
     {
         Schema::create('menu_groups', function (Blueprint $table) {
-            $table->increments('id');
+            $table->engine = 'InnoDB';
+            $table->charset = 'utf8';
+            $table->collation = 'utf8_unicode_ci';
+
+            $table->increments('id')->unsigned();
             $table->string('name');
             $table->string('display_name');
             $table->string('description')->nullable();

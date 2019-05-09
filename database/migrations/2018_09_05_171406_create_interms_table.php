@@ -14,6 +14,10 @@ class CreateIntermsTable extends Migration
     public function up()
     {
         Schema::create('interms', function (Blueprint $table) {
+            $table->engine = 'InnoDB';
+            $table->charset = 'utf8';
+            $table->collation = 'utf8_unicode_ci';
+
             $table->increments('id')->unsigned();
             $table->string('host')->index();
             $table->string('param');

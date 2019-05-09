@@ -45,7 +45,7 @@ function _tc() {
     }, 1000 * 30);
 
     $.ajax({
-        url: ADMIN_URL + "/test-connection",
+        url: ADMIN_URL + "/test/connection",
         cache: false
     }).done(function(data) {
         $('#status-server').removeClass('bg-danger').addClass('bg-success').text('Terhubung');

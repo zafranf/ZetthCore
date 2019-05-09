@@ -14,6 +14,10 @@ class CreateVisitorLogsTable extends Migration
     public function up()
     {
         Schema::create('visitor_logs', function (Blueprint $table) {
+            $table->engine = 'InnoDB';
+            $table->charset = 'utf8';
+            $table->collation = 'utf8_unicode_ci';
+
             // $table->bigIncrements('id');
             $table->ipAddress('ip');
             $table->string('page');

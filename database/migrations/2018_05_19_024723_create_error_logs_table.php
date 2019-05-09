@@ -14,6 +14,10 @@ class CreateErrorLogsTable extends Migration
     public function up()
     {
         Schema::create('error_logs', function (Blueprint $table) {
+            $table->engine = 'InnoDB';
+            $table->charset = 'utf8';
+            $table->collation = 'utf8_unicode_ci';
+
             $table->string('code');
             $table->string('message');
             $table->string('file');
@@ -26,7 +30,7 @@ class CreateErrorLogsTable extends Migration
             $table->text('time_history')->nullable();
             $table->timestamps();
 
-            $table->primary(['file', 'line', 'path', 'code']);
+            $table->primary(['code', 'path', 'file', 'line', 'message']);
         });
     }
 
