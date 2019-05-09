@@ -27,9 +27,6 @@ class AppServiceProvider extends ServiceProvider
             \RenatoMarinho\LaravelPageSpeed\Middleware\CollapseWhitespace::class,
         ]);
 
-        if (env('APP_DOMAIN') === null) {
-            throw new \Exception("Please set your APP_DOMAIN in .env file", 1);
-        }
         $this->loadRoutesFrom(__DIR__ . '/../../routes/routes.php');
         $this->loadViewsFrom(__DIR__ . '/../../resources/views', 'zetthcore');
         $this->loadMigrationsFrom(__DIR__ . '/../../database/migrations');

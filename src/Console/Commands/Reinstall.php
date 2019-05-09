@@ -12,14 +12,14 @@ class Reinstall extends Command
      *
      * @var string
      */
-    protected $signature = 'reinstall';
+    protected $signature = 'zetth:reinstall';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Reinstall ZetthCMS Core Admin Panel';
+    protected $description = 'Reinstall ZetthCore';
 
     /**
      * Clear timeout while executing command

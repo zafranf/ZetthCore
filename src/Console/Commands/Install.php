@@ -12,14 +12,14 @@ class Install extends Command
      *
      * @var string
      */
-    protected $signature = 'install {--fresh}';
+    protected $signature = 'zetth:install {--fresh}';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Install ZetthCMS Core Admin Panel';
+    protected $description = 'Install ZetthCore';
 
     /**
      * Clear timeout while executing command
@@ -46,6 +46,12 @@ class Install extends Command
      */
     public function handle()
     {
+        if (!file_exists(base_path('.env'))) {
+            throw new \Exception("Copy .env.example file as .env first and set the env", 1);
+        } else if (env('APP_DOMAIN') === null) {
+            throw new \Exception("Please set your APP_DOMAIN in .env file", 1);
+        }
+
         $this->process('composer dump-autoload');
 
         $this->publishConfig();
