@@ -310,7 +310,8 @@ textarea:focus {
     z-index: 3;
     background: #fff;
     text-align: right;
-    overflow: hidden;
+    width: auto;
+    /* overflow: hidden; */
 }
 
 .copyright #status-server {

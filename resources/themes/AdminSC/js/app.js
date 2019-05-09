@@ -29,14 +29,14 @@ $(document).ready(function() {
     $('[data-toggle="tooltip"]').tooltip();
 
     _onfocus();
+    _tc();
 });
 
 function _onfocus() {
+    /* this focus on last character if input isn't empty. https://stackoverflow.com/a/53196878/6885956 */
     let el = $('.autofocus');
     tmp = el.val();
     el.val("").val(tmp).blur().focus();
-
-    /* this focus on last character if input isn't empty. https://stackoverflow.com/a/53196878/6885956 */
 }
 
 function _tc() {
@@ -48,10 +48,10 @@ function _tc() {
         url: ADMIN_URL + "/test-connection",
         cache: false
     }).done(function(data) {
-        $('#status-server').removeClass('bg-danger').addClass('bg-success').text('Connected');
+        $('#status-server').removeClass('bg-danger').addClass('bg-success').text('Terhubung');
         CONNECT = true;
     }).fail(function() {
-        $('#status-server').removeClass('bg-success').addClass('bg-danger').text('Disconnected');
+        $('#status-server').removeClass('bg-success').addClass('bg-danger').text('Terputus');
         CONNECT = false;
     });
 }

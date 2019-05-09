@@ -102,7 +102,7 @@
     </div>
   </div>
   <div class="copyright">
-    <span id="status-server" class="bg-success" title="Server Status">Connected</span> Powered by <a href="https://porisweb.id" target="_blank">Poris Webdev</a>
+    <span id="status-server" class="bg-success" data-toggle="tooltip" title="Status Koneksi">Terhubung</span> Didukung oleh <a href="https://porisweb.id" target="_blank">Poris Webdev</a>
   </div>
   <script>
     var SITE_URL = '{{ url('/') }}';
@@ -117,5 +117,4 @@
   {!! _admin_js('themes/admin/AdminSC/plugins/sweetalert2/js/sweetalert2.min.js') !!}
   @yield('scripts')
   {!! _admin_js('themes/admin/AdminSC/js/app.js') !!}
-  <script>_tc();</script>
 @include('zetthcore::AdminSC.layouts.footer')

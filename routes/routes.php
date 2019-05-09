@@ -1,5 +1,6 @@
 <?php
 Route::get('/themes/admin/{path}', '\ZetthCore\Http\Controllers\AdminController@themes')->where('path', '.*');
+
 /* admin routes */
 if (env('ADMIN_ROUTE', 'path') == 'path') {
     Route::middleware('web')->prefix('admin')->group(function () {
