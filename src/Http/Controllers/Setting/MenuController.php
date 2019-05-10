@@ -30,7 +30,7 @@ class MenuController extends AdminController
             'url' => url($this->adminPath . '/setting/menu-groups'),
         ];
 
-        if (!request()->input('group')) {
+        if (!request()->input('group') && !\App::runningInConsole()) {
             return redirect($this->adminPath . '/setting/menu-groups')->send();
         }
     }

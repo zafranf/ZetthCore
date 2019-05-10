@@ -1,4 +1,3 @@
-@php $no=1 @endphp
 @extends('zetthcore::AdminSC.layouts.main')
 
 @section('content')
