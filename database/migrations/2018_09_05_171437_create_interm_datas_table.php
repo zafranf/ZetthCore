@@ -15,8 +15,8 @@ class CreateIntermDatasTable extends Migration
     {
         Schema::create('interm_datas', function (Blueprint $table) {
             $table->engine = 'InnoDB';
-            $table->charset = 'utf8';
-            $table->collation = 'utf8_unicode_ci';
+            $table->charset = 'utf8mb4';
+            $table->collation = 'utf8mb4_unicode_ci';
 
             $table->increments('id')->unsigned();
             $table->string('host')->index();
