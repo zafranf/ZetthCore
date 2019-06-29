@@ -295,7 +295,8 @@ if (!function_exists('_admin_css')) {
     function _admin_css($file = "", $attributes = [])
     {
         $path = str_replace("themes/admin", "themes", $file);
-        $path = base_path('vendor/zafranf/zetthcore/resources/' . ltrim($path, '/'));
+        // $path = base_path('vendor/zafranf/zetthcore/resources/' . ltrim($path, '/'));
+        $path = dirname(__DIR__) . 'resources/' . ltrim($path, '/');
         if (file_exists($path)) {
             $mtime = filemtime($path);
             $attr = ' rel="stylesheet" type="text/css"';
@@ -322,7 +323,8 @@ if (!function_exists('_admin_js')) {
     function _admin_js($file = "", $attributes = [])
     {
         $path = str_replace("themes/admin", "themes", $file);
-        $path = base_path('vendor/zafranf/zetthcore/resources/' . ltrim($path, '/'));
+        // $path = base_path('vendor/zafranf/zetthcore/resources/' . ltrim($path, '/'));
+        $path = dirname(__DIR__) . 'resources/' . ltrim($path, '/');
         if (file_exists($path)) {
             $mtime = filemtime($path);
             $attr = ' type="text/javascript"';
