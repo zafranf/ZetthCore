@@ -39,7 +39,7 @@ class MenuTableSeeder extends Seeder
         // $set->icon = 'fa fa-cog';
         $set->order = $mainOrder++;
         $set->status = 1;
-        $set->index = 1;
+        // $set->index = 1;
         $set->save();
 
         /* menu aplikasi */
@@ -98,7 +98,7 @@ class MenuTableSeeder extends Seeder
         // $data->icon = 'fa fa-cog';
         $data->order = $mainOrder++;
         $data->status = 1;
-        $data->index = 1;
+        // $data->index = 1;
         $data->save();
 
         /* menu pengguna */
@@ -157,7 +157,7 @@ class MenuTableSeeder extends Seeder
         // $content->icon = 'fa fa-edit';
         $content->order = $mainOrder++;
         $content->status = 1;
-        $content->index = 1;
+        // $content->index = 1;
         $content->save();
 
         /* menu halaman */
@@ -337,7 +337,7 @@ class MenuTableSeeder extends Seeder
         // $report->icon = 'pg-charts';
         $report->order = $mainOrder++;
         $report->status = 1;
-        $report->index = 1;
+        // $report->index = 1;
         $report->save();
 
         /* menu kontak masuk */
@@ -412,7 +412,7 @@ class MenuTableSeeder extends Seeder
         // $log->icon = 'pg-note';
         $log->order = $mainOrder++;
         $log->status = 1;
-        $log->index = 1;
+        // $log->index = 1;
         $log->save();
 
         /* menu catatan aktifitas */

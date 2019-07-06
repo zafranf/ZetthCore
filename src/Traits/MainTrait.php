@@ -29,25 +29,29 @@ trait MainTrait
         $robot_name = $agent->robot() ? $agent->robot : null;
 
         $params = [
-            'ip' => $ip,
-            'page' => $page,
-            'referral' => $referral,
-            'agent' => $browser_agent,
-            'browser' => $browser,
-            'browser_version' => $browser_version,
-            'device' => $device,
-            'device_name' => $device_name,
-            'os' => $os,
-            'os_version' => $os_version,
-            'is_robot' => $is_robot,
-            'robot_name' => $robot_name,
+            'id' => md5($ip . $page . $referral . $browser_agent . $browser . $browser_version . $device . $device_name . $os . $os_version . $is_robot . $robot_name),
         ];
 
         $q = \ZetthCore\Models\VisitorLog::where($params)->whereBetween('created_at', [date("Y-m-d H:00:00"), date("Y-m-d H:59:59")]);
 
         $v = $q->first();
         if (!$v) {
-            $params['count'] = \DB::raw('count+1');
+            $params = array_push($params, [
+                'ip' => $ip,
+                'page' => $page,
+                'referral' => $referral,
+                'agent' => $browser_agent,
+                'browser' => $browser,
+                'browser_version' => $browser_version,
+                'device' => $device,
+                'device_name' => $device_name,
+                'os' => $os,
+                'os_version' => $os_version,
+                'is_robot' => $is_robot,
+                'robot_name' => $robot_name,
+                'count' => \DB::raw('count+1'),
+            ]);
+
             \ZetthCore\Models\VisitorLog::create($params);
         } else {
             $q->update([
@@ -101,13 +105,14 @@ trait MainTrait
             if (\Illuminate\Support\Facades\Schema::hasTable('applications')) {
                 $err = \ZetthCore\Models\ErrorLog::updateOrCreate(
                     [
+                        'id' => md5($log['code'] . $log['file'] . $log['line'] . $log['path'] . $log['message']),
+                    ],
+                    [
                         'code' => $log['code'],
                         'file' => $log['file'],
                         'line' => $log['line'],
                         'path' => $log['path'],
                         'message' => $log['message'],
-                    ],
-                    [
                         'params' => $log['params'],
                         'trace' => $log['trace'],
                         'data' => $log['data'] ?? null,

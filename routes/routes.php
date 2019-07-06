@@ -3,11 +3,12 @@ Route::get('/themes/admin/{path}', '\ZetthCore\Http\Controllers\AdminController@
 
 /* admin routes */
 Route::middleware('web')->name('admin.')->group(function () {
-    if (env('ADMIN_ROUTE', 'path') == 'path') {
+    $admin_route = env('ADMIN_ROUTE', 'path');
+    if ($admin_route == 'path') {
         Route::prefix('admin')->group(function () {
             include __DIR__ . "/admin.php";
         });
-    } else if (env('ADMIN_ROUTE') == 'subdomain') {
+    } else if ($admin_route == 'subdomain') {
         Route::domain('admin.' . env('APP_DOMAIN'))->group(function () {
             include __DIR__ . "/admin.php";
         });
