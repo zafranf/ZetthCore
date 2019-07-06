@@ -11,7 +11,7 @@
         "renatomarinho/laravel-page-speed": "^1.8",
         "santigarcor/laratrust": "5.2.*",
         "yajra/laravel-datatables-oracle": "~9.0",
-        "zafranf/helpers": "^1.0"
+        "zafranf/helpers": "^1.1"
     },
     "require-dev": {},
     "license": "MIT",
