@@ -18,7 +18,7 @@ class CreateVisitorLogsTable extends Migration
             $table->charset = 'utf8mb4';
             $table->collation = 'utf8mb4_unicode_ci';
 
-            // $table->bigIncrements('id');
+            $table->string('id')->primary();
             $table->ipAddress('ip');
             $table->string('page');
             $table->string('referral')->nullable();

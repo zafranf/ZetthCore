@@ -18,6 +18,7 @@ class CreateErrorLogsTable extends Migration
             $table->charset = 'utf8mb4';
             $table->collation = 'utf8mb4_unicode_ci';
 
+            $table->string('id')->primary();
             $table->string('code');
             $table->string('message');
             $table->string('file');
@@ -30,7 +31,7 @@ class CreateErrorLogsTable extends Migration
             $table->text('time_history')->nullable();
             $table->timestamps();
 
-            $table->primary(['code', 'path', 'file', 'line', 'message']);
+            // $table->primary(['code', 'path', 'file', 'line', 'message']);
         });
     }
 
