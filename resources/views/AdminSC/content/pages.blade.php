@@ -5,15 +5,14 @@
     <table id="table-data" class="row-border hover">
       <thead>
         <tr>
-          <td width="25">No.</td>
-          {{-- @if ($is_desktop) --}}
+          <td>No.</td>
+          @if ($is_desktop)
             <td>Judul</td>
-            {{-- <td width="300">URL</td> --}}
-            <td width="80">Status</td>
-          {{-- @else
-            <td width="250">Page</td>
-          @endif --}}
-          <td width="50">Akses</td>
+            <td>Status</td>
+          @else
+            <td>Halaman</td>
+          @endif
+          <td>Akses</td>
         </tr>
       </thead>
     </table>
@@ -28,7 +27,7 @@
   {!! _admin_js('themes/admin/AdminSC/plugins/DataTables/1.10.12/js/jquery.dataTables.min.js') !!}
   <script>
     $(document).ready(function() {
-      var table = $('#table-data').DataTable({
+      let options = {
         "processing": true,
         "serverSide": true,
         "ajax": SITE_URL + "{{ $adminPath }}/content/pages/data",
@@ -39,10 +38,9 @@
         ],
         "columns": [
           { "width": "30px" },
-          // { "data": "title", "width": "200px" },
           { "data": "title" },
           { "data": "status", "width": "50px" },
-          { "width": "100px" },
+          { "width": "40px" },
         ],
         "columnDefs": [{
           "targets": 0,
@@ -72,7 +70,49 @@
             return actions;
           }
         }],
-      });
+      };
+
+      @if (!$is_desktop)
+        options.columns = [
+          { "width": "30px" },
+          { },
+          { "width": "40px" },
+        ];
+        options.columnDefs = [
+          {
+            "targets": 0,
+            "sortable": false,
+            "render": function (data, type, row, meta) {
+              return meta.row + meta.settings._iDisplayStart + 1;
+            }
+          }, {
+            "targets": 1,
+            "sortable": false,
+            "render": function (data, type, row, meta) {
+              let render = row.title+'<br>';
+              // render += '<small>'+row.description+'</small><br>';
+              render += _get_status_text(row.status);
+
+              return render;
+            }
+          }, {
+            "targets": 2,
+            "data": 'id',
+            "sortable": false,
+            "render": function (data, type, row, meta) {
+              let actions = '';
+              let url = SITE_URL + "{{ $adminPath }}/content/pages/" + data;
+              let del = "_delete('" + url + "')";
+              {!! _get_access_buttons() !!}
+              $('[data-toggle="tooltip"]').tooltip();
+
+              return actions;
+            }
+          }
+        ];
+      @endif
+
+      let table = $('#table-data').DataTable(options);
     });
   </script>
 @endsection
