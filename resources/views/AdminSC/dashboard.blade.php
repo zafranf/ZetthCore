@@ -210,7 +210,7 @@
       yr = start.format('YYYY');
       mn = start.format('MM')-1;
       dt = start.format('DD');
-      @if ($isDesktop)
+      @if ($is_desktop)
         var range = start.format('MMMM DD, YYYY') + ' - ' + end.format('MMMM DD, YYYY');
       @else
         var range = label;
@@ -305,7 +305,7 @@
       var html = '';
       if (data.length > 0) {
         $.each(data, function(k,v){
-          @if ($isDesktop)
+          @if ($is_desktop)
           var time = 'on '+v.time;
           @else
           var time = ''; 
@@ -361,7 +361,7 @@
           }*/
         },
         legend: {
-          {!! !$isDesktop ? 'layout: \'vertical\',' : '' !!}
+          {!! !$is_desktop ? 'layout: \'vertical\',' : '' !!}
           align: 'right',
           verticalAlign: 'top',
           floating: true,

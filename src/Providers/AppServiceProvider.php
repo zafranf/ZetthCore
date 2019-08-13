@@ -101,9 +101,9 @@ class AppServiceProvider extends ServiceProvider
             /* send device type to all views */
             $agent = new \Jenssegers\Agent\Agent();
             View::share([
-                'isMobile' => $agent->isMobile(),
-                'isTablet' => $agent->isTablet(),
-                'isDesktop' => $agent->isDesktop(),
+                'is_mobile' => $agent->isMobile(),
+                'is_tablet' => $agent->isTablet(),
+                'is_desktop' => $agent->isDesktop(),
             ]);
         }
     }

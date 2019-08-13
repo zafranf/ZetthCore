@@ -9,9 +9,9 @@
 					<hr>
 					<div class="form-group">
 						<label for="name" class="col-md-4 control-label">
-              Logo
-              <small class="help-block">Maksimal dimensi logo adalah 512x512 piksel dengan ukuran maksimal 384 KB</small>
-            </label>
+							Logo
+							<small class="help-block">Maksimal dimensi logo adalah 512x512 px dengan ukuran maksimal 384 KB</small>
+						</label>
 						<div class="col-md-8">
 							<div class="fileinput fileinput-new" data-provides="fileinput">
 								<div class="fileinput-new thumbnail">
@@ -39,7 +39,7 @@
 					<div class="form-group">
 						<label for="name" class="col-md-4 control-label">
               Ikon
-							<small class="help-block">Maksimal dimensi ikon adalah 128x128 piksel dengan ukuran maksimal 96 KB</small>
+							<small class="help-block">Maksimal dimensi ikon adalah 128x128 px dengan ukuran maksimal 96 KB</small>
             </label>
 						<div class="col-md-8">
 							<div class="fileinput fileinput-new input-group" data-provides="fileinput">
@@ -114,7 +114,10 @@
 						</div>
 					</div>
 					<div class="form-group">
-						<label for="enable" class="col-md-4 control-label">Aktifkan</label>
+						<label for="enable" class="col-md-4 control-label">
+              Aktifkan
+              <small class="help-block">Fitur untuk pengunjung situs</small>
+            </label>
 						<div class="col-md-8">
 							<div class="checkbox">
 								<div class="col-xs-6 col-sm-3">
@@ -161,7 +164,10 @@
 					<h4>Media Sosial <span class="btn btn-default btn-xs pull-right" id="btn-add-socmed"><i class="fa fa-plus"></i> Tambah</span></h4>
 					<hr>
 					<div class="form-group">
-						<label for="label" class="col-md-4 control-label">Akun</label>
+						<label for="label" class="col-md-4 control-label">
+              Akun
+              <small class="help-block">Akun sosial media situs</small>
+            </label>
 						<div class="col-md-8">
 							@if (isset($socmed_data) && count($socmed_data) > 0)
 								@foreach ($socmed_data as $key => $val)
@@ -217,9 +223,12 @@
 					<h4>Pengaturan SEO</h4>
 					<hr>
 					<div class="form-group">
-						<label for="keywords" class="col-md-4 control-label">Kata Kunci</label>
+						<label for="keywords" class="col-md-4 control-label">
+              Kata Kunci
+              <small class="help-block">Tekan enter untuk menambahkan</small>
+            </label>
 						<div class="col-md-8">
-							<input type="text" class="form-control" id="keywords" name="keywords" value="{{ $apps->keywords ?? '' }}" placeholder="Tekan enter untuk konfirmasi.." maxlength="50">
+							<input type="text" class="form-control" id="keywords" name="keywords" value="{{ $apps->keywords ?? '' }}" placeholder="Kata kunci situs.." maxlength="50">
 						</div>
 					</div>
 					<div class="form-group">
@@ -234,7 +243,7 @@
 							<small class="help-block">Kode untuk analitik website dari Google</small>
             </label>
 						<div class="col-md-8">
-							<input type="text" class="form-control" id="google-analytics" name="google_analytics" value="{{ $apps->google_analytics ?? '' }}" placeholder="Kode lacak dari Google Analytics.." maxlength="20">
+							<input type="text" class="form-control" id="google-analytics" name="google_analytics" value="{{ $apps->google_analytics ?? '' }}" placeholder="Kode Google Analytics.." maxlength="20">
 						</div>
 					</div>
 					<h4>Lokasi</h4>

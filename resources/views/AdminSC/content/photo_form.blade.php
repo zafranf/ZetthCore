@@ -60,17 +60,17 @@
             <div class="row">
                 <div class="col-sm-12 col-md-12" style="max-height: 500px;overflow: auto;" id="photo-box">
                     <div class="col-sm-6 col-md-2 col-xs-3 no-padding" style="margin-bottom:1px;cursor:pointer;" onclick="addPhotoModal()">
-                        <div class="thumbnail text-warning" style="height:{{ $isDesktop ? '150px' : '64px' }};display:table-cell;vertical-align:middle;text-align:center;width:inherit">
-                            <i class="fa fa-plus" style="font-size: {{ $isDesktop ? '80px' : '25px' }};"></i>
+                        <div class="thumbnail text-warning" style="height:{{ $is_desktop ? '150px' : '64px' }};display:table-cell;vertical-align:middle;text-align:center;width:inherit">
+                            <i class="fa fa-plus" style="font-size: {{ $is_desktop ? '80px' : '25px' }};"></i>
                             <br>
-                            <span class="" style="font-size: {{ $isDesktop ? '32px' : '11px' }};">Add Photo</span>
+                            <span class="" style="font-size: {{ $is_desktop ? '32px' : '11px' }};">Add Photo</span>
                         </div>
                     </div>
                     @php $no_img=0 @endphp
                     @if (isset($albums->photos))
                         @foreach($albums->photos as $photo)
                         <div id="img{{ ++$no_img }}" class="col-sm-6 col-md-2 col-xs-3 no-padding" style="margin-bottom:1px;">
-                            <div class="thumbnail" style="height:{{ $isDesktop ? '150px' : '64px' }};display:table-cell;vertical-align:middle;width:inherit;position:relative;">
+                            <div class="thumbnail" style="height:{{ $is_desktop ? '150px' : '64px' }};display:table-cell;vertical-align:middle;width:inherit;position:relative;">
                                 <img src="{{ _get_image_temp('assets/images/upload/'.$photo->photo_name, ['auto',140]) }}" style="max-height:140px;"><div id="zetth-process{{ $no_img }}" class="zetth-process">
                                 <img class="zetth-loading" src="{{ url('assets/images/loading.gif') }}"></div>
                                 <button class="btn btn-default btn-xs btn-xs-top-right" title="Edit Description" type="button" onclick="_edit2('{{ $no_img }}', '{{ $photo->photo_name }}')" style="right:26px;"><i class="fa fa-edit"></i></button>
@@ -132,7 +132,7 @@ function addPhoto() {
     if (img_val!="" && typeof img!="undefined"){
         no_img++;
         var photo = '<div id="img'+no_img+'" class="col-sm-6 col-md-2 col-xs-3 no-padding" style="margin-bottom:1px;">'+
-                        '<div class="thumbnail" style="height:{{ $isDesktop ? '150px' : 'inherit' }};display:table-cell;vertical-align:middle;width:inherit">'+
+                        '<div class="thumbnail" style="height:{{ $is_desktop ? '150px' : 'inherit' }};display:table-cell;vertical-align:middle;width:inherit">'+
                             '<img src="'+img+'" style="max-height:140px;"><div id="photo-box-file'+no_img+'" style="display:none;">'+img_file+'<textarea name="photo_description[]">'+img_desc+'</textarea></div>'+
                             '<button class="btn btn-default btn-xs btn-xs-top-right" title="Edit Description" type="button" onclick="_edit(\'#img'+no_img+'\')" style="right:26px;"><i class="fa fa-edit"></i></button>'+
                             '<button class="btn btn-default btn-xs btn-xs-top-right" title="Remove Photo" type="button" onclick="_remove(\'#img'+no_img+'\')"><i class="fa fa-minus"></i></button>'+

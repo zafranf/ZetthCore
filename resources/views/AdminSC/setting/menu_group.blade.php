@@ -6,17 +6,13 @@
       <thead>
         <tr>
           <td width="25">No.</td>
-          <td>Grup</td>
-          <td>Deskripsi</td>
-          <td width="80">Status</td>
-          {{-- @if ($isDesktop)
-              <td>Menu Name</td>
-              <td>URL</td>
-              <td width="100">Target</td>
-              <td width="80">Status</td>
+          @if ($is_desktop)
+            <td>Grup</td>
+            <td>Deskripsi</td>
+            <td width="80">Status</td>
           @else
-              <td width="200">Menu</td>
-          @endif --}}
+            <td width="200">Grup</td>
+          @endif
           <td width="50">Akses</td>
         </tr>
       </thead>
@@ -32,7 +28,7 @@
   {!! _admin_js('themes/admin/AdminSC/plugins/DataTables/1.10.12/js/jquery.dataTables.min.js') !!}
   <script>
     $(document).ready(function() {
-      var table = $('#table-data').DataTable({
+      let options = {
         "processing": true,
         "serverSide": true,
         "ajax": SITE_URL + "{{ $adminPath }}/setting/menu-groups/data",
@@ -46,7 +42,7 @@
           { "data": "name", "width": "200px" },
           { "data": "description" },
           { "data": "status", "width": "50px" },
-          { "width": "60px" },
+          { "width": "50px" },
         ],
         "columnDefs": [{
           "targets": 0,
@@ -67,16 +63,55 @@
           "data": 'id',
           "sortable": false,
           "render": function (data, type, row, meta) {
-            var actions = '';
-            var url = SITE_URL + "{{ $adminPath }}/setting/menu-groups/" + data;
-            var del = "_delete('" + url + "')";
+            let actions = '';
+            let url = SITE_URL + "{{ $adminPath }}/setting/menu-groups/" + data;
+            let del = "_delete('" + url + "')";
             {!! _get_access_buttons() !!}
             $('[data-toggle="tooltip"]').tooltip();
 
             return actions;
           }
         }],
-      });
+      };
+
+      @if (!$is_desktop)
+        options.columns = [
+          { "width": "30px" },
+          { },
+          { "width": "10px" },
+        ];
+        options.columnDefs = [{
+            "targets": 0,
+            "sortable": false,
+            "render": function (data, type, row, meta) {
+              return meta.row + meta.settings._iDisplayStart + 1;
+            }
+          }, {
+            "targets": 1,
+            "sortable": false,
+            "render": function (data, type, row, meta) {
+              let render = row.name+'<br>';
+              render += '<small>'+row.description+'</small><br>';
+              render += _get_status_text(row.status);
+
+              return render;
+            }
+          }, {
+            "targets": 2,
+            "data": 'id',
+            "sortable": false,
+            "render": function (data, type, row, meta) {
+              let actions = '';
+              let url = SITE_URL + "{{ $adminPath }}/setting/menu-groups/" + data;
+              let del = "_delete('" + url + "')";
+              {!! _get_access_buttons() !!}
+              $('[data-toggle="tooltip"]').tooltip();
+
+              return actions;
+            }
+          }]
+      @endif
+      let table = $('#table-data').DataTable(options);
     });
   </script>
 @endsection

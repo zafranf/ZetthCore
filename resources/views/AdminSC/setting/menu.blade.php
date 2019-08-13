@@ -9,7 +9,7 @@
           <td>Menu</td>
           <td>Deskripsi</td>
           <td width="80">Status</td>
-          {{-- @if ($isDesktop)
+          {{-- @if ($is_desktop)
               <td>Menu Name</td>
               <td>URL</td>
               <td width="100">Target</td>

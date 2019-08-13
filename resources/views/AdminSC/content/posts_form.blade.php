@@ -166,7 +166,7 @@
       position: absolute;
       right: 10px;
     }
-    /* @if ($isDesktop)
+    /* @if ($is_desktop)
       textarea#mceu_34 {
         height: 458px!important;
       }

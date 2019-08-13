@@ -12,7 +12,7 @@
 			<thead>
 				<tr>
 					<td width="25">No.</td>
-					@if ($isDesktop)
+					@if ($is_desktop)
 						<td width="50">Image</td>
 						<td>Banner Name</td>
 						<td width="200">URL</td>
@@ -29,7 +29,7 @@
 					@foreach($banners as $banner)
 						<tr>
 							<td align="center">{{ $no++ }}</td>
-							@if ($isDesktop)
+							@if ($is_desktop)
 								<td><img src="{{ _get_image_temp($banner->banner_image, [50,50]) }}" width="50"></td>
 								<td>{{ $banner->banner_title }}<br>{!! ($banner->banner_only)?'<small><i class="fa fa-check"></i> Image Only</small>':'' !!}</td>
 								<td>{{ url($banner->banner_url) }}</td>

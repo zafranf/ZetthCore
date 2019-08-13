@@ -12,7 +12,7 @@
             <thead>
                 <tr>
                     <td width="25">No.</td>
-                    @if ($isDesktop)
+                    @if ($is_desktop)
                         <td width="200">Name</td>
                         <td>Comment</td>
                         <td width="80">Approved By</td>
@@ -28,7 +28,7 @@
                     @foreach($comments as $comment)
                         <tr{!! ($comment->comment_read)?'':' style="font-weight:400"' !!}>
                             <td align="center">{{ $no++ }}</td>
-                            @if ($isDesktop)
+                            @if ($is_desktop)
                                 <td>
                                     {{ $comment->comment_name }}<br>
                                     <small>{{ $comment->comment_email }}</small>

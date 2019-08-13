@@ -46,7 +46,7 @@ if (!function_exists('_get_access_buttons')) {
      */
     function _get_access_buttons($url = '', $btn = '')
     {
-        $add = isDesktop() ? 'TAMBAH' : '';
+        $add = is_desktop() ? 'TAMBAH' : '';
 
         /* ambil user login */
         $user = \Auth::user();
@@ -64,13 +64,13 @@ if (!function_exists('_get_access_buttons')) {
             }
         } else {
             if ($user->can('read-' . $xname[1])) {
-                echo "actions += '&nbsp;<a href=\"' + url + '\" class=\"btn btn-default btn-sm\" data-toggle=\"tooltip\" data-original-title=\"Detail\"><i class=\"fa fa-eye\"></i></a>';";
+                echo "actions += '&nbsp;<a href=\"' + url + '\" class=\"btn btn-default btn-xs\" data-toggle=\"tooltip\" data-original-title=\"Detail\"><i class=\"fa fa-eye\"></i></a>';";
             }
             if ($user->can('update-' . $xname[1])) {
-                echo "actions += '&nbsp;<a href=\"' + url + '/edit\" class=\"btn btn-default btn-sm\" data-toggle=\"tooltip\" data-original-title=\"Edit\"><i class=\"fa fa-edit\"></i></a>';";
+                echo "actions += '&nbsp;<a href=\"' + url + '/edit\" class=\"btn btn-default btn-xs\" data-toggle=\"tooltip\" data-original-title=\"Edit\"><i class=\"fa fa-edit\"></i></a>';";
             }
             if ($user->can('delete-' . $xname[1])) {
-                echo "actions += '&nbsp;<a href=\"#\" onclick=\"' + del + '\" class=\"btn btn-default btn-sm\" data-toggle=\"tooltip\" data-original-title=\"Hapus\"><i class=\"fa fa-trash\"></i></a>';";
+                echo "actions += '&nbsp;<a href=\"#\" onclick=\"' + del + '\" class=\"btn btn-default btn-xs\" data-toggle=\"tooltip\" data-original-title=\"Hapus\"><i class=\"fa fa-trash\"></i></a>';";
             }
         }
     }
@@ -182,9 +182,9 @@ if (!function_exists('generateSubmenu')) {
             $sublink = count($submenu->submenu) ? ' dropdown-toggle submenu' : '';
             $subtoggle = count($submenu->submenu) ? ' data-toggle="dropdown" role="button"' : '';
             $icon = ($submenu->icon != '') ? '<i class="' . $submenu->icon . '"></i>' : '';
-            $caret_class = !isMobile() ? ' style="position: absolute;right: 10px;top: 3px;"' : ' class="pull-right"';
-            $direction = isMobile() ? 'down' : 'right';
-            $caret = !isMobile() ? 'fa fa-caret-' . $direction : 'caret';
+            $caret_class = !is_mobile() ? ' style="position: absolute;right: 10px;top: 3px;"' : ' class="pull-right"';
+            $direction = is_mobile() ? 'down' : 'right';
+            $caret = !is_mobile() ? 'fa fa-caret-' . $direction : 'caret';
             $caret = (count($submenu->submenu) > 0) ? '<span ' . $caret_class . '><span class="' . $caret . '"></span></span>' : '';
             echo '<li class="' . $dropdown . '">';
             echo '<a ' . ($href ?? '') . ' class="dropdown-item' . ($sublink ?? '') . ' ' . $active . '" ' . ($subtoggle ?? '') . ' target="' . $submenu->target . '">' . $icon . ' ' . $submenu->name . $caret . '</a>';
@@ -263,22 +263,22 @@ if (!function_exists('generateDate')) {
     }
 }
 
-if (!function_exists('isMobile')) {
-    function isMobile()
+if (!function_exists('is_mobile')) {
+    function is_mobile()
     {
         return (new \Jenssegers\Agent\Agent())->isMobile();
     }
 }
 
-if (!function_exists('isTablet')) {
-    function isTablet()
+if (!function_exists('is_tablet')) {
+    function is_tablet()
     {
         return (new \Jenssegers\Agent\Agent())->isTablet();
     }
 }
 
-if (!function_exists('isDesktop')) {
-    function isDesktop()
+if (!function_exists('is_desktop')) {
+    function is_desktop()
     {
         return (new \Jenssegers\Agent\Agent())->isDesktop();
     }

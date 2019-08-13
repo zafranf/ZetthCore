@@ -12,7 +12,7 @@
             <thead>
                 <tr>
                     <td width="25">No.</td>
-                    @if ($isDesktop)
+                    @if ($is_desktop)
                         <td width="100">Photo</td>
                         <td>Album</td>
                         <td width="80">Photos</td>
@@ -31,7 +31,7 @@
                         @endphp
                         <tr>
                             <td align="center">{{ $no++ }}</td>
-                            @if ($isDesktop)
+                            @if ($is_desktop)
                                 <td><img src="{{ _get_image_temp('assets/images/upload/'.$photo_name, [50,50]) }}" width="50"> </td>
                                 <td>{{ $album->album_name }}</td>
                                 <td>{{ count($album->photos) }}</td>

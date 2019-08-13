@@ -73,10 +73,10 @@ function _get_status_text(status = 0, par = []) {
 
     /* generate text */
     if (status) {
-        return '<span class="tag bg-success text-cente text-white"">' + par[1] + '</span>';
+        return '<span class="tag bg-success text-center text-white" style="padding:2px 5px;">' + par[1] + '</span>';
     }
 
-    return '<span class="tag bg-danger text-center text-white">' + par[0] + '</span>';
+    return '<span class="tag bg-danger text-center text-white" style="padding:2px 5px;">' + par[0] + '</span>';
 }
 
 function _delete(URL = '') {

@@ -8,7 +8,7 @@
             <div class="form-group">
                 <label for="youtube_id" class="col-sm-2 control-label">Youtube ID</label>
                 <div class="col-sm-4">
-                    @if ($isDesktop)
+                    @if ($is_desktop)
                     <div class="input-group">
                         <span class="input-group-addon" id="youtube_id_span">http://youtube.com/watch?v=</span>
                         <input type="text" id="youtube_id" class="form-control" name="youtube_id" placeholder="Youtube ID" value="{{ isset($video->post_id)?$video->post_cover:'' }}" autofocus onfocus="this.value = this.value;">

@@ -9,7 +9,7 @@ $page_title = 'Masuk Aplikasi';
           <!-- <div class="panel-heading">Login Form</div> -->
           <div class="panel-body">
             @php
-              $w = $isMobile ? 150 : 250;
+              $w = $is_mobile ? 150 : 250;
             @endphp
             <center>
               <img src="{{ _get_image("/assets/images/" . $apps->logo) }}" alt="{{ $apps->name }} Logo" style="margin-bottom: 20px; width: {{ $w }}px;">

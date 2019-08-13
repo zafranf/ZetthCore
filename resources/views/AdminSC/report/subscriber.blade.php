@@ -12,7 +12,7 @@
             <thead>
                 <tr>
                     <td width="25">No.</td>
-                    @if ($isDesktop)
+                    @if ($is_desktop)
                         <td>Email</td>
                         <td width="80">Status</td>
                     @else
@@ -26,7 +26,7 @@
                     @foreach($subscribers as $subscriber)
                         <tr>
                             <td align="center">{{ $no++ }}</td>
-                            @if ($isDesktop)
+                            @if ($is_desktop)
                                 <td>{{ $subscriber->subscriber_email }}</td>
                                 <td>{{ _get_status_text($subscriber->subscriber_status) }}</td>
                             @else

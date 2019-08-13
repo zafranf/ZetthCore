@@ -6,7 +6,7 @@
 			<thead>
 				<tr>
 					<td width="25">No.</td>
-					{{-- @if ($isDesktop) --}}
+					{{-- @if ($is_desktop) --}}
 						{{-- <td width="80">Cover</td> --}}
 						<td>Title</td>
 						{{-- <td width="60">Stats</td> --}}
