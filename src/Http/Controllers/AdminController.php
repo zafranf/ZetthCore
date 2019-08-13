@@ -2,7 +2,7 @@
 
 namespace ZetthCore\Http\Controllers;
 
-use Illuminate\Routing\Controller as BaseController;
+use App\Http\Controllers\Controller as BaseController;
 use Illuminate\Support\Facades\File;
 
 class AdminController extends BaseController
