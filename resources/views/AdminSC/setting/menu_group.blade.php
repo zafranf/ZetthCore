@@ -5,15 +5,15 @@
     <table id="table-data" class="row-border hover">
       <thead>
         <tr>
-          <td width="25">No.</td>
+          <td>No.</td>
           @if ($is_desktop)
             <td>Grup</td>
             <td>Deskripsi</td>
-            <td width="80">Status</td>
+            <td>Status</td>
           @else
-            <td width="200">Grup</td>
+            <td>Grup</td>
           @endif
-          <td width="50">Akses</td>
+          <td>Akses</td>
         </tr>
       </thead>
     </table>
@@ -42,7 +42,7 @@
           { "data": "name", "width": "200px" },
           { "data": "description" },
           { "data": "status", "width": "50px" },
-          { "width": "50px" },
+          { "width": "40px" },
         ],
         "columnDefs": [{
           "targets": 0,
@@ -78,9 +78,10 @@
         options.columns = [
           { "width": "30px" },
           { },
-          { "width": "10px" },
+          { "width": "40px" },
         ];
-        options.columnDefs = [{
+        options.columnDefs = [
+          {
             "targets": 0,
             "sortable": false,
             "render": function (data, type, row, meta) {
@@ -109,8 +110,10 @@
 
               return actions;
             }
-          }]
+          }
+        ];
       @endif
+
       let table = $('#table-data').DataTable(options);
     });
   </script>
