@@ -39,7 +39,7 @@
         ],
         "columns": [
           { "width": "30px" },
-          { "data": "name", "width": "200px" },
+          { "data": "name", "width": "250px" },
           { "data": "description" },
           { "data": "status", "width": "50px" },
           { "width": "60px" },
@@ -114,7 +114,7 @@
         ];
       @endif
 
-      var table = $('#table-data').DataTable(options);
+      let table = $('#table-data').DataTable(options);
     });
   </script>
 @endsection
