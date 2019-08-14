@@ -152,7 +152,7 @@ class MenuController extends AdminController
     public function edit(Menu $menu)
     {
         $this->breadcrumbs[] = [
-            'page' => 'Tambah',
+            'page' => 'Edit',
             'icon' => '',
             'url' => '',
         ];

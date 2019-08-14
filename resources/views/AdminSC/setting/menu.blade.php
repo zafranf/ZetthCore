@@ -42,7 +42,7 @@
           { "data": "name", "width": "250px" },
           { "data": "description" },
           { "data": "status", "width": "50px" },
-          { "width": "60px" },
+          { "width": "40px" },
         ],
         "columnDefs": [{
           "targets": 0,
@@ -63,9 +63,9 @@
           "data": 'id',
           "sortable": false,
           "render": function (data, type, row, meta) {
-            var actions = '';
-            var url = SITE_URL + "{{ $adminPath }}/setting/menus/" + data;
-            var del = "_delete('" + url + "')";
+            let actions = '';
+            let url = SITE_URL + "{{ $adminPath }}/setting/menus/" + data;
+            let del = "_delete('" + url + "')";
             {!! _get_access_buttons() !!}
             $('[data-toggle="tooltip"]').tooltip();
 
