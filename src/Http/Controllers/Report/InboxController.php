@@ -152,7 +152,7 @@ class InboxController extends AdminController
     public function datatable(Request $r)
     {
         /* get data */
-        $data = Inbox::select(\DB::raw('substring(message, 1, 50) as message'), 'id', 'name', 'email', 'status')->get();
+        $data = Inbox::select('id', 'name', 'email', \DB::raw('substring(message, 1, 100) as message'), 'status')->get();
 
         /* generate datatable */
         if ($r->ajax()) {

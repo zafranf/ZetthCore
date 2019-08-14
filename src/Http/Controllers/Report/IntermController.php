@@ -4,7 +4,7 @@ namespace ZetthCore\Http\Controllers\Report;
 
 use Illuminate\Http\Request;
 use ZetthCore\Http\Controllers\AdminController;
-use ZetthCore\Models\Inbox;
+use ZetthCore\Models\IntermData;
 
 class IntermController extends AdminController
 {
@@ -18,14 +18,14 @@ class IntermController extends AdminController
     {
         parent::__construct();
         $this->current_url = url($this->adminPath . '/report/inbox');
-        $this->page_title = 'Kelola Kotak Masuk';
+        $this->page_title = 'Kelola Pencarian';
         $this->breadcrumbs[] = [
             'page' => 'Laporan',
             'icon' => '',
             'url' => url($this->adminPath . '/report/inbox'),
         ];
         $this->breadcrumbs[] = [
-            'page' => 'Kotak Masuk',
+            'page' => 'Pencarian',
             'icon' => '',
             'url' => $this->current_url,
         ];
@@ -49,10 +49,10 @@ class IntermController extends AdminController
             'current_url' => $this->current_url,
             'breadcrumbs' => $this->breadcrumbs,
             'page_title' => $this->page_title,
-            'page_subtitle' => 'Daftar Kotak Masuk',
+            'page_subtitle' => 'Daftar Pencarian',
         ];
 
-        return view('zetthcore::AdminSC.report.inbox', $data);
+        return view('zetthcore::AdminSC.report.interm', $data);
     }
 
     /**
@@ -79,10 +79,10 @@ class IntermController extends AdminController
     /**
      * Display the specified resource.
      *
-     * @param  \ZetthCore\Models\Inbox  $inbox
+     * @param  \ZetthCore\Models\IntermData  $interm
      * @return \Illuminate\Http\Response
      */
-    public function show(Inbox $inbox)
+    public function show(IntermData $interm)
     {
         $this->breadcrumbs[] = [
             'page' => 'Detail',
@@ -95,24 +95,24 @@ class IntermController extends AdminController
             'current_url' => $this->current_url,
             'breadcrumbs' => $this->breadcrumbs,
             'page_title' => $this->page_title,
-            'page_subtitle' => 'Detail Kotak Masuk',
-            'data' => $inbox,
+            'page_subtitle' => 'Detail Pencarian',
+            'data' => $interm,
         ];
 
         /* mark as read */
-        $inbox->read = 1;
-        $inbox->save();
+        $interm->read = 1;
+        $interm->save();
 
-        return view('zetthcore::AdminSC.report.inbox_detail', $data);
+        return view('zetthcore::AdminSC.report.interm_detail', $data);
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \ZetthCore\Models\Inbox  $inbox
+     * @param  \ZetthCore\Models\IntermData  $interm
      * @return \Illuminate\Http\Response
      */
-    public function edit(Inbox $inbox)
+    public function edit(IntermData $interm)
     {
         abort(403);
     }
@@ -121,10 +121,10 @@ class IntermController extends AdminController
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $r
-     * @param  \ZetthCore\Models\Inbox  $inbox
+     * @param  \ZetthCore\Models\IntermData  $interm
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $r, Inbox $inbox)
+    public function update(Request $r, IntermData $interm)
     {
         abort(403);
     }
@@ -132,18 +132,18 @@ class IntermController extends AdminController
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \ZetthCore\Models\Inbox  $inbox
+     * @param  \ZetthCore\Models\IntermData  $interm
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Inbox $inbox)
+    public function destroy(IntermData $interm)
     {
         /* log aktifitas */
-        $this->activityLog('<b>' . \Auth::user()->fullname . '</b> menghapus Kotak Masuk "' . $inbox->email . '"');
+        $this->activityLog('<b>' . \Auth::user()->fullname . '</b> menghapus Pencarian "' . $interm->email . '"');
 
         /* soft delete */
-        $inbox->delete();
+        $interm->delete();
 
-        return redirect($this->current_url)->with('success', 'Kotak Masuk berhasil dihapus!');
+        return redirect($this->current_url)->with('success', 'Pencarian berhasil dihapus!');
     }
 
     /**
@@ -152,7 +152,7 @@ class IntermController extends AdminController
     public function datatable(Request $r)
     {
         /* get data */
-        $data = Inbox::select(\DB::raw('substring(message, 1, 50) as message'), 'id', 'name', 'email', 'status')->get();
+        $data = IntermDataData::select('id', 'host', 'text', 'count')->get();
 
         /* generate datatable */
         if ($r->ajax()) {

@@ -4,7 +4,7 @@ namespace ZetthCore\Http\Controllers\Report;
 
 use Illuminate\Http\Request;
 use ZetthCore\Http\Controllers\AdminController;
-use ZetthCore\Models\Inbox;
+use ZetthCore\Models\PostComment;
 
 class CommentController extends AdminController
 {
@@ -17,15 +17,15 @@ class CommentController extends AdminController
     public function __construct()
     {
         parent::__construct();
-        $this->current_url = url($this->adminPath . '/report/inbox');
-        $this->page_title = 'Kelola Kotak Masuk';
+        $this->current_url = url($this->adminPath . '/report/comments');
+        $this->page_title = 'Kelola Komentar';
         $this->breadcrumbs[] = [
             'page' => 'Laporan',
             'icon' => '',
-            'url' => url($this->adminPath . '/report/inbox'),
+            'url' => url($this->adminPath . '/report/comments'),
         ];
         $this->breadcrumbs[] = [
-            'page' => 'Kotak Masuk',
+            'page' => 'Komentar',
             'icon' => '',
             'url' => $this->current_url,
         ];
@@ -49,10 +49,10 @@ class CommentController extends AdminController
             'current_url' => $this->current_url,
             'breadcrumbs' => $this->breadcrumbs,
             'page_title' => $this->page_title,
-            'page_subtitle' => 'Daftar Kotak Masuk',
+            'page_subtitle' => 'Daftar Komentar',
         ];
 
-        return view('zetthcore::AdminSC.report.inbox', $data);
+        return view('zetthcore::AdminSC.report.comment', $data);
     }
 
     /**
@@ -79,10 +79,10 @@ class CommentController extends AdminController
     /**
      * Display the specified resource.
      *
-     * @param  \ZetthCore\Models\Inbox  $inbox
+     * @param  \ZetthCore\Models\PostComment  $comment
      * @return \Illuminate\Http\Response
      */
-    public function show(Inbox $inbox)
+    public function show(PostComment $comment)
     {
         $this->breadcrumbs[] = [
             'page' => 'Detail',
@@ -95,24 +95,24 @@ class CommentController extends AdminController
             'current_url' => $this->current_url,
             'breadcrumbs' => $this->breadcrumbs,
             'page_title' => $this->page_title,
-            'page_subtitle' => 'Detail Kotak Masuk',
-            'data' => $inbox,
+            'page_subtitle' => 'Detail Komentar',
+            'data' => $comment,
         ];
 
         /* mark as read */
-        $inbox->read = 1;
-        $inbox->save();
+        $comment->read = 1;
+        $comment->save();
 
-        return view('zetthcore::AdminSC.report.inbox_detail', $data);
+        return view('zetthcore::AdminSC.report.comment_detail', $data);
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \ZetthCore\Models\Inbox  $inbox
+     * @param  \ZetthCore\Models\PostComment  $comment
      * @return \Illuminate\Http\Response
      */
-    public function edit(Inbox $inbox)
+    public function edit(PostComment $comment)
     {
         abort(403);
     }
@@ -121,10 +121,10 @@ class CommentController extends AdminController
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $r
-     * @param  \ZetthCore\Models\Inbox  $inbox
+     * @param  \ZetthCore\Models\PostComment  $inbox
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $r, Inbox $inbox)
+    public function update(Request $r, PostComment $comment)
     {
         abort(403);
     }
@@ -132,18 +132,18 @@ class CommentController extends AdminController
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \ZetthCore\Models\Inbox  $inbox
+     * @param  \ZetthCore\Models\PostComment  $comment
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Inbox $inbox)
+    public function destroy(PostComment $comment)
     {
         /* log aktifitas */
-        $this->activityLog('<b>' . \Auth::user()->fullname . '</b> menghapus Kotak Masuk "' . $inbox->email . '"');
+        $this->activityLog('<b>' . \Auth::user()->fullname . '</b> menghapus Komentar "' . $comment->email . '"');
 
         /* soft delete */
-        $inbox->delete();
+        $comment->delete();
 
-        return redirect($this->current_url)->with('success', 'Kotak Masuk berhasil dihapus!');
+        return redirect($this->current_url)->with('success', 'Komentar berhasil dihapus!');
     }
 
     /**
@@ -152,7 +152,7 @@ class CommentController extends AdminController
     public function datatable(Request $r)
     {
         /* get data */
-        $data = Inbox::select(\DB::raw('substring(message, 1, 50) as message'), 'id', 'name', 'email', 'status')->get();
+        $data = PostComment::select('id', 'name', 'email', \DB::raw('substring(comment, 1, 100) as comment'), 'status')->get();
 
         /* generate datatable */
         if ($r->ajax()) {

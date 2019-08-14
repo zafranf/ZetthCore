@@ -5,17 +5,16 @@
 		<table id="table-data" class="row-border hover">
 			<thead>
 				<tr>
-					<td width="25">No.</td>
-					{{-- @if ($is_desktop) --}}
-						{{-- <td width="100">Foto</td> --}}
-						<td width="200">Nama</td>
+					<td>No.</td>
+					@if ($is_desktop)
+						<td>Nama</td>
+						<td>Surel</td>
 						<td>Pesan</td>
-						{{-- <td width="200">Surel</td> --}}
-						<td width="80">Status</td>
-					{{-- @else
-						<td width="100%">User</td>
-					@endif --}}
-					<td width="50">Akses</td>
+						<td>Status</td>
+					@else
+						<td>Pesan</td>
+					@endif
+					<td>Akses</td>
 				</tr>
 			</thead>
 		</table>
@@ -30,7 +29,7 @@
   {!! _admin_js('themes/admin/AdminSC/plugins/DataTables/1.10.12/js/jquery.dataTables.min.js') !!}
   <script>
     $(document).ready(function() {
-      var table = $('#table-data').DataTable({
+      let options = {
         "processing": true,
         "serverSide": true,
         "ajax": SITE_URL + "{{ $adminPath }}/report/inbox/data",
@@ -41,12 +40,11 @@
         ],
         "columns": [
           { "width": "30px" },
-          // { "data": "image", "width": "80px" },
           { "data": "name", "width": "200px" },
+          { "data": "email", "width": "200px" },
           { "data": "message" },
-          // { "data": "email", "width": "200px" },
           { "data": "status", "width": "50px" },
-          { "width": "100px" },
+          { "width": "40px" },
         ],
         "columnDefs": [{
           "targets": 0,
@@ -55,14 +53,7 @@
           "render": function (data, type, row, meta) {
             return meta.row + meta.settings._iDisplayStart + 1;
           }
-        }, /* {
-          "targets": 1,
-          "data": 'image',
-          "sortable": false,
-          "render": function (data, type, row, meta) {
-            return '<img src="' + data + '" width="80">';
-          }
-        }, */ {
+        }, {
           "targets": 3,
           "data": 'status',
           "sortable": false,
@@ -74,16 +65,58 @@
           "data": 'id',
           "sortable": false,
           "render": function (data, type, row, meta) {
-            var actions = '';
-            var url = SITE_URL + "{{ $adminPath }}/report/inbox/" + data;
-            var del = "_delete('" + url + "')";
+            let actions = '';
+            let url = SITE_URL + "{{ $adminPath }}/report/inbox/" + data;
+            let del = "_delete('" + url + "')";
             {!! _get_access_buttons() !!}
             $('[data-toggle="tooltip"]').tooltip();
 
             return actions;
           }
         }],
-      });
+      };
+
+      @if (!$is_desktop)
+        options.columns = [
+          { "width": "30px" },
+          { },
+          { "width": "40px" },
+        ];
+        options.columnDefs = [
+          {
+            "targets": 0,
+            "sortable": false,
+            "render": function (data, type, row, meta) {
+              return meta.row + meta.settings._iDisplayStart + 1;
+            }
+          }, {
+            "targets": 1,
+            "sortable": false,
+            "render": function (data, type, row, meta) {
+              let render = row.name+' ('+row.email+')<br>';
+              render += '<small>'+row.message+'</small><br>';
+              render += _get_status_text(row.status);
+
+              return render;
+            }
+          }, {
+            "targets": 2,
+            "data": 'id',
+            "sortable": false,
+            "render": function (data, type, row, meta) {
+              let actions = '';
+              let url = SITE_URL + "{{ $adminPath }}/report/inbox/" + data;
+              let del = "_delete('" + url + "')";
+              {!! _get_access_buttons() !!}
+              $('[data-toggle="tooltip"]').tooltip();
+
+              return actions;
+            }
+          }
+        ];
+      @endif
+
+      let table = $('#table-data').DataTable(options);
     });
   </script>
 @endsection

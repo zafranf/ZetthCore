@@ -27,8 +27,8 @@ Route::middleware('auth')->group(function () use ($prefix) {
     // Route::get('/content/banners/data', $prefix.'\Content\BannerController@datatable')->name('banners.data');
     Route::get('/report/inbox/data', $prefix . '\Report\InboxController@datatable')->name('inbox.data');
     Route::get('/report/comments/data', $prefix . '\Report\CommentController@datatable')->name('comments.data');
-    // Route::get('/report/incoming-terms/data', $prefix . '\Report\IntermController@datatable')->name('interms.data');
-    // Route::get('/report/subscribers/data', $prefix . '\Report\SubscriberController@datatable')->name('subscribers.data');
+    Route::get('/report/incoming-terms/data', $prefix . '\Report\IntermController@datatable')->name('interms.data');
+    Route::get('/report/subscribers/data', $prefix . '\Report\SubscriberController@datatable')->name('subscribers.data');
     Route::get('/log/activities/data', $prefix . '\Log\ActivityController@datatable')->name('activities.data');
     Route::get('/log/errors/data', $prefix . '\Log\ErrorController@datatable')->name('errors.data');
     Route::get('/log/visitors/data', $prefix . '\Log\VisitorController@datatable')->name('visitors.data');

@@ -1,70 +1,122 @@
-@php $no=1 @endphp
-@extends('admin.layout')
-
-@section('styles')
-{!! _load_sweetalert('css') !!}
-{!! _load_datatables('css') !!}
-@endsection
+@extends('zetthcore::AdminSC.layouts.main')
 
 @section('content')
-    <div class="panel-body no-padding-right-left">
-        <table id="table-data" class="row-border hover">
-            <thead>
-                <tr>
-                    <td width="25">No.</td>
-                    @if ($is_desktop)
-                        <td width="200">Name</td>
-                        <td>Comment</td>
-                        <td width="80">Approved By</td>
-                        <td width="80">Status</td>
-                    @else
-                        <td width="300">Comment</td>
-                    @endif
-                    <td width="100">Action</td>
-                </tr>
-            </thead>
-            <tbody>
-                @if (count($comments)>0)
-                    @foreach($comments as $comment)
-                        <tr{!! ($comment->comment_read)?'':' style="font-weight:400"' !!}>
-                            <td align="center">{{ $no++ }}</td>
-                            @if ($is_desktop)
-                                <td>
-                                    {{ $comment->comment_name }}<br>
-                                    <small>{{ $comment->comment_email }}</small>
-                                </td>
-                                <td>
-                                    {{ str_limit(strip_tags($comment->comment_text), 100) }}<br>
-                                    <small>in <a style="text-decoration:none;">{{ $comment->post->post_title }}</a></small>
-                                </td>
-                                <td>{{ ($comment->comment_status)?$comment->approval->user_fullname:'-' }}</td>
-                                <td>{{ _get_status_text($comment->comment_status, ['Pending', 'Approved']) }}</td>
-                            @else
-                                <td>
-                                    {{ $comment->comment_name }} <!-- <small>({{ $comment->comment_email }})</small> --><br>
-                                    <small>{{ str_limit(strip_tags($comment->comment_text), 60) }}<br>
-                                    in <a style="text-decoration:none;">{{ str_limit($comment->post->post_title, 50) }}</a><br>
-                                    {{ _get_status_text($comment->comment_status, ['Pending', 'Approved']) }}{{ ($comment->comment_status)?" by ".$comment->approval->user_fullname:'' }}</small>
-                                </td>
-                            @endif
-                            <td>
-                                <a href="{{ url($current_url."/create?cid=".$comment->comment_id."&pid=".$comment->post_id) }}" class="btn btn-default btn-xs" title="Reply"><i class="fa fa-reply"></i></a>
-                                {{ _get_button_access($comment->comment_id, $current_url) }}
-                            </td>
-                        </tr>
-                    @endforeach
-                @endif
-            </tbody>
-        </table>
-    </div>
+	<div class="panel-body no-padding-right-left">
+		<table id="table-data" class="row-border hover">
+			<thead>
+				<tr>
+					<td>No.</td>
+					@if ($is_desktop)
+						<td>Nama</td>
+						<td>Surel</td>
+						<td>Komentar</td>
+						<td>Status</td>
+					@else
+						<td>Komentar</td>
+					@endif
+					<td>Akses</td>
+				</tr>
+			</thead>
+		</table>
+	</div>
+@endsection
+
+@section('styles')
+  {!! _admin_css('themes/admin/AdminSC/plugins/DataTables/1.10.12/css/jquery.dataTables.min.css') !!}
 @endsection
 
 @section('scripts')
-{!! _load_sweetalert('js') !!}
-{!! _load_datatables('js') !!}
-<script>
-$(function(){
-    $('#btn-add-new').hide();
-});
-</script>
+  {!! _admin_js('themes/admin/AdminSC/plugins/DataTables/1.10.12/js/jquery.dataTables.min.js') !!}
+  <script>
+    $(document).ready(function() {
+      let options = {
+        "processing": true,
+        "serverSide": true,
+        "ajax": SITE_URL + "{{ $adminPath }}/report/comments/data",
+        "pageLength": 20,
+        "lengthMenu": [
+          [10, 20, 50, 100, -1], 
+          [10, 20, 50, 100, "All"]
+        ],
+        "columns": [
+          { "width": "30px" },
+          { "data": "name", "width": "200px" },
+          { "data": "email", "width": "200px" },
+          { "data": "comment" },
+          { "data": "status", "width": "50px" },
+          { "width": "40px" },
+        ],
+        "columnDefs": [{
+          "targets": 0,
+          "data": null,
+          "sortable": false,
+          "render": function (data, type, row, meta) {
+            return meta.row + meta.settings._iDisplayStart + 1;
+          }
+        }, {
+          "targets": 3,
+          "data": 'status',
+          "sortable": false,
+          "render": function (data, type, row, meta) {
+            return _get_status_text(data);
+          }
+        }, {
+          "targets": 4,
+          "data": 'id',
+          "sortable": false,
+          "render": function (data, type, row, meta) {
+            let actions = '';
+            let url = SITE_URL + "{{ $adminPath }}/report/comments/" + data;
+            let del = "_delete('" + url + "')";
+            {!! _get_access_buttons() !!}
+            $('[data-toggle="tooltip"]').tooltip();
+
+            return actions;
+          }
+        }],
+      };
+
+      @if (!$is_desktop)
+        options.columns = [
+          { "width": "30px" },
+          { },
+          { "width": "40px" },
+        ];
+        options.columnDefs = [
+          {
+            "targets": 0,
+            "sortable": false,
+            "render": function (data, type, row, meta) {
+              return meta.row + meta.settings._iDisplayStart + 1;
+            }
+          }, {
+            "targets": 1,
+            "sortable": false,
+            "render": function (data, type, row, meta) {
+              let render = row.name+' ('+row.email+')<br>';
+              render += '<small>'+row.comment+'</small><br>';
+              render += _get_status_text(row.status);
+
+              return render;
+            }
+          }, {
+            "targets": 2,
+            "data": 'id',
+            "sortable": false,
+            "render": function (data, type, row, meta) {
+              let actions = '';
+              let url = SITE_URL + "{{ $adminPath }}/report/comments/" + data;
+              let del = "_delete('" + url + "')";
+              {!! _get_access_buttons() !!}
+              $('[data-toggle="tooltip"]').tooltip();
+
+              return actions;
+            }
+          }
+        ];
+      @endif
+
+      let table = $('#table-data').DataTable(options);
+    });
+  </script>
 @endsection
