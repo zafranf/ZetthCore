@@ -116,15 +116,24 @@ if (!function_exists('_get_image')) {
 }
 
 if (!function_exists('getMenu')) {
-    function getMenu($group = 'admin', $cache = false)
+    function getMenu($group = 'user_role', $cache = false)
     {
-        $cacheMenuName = 'cacheMenu-Group' . ucfirst($group);
+        $cacheMenuName = 'cacheMenuGroup' . ucfirst($group);
         $cacheMenu = \Cache::get($cacheMenuName);
         if ($cacheMenu && $cache) {
             $menus = $cacheMenu;
         } else {
-            $groupmenu = \ZetthCore\Models\MenuGroup::where('name', $group)->with('menu.submenu')->first();
-            $menus = $groupmenu->menu;
+            if ($group == 'user_role') {
+                $menus = collect([]);
+                foreach (\Auth::user()->roles as $role) {
+                    foreach ($role->menu_groups as $group) {
+                        $menus = $menus->merge($group->menu);
+                    }
+                }
+            } else {
+                $groupmenu = \ZetthCore\Models\MenuGroup::where('name', $group)->with('menu', 'menu.submenu')->first();
+                $menus = $groupmenu->menu;
+            }
 
             \Cache::put($cacheMenuName, $menus, 10 * 60);
         }
@@ -139,9 +148,10 @@ if (!function_exists('generateMenu')) {
      *
      * @return void
      */
-    function generateMenu($group = 'admin')
+    function generateMenu($group = 'user_role')
     {
-        $menus = getMenu($group);
+        /* get all menus */
+        $menus = getMenu($group, true);
 
         echo '<ul class="nav navbar-nav">';
         foreach ($menus as $menu) {
@@ -254,7 +264,7 @@ if (!function_exists('generateDate')) {
      * @param  [type] $lang [description]
      * @return [type]             [description]
      */
-    function generateDate($date = null, $lang = 'id')
+    function generateDate($date = null, string $lang = 'id')
     {
         $date = $date ?? date("Y-m-d");
         $format = ($lang == 'id') ? 'dddd, Do MMMM YYYY' : 'dddd, MMMM Do YYYY';

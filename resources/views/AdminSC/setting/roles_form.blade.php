@@ -96,31 +96,31 @@
                     <td style="padding-left:20px;">{!! $menu->name !!}</td>
                     <td>
                       <label class="custom-control custom-checkbox">
-                        <input type="checkbox" class="custom-control-input" {{ isset($routename[1]) ? 'name="access['.$routename[1].'][index]"':'' }} {{ !$menu->index ? 'disabled' : '' }} {{ isset($routename[1]) && isset($data) && $data->hasPermission('index-' . $routename[1]) ? 'checked' : '' }}>
+                        <input type="checkbox" class="custom-control-input" {!! isset($routename[1]) ? 'name="access['.$routename[1].'][index]"':'' !!} {{ !$menu->index ? 'disabled' : '' }} {{ isset($routename[1]) && isset($data) && $data->hasPermission('index-' . $routename[1]) ? 'checked' : '' }}>
                         <span class="custom-control-label"></span>
                       </label>
                     </td>
                     <td>
                       <label class="custom-control custom-checkbox">
-                        <input type="checkbox" class="custom-control-input" {{ isset($routename[1]) ? 'name="access['.$routename[1].'][create]"':'' }} {{ !$menu->create ? 'disabled' : '' }} {{ isset($routename[1]) && isset($data) && $data->hasPermission('create-' . $routename[1]) ? 'checked' : '' }}>
+                        <input type="checkbox" class="custom-control-input" {!! isset($routename[1]) ? 'name="access['.$routename[1].'][create]"':'' !!} {{ !$menu->create ? 'disabled' : '' }} {{ isset($routename[1]) && isset($data) && $data->hasPermission('create-' . $routename[1]) ? 'checked' : '' }}>
                         <span class="custom-control-label"></span>
                       </label>
                     </td>
                     <td>
                       <label class="custom-control custom-checkbox">
-                        <input type="checkbox" class="custom-control-input" {{ isset($routename[1]) ? 'name="access['.$routename[1].'][read]"':'' }} {{ !$menu->read ? 'disabled' : '' }} {{ isset($routename[1]) && isset($data) && $data->hasPermission('read-' . $routename[1]) ? 'checked' : '' }}>
+                        <input type="checkbox" class="custom-control-input" {!! isset($routename[1]) ? 'name="access['.$routename[1].'][read]"':'' !!} {{ !$menu->read ? 'disabled' : '' }} {{ isset($routename[1]) && isset($data) && $data->hasPermission('read-' . $routename[1]) ? 'checked' : '' }}>
                         <span class="custom-control-label"></span>
                       </label>
                     </td>
                     <td>
                       <label class="custom-control custom-checkbox">
-                        <input type="checkbox" class="custom-control-input" {{ isset($routename[1]) ? 'name="access['.$routename[1].'][update]"':'' }} {{ !$menu->update ? 'disabled' : '' }} {{ isset($routename[1]) && isset($data) && $data->hasPermission('update-' . $routename[1]) ? 'checked' : '' }}>
+                        <input type="checkbox" class="custom-control-input" {!! isset($routename[1]) ? 'name="access['.$routename[1].'][update]"':'' !!} {{ !$menu->update ? 'disabled' : '' }} {{ isset($routename[1]) && isset($data) && $data->hasPermission('update-' . $routename[1]) ? 'checked' : '' }}>
                         <span class="custom-control-label"></span>
                       </label>
                     </td>
                     <td>
                       <label class="custom-control custom-checkbox">
-                        <input type="checkbox" class="custom-control-input" {{ isset($routename[1]) ? 'name="access['.$routename[1].'][delete]"':'' }} {{ !$menu->delete ? 'disabled' : '' }} {{ isset($routename[1]) && isset($data) && $data->hasPermission('delete-' . $routename[1]) ? 'checked' : '' }}>
+                        <input type="checkbox" class="custom-control-input" {!! isset($routename[1]) ? 'name="access['.$routename[1].'][delete]"':'' !!} {{ !$menu->delete ? 'disabled' : '' }} {{ isset($routename[1]) && isset($data) && $data->hasPermission('delete-' . $routename[1]) ? 'checked' : '' }}>
                         <span class="custom-control-label"></span>
                       </label>
                     </td>
@@ -207,7 +207,7 @@
       console.log('val', val)
       console.log('length menugroup', cMenugroup)
       console.log('length val', cVal)
-      if (cVal == cMenugroup) {
+      if (cVal > 0) {
         hide = checkToggle(val, menugroup);
       }
 
@@ -222,20 +222,20 @@
 
     function checkToggle(arr1, arr2) {
       let toggle = false;
-      let t = 0;
-      let f = 0;
+      let show = 0;
+      let hide = 0;
       $.each(arr1, function (k, v) {
         let idx = arr2.indexOf(parseInt(v));
         if (idx >= 0) {
-          t += 1
+          show += 1
         } else {
-          f += 1
+          hide += 1
         }
         console.log('indexof v=' + parseInt(v) + ' k=' + k, arr2.indexOf(parseInt(v)));
-        console.log('t='+ t +' f='+ f)
+        console.log('show='+ show +' hide='+ hide)
       });
 
-      if (f > 0) {
+      if (hide > 0) {
         return true;
       }
 

@@ -61,16 +61,18 @@ class Install extends Command
 
     public function publishConfig()
     {
-        $this->info('Publishing package configuration files');
-        $this->process('php artisan vendor:publish --provider="Intervention\Image\ImageServiceProviderLaravel5" --force');
+        $this->info('Publishing package files');
+        // $this->process('php artisan vendor:publish --provider="Intervention\Image\ImageServiceProviderLaravel5" --force');
         $this->process('php artisan vendor:publish --provider="RenatoMarinho\LaravelPageSpeed\ServiceProvider" --force');
         $this->process('php artisan vendor:publish --tag=datatables --force');
         // $this->process('php artisan vendor:publish --tag="laratrust" --force');
         $this->process('php artisan vendor:publish --tag=zetthconfig --force');
         // $this->process('php artisan vendor:publish --tag=zetthauth --force');
         $this->process('php artisan vendor:publish --tag=zetthhandler --force');
+        $this->process('php artisan vendor:publish --tag=zetthmiddleware --force');
+        $this->process('php artisan vendor:publish --tag=zetthroutes --force');
         // $this->process('php artisan vendor:publish --tag=zetthmigrate --force');
-        $this->info('Publish config finished!');
+        $this->info('Publish files finished!');
     }
 
     public function migratingTable()

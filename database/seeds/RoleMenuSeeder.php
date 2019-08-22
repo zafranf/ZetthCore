@@ -13,7 +13,7 @@ class RoleMenuSeeder extends Seeder
     {
         $roles = \ZetthCore\Models\Role::all();
         foreach ($roles as $role) {
-            if ($role->id == 1) {
+            if ($role->name == 'super') {
                 $menus = \ZetthCore\Models\MenuGroup::all();
                 foreach ($menus as $menu) {
                     \ZetthCore\Models\RoleMenu::create([
@@ -21,6 +21,14 @@ class RoleMenuSeeder extends Seeder
                         'menu_group_id' => $menu->id,
                     ]);
                 }
+            } else if ($role->name == 'admin') {
+                $menu = \ZetthCore\Models\MenuGroup::first();
+                // foreach ($menus as $menu) {
+                    \ZetthCore\Models\RoleMenu::create([
+                        'role_id' => $role->id,
+                        'menu_group_id' => $menu->id,
+                    ]);
+                // }
             }
         }
     }

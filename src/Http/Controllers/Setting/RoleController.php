@@ -191,7 +191,7 @@ class RoleController extends AdminController
             $this->setPermissions($r, $role);
         } else {
             /* remove all permissions */
-            RolePermission::where('role_id', $role->id)->delete();
+            RolePermission::where('role_id', '!=', $role->id)->delete();
         }
 
         /* save menu group */
@@ -199,6 +199,9 @@ class RoleController extends AdminController
 
         /* log aktifitas */
         $this->activityLog('<b>' . \Auth::user()->fullname . '</b> memperbarui Peran "' . $role->name . '"');
+
+        /* Clear cache */
+        // \Cache::forget('cacheMenuGroupUser_role');
 
         return redirect($this->current_url . '/' . $role->id . '/edit')->with('success', 'Peran "' . $role->display_name . '" berhasil disimpan, segera atur akses menu!');
     }

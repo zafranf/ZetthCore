@@ -43,6 +43,7 @@ class AppServiceProvider extends ServiceProvider
         ], 'zetthmigrate'); */
         $this->publishes([
             __DIR__ . '/../../publishable/config/auth.php' => config_path('auth.php'),
+            __DIR__ . '/../../publishable/config/database.php' => config_path('database.php'),
             __DIR__ . '/../../publishable/config/image.php' => config_path('image.php'),
             __DIR__ . '/../../publishable/config/laratrust.php' => config_path('laratrust.php'),
             __DIR__ . '/../../publishable/config/laratrust_seeder.php' => config_path('laratrust_seeder.php'),
@@ -53,6 +54,13 @@ class AppServiceProvider extends ServiceProvider
         $this->publishes([
             __DIR__ . '/../../publishable/Exceptions/Handler.php' => app_path('Exceptions/Handler.php'),
         ], 'zetthhandler');
+        $this->publishes([
+            __DIR__ . '/../../publishable/Middleware/Authenticate.php' => app_path('Http/Middleware/Authenticate.php'),
+            __DIR__ . '/../../publishable/Middleware/RedirectIfAuthenticated.php' => app_path('Http/Middleware/RedirectIfAuthenticated.php'),
+        ], 'zetthmiddleware');
+        $this->publishes([
+            __DIR__ . '/../../publishable/routes/web.php' => base_path('routes/web.php'),
+        ], 'zetthroutes');
 
         /* set default varchar */
         Schema::defaultStringLength(191);

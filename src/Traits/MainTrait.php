@@ -36,7 +36,7 @@ trait MainTrait
 
         $v = $q->first();
         if (!$v) {
-            $params = array_push($params, [
+            $join = array_push($params, [
                 'ip' => $ip,
                 'page' => $page,
                 'referral' => $referral,
@@ -72,6 +72,9 @@ trait MainTrait
         }
         if (isset($_POST['user_password'])) {
             $_POST['user_password'] = $sensor;
+        }
+        if (isset($_POST['_token'])) {
+            $_POST['_token'] = $sensor;
         }
 
         $act = new \ZetthCore\Models\ActivityLog;
@@ -157,7 +160,7 @@ trait MainTrait
                     $mail->from($par['from']);
                 }
             } else {
-                $mail->from($cfg['username']);
+                $mail->from($this->user->email, $this->user->name);
             }
 
             /* Set Sender 'Reply To' */
