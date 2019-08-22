@@ -27,14 +27,14 @@
     "prefer-stable": true,
     "autoload": {
         "psr-4": {
-            "ZetthCore\\": "src/"
+            "ZetthCore\\": "src/app"
         },
         "classmap": [
-            "database/seeds",
-            "database/factories"
+            "src/database/seeds",
+            "src/database/factories"
         ],
         "files": [
-            "src/helpers.php"
+            "src/app/helpers.php"
         ]
     },
     "extra": {
