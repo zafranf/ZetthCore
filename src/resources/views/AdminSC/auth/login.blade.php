@@ -12,7 +12,7 @@ $page_title = 'Masuk Aplikasi';
               $w = $is_mobile ? 150 : 250;
             @endphp
             <center>
-              <img src="{{ _get_image("/assets/images/" . $apps->logo) }}" alt="{{ $apps->name }} Logo" style="margin-bottom: 20px; width: {{ $w }}px;">
+              <img src="{{ _get_image("/assets/images/" . $apps->logo, url("themes/admin/AdminSC/images/" . ($apps->logo ?? 'logo.v2.png'))) }}" alt="{{ $apps->name }} Logo" style="margin-bottom: 20px; width: {{ $w }}px;">
             </center>
             <form class="form-horizontal" role="form" method="POST" action="{{ url($adminPath . '/login') }}">
               

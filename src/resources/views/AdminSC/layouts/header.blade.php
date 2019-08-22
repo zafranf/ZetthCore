@@ -9,7 +9,7 @@
 
   <title>{{ $page_title }} | {{ $apps->name }}</title>
 
-  <link rel="icon" type="image/x-icon" href="{{ _get_image("/assets/images/" . $apps->icon, "/assets/images/logo.jpg") }}" />
+  <link rel="icon" type="image/x-icon" href="{{ _get_image("/assets/images/" . $apps->icon, url("themes/admin/AdminSC/images/" . ($apps->logo ?? 'logo.v2.png'))) }}" />
 
   {{-- Fonts --}}
   {!! _admin_css('themes/admin/AdminSC/plugins/googlefonts/lato/css/font-lato.min.css') !!}

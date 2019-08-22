@@ -15,7 +15,7 @@
 						<div class="col-md-8">
 							<div class="fileinput fileinput-new" data-provides="fileinput">
 								<div class="fileinput-new thumbnail">
-									<img src="{{ _get_image("/assets/images/" . $apps->logo, "/assets/images/logo.jpg") }}">
+									<img src="{{ _get_image("/assets/images/" . $apps->logo, url("themes/admin/AdminSC/images/" . ($apps->logo ?? 'logo.v2.png'))) }}">
 								</div>
 								<div class="fileinput-preview fileinput-exists thumbnail"></div>
 								<div>
@@ -25,35 +25,35 @@
 										<input type="file" id="logo" name="logo" accept="image/*">
 									</span>
 									<a href="#" class="btn btn-default fileinput-exists" data-dismiss="fileinput">Batal</a>
-                  @if (isset($apps->logo))
-                    <small class="help-inline-table">
-                      <label class="pull-right">
-                        <input type="checkbox" name="logo_remove" id="logo_remove"> Hapus
-                      </label>
-                    </small>
-                  @endif
+									@if (isset($apps->logo))
+										<small class="help-inline-table">
+										<label class="pull-right">
+											<input type="checkbox" name="logo_remove" id="logo_remove"> Hapus
+										</label>
+										</small>
+									@endif
 								</div>
 							</div>
 						</div>
 					</div>
 					<div class="form-group">
 						<label for="name" class="col-md-4 control-label">
-              Ikon
+							Ikon
 							<small class="help-block">Maksimal dimensi ikon adalah 128x128 px dengan ukuran maksimal 96 KB</small>
-            </label>
+						</label>
 						<div class="col-md-8">
 							<div class="fileinput fileinput-new input-group" data-provides="fileinput">
 								<div class="form-control" data-trigger="fileinput">
-                  <div class="fileinput-new thumbnail" style="width:20px;padding:0;margin-bottom:8px;position:absolute;left:5px;">
-                    <img src="{{ _get_image("/assets/images/" . $apps->icon, "/assets/images/logo.jpg") }}" width="20">
-                  </div>
-                  <div class="fileinput-preview fileinput-exists thumbnail" style="width:20px;padding:0;margin-bottom:8px;position:absolute;left:5px;"></div>
+									<div class="fileinput-new thumbnail" style="width:20px;padding:0;margin-bottom:8px;position:absolute;left:5px;">
+										<img src="{{ _get_image("/assets/images/" . $apps->icon, url("themes/admin/AdminSC/images/" . ($apps->logo ?? 'logo.v2.png'))) }}" width="20">
+									</div>
+									<div class="fileinput-preview fileinput-exists thumbnail" style="width:20px;padding:0;margin-bottom:8px;position:absolute;left:5px;"></div>
 									<span class="fileinput-filename" style="margin-bottom:5px;position:relative;left:20px;"></span>
 								</div>
 								<span class="input-group-addon btn btn-default btn-file" style="border-left:1px solid coral;">
 									<span class="fileinput-new">Pilih</span>
 									<span class="fileinput-exists">Ganti</span>
-                  <input type="file" id="icon" name="icon" accept="image/*">
+                  					<input type="file" id="icon" name="icon" accept="image/*">
 								</span>
 								<a href="#" class="input-group-addon btn btn-default fileinput-exists" data-dismiss="fileinput">Batal</a>
 							</div>
@@ -61,11 +61,11 @@
 								<label>
 									<input type="checkbox" name="use_logo" id="use_logo"> Gunakan logo
 								</label>
-                @if (isset($apps->icon))
-                  <label class="pull-right">
-                    <input type="checkbox" name="icon_remove" id="icon_remove"> Hapus
-                  </label>
-                @endif
+								@if (isset($apps->icon))
+									<label class="pull-right">
+										<input type="checkbox" name="icon_remove" id="icon_remove"> Hapus
+									</label>
+								@endif
 							</small>
 						</div>
 					</div>
@@ -115,9 +115,9 @@
 					</div>
 					<div class="form-group">
 						<label for="enable" class="col-md-4 control-label">
-              Aktifkan
-              <small class="help-block">Fitur untuk pengunjung situs</small>
-            </label>
+							Aktifkan
+							<small class="help-block">Fitur untuk pengunjung situs</small>
+						</label>
 						<div class="col-md-8">
 							<div class="checkbox">
 								<div class="col-xs-6 col-sm-3">
@@ -165,9 +165,9 @@
 					<hr>
 					<div class="form-group">
 						<label for="label" class="col-md-4 control-label">
-              Akun
-              <small class="help-block">Akun sosial media situs</small>
-            </label>
+							Akun
+							<small class="help-block">Akun sosial media situs</small>
+						</label>
 						<div class="col-md-8">
 							@if (isset($socmed_data) && count($socmed_data) > 0)
 								@foreach ($socmed_data as $key => $val)
@@ -176,45 +176,45 @@
 									@endphp
 									<div id="div-socmed-{{ $rand }}">
 										<div class="col-md-3 col-xs-6 no-padding">
-                      <select class="form-control custom-select2" id="socmed-id-{{ $rand }}" name="socmed_id[]">
-                        <option value="">--Pilih--</option>
-                        @if (isset($socmeds))
-                          @foreach ($socmeds as $socmed)
-                            @php 
-                              $sl = ($socmed->id==$val->socmed->id) ? 'selected' : ''
-                            @endphp
-                            <option value="{{ $socmed->id }}" {{ $sl }}>{{ $socmed->name }}</option>
-                          @endforeach
-                        @endif
-                      </select>
+											<select class="form-control custom-select2" id="socmed-id-{{ $rand }}" name="socmed_id[]">
+												<option value="">--Pilih--</option>
+												@if (isset($socmeds))
+												@foreach ($socmeds as $socmed)
+													@php 
+													$sl = ($socmed->id==$val->socmed->id) ? 'selected' : ''
+													@endphp
+													<option value="{{ $socmed->id }}" {{ $sl }}>{{ $socmed->name }}</option>
+												@endforeach
+												@endif
+											</select>
 										</div>
 										<div class="col-md-9 col-xs-6 no-padding">
-                      @if ($key > 0)
-                        <div class="input-group">
-                          <input type="text" class="form-control" id="socmed-uname-{{ $rand }}" name="socmed_uname[]" placeholder="Nama/ID akun.." maxlength="50" value="{{ $val->username }}">
-                          <span class="input-group-btn">
-                            <button type="button" class="btn" style="background:white;border:1px solid #ccc;" onclick="_remove('#div-socmed-{{ $rand }}')"><i class="fa fa-minus"></i></button>
-                          </span>
-                        </div>
-                      @else
-                        <input type="text" class="form-control" id="socmed-uname-{{ $rand }}" name="socmed_uname[]" placeholder="Nama/ID akun.." value="{{ $val->username }}">
-                      @endif
+											@if ($key > 0)
+												<div class="input-group">
+												<input type="text" class="form-control" id="socmed-uname-{{ $rand }}" name="socmed_uname[]" placeholder="Nama/ID akun.." maxlength="50" value="{{ $val->username }}">
+												<span class="input-group-btn">
+													<button type="button" class="btn" style="background:white;border:1px solid #ccc;" onclick="_remove('#div-socmed-{{ $rand }}')"><i class="fa fa-minus"></i></button>
+												</span>
+												</div>
+											@else
+												<input type="text" class="form-control" id="socmed-uname-{{ $rand }}" name="socmed_uname[]" placeholder="Nama/ID akun.." value="{{ $val->username }}">
+											@endif
 										</div>
 									</div>
 								@endforeach
 							@else
 								<div class="col-md-3 col-xs-6 no-padding">
-                  <select class="form-control custom-select2" id="socmed-id" name="socmed_id[]">
+                  					<select class="form-control custom-select2" id="socmed-id" name="socmed_id[]">
 										<option value="">--Pilih--</option>
 										@if (isset($socmeds))
-                      @foreach ($socmeds as $socmed)
-                        <option value="{{ $socmed->id }}">{{ $socmed->name }}</option>
-                      @endforeach
+											@foreach ($socmeds as $socmed)
+												<option value="{{ $socmed->id }}">{{ $socmed->name }}</option>
+											@endforeach
 										@endif
 									</select>
 								</div>
 								<div class="col-md-9 col-xs-6 no-padding">
-                  <input type="text" class="form-control" id="socmed-uname" name="socmed_uname[]" placeholder="Nama/ID akun.." maxlength="50">
+                  					<input type="text" class="form-control" id="socmed-uname" name="socmed_uname[]" placeholder="Nama/ID akun.." maxlength="50">
 								</div>
 							@endif
 							<div id="div-socmed"></div>
@@ -224,9 +224,9 @@
 					<hr>
 					<div class="form-group">
 						<label for="keywords" class="col-md-4 control-label">
-              Kata Kunci
-              <small class="help-block">Tekan enter untuk menambahkan</small>
-            </label>
+							Kata Kunci
+							<small class="help-block">Tekan enter untuk menambahkan</small>
+						</label>
 						<div class="col-md-8">
 							<input type="text" class="form-control" id="keywords" name="keywords" value="{{ $apps->keywords ?? '' }}" placeholder="Kata kunci situs.." maxlength="50">
 						</div>
@@ -239,9 +239,9 @@
 					</div>
 					<div class="form-group">
 						<label for="google_analytics" class="col-md-4 control-label">
-              Google Analytics
+              				Google Analytics
 							<small class="help-block">Kode untuk analitik website dari Google</small>
-            </label>
+            			</label>
 						<div class="col-md-8">
 							<input type="text" class="form-control" id="google-analytics" name="google_analytics" value="{{ $apps->google_analytics ?? '' }}" placeholder="Kode Google Analytics.." maxlength="20">
 						</div>
@@ -256,9 +256,9 @@
 					</div>
 					<div class="form-group">
 						<label for="coordinate" class="col-md-4 control-label">
-              Koordinat
-              <small class="help-block">Garis lintang dan garis bujur.<br>(contoh: -6.229728, 106.6894312)</small>
-            </label>
+							Koordinat
+							<small class="help-block">Garis lintang dan garis bujur.<br>(contoh: -6.229728, 106.6894312)</small>
+						</label>
 						<div class="col-md-8">
 							<input type="text" class="form-control" id="coordinate" name="coordinate" value="{{ $apps->coordinate ?? '' }}" placeholder="Titik koordinat.." maxlength="30">
 						</div>
@@ -308,7 +308,7 @@
 		$(function() {
 			$('#active-at').datetimepicker({
 				format: 'YYYY-MM-DD'
-      });
+      		});
       
 			$(".custom-select2").select2({
 				minimumResultsForSearch: Infinity
@@ -324,13 +324,13 @@
 					$('#d-active-at').hide();
 					$('#active-at').attr('readonly', true);
 				}
-      });
+      		});
       
 			$('#keywords').tagsinput({
 				tagClass: function(item){
 					return 'label label-warning'
 				}
-      });
+      		});
       
 			$('#btn-add-socmed').on('click', function(){
 				socmed_no = (Math.random() * 1000000000).toFixed(0);
@@ -352,7 +352,7 @@
 									'</span>'+
 								'</div>'+
 							'</div></div>';
-        $('#div-socmed').append(html);
+        		$('#div-socmed').append(html);
         
 				$(".custom-select2").select2({
 					minimumResultsForSearch: Infinity
