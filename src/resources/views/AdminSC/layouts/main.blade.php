@@ -13,7 +13,7 @@
 
         {{-- Branding Image --}}
         <a class="navbar-brand" href="{{ url($adminPath . '/dashboard') }}">
-          <img src="{{ _get_image("/assets/images/" . $apps->logo, '/assets/images/logo.jpg') }}">
+          <img src="{{ _get_image("/assets/images/" . $apps->logo, url("themes/admin/AdminSC/images/" . ($apps->logo ?? 'logo.v2.png'))) }}">
         </a>
       </div>
 

@@ -30,7 +30,7 @@ class AdminController extends BaseController
     public function themes(\Illuminate\Http\Request $r, $path)
     {
         $path = str_start(str_replace(['../', './'], '', urldecode($path)), '/');
-        $path = base_path('vendor/zafranf/zetthcore/resources/themes' . $path);
+        $path = base_path('vendor/zafranf/zetthcore/src/resources/themes' . $path);
         if (File::exists($path)) {
             $mime = '';
             if (ends_with($path, '.js')) {
