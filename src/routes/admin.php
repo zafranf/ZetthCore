@@ -1,13 +1,14 @@
 <?php
 $prefix = '\ZetthCore\Http\Controllers';
+
 Route::get('/', function () {
     return redirect(adminPath() . '/login');
 })->name('index');
 Route::get('/login', $prefix . '\Auth\LoginController@showLoginForm')->name('login.form');
 Route::post('/login', $prefix . '\Auth\LoginController@login')->name('login.post');
-Route::get('/filemanager/dialog', function () {
-    include (base_path('vendor/zafranf/zetthcore/src/resources/themes/AdminSC/plugins/filemanager/dialog.php'));
-})->name('filemanager.dialog');
+/* Route::get('/filemanager/dialog', function () {
+include (base_path('vendor/zafranf/zetthcore/src/resources/themes/AdminSC/plugins/filemanager/dialog.php'));
+})->name('filemanager.dialog'); */
 
 Route::middleware('auth')->group(function () use ($prefix) {
     Route::post('/logout', $prefix . '\Auth\LoginController@logout')->name('logout.post');
