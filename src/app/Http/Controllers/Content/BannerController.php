@@ -17,8 +17,13 @@ class BannerController extends AdminController
     public function __construct()
     {
         parent::__construct();
-        $this->current_url = url('/content/banners');
-        $this->page_title = 'Pengaturan Spanduk';
+        $this->current_url = url($this->adminPath . '/content/banners');
+        $this->page_title = 'Kelola Spanduk';
+        $this->breadcrumbs[] = [
+            'page' => 'Konten',
+            'icon' => '',
+            'url' => url($this->adminPath . '/content/banners'),
+        ];
         $this->breadcrumbs[] = [
             'page' => 'Spanduk',
             'icon' => '',
@@ -33,14 +38,21 @@ class BannerController extends AdminController
      */
     public function index()
     {
+        $this->breadcrumbs[] = [
+            'page' => 'Daftar',
+            'icon' => '',
+            'url' => '',
+        ];
+
         /* set variable for view */
         $data = [
             'current_url' => $this->current_url,
+            'breadcrumbs' => $this->breadcrumbs,
             'page_title' => $this->page_title,
             'page_subtitle' => 'Daftar Spanduk',
         ];
 
-        return view('admin.content.banner', $data);
+        return view('zetthcore::AdminSC.content.banners', $data);
     }
 
     /**
@@ -50,18 +62,21 @@ class BannerController extends AdminController
      */
     public function create()
     {
-        /* get data */
-        $banners = Banner::select('id', 'order', 'title')->orderBy('order')->get();
+        $this->breadcrumbs[] = [
+            'page' => 'Tambah',
+            'icon' => '',
+            'url' => '',
+        ];
 
         /* set variable for view */
         $data = [
             'current_url' => $this->current_url,
+            'breadcrumbs' => $this->breadcrumbs,
             'page_title' => $this->page_title,
             'page_subtitle' => 'Tambah Spanduk',
-            'banners' => $banners,
         ];
 
-        return view('admin.content.banner_form', $data);
+        return view('zetthcore::AdminSC.content.banners_form', $data);
     }
 
     /**
@@ -262,7 +277,7 @@ class BannerController extends AdminController
     public function datatable(Request $r)
     {
         /* get data */
-        $data = Banner::select(sequence(), 'id', 'title', 'description', 'image', 'order', 'status')->get();
+        $data = Banner::select('id', 'title', 'description', 'image', 'order', 'status')->get();
 
         /* generate datatable */
         if ($r->ajax()) {

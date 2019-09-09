@@ -205,8 +205,26 @@ class MenuGroupController extends AdminController
      */
     public function datatable(Request $r)
     {
+        /* where roles */
+        if (\Auth::user()->hasRole('super')) {
+            $whrRole = [
+                // ['status', 1],
+            ];
+        } else if (\Auth::user()->hasRole('admin')) {
+            $whrRole = [
+                // ['status', 1],
+                ['id', '!=', 1],
+            ];
+        } else {
+            $whrRole = [
+                // ['status', 1],
+                ['id', '!=', 1],
+                // ['id', '!=', 2],
+            ];
+        }
+
         /* get data */
-        $data = MenuGroup::select('id', 'display_name as name', 'description', 'status')->get();
+        $data = MenuGroup::select('id', 'display_name as name', 'description', 'status')->where($whrRole)->get();
 
         /* generate datatable */
         if ($r->ajax()) {

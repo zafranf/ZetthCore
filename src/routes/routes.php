@@ -5,11 +5,11 @@ Route::get('/themes/admin/{path}', '\ZetthCore\Http\Controllers\AdminController@
 Route::middleware('web')->name('admin.')->group(function () {
     $admin_route = env('ADMIN_ROUTE', 'path');
     if ($admin_route == 'path') {
-        Route::prefix('admin')->group(function () {
+        Route::prefix(env('ADMIN_PATH', 'admin'))->group(function () {
             include __DIR__ . "/admin.php";
         });
     } else if ($admin_route == 'subdomain') {
-        Route::domain('admin.' . env('APP_DOMAIN'))->group(function () {
+        Route::domain(env('ADMIN_SUBDOMAIN', 'admin') . '.' . env('APP_DOMAIN'))->group(function () {
             include __DIR__ . "/admin.php";
         });
     }

@@ -3,7 +3,7 @@
 @section('content2')
   <div class="container-fluid">
     <div class="row">
-      <div class="col-sm-12">
+      <div id="btn-quick-box" class="col-sm-12">
         <div class="btn btn-default btn-quick">
           <a href="{{ url($adminPath . '/content/posts/create') }}">
             <div class="row">
@@ -132,6 +132,10 @@
     }
     .daterangepicker.dropdown-menu {
       top: 122px!important;
+    }
+    #btn-quick-box {
+      white-space: nowrap;
+      overflow-x: scroll;
     }
     .btn-quick {
       font-size: 24px;

@@ -12,6 +12,13 @@ class MenuGroupSeeder extends Seeder
     public function run()
     {
         DB::table('menu_groups')->insert([
+            'name' => "super",
+            'display_name' => "Super",
+            'description' => "Grup menu untuk super",
+            'status' => 1,
+            'created_at' => date("Y-m-d H:i:s"),
+        ]);
+        DB::table('menu_groups')->insert([
             'name' => "admin",
             'display_name' => "Admin",
             'description' => "Grup menu untuk admin",

@@ -61,7 +61,7 @@
         </div>
       </div> --}}
       <div class="form-group">
-        <label for="target" class="col-sm-2 control-label">Jendela Tujuan</label>
+        <label for="target" class="col-sm-2 control-label">Target</label>
         <div class="col-sm-4">
           <select class="form-control custom-select2" name="target" id="target">
             <option value="_self" {{ isset($data) && ($data->target == "_self") ? 'selected' : '' }}>Jendela Aktif</option>

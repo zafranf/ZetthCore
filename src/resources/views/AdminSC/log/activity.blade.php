@@ -6,6 +6,7 @@
 			<thead>
 				<tr>
           <td>No.</td>
+          <td>Waktu</td>
           <td>IP</td>
           <td>Aktifitas</td>
 				</tr>
@@ -33,6 +34,7 @@
         ],
         "columns": [
           { "width": "30px" },
+          { "data": "created_at", "width": "120px" },
           { "data": "ip", "width": "100px" },
           { "data": "description" },
         ],

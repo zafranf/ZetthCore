@@ -41,25 +41,26 @@ class AppServiceProvider extends ServiceProvider
         /* $this->publishes([
         __DIR__ . '/../../database' => database_path(),
         ], 'zetthmigrate'); */
+        $publishable_path = '/../../../publishable';
         $this->publishes([
-            __DIR__ . '/../../publishable/config/auth.php' => config_path('auth.php'),
-            __DIR__ . '/../../publishable/config/database.php' => config_path('database.php'),
-            __DIR__ . '/../../publishable/config/image.php' => config_path('image.php'),
-            __DIR__ . '/../../publishable/config/laratrust.php' => config_path('laratrust.php'),
-            __DIR__ . '/../../publishable/config/laratrust_seeder.php' => config_path('laratrust_seeder.php'),
+            __DIR__ . $publishable_path . '/config/auth.php' => config_path('auth.php'),
+            __DIR__ . $publishable_path . '/config/database.php' => config_path('database.php'),
+            __DIR__ . $publishable_path . '/config/image.php' => config_path('image.php'),
+            __DIR__ . $publishable_path . '/config/laratrust.php' => config_path('laratrust.php'),
+            __DIR__ . $publishable_path . '/config/laratrust_seeder.php' => config_path('laratrust_seeder.php'),
         ], 'zetthconfig');
         // $this->publishes([
-        //     __DIR__ . '/../../publishable/config/auth.php' => config_path('auth.php'),
+        //     __DIR__ . $publishable_path.'/config/auth.php' => config_path('auth.php'),
         // ], 'zetthauth');
         $this->publishes([
-            __DIR__ . '/../../publishable/Exceptions/Handler.php' => app_path('Exceptions/Handler.php'),
+            __DIR__ . $publishable_path . '/Exceptions/Handler.php' => app_path('Exceptions/Handler.php'),
         ], 'zetthhandler');
         $this->publishes([
-            __DIR__ . '/../../publishable/Middleware/Authenticate.php' => app_path('Http/Middleware/Authenticate.php'),
-            __DIR__ . '/../../publishable/Middleware/RedirectIfAuthenticated.php' => app_path('Http/Middleware/RedirectIfAuthenticated.php'),
+            __DIR__ . $publishable_path . '/Middleware/Authenticate.php' => app_path('Http/Middleware/Authenticate.php'),
+            __DIR__ . $publishable_path . '/Middleware/RedirectIfAuthenticated.php' => app_path('Http/Middleware/RedirectIfAuthenticated.php'),
         ], 'zetthmiddleware');
         $this->publishes([
-            __DIR__ . '/../../publishable/routes/web.php' => base_path('routes/web.php'),
+            __DIR__ . $publishable_path . '/routes/web.php' => base_path('routes/web.php'),
         ], 'zetthroutes');
 
         /* set default varchar */
@@ -74,19 +75,19 @@ class AppServiceProvider extends ServiceProvider
             }
 
             /* check admin page */
-            $adminPath = '/admin';
+            $adminPath = '/' . env('ADMIN_PATH', 'admin');
             $isAdminSubdomain = false;
             $isAdminPanel = false;
 
             /* check admin on uri */
             $uri = _server('REQUEST_URI');
-            if (strpos($uri, 'admin') !== false) {
+            if (strpos($uri, env('ADMIN_PATH', 'admin')) !== false) {
                 $isAdminPanel = true;
             }
 
             /* check admin on host */
             $host = parse_url(url('/'))['host'];
-            if (strpos($host, 'admin') !== false) {
+            if (strpos($host, env('ADMIN_SUBDOMAIN', 'admin')) !== false) {
                 $adminPath = '';
                 $isAdminSubdomain = true;
                 $isAdminPanel = true;

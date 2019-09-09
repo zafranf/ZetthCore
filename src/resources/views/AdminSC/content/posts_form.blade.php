@@ -37,7 +37,7 @@
             <label for="cover">Sampul</label><br>
             <div class="zetth-upload">
               <div class="zetth-upload-new thumbnail">
-                <img src="{!! _get_image(isset($data) ? $data->cover : '') !!}">
+                <img src="{!! _get_image(isset($data) ? $data->cover : '', 'themes/admin/AdminSC/images/no-image.png') !!}">
               </div>
               <div class="zetth-upload-exists thumbnail"></div>
               <div>

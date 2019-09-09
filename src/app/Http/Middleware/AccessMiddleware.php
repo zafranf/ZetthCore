@@ -33,6 +33,16 @@ class AccessMiddleware
         /* get route name */
         $name = \Route::current()->getName();
         $xname = explode('.', $name);
+        $sliced = array_slice($xname, 0, -1);
+        $newname = implode(".", $sliced);
+
+        /* allow datatable */
+        $is_datatable = end($xname);
+        if ($is_datatable == 'datatable') {
+            return true;
+        }
+
+        // return $user->can($name);
 
         /* check access */
         $access = null;
@@ -58,8 +68,8 @@ class AccessMiddleware
                 $page = $xname[1];
             }
         }
-
-        return $user->can($access . '-' . $page);
+        // dd($name, $xname, $access, $page, $newname . '.' . $access);
+        return $user->can($newname . '.' . $access);
     }
 
 }

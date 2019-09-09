@@ -57,19 +57,21 @@ if (!function_exists('_get_access_buttons')) {
         /* ambil route name */
         $name = \Route::current()->getName();
         $xname = explode('.', $name);
+        $sliced = array_slice($xname, 0, -1);
+        $newname = implode(".", $sliced);
 
         if ($btn == 'add') {
-            if ($user->can('create-' . $xname[1])) {
+            if ($user->can($newname . '.create')) {
                 echo '<a href="' . url($url . '/create') . '" class="btn btn-default pull-right" data-toggle="tooltip" data-original-title="Tambah Data"><i class="fa fa-plus"></i>&nbsp;' . $add . '</a>';
             }
         } else {
-            if ($user->can('read-' . $xname[1])) {
+            if ($user->can($newname . '.read')) {
                 echo "actions += '&nbsp;<a href=\"' + url + '\" class=\"btn btn-default btn-xs\" data-toggle=\"tooltip\" data-original-title=\"Detail\"><i class=\"fa fa-eye\"></i></a>';";
             }
-            if ($user->can('update-' . $xname[1])) {
+            if ($user->can($newname . '.update')) {
                 echo "actions += '&nbsp;<a href=\"' + url + '/edit\" class=\"btn btn-default btn-xs\" data-toggle=\"tooltip\" data-original-title=\"Edit\"><i class=\"fa fa-edit\"></i></a>';";
             }
-            if ($user->can('delete-' . $xname[1])) {
+            if ($user->can($newname . '.delete')) {
                 echo "actions += '&nbsp;<a href=\"#\" onclick=\"' + del + '\" class=\"btn btn-default btn-xs\" data-toggle=\"tooltip\" data-original-title=\"Hapus\"><i class=\"fa fa-trash\"></i></a>';";
             }
         }
@@ -118,7 +120,14 @@ if (!function_exists('_get_image')) {
 if (!function_exists('getMenu')) {
     function getMenu($group = 'user_role', $cache = false)
     {
-        $cacheMenuName = 'cacheMenuGroup' . ucfirst($group);
+        $user = \Auth::user() ? \Auth::user()->id : '';
+        $roleName = '';
+        if ($group == 'user_role') {
+            foreach (\Auth::user()->roles as $role) {
+                $roleName .= ucfirst($role->name);
+            }
+        }
+        $cacheMenuName = 'cacheMenuGroup' . studly_case($group) . $roleName;
         $cacheMenu = \Cache::get($cacheMenuName);
         if ($cacheMenu && $cache) {
             $menus = $cacheMenu;

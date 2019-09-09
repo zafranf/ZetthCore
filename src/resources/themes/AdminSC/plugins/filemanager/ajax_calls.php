@@ -243,10 +243,10 @@ if(isset($_GET['action']))
 			break;
 		case 'media_preview':
 			if(isset($_GET['file'])){
-				$_GET['file'] = sanitize($_GET['file']);
+				$_GET['file'] = sanitize_fm($_GET['file']);
 			}
 			if(isset($_GET['title'])){
-				$_GET['title'] = sanitize($_GET['title']);
+				$_GET['title'] = sanitize_fm($_GET['title']);
 			}
 			if($ftp){
 				$preview_file = $config['ftp_base_url'].$config['upload_dir'] . $_GET['file'];

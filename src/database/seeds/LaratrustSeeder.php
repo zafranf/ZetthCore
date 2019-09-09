@@ -36,10 +36,11 @@ class LaratrustSeeder extends Seeder
                 foreach (explode(',', $value) as $p => $perm) {
                     $permissionValue = $mapPermission->get($perm);
 
+                    $modulename = explode('.', $module);
                     $permissions[] = \ZetthCore\Models\Permission::firstOrCreate([
-                        'name' => $permissionValue . '-' . $module,
-                        'display_name' => ucfirst($permissionValue) . ' ' . ucfirst($module),
-                        'description' => ucfirst($permissionValue) . ' ' . ucfirst($module),
+                        'name' => $module . '.' . $permissionValue,
+                        'display_name' => ucfirst($permissionValue) . ' ' . ucwords(implode(" ", $modulename)),
+                        'description' => ucfirst($permissionValue) . ' ' . ucwords(implode(" ", $modulename)),
                     ])->id;
 
                     $this->command->info('Creating Permission to ' . $permissionValue . ' for ' . $module);

@@ -22,7 +22,7 @@
         {{ generateMenu() }}
         {{-- Right Side Of Navbar --}}
         <ul class="nav navbar-nav navbar-right">
-          <li data-toggle="tooltip" title="Kunjungi website" data-placement="bottom"><a href="{{ url('/') }}" target="_blank"><i class="fa fa-globe"></i></a></li>
+          <li data-toggle="tooltip" title="Kunjungi website" data-placement="bottom"><a href="{{ url('/') }}" target="_blank">{!! $is_mobile ? 'Kunjungi website&nbsp;<span class="pull-right"><i class="fa fa-external-link"></span>' : '<i class="fa fa-globe">' !!}</i></a></li>
           {{-- <li><a href="{{ url('admin/help') }}" title="Help"><i class="fa fa-question-circle-o"></i></a></li> --}}
           {{-- <li><a href="#" title="Notifications"><i class="fa fa-bell-o"></i></a></li> --}}
           {{-- Authentication Links --}}

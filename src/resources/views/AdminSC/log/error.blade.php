@@ -6,7 +6,7 @@
 			<thead>
 				<tr>
           <td>No.</td>
-          <td>Tanggal</td>
+          <td>Waktu</td>
           <td>Pesan</td>
           <td>File</td>
           <td>Baris</td>
@@ -37,7 +37,7 @@
         // "order": [[ 0, "desc" ]],
         "columns": [
           { "width": "30px" },
-          { "data": "updated_at", "width": "50px" },
+          { "data": "updated_at", "width": "120px" },
           { "data": "message", "width": "300px" },
           { "data": "file", "width": "200px" },
           { "data": "line", "width": "50px" },
