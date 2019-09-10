@@ -76,7 +76,7 @@ $config = array(
     | with start and final /
     |
      */
-    'upload_dir' => './../../../../../../../storage/app/public/assets/images/',
+    'upload_dir' => '/files/',
     /*
     |--------------------------------------------------------------------------
     | relative path from filemanager folder to upload folder
@@ -85,7 +85,7 @@ $config = array(
     | with final /
     |
      */
-    'current_path' => '../source/',
+    'current_path' => './source/files/',
 
     /*
     |--------------------------------------------------------------------------
@@ -96,7 +96,7 @@ $config = array(
     | DO NOT put inside upload folder
     |
      */
-    'thumbs_base_path' => '../thumbs/',
+    'thumbs_base_path' => './source/thumbs/',
 
     /*
     |--------------------------------------------------------------------------
@@ -344,7 +344,7 @@ $config = array(
     'chmod_dirs' => true, // change folder permissions
     'preview_text_files' => true, // eg.: txt, log etc.
     'edit_text_files' => true, // eg.: txt, log etc.
-    'create_text_files' => true, // only create files with exts. defined in $config['editable_text_file_exts']
+    'create_text_files' => false, // only create files with exts. defined in $config['editable_text_file_exts']
     'download_files' => true, // allow download files or just preview
 
     // you can preview these type of files if $preview_text_files is true

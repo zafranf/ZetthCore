@@ -107,21 +107,60 @@ class Install extends Command
     public function linkFolders()
     {
         $this->info('Link folders');
-        $this->info('');
         $this->info('Linking storage folder');
+        if ($this->option('fresh')) {
+            if (file_exists('public/storage')) {
+                $this->info('Removing "public/storage" folder');
+                $process = new Process('cd ' . public_path() . ' && rm -rf storage && cd ' . base_path());
+                $process->setTimeout($this->timeout);
+                $process->run(function ($type, $buffer) {
+                    echo $buffer;
+                });
+            }
+        }
         $process = new Process('php artisan storage:link');
         $process->setTimeout($this->timeout);
         $process->run(function ($type, $buffer) {
             echo $buffer;
         });
-        $this->info('');
-        $this->info('Linking filemanager folder');
-        $filemanager_path = base_path('vendor/zafranf/zetthcore/src/resources/themes/AdminSC/plugins');
+
+        $this->info('Linking plugins folder');
+        if ($this->option('fresh')) {
+            if (file_exists('public/larafile')) {
+                $this->info('Removing "public/larafile" folder');
+                $process = new Process('cd ' . public_path() . ' && rm -rf larafile && cd ' . base_path());
+                $process->setTimeout($this->timeout);
+                $process->run(function ($type, $buffer) {
+                    echo $buffer;
+                });
+            }
+        }
+        $plugins_path = base_path('vendor/zafranf/zetthcore/src/resources/themes/AdminSC/plugins/filemanager');
+        $process = new Process('cd ' . public_path() . ' && ln -s ' . $plugins_path . ' larafile && cd ' . base_path());
+        $process->setTimeout($this->timeout);
+        $process->run(function ($type, $buffer) {
+            echo $buffer;
+        });
+        $this->info('The [public/larafile] directory has been linked.');
+
+        $this->info('Linking assets filemanager folder');
+        $filemanager_path = base_path('vendor/zafranf/zetthcore/src/resources/themes/AdminSC/plugins/filemanager/source/files');
+        if ($this->option('fresh')) {
+            if (file_exists('public/files')) {
+                $this->info('Removing "public/files" folder');
+                $process = new Process('cd ' . public_path() . ' && rm -rf files && cd ' . base_path());
+                $process->setTimeout($this->timeout);
+                $process->run(function ($type, $buffer) {
+                    echo $buffer;
+                });
+            }
+        }
         $process = new Process('cd ' . public_path() . ' && ln -s ' . $filemanager_path . ' && cd ' . base_path());
         $process->setTimeout($this->timeout);
         $process->run(function ($type, $buffer) {
             echo $buffer;
         });
+        $this->info('The [public/files] directory has been linked.');
         $this->info('Link folders finished!');
     }
 
