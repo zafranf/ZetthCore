@@ -57,6 +57,8 @@ class Install extends Command
         $this->migratingTable();
         $this->line('');
         $this->seedingTable();
+        $this->line('');
+        $this->linkFolders();
     }
 
     public function publishConfig()
@@ -100,6 +102,27 @@ class Install extends Command
             echo $buffer;
         });
         $this->info('Seeding finished!');
+    }
+
+    public function linkFolders()
+    {
+        $this->info('Link folders');
+        $this->info('');
+        $this->info('Linking storage folder');
+        $process = new Process('php artisan storage:link');
+        $process->setTimeout($this->timeout);
+        $process->run(function ($type, $buffer) {
+            echo $buffer;
+        });
+        $this->info('');
+        $this->info('Linking filemanager folder');
+        $filemanager_path = base_path('vendor/zafranf/zetthcore/src/resources/themes/AdminSC/plugins');
+        $process = new Process('cd ' . public_path() . ' && ln -s ' . $filemanager_path . ' && cd ' . base_path());
+        $process->setTimeout($this->timeout);
+        $process->run(function ($type, $buffer) {
+            echo $buffer;
+        });
+        $this->info('Link folders finished!');
     }
 
     public function process($command)

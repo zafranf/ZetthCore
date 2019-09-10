@@ -712,7 +712,7 @@ function check_extension($extension,$config){
 *
 * @return string
 */
-function sanitize_fm($str)
+function sanitize($str)
 {
 	return strip_tags(htmlspecialchars($str));
 }
@@ -730,7 +730,7 @@ function sanitize_fm($str)
 */
 function fix_filename($str, $config, $is_folder = false)
 {
-	$str = sanitize_fm($str);
+	$str = sanitize($str);
 	if ($config['convert_spaces'])
 	{
 		$str = str_replace(' ', $config['replace_with'], $str);
