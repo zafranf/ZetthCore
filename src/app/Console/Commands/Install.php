@@ -144,7 +144,6 @@ class Install extends Command
         $this->info('The [public/larafile] directory has been linked.');
 
         $this->info('Linking assets filemanager folder');
-        $filemanager_path = base_path('vendor/zafranf/zetthcore/src/resources/themes/AdminSC/plugins/filemanager/source/files');
         if ($this->option('fresh')) {
             if (file_exists('public/files')) {
                 $this->info('Removing "public/files" folder');
@@ -155,6 +154,7 @@ class Install extends Command
                 });
             }
         }
+        $filemanager_path = base_path('vendor/zafranf/zetthcore/src/resources/themes/AdminSC/plugins/filemanager/source/files');
         $process = new Process('cd ' . public_path() . ' && ln -s ' . $filemanager_path . ' && cd ' . base_path());
         $process->setTimeout($this->timeout);
         $process->run(function ($type, $buffer) {

@@ -232,7 +232,9 @@ class PostController extends AdminController
         $post->content = $r->input('content');
         $post->excerpt = $r->input('excerpt');
         $post->type = 'article';
-        $post->cover = $cover;
+        if ($r->input('cover')) {
+            $post->cover = $cover;
+        }
         if ($r->input('cover_remove')) {
             $post->cover = '';
         }

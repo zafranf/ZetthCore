@@ -27,7 +27,7 @@ if (isset($data->id) && ($key = array_search($data->id, $orders)) !== false) {;
 						<div>
 							<a href="{{ url('larafile/dialog.php?type=1&field_id=image&relative_url=0&fldr=images') }}/" class="btn btn-default zetth-upload-new" id="btn-upload" type="button">Pilih</a>
 							<a href="{{ url('larafile/dialog.php?type=1&field_id=image&relative_url=0&fldr=images') }}/" class="btn btn-default zetth-upload-exists" id="btn-upload" type="button">Ganti</a>
-							<a id="btn-remove" class="btn btn-default zetth-upload-exists" type="button">Hapus</a>
+							<a id="btn-remove" class="btn btn-default zetth-upload-exists" type="button">Batal</a>
 							<input name="image" id="image" type="hidden">
 						</div>
 					</div>
@@ -113,7 +113,7 @@ if (isset($data->id) && ($key = array_search($data->id, $orders)) !== false) {;
 				<div class="col-sm-offset-2 col-sm-4">
 					{{ isset($data->id) ? method_field('PUT') : '' }}
 					{{ csrf_field() }}
-          {{ _get_button_post($current_url, true, $data->id ?? '') }}
+					{{ _get_button_post($current_url, true, $data->id ?? '') }}
 				</div>
 			</div>
 		</form>

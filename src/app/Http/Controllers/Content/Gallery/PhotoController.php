@@ -19,15 +19,20 @@ class PhotoController extends AdminController
     public function __construct()
     {
         parent::__construct();
-        $this->current_url = url($this->adminPath . '/content/posts');
-        $this->page_title = 'Kelola Artikel';
+        $this->current_url = url($this->adminPath . '/content/gallery/photos');
+        $this->page_title = 'Kelola Foto';
         $this->breadcrumbs[] = [
             'page' => 'Konten',
             'icon' => '',
             'url' => url($this->adminPath . '/content/banners'),
         ];
         $this->breadcrumbs[] = [
-            'page' => 'Halaman',
+            'page' => 'Galeri',
+            'icon' => '',
+            'url' => url($this->adminPath . '/content/gallery/photos'),
+        ];
+        $this->breadcrumbs[] = [
+            'page' => 'Foto',
             'icon' => '',
             'url' => $this->current_url,
         ];
@@ -51,10 +56,10 @@ class PhotoController extends AdminController
             'current_url' => $this->current_url,
             'breadcrumbs' => $this->breadcrumbs,
             'page_title' => $this->page_title,
-            'page_subtitle' => 'Daftar Artikel',
+            'page_subtitle' => 'Daftar Album Foto',
         ];
 
-        return view('zetthcore::AdminSC.content.posts', $data);
+        return view('zetthcore::AdminSC.content.photo', $data);
     }
 
     /**

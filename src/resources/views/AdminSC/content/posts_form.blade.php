@@ -15,7 +15,7 @@
     }
   }
 
-  $urlFilemanager = url('/themes/admin/AdminSC/plugins/filemanager/dialog.php?type=1&field_id=cover&lang=id&fldr=/');
+  $urlFilemanager = url('/larafile/dialog.php?type=1&field_id=cover&lang=id&fldr=/images');
 @endphp
 @extends('zetthcore::AdminSC.layouts.main')
 
@@ -134,10 +134,10 @@
           <div class="form-group">
             <label for="time">Waktu</label><br>
             <div class="col-sm-6 col-xs-6 no-padding">
-              <input type="text" class="form-control" id="date" name="date" value="{{ isset($data) ? date("Y-m-d", strtotime($data->published_at)):date("Y-m-d") }}" placeholder="{{ isset($data) ? date("Y-m-d", strtotime($data->published_at)):date("Y-m-d") }}">
+              <input type="text" class="form-control" id="date" name="date" value="{{ isset($data) ? date("Y-m-d", strtotime($data->published_at)) : '' }}" placeholder="{{ isset($data) ? date("Y-m-d", strtotime($data->published_at)) : date("Y-m-d") }}">
             </div>
             <div class="col-sm-6 col-xs-6 no-padding">
-              <input type="text" class="form-control" id="time" name="time" value="{{ isset($data) ? date("H:i", strtotime($data->published_at)) : date("H:i") }}" placeholder="{{ isset($data) ? date("H:i", strtotime($data->published_at)) : date("H:i") }}">
+              <input type="text" class="form-control" id="time" name="time" value="{{ isset($data) ? date("H:i", strtotime($data->published_at)) : '' }}" placeholder="{{ isset($data) ? date("H:i", strtotime($data->published_at)) : date("H:i") }}">
             </div>
           </div>
           <div class="form-group btn-post">
@@ -317,8 +317,9 @@
     });
 
     function responsive_filemanager_callback(field_id){
-      var url = $('#'+field_id).val().replace(SITE_URL, "");
-      var img = '<img src="'+url+'">';
+      var val = $('#'+field_id).val();
+      var url = val.replace(SITE_URL, "");
+			var img = '<img src="'+url+'">';
       if (field_id.indexOf("featured") < 0) {
         $('.zetth-upload-new').hide();
         $('.zetth-upload-exists').show();
@@ -328,13 +329,13 @@
       }/*  else {
         url = url.replace('/storage/assets/images/upload/', "");
       } */
-      $('#'+field_id).val(url.replace('/storage', ''));
+      $('#'+field_id).val(url);
     }
 
     $(document).ready(function(){
       var wFB = window.innerWidth - 30;
       var hFB = window.innerHeight - 60;
-      // var fImage = {{ isset($data) ? count($data->images) : 1 }};
+      // var fImage = {{ isset($data->images) ? count($data->images) : 1 }};
       
       $('input').on('keypress', function(e){
         key = e.keyCode;
@@ -378,9 +379,9 @@
         image_advtab: true,
         image_caption: true,
         menubar: false,
-        external_filemanager_path:"{{ asset('/themes/admin/AdminSC/plugins/filemanager/') }}/",
+        external_filemanager_path:"{{ asset('larafile/') }}/",
         filemanager_title:"Filemanager",
-        filemanager_folder: '/',
+        filemanager_folder: '/images',
         filemanager_language: 'id',
         external_plugins: { "filemanager" : "{{ asset('/themes/admin/AdminSC/plugins/filemanager/plugin.min.js') }}" }
       });
