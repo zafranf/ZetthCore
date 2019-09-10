@@ -143,8 +143,7 @@ $cur_dir		= $config['upload_dir'].$rfm_subfolder.$subdir;
 $cur_dir_thumb	= $config['thumbs_upload_dir'].$rfm_subfolder.$subdir;
 $thumbs_path	= $config['thumbs_base_path'].$rfm_subfolder.$subdir;
 $parent			= $rfm_subfolder.$subdir;
-// die(__DIR__);
-die(normalizePath(__DIR__.$cur_dir));
+
 if ($ftp) {
     $cur_dir = $config['ftp_base_folder'] . $cur_dir;
     $cur_dir_thumb = $config['ftp_base_folder'] . $cur_dir_thumb;
