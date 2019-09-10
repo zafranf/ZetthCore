@@ -27,7 +27,7 @@ class PostController extends AdminController
             'url' => url($this->adminPath . '/content/banners'),
         ];
         $this->breadcrumbs[] = [
-            'page' => 'Halaman',
+            'page' => 'Artikel',
             'icon' => '',
             'url' => $this->current_url,
         ];
