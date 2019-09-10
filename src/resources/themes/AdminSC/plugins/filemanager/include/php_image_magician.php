@@ -2719,27 +2719,25 @@ class imageLib {
 			}
 		};
 
-		// *** Get extension / image type
-		$extension = mime_content_type($file);
+		// *** Get extension
+		$extension = strrchr($file, '.');
 		$extension = fix_strtolower($extension);
-		$extension = str_replace('image/', '', $extension);
 		switch ($extension)
 		{
-			case 'jpg':
-			case 'jpeg':
+			case '.jpg':
+			case '.jpeg':
 				$img = @imagecreatefromjpeg($file);
 				break;
-			case 'gif':
+			case '.gif':
 				$img = @imagecreatefromgif($file);
 				break;
-			case 'png':
+			case '.png':
 				$img = @imagecreatefrompng($file);
 				break;
-			case 'bmp':
+			case '.bmp':
 				$img = @$this->imagecreatefrombmp($file);
 				break;
-			case 'psd':
-			case 'vnd.adobe.photoshop':
+			case '.psd':
 				$img = @$this->imagecreatefrompsd($file);
 				break;
 
