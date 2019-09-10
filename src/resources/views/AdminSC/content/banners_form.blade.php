@@ -1,10 +1,23 @@
 @extends('zetthcore::AdminSC.layouts.main')
 
+@php
+/* mapping order to array */
+$orders = collect($banners)->map(function($arr) use ($data) {
+    return $arr->id;
+})->toArray();
+
+/* remove current id */
+if (isset($data->id) && ($key = array_search($data->id, $orders)) !== false) {;
+  unset($orders[$key]);
+}
+@endphp
+
 @section('content')
 	<div class="panel-body">
-		<form class="form-horizontal" action="{{ url($current_url) }}{{ isset($data) ? '/' . $data->id : '' }}" method="post" enctype="multipart/form-data">
+		<form class="form-horizontal" action="{{ url($current_url) }}{{ isset($data->id) ? '/' . $data->id : '' }}" method="post" enctype="multipart/form-data">
 			<div class="form-group">
-				<label for="banner_image" class="col-sm-2 control-label">Banner Image <abbr data-toggle="tooltip" data-placement="top" title="Size 1600x600"><i class="fa fa-question-circle"></i></abbr></label>
+				<label for="image" class="col-sm-2 control-label">Gambar Spanduk 
+          <small class="help-block">Maksimal dimensi spanduk adalah 1600x600 px dengan ukuran maksimal 1024 KB</small></label>
 				<div class="col-sm-4">
 					<div class="zetth-upload">
 						<div class="zetth-upload-new thumbnail">
@@ -12,72 +25,86 @@
 						</div>
 						<div class="zetth-upload-exists thumbnail"></div>
 						<div>
-							<a href="{{ url('larafile/dialog.php?type=1&field_id=banner_image&relative_url=0&fldr=images') }}/" class="btn btn-default zetth-upload-new" id="btn-upload" type="button">Select</a>
-							<a href="{{ url('larafile/dialog.php?type=1&field_id=banner_image&relative_url=0&fldr=images') }}/" class="btn btn-default zetth-upload-exists" id="btn-upload" type="button">Change</a>
-							<a id="btn-remove" class="btn btn-default zetth-upload-exists" type="button">Remove</a>
-							<input name="banner_image" id="banner_image" type="hidden">
+							<a href="{{ url('larafile/dialog.php?type=1&field_id=image&relative_url=0&fldr=images') }}/" class="btn btn-default zetth-upload-new" id="btn-upload" type="button">Pilih</a>
+							<a href="{{ url('larafile/dialog.php?type=1&field_id=image&relative_url=0&fldr=images') }}/" class="btn btn-default zetth-upload-exists" id="btn-upload" type="button">Ganti</a>
+							<a id="btn-remove" class="btn btn-default zetth-upload-exists" type="button">Hapus</a>
+							<input name="image" id="image" type="hidden">
 						</div>
 					</div>
 				</div>
 			</div>
 			<div class="form-group">
-				<label for="banner_title" class="col-sm-2 control-label">Title</label>
+				<label for="title" class="col-sm-2 control-label">Judul</label>
 				<div class="col-sm-4">
-					<input type="text" class="form-control autofocus" id="banner_title" name="banner_title" value="{{ isset($data->id)?$data->title:'' }}" maxlength="100" placeholder="Title">
+					<input type="text" class="form-control autofocus" id="title" name="title" value="{{ isset($data->id) ? $data->title : '' }}" maxlength="100" placeholder="Judul spanduk..">
 				</div>
 			</div>
 			<div class="form-group">
-				<label for="banner_description" class="col-sm-2 control-label">Description</label>
+				<label for="description" class="col-sm-2 control-label">Sub Judul</label>
 				<div class="col-sm-4">
-					<textarea id="banner_description" name="banner_description" class="form-control" placeholder="Type the description here..">{{ isset($data->id)?$data->description:'' }}</textarea>
+					<textarea id="description" name="description" class="form-control" placeholder="Sub judul spanduk..">{{ isset($data->id) ? $data->description : '' }}</textarea>
 				</div>
 			</div>
 			<div class="form-group">
-				<label for="banner_url" class="col-sm-2 control-label">URL</label>
+				<label for="url" class="col-sm-2 control-label">Tautan</label>
 				<div class="col-sm-4">
-					<select id="banner_url" name="banner_url" class="form-control select2">
-						<option value="#">[None]</option>
-						<option value="/">Home</option>
-						<option value="external" {{ (isset($data->id) && $data->url_ext)?'selected':'' }}>External Link</option>
-						<?php $type = ''; ?>
-							{{-- @foreach($post_opt as $n => $post)
-								@if ($type!=$post->post_type)
-									{!! ($n>0)?'</optgroup>':'' !!}
-									@php($type=($post->post_type=="video")?"Video":$post->post_type)
+					<select id="url" name="url" class="form-control select2">
+						<option value="#">[Tidak ada]</option>
+						<option value="external" {{ (isset($data->id) && ($data->url_external) ) ? 'selected' : '' }}>[Tautan Luar]</option>
+						<option value="/" {{ (isset($data->id) && $data->url == "/" ) ? 'selected' : '' }}>Beranda</option>
+						@php $type = ''; @endphp
+							@foreach($post_opts as $n => $post)
+								@if ($type != $post->type)
+									{!! ($n > 0) ? '</optgroup>' : '' !!}
+									@php $type = $post->type @endphp
 									<optgroup label="{{ ucfirst($type) }}">
 								@endif
-								@if ($post->post_type=="video")
-									<option value="{{ $post->post_slug }}" {{ $post->post_slug=="#"?'disabled':'' }}  {{ (isset($data->id) && $post->post_slug==$data->url)?'selected':'' }}>{{ $post->post_title }}</option>
+								@if ($post->type == "video")
+									<option value="{{ $post->slug }}" {{ $post->slug == "#" ? 'disabled' : '' }} {{ (isset($data->id) && $post->slug == $data->url) ? 'selected' : '' }}>{{ $post->title }}</option>
 								@endif
-								@if ($post->post_type=="page")
-									<option value="{{ $post->post_slug }}" {{ $post->post_slug=="#"?'disabled':'' }}  {{ (isset($data->id) && $post->post_slug==$data->url)?'selected':'' }}>{{ $post->post_title }}</option>
+								@if ($post->type=="page")
+									<option value="{{ $post->slug }}" {{ $post->slug == "#" ? 'disabled' : '' }} {{ (isset($data->id) && $post->slug == $data->url)?'selected':'' }}>{{ $post->title }}</option>
 								@endif
-								@if ($post->post_type=="article")
-									<option value="{{ 'article/'.$post->post_slug }}" {{ $post->post_slug=="#"?'disabled':'' }}  {{ (isset($data->id) && 'article/'.$post->post_slug==$data->url)?'selected':'' }}>{{ $post->post_title }}</option>
+								@if ($post->type=="article")
+									<option value="{{ 'article/' . $post->slug }}" {{ $post->slug == "#" ? 'disabled' : '' }} {{ (isset($data->id) && 'article/' . $post->slug == $data->url) ? 'selected' : '' }}>{{ $post->title }}</option>
 								@endif
-							@endforeach --}}
+							@endforeach
 					</select>
-					<input type="text" class="form-control" id="banner_url_ext" name="banner_url_ext" value="{{ isset($data->id)?$data->url:'' }}" placeholder="http://external.link" {!! (isset($data->id) && ($data->url_ext))?'style="margin-top:5px;"':'style="margin-top:5px;display:none;" disabled' !!}>
+					<input type="text" class="form-control" id="url_external" name="url_external" value="{{ isset($data->id) ? $data->url : '' }}" placeholder="http://external.link" {!! (isset($data->id) && ($data->url_external)) ? 'style="margin-top:5px;"' : 'style="margin-top:5px;display:none;" disabled' !!}>
 				</div>
 			</div>
 			<div class="form-group">
-				<label for="banner_target" class="col-sm-2 control-label">Target</label>
+				<label for="target" class="col-sm-2 control-label">Target</label>
 				<div class="col-sm-4">
 					<select class="form-control custom-select2" name="target" id="target">
-					  <option value="_self" {{ isset($data) && ($data->target == "_self") ? 'selected' : '' }}>Jendela Aktif</option>
-					  <option value="_blank" {{ isset($data) && ($data->target == "_blank") ? 'selected' : '' }}>Jendela Baru</option>
+					  <option value="_self" {{ isset($data->id) && ($data->target == "_self") ? 'selected' : '' }}>Jendela Aktif</option>
+					  <option value="_blank" {{ isset($data->id) && ($data->target == "_blank") ? 'selected' : '' }}>Jendela Baru</option>
 					</select>
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="target" class="col-sm-2 control-label">Urutan</label>
+				<div class="col-sm-4">
+					<input type="hidden" name="orders" value="{{ implode(',', $orders) }}">
+          <select id="order" name="order" class="form-control custom-select2">
+            <option value="first">Pertama</option>
+            @foreach ($banners as $banner)
+              @if (!isset($data->id) || (isset($data->id) && $banner->id != $data->id))
+                <option value="{{ $banner->id }}" {{ (isset($data->id) && ($banner->order == ($data->order - 1))) ? 'selected' : '' }}>Setelah {{ $banner->title != '' ? $banner->title : $banner->order }}</option>
+              @endif
+            @endforeach
+          </select>
 				</div>
 			</div>
 			<div class="form-group">
 				<div class="col-sm-offset-2 col-sm-4">
 					<div class="checkbox">
 						<label>
-							<input type="checkbox" name="banner_status" {{ (isset($data->status) && $data->status==0)?'':'checked' }}> Active
+							<input type="checkbox" name="status" {{ (isset($data->id) && $data->status == 0) ? '' : 'checked' }}> Aktif
 						</label>
 						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 						<label>
-							<input type="checkbox" name="banner_only" {{ (isset($data->only) && $data->only==1)?'checked':'' }}> Image Only
+							<input type="checkbox" name="only_image" {{ (isset($data->id) && $data->only_image==1) ? 'checked' : '' }}> Hanya Gambar
 						</label>
 					</div>
 				</div>
@@ -86,7 +113,7 @@
 				<div class="col-sm-offset-2 col-sm-4">
 					{{ isset($data->id) ? method_field('PUT') : '' }}
 					{{ csrf_field() }}
-					{{ _get_button_post() }}
+          {{ _get_button_post($current_url, true, $data->id ?? '') }}
 				</div>
 			</div>
 		</form>
@@ -116,8 +143,9 @@
 		$(function(){
 			$(".select2").select2({
 				placeholder: "[None]"
-			});
-			$(".zetth-select").select2({
+      });
+      
+			$(".custom-select2").select2({
 				minimumResultsForSearch: Infinity
 			});
 		});
@@ -129,7 +157,8 @@
 			$('.zetth-upload-new').hide();
 			$('.zetth-upload-exists').show();
 			$('.zetth-upload-exists.thumbnail').html(img);
-			$('#banner_image_remove').attr("checked", false);
+      $('#image_remove').attr("checked", false);
+      $('#'+field_id).val(url);
 		}
 
 		$(document).ready(function(){
@@ -141,10 +170,10 @@
 				hFB = window.innerHeight - 60;
 
 			$('.select2').on('change',function(){
-				if ($('#banner_url').val()=="external"){
-					$('#banner_url_ext').attr("disabled", false).show();
+				if ($('#url').val()=="external"){
+					$('#url_ext').attr("disabled", false).show();
 				}else{
-					$('#banner_url_ext').attr("disabled", true).hide();
+					$('#url_ext').attr("disabled", true).hide();
 				}
 			});
 			$('#btn-upload').fancybox({

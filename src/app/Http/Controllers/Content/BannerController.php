@@ -5,6 +5,7 @@ namespace ZetthCore\Http\Controllers\Content;
 use Illuminate\Http\Request;
 use ZetthCore\Http\Controllers\AdminController;
 use ZetthCore\Models\Banner;
+use ZetthCore\Models\Post;
 
 class BannerController extends AdminController
 {
@@ -38,6 +39,7 @@ class BannerController extends AdminController
      */
     public function index()
     {
+        /* set breadcrumbs */
         $this->breadcrumbs[] = [
             'page' => 'Daftar',
             'icon' => '',
@@ -62,11 +64,15 @@ class BannerController extends AdminController
      */
     public function create()
     {
+        /* set breadcrumbs */
         $this->breadcrumbs[] = [
             'page' => 'Tambah',
             'icon' => '',
             'url' => '',
         ];
+
+        /* get additional data */
+        $additional = $this->getAdditionalData();
 
         /* set variable for view */
         $data = [
@@ -74,6 +80,9 @@ class BannerController extends AdminController
             'breadcrumbs' => $this->breadcrumbs,
             'page_title' => $this->page_title,
             'page_subtitle' => 'Tambah Spanduk',
+            'banners' => $additional['banners'],
+            'post_opts' => $additional['posts'],
+            'data' => [],
         ];
 
         return view('zetthcore::AdminSC.content.banners_form', $data);
@@ -91,27 +100,26 @@ class BannerController extends AdminController
         $orders = explode(',', $r->input('orders'));
 
         /* validation */
+        $validate = [
+            'title' => 'required',
+            'description' => 'required',
+            'image' => 'required',
+        ];
         if (bool($r->input('only_image'))) {
             $validate = [
-                'image' => 'mimes:jpg,jpeg,png,svg|max:200|dimensions:max_width=500,max_height=500',
-            ];
-        } else {
-            $validate = [
-                'title' => 'required',
-                'description' => 'required',
-                'image' => 'mimes:jpg,jpeg,png,svg|max:200|dimensions:max_width=500,max_height=500',
+                'image' => 'required',
             ];
         }
         $this->validate($r, $validate);
 
         /* save data */
         $banner = new Banner;
-        $banner->title = str_sanitize($r->input('title'));
-        $banner->description = str_sanitize($r->input('description'));
-        $banner->url = str_sanitize($r->input('url'));
+        $banner->title = $r->input('title');
+        $banner->description = $r->input('description');
+        $banner->url = $r->input('url');
         $banner->url_external = bool($r->input('url_external')) ? 1 : 0;
-        $banner->target = str_sanitize($r->input('target'));
-        // $banner->order = $order;
+        $banner->target = $r->input('target');
+        $banner->image = $r->input('image');
         $banner->only_image = bool($r->input('only_image')) ? 1 : 0;
         $banner->status = bool($r->input('status')) ? 1 : 0;
         $banner->save();
@@ -124,23 +132,6 @@ class BannerController extends AdminController
             array_splice($orders, ($key + 1), 0, $banner->id);
         }
         $this->sortQuery($r, $orders);
-
-        /* upload image */
-        if ($r->hasFile('image')) {
-            $file = $r->file('image');
-            $par = [
-                'file' => $file,
-                'folder' => '/assets/images/banner/',
-                'name' => str_slug(pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME)),
-                'type' => $file->getMimeType(),
-                'ext' => pathinfo($file->getClientOriginalName(), PATHINFO_EXTENSION),
-            ];
-
-            if ($this->uploadImage($par)) {
-                $banner->image = $par['name'] . '.' . $par['ext'];
-                $banner->save();
-            }
-        }
 
         /* log aktifitas */
         $this->activityLog('<b>' . \Auth::user()->fullname . '</b> menambahkan Spanduk "' . $banner->title . '"');
@@ -167,19 +158,28 @@ class BannerController extends AdminController
      */
     public function edit(Banner $banner)
     {
-        /* get data */
-        $banners = Banner::select('id', 'order', 'title')->orderBy('order')->get();
+        /* set breadcrumbs */
+        $this->breadcrumbs[] = [
+            'page' => 'Edit',
+            'icon' => '',
+            'url' => '',
+        ];
+
+        /* get additional data */
+        $additional = $this->getAdditionalData();
 
         /* set variable for view */
         $data = [
             'current_url' => $this->current_url,
+            'breadcrumbs' => $this->breadcrumbs,
             'page_title' => $this->page_title,
             'page_subtitle' => 'Edit Spanduk',
-            'banners' => $banners,
+            'banners' => $additional['banners'],
+            'post_opts' => $additional['posts'],
             'data' => $banner,
         ];
 
-        return view('admin.content.banner_form', $data);
+        return view('zetthcore::AdminSC.content.banners_form', $data);
     }
 
     /**
@@ -195,26 +195,27 @@ class BannerController extends AdminController
         $orders = explode(',', $r->input('orders'));
 
         /* validation */
+        $validate = [
+            'title' => 'required',
+            'description' => 'required',
+            // 'image' => 'required',
+        ];
         if (bool($r->input('only_image'))) {
             $validate = [
-                'image' => 'mimes:jpg,jpeg,png,svg|max:200|dimensions:max_width=500,max_height=500',
-            ];
-        } else {
-            $validate = [
-                'title' => 'required',
-                'description' => 'required',
-                'image' => 'mimes:jpg,jpeg,png,svg|max:200|dimensions:max_width=500,max_height=500',
+                // 'image' => 'required',
             ];
         }
         $this->validate($r, $validate);
 
         /* save data */
-        $banner->title = str_sanitize($r->input('title'));
-        $banner->description = str_sanitize($r->input('description'));
-        $banner->url = str_sanitize($r->input('url'));
+        $banner->title = $r->input('title');
+        $banner->description = $r->input('description');
+        $banner->url = $r->input('url');
         $banner->url_external = bool($r->input('url_external')) ? 1 : 0;
-        $banner->target = str_sanitize($r->input('target'));
-        // $banner->order = $order;
+        $banner->target = $r->input('target');
+        if ($r->input('image')) {
+            $banner->image = $r->input('image');
+        }
         $banner->only_image = bool($r->input('only_image')) ? 1 : 0;
         $banner->status = bool($r->input('status')) ? 1 : 0;
         $banner->save();
@@ -227,23 +228,6 @@ class BannerController extends AdminController
             array_splice($orders, ($key + 1), 0, $banner->id);
         }
         $this->sortQuery($r, $orders);
-
-        /* upload image */
-        if ($r->hasFile('image')) {
-            $file = $r->file('image');
-            $par = [
-                'file' => $file,
-                'folder' => '/assets/images/banner/',
-                'name' => str_slug(pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME)),
-                'type' => $file->getMimeType(),
-                'ext' => pathinfo($file->getClientOriginalName(), PATHINFO_EXTENSION),
-            ];
-
-            if ($this->uploadImage($par)) {
-                $banner->image = $par['name'] . '.' . $par['ext'];
-                $banner->save();
-            }
-        }
 
         /* log aktifitas */
         $this->activityLog('<b>' . \Auth::user()->fullname . '</b> memperbarui Spanduk "' . $banner->title . '"');
@@ -349,5 +333,34 @@ class BannerController extends AdminController
         }
 
         return $updates;
+    }
+
+    public function getAdditionalData()
+    {
+        /* get banners */
+        $banners = Banner::select('id', 'order', 'title')->orderBy('order')->get();
+
+        /* get ~30 posts */
+        $pages = Post::select('type', 'slug', 'title')->where([
+            'type' => 'page',
+            'status' => 1,
+        ])->take(10)->get();
+        $articles = Post::select('type', 'slug', 'title')->where([
+            'type' => 'article',
+            'status' => 1,
+        ])->take(10)->get();
+        $videos = Post::select('type', 'slug', 'title')->where([
+            'type' => 'video',
+            'status' => 1,
+        ])->take(10)->get();
+        $posts = collect();
+        $posts = $posts->merge($pages);
+        $posts = $posts->merge($articles);
+        $posts = $posts->merge($videos);
+
+        return [
+            'banners' => $banners,
+            'posts' => $posts,
+        ];
     }
 }

@@ -28,8 +28,6 @@
             <option value="#">[Tidak ada]</option>
             <option value="external" {{ (isset($data) && ($data->url_external) ) ? 'selected' : '' }}>[Tautan Luar]</option>
             <option value="/" {{ (isset($data) && $data->url == "/" ) ? 'selected' : '' }}>Beranda</option>
-            <option value="/pages" {{ (isset($data) && $data->url == "/pages" ) ? 'selected' : '' }}>Halaman</option>
-            <option value="/articles" {{ (isset($data) && $data->url == "/articles" ) ? 'selected' : '' }}>Artikel</option>
             {{-- <option value="/albums">Album Foto</option>
             <option value="/videos">Video</option> --}}
             {{-- @php $type = ''; @endphp

@@ -106,9 +106,13 @@ if (!function_exists('_get_image')) {
     function _get_image($image = "", $default = '/assets/images/default.jpg')
     {
         $img = storage_path('app/public/' . $image);
+        $fm = base_path('vendor/zafranf/zetthcore/src/resources/themes/AdminSC/plugins/filemanager/source' . $image);
         if (file_exists($img) && !is_dir($img)) {
             $mtime = filemtime($img);
             $img = url('/storage/' . $image) . '?v=' . $mtime;
+        } else if (file_exists($fm) && !is_dir($fm)) {
+            $mtime = filemtime($fm);
+            $img = url($image) . '?v=' . $mtime;
         } else {
             $img = url($default);
         }
