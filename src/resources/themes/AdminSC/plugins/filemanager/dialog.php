@@ -3,38 +3,6 @@ $time = time();
 
 $config = include 'config/config.php';
 
-function normalizePath($path)
-{
-    $parts = array();// Array to build a new path from the good parts
-    $path = str_replace('\\', '/', $path);// Replace backslashes with forwardslashes
-    $path = preg_replace('/\/+/', '/', $path);// Combine multiple slashes into a single slash
-    $segments = explode('/', $path);// Collect path segments
-    $test = '';// Initialize testing variable
-    foreach($segments as $segment)
-    {
-        if($segment != '.')
-        {
-            $test = array_pop($parts);
-            if(is_null($test))
-                $parts[] = $segment;
-            else if($segment == '..')
-            {
-                if($test == '..')
-                    $parts[] = $test;
-
-                if($test == '..' || $test == '')
-                    $parts[] = $segment;
-            }
-            else
-            {
-                $parts[] = $test;
-                $parts[] = $segment;
-            }
-        }
-    }
-    return implode('/', $parts);
-}
-
 if (USE_ACCESS_KEYS == true){
 	if (!isset($_GET['akey'], $config['access_keys']) || empty($config['access_keys'])){
 		die('Access Denied!');
@@ -363,6 +331,16 @@ $get_params = http_build_query($get_params);
             }
         </style>
         <![endif]-->
+        <style>
+            .breadcrumb {
+                position: fixed;
+                z-index: 2;
+                width: 100%;
+            }
+            .ff-container {
+                margin-top: 50px;
+            }
+        </style>
 
         <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
         <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js" integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU=" crossorigin="anonymous"></script>
@@ -792,6 +770,10 @@ if ($subdir != "") {
 }
 
 $files = $sorted;
+
+include 'include/pagination.class.php';
+$pagination = new pagination($files, (isset($_GET['page']) ? $_GET['page'] : 1), 50);
+$files = $pagination->getResults();
 ?>
 <!-- header div start -->
 <div class="navbar navbar-fixed-top">
@@ -883,7 +865,7 @@ $files = $sorted;
     <?php
     $link = "dialog.php?" . $get_params;
     ?>
-    <ul class="breadcrumb">
+    <ul class="breadcrumb navbar-fixed-top" style="top:36px;">
     <li class="pull-left"><a href="<?php echo $link?>/"><i class="icon-home"></i></a></li>
     <li><span class="divider">/</span></li>
     <?php
@@ -955,8 +937,6 @@ $files = $sorted;
         <!--ul class="thumbnails ff-items"-->
         <ul class="grid cs-style-2 <?php echo "list-view".$view;?>" id="main-item-container">
         <?php
-
-
         foreach ($files as $file_array) {
             $file=$file_array['file'];
             if($file == '.' || ( substr($file, 0, 1) == '.' && isset( $file_array[ 'extension' ] ) && $file_array[ 'extension' ] == fix_strtolower(trans( 'Type_dir' ) )) || (isset($file_array['extension']) && $file_array['extension']!=fix_strtolower(trans('Type_dir'))) || ($file == '..' && $subdir == '') || in_array($file, $config['hidden_folders']) || ($filter!='' && $n_files>$config['file_number_limit_js'] && $file!=".." && stripos($file,$filter)===false)){
@@ -1256,9 +1236,21 @@ $files = $sorted;
         </ul>
         <?php } ?>
     </div>
+<style>
+.pagination {
+  margin-bottom: 1px;
+  margin-right: 1px;
+}   
+.pagination a {
+  color: black;
+}
+</style>
+<?php 
+parse_str($get_params.rawurlencode($src), $page_params);
+echo $pageNumbers = '<div class="pagination navbar-fixed-bottom"><ul class="" style="float:right;" >'.$pagination->getLinks($page_params).'</ul></div>';
+?>
     </div>
 </div>
-
 <script>
     var files_prevent_duplicate = [];
     <?php foreach ($files_prevent_duplicate as $key => $value): ?>

@@ -12,8 +12,8 @@
 						</div>
 						<div class="zetth-upload-exists thumbnail"></div>
 						<div>
-							<a href="{{ url('assets/plugins/filemanager/dialog.php?type=1&field_id=banner_image&relative_url=1&fldr=') }}/" class="btn btn-default zetth-upload-new" id="btn-upload" type="button">Select</a>
-							<a href="{{ url('assets/plugins/filemanager/dialog.php?type=1&field_id=banner_image&relative_url=1&fldr=') }}/" class="btn btn-default zetth-upload-exists" id="btn-upload" type="button">Change</a>
+							<a href="{{ url('larafile/dialog.php?type=1&field_id=banner_image&relative_url=0&fldr=images') }}/" class="btn btn-default zetth-upload-new" id="btn-upload" type="button">Select</a>
+							<a href="{{ url('larafile/dialog.php?type=1&field_id=banner_image&relative_url=0&fldr=images') }}/" class="btn btn-default zetth-upload-exists" id="btn-upload" type="button">Change</a>
 							<a id="btn-remove" class="btn btn-default zetth-upload-exists" type="button">Remove</a>
 							<input name="banner_image" id="banner_image" type="hidden">
 						</div>
@@ -94,6 +94,7 @@
 @endsection
 
 @section('styles')
+  {!! _admin_css('themes/admin/AdminSC/plugins/fancybox/2.1.5/css/jquery.fancybox.css') !!}
   {!! _admin_css('themes/admin/AdminSC/plugins/select2/4.0.0/css/select2.min.css') !!}
   <style>
     .zetth-upload a {
@@ -109,6 +110,7 @@
 @endsection
 
 @section('scripts')
+  {!! _admin_js('themes/admin/AdminSC/plugins/fancybox/2.1.5/js/jquery.fancybox.js') !!}
 	{!! _admin_js('themes/admin/AdminSC/plugins/select2/4.0.0/js/select2.min.js') !!}
 	<script>
 		$(function(){
@@ -121,7 +123,8 @@
 		});
 
 		function responsive_filemanager_callback(field_id){
-			var url = $('#'+field_id).val().replace(SITE_URL, "");
+      var val = $('#'+field_id).val();
+      var url = val.replace(SITE_URL, "");
 			var img = '<img src="'+url+'">';
 			$('.zetth-upload-new').hide();
 			$('.zetth-upload-exists').show();
