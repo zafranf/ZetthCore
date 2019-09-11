@@ -3,16 +3,16 @@
 @section('content')
     <div class="panel-body">
         <form class="form-horizontal" action="{{ url($current_url) }}{{ isset($data) ? '/' . $data->id : '' }}" method="post" enctype="multipart/form-data">
-            <div class="form-group" style="margin-top:20px;">
-                <label for="photo_title" class="col-sm-2 control-label">Nama Album</label>
+            <div class="form-group">
+                <label for="name" class="col-sm-2 control-label">Nama Album</label>
                 <div class="col-sm-4">
                     <input type="text" class="form-control autofocus" id="name" name="name" value="{{ isset($data->id) ? $data->name : '' }}" maxlength="100" placeholder="Nama album..">
                 </div>
             </div>
             <div class="form-group">
-                <label for="title" class="col-sm-2 control-label">Description</label>
+                <label for="description" class="col-sm-2 control-label">Deskripsi</label>
                 <div class="col-sm-4">
-                    <textarea class="form-control" name="description" placeholder="Penjelasan singkat tentang album..">{{ isset($data->id) ? $data->description : '' }}</textarea>
+                    <textarea class="form-control" id="description" name="description" placeholder="Penjelasan singkat tentang album..">{{ isset($data->id) ? $data->description : '' }}</textarea>
                 </div>
             </div>
             <div class="form-group">
@@ -155,26 +155,27 @@
             console.log('ini index',i)
             console.log('ini value',val)
             console.log('ini path',path)
+            addPhoto(val)
         })
     }
 
-    function addPhoto() {
+    function addPhoto(val) {
         var img = $('.fileinput-preview img').attr('src');
         var img_val = $('#photo_name').val();
         var img_file = $("#photo-file input")[1];
         var img_desc = $('#photo_description').val();
         $('#photo_name'+no_img).hide();
-        if (img_val!="" && typeof img!="undefined"){
+        if (val){//img_val!="" && typeof img!="undefined"){
             no_img++;
             var photo = '<div id="img'+no_img+'" class="col-sm-6 col-md-3 no-padding" style="margin-bottom:1px;">'+
                             '<div class="thumbnail" style="height:{{ $is_desktop ? '350px' : 'inherit' }};display:table-cell;width:inherit">'+
-                                '<img src="'+img+'" style="max-height:270px;"><div id="photo-box-file'+no_img+'"><div style="display:none;">'+img_file+'</div><textarea name="photo_description[]" class="form-control" style="position:absolute;bottom:0;left:0;height:80px;" placeholder="Keterangan foto..">'+img_desc+'</textarea></div>'+
+                                '<img src="'+val+'" style="max-height:270px;"><div id="photo-box-file'+no_img+'"><textarea name="photo_description[]" class="form-control" style="position:absolute;bottom:0;left:0;height:80px;" placeholder="Keterangan foto.."></textarea></div>'+
                                 // '<button class="btn btn-default btn-xs btn-xs-top-right" title="Edit Description" type="button" onclick="_edit2(\'#img'+no_img+'\')" style="right:26px;"><i class="fa fa-edit"></i></button>'+
                                 '<button class="btn btn-default btn-xs btn-xs-top-right" title="Remove Photo" type="button" onclick="_remove(\'#img'+no_img+'\')"><i class="fa fa-minus"></i></button>'+
                             '</div>'+
                         '</div>';
             $('#photo-box').append(photo);
-            $('#photo-box-file'+no_img).append(img_file);
+            // $('#photo-box-file'+no_img).append(img_file);
         }
         $('#zetth-modal').modal('hide');
         $('.modal-body').html('');
