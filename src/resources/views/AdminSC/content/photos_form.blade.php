@@ -34,9 +34,9 @@
             <hr>
             
             <div class="row">
-                <div class="col-sm-12 col-md-12" style="max-height: 720px;overflow: auto;" id="photo-box">
-                    <div class="col-sm-6 col-md-3 no-padding" style="margin-bottom:1px;cursor:pointer;" onclick="addPhotoModal()">
-                        <div class="thumbnail text-warning" style="height:{{ $is_desktop ? '350px' : '64px' }};display:table-cell;vertical-align:middle;text-align:center;width:inherit">
+                <div class="col-sm-12" style="max-height:500px;overflow:auto;" id="photo-box">
+                    <div class="col-sm-6 col-md-2 no-padding" style="margin-bottom:1px;cursor:pointer;" onclick="addPhotoModal()">
+                        <div class="thumbnail text-warning" style="height:{{ $is_desktop ? '150px' : '64px' }};display:table-cell;vertical-align:middle;text-align:center;width:inherit">
                             <i class="fa fa-plus" style="font-size: {{ $is_desktop ? '80px' : '25px' }};"></i>
                             <br>
                             <span class="" style="font-size: {{ $is_desktop ? '32px' : '11px' }};">Tambah Foto</span>
@@ -47,8 +47,8 @@
                     @if (isset($data->photos))
                       @foreach($data->photos as $photo)
                         <div id="img{{ ++$no_img }}" class="col-sm-6 col-md-2 no-padding" style="margin-bottom:1px;">
-                            <div class="thumbnail" style="height:{{ $is_desktop ? '350px' : '64px' }};display:table-cell;width:inherit;position:relative;">
-                                <img src="{{ _get_image('assets/images/upload/'.$photo->name) }}" style="max-height:170px;"><div id="zetth-process{{ $no_img }}" class="zetth-process">
+                            <div class="thumbnail" style="height:{{ $is_desktop ? '150px' : '64px' }};display:table-cell;width:inherit;position:relative;">
+                                <img src="{{ _get_image('assets/images/upload/'.$photo->name) }}" style="max-height:100px;"><div id="zetth-process{{ $no_img }}" class="zetth-process">
                                 <img class="zetth-loading" src="{{ url('assets/images/loading.gif') }}"></div>
                                 <button class="btn btn-default btn-xs btn-xs-top-right" title="Edit Description" type="button" onclick="_edit2('{{ $no_img }}', '{{ $photo->name }}')" style="right:26px;"><i class="fa fa-edit"></i></button>
                                 <button class="btn btn-default btn-xs btn-xs-top-right" title="Remove Photo" type="button" onclick="_remove2('{{ $no_img }}', '{{ $photo->name }}')"><i class="fa fa-minus"></i></button>
@@ -100,85 +100,58 @@
     });
 
     function addPhotoModal() {
-        if (no_img>=max_img){
-            return alert('Max upload photo is '+max_img);
+        if (no_img >= max_img){
+            alert('Max upload photo is '+max_img);
+            return;
+        } else {
+            $.fancybox({
+                href : '{!! url('/larafile-standalone/dialog.php?type=1&field_id=input_tmp&lang=id&fldr=/images') !!}',
+                type : 'iframe',
+                autoScale : false,
+                autoSize : true,
+                beforeLoad : function() {
+                    this.width  = wFB;
+                    this.height = hFB;
+                }
+            });
         }
-        $('#photo-box').fancybox({
-          href : '{!! url('/larafile-standalone/dialog.php?type=1&field_id=input_tmp&lang=id&fldr=/images') !!}',
-          type : 'iframe',
-          autoScale : false,
-          autoSize : true,
-          beforeLoad : function() {
-            this.width  = wFB;
-            this.height = hFB;
-          }/*,
-          afterClose : function(){
-            alert('from iframe btn');
-          }*/
-        });
-        /* var html = 'Photo:<br>'+
-                    '<div class="fileinput fileinput-new" data-provides="fileinput">'+
-                        '<div class="fileinput-new thumbnail">'+
-                            '<img src="{{ url('themes/admin/AdminSC/images/no-image.png') }}">'+
-                        '</div>'+
-                        '<div class="fileinput-preview fileinput-exists thumbnail"></div>'+
-                        '<div id="photo-file">'+
-                            '<span class="btn btn-default btn-file">'+
-                                '<span class="fileinput-new">Pilih</span>'+
-                                '<span class="fileinput-exists">Ganti</span>'+
-                                '<input name="photo_name[]" id="photo_name'+no_img+'" type="file" accept="image/*">'+
-                            '</span>'+
-                            '<a href="#" class="btn btn-default fileinput-exists" data-dismiss="fileinput">Batal</a>'+
-                        '</div>'+
-                    '</div>';
-        html += 'Description:<br><textarea name="photo_description[]" id="photo_description" class="form-control" placeholder="Photo Description"></textarea>';
-        $('#zetth-modal').modal('show');
-        $('.modal-title').text('Add Photo');
-        $('.modal-body').html(html);
-        $('.modal-footer').html('<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button><button type="button" class="btn btn-warning" onclick="addPhoto()">Add</button>'); */
     }
 
     function responsive_filemanager_callback(field_id){
         var vals = $('#input_tmp').val();
-        console.log('ini vals', vals);
-        console.log('tipe', typeof vals);
         try {
             vals = JSON.parse(vals);
         } catch (e) {
-            vals = JSON.parse('["'+vals+'"]')
+            vals = JSON.parse('["'+vals+'"]');
         }
-        console.log('ini vals', vals);
-        console.log('tipe', typeof vals);
-        console.log('ini vals length', vals.length);
         $.each(vals, function(i,val) {
             var path = val.replace(SITE_URL, "");
-            console.log('ini index',i)
-            console.log('ini value',val)
-            console.log('ini path',path)
-            addPhoto(val)
-        })
+            addPhoto(path);
+        });
     }
 
     function addPhoto(val) {
-        var img = $('.fileinput-preview img').attr('src');
-        var img_val = $('#photo_name').val();
-        var img_file = $("#photo-file input")[1];
-        var img_desc = $('#photo_description').val();
-        $('#photo_name'+no_img).hide();
-        if (val){//img_val!="" && typeof img!="undefined"){
-            no_img++;
-            var photo = '<div id="img'+no_img+'" class="col-sm-6 col-md-3 no-padding" style="margin-bottom:1px;">'+
-                            '<div class="thumbnail" style="height:{{ $is_desktop ? '350px' : 'inherit' }};display:table-cell;width:inherit">'+
-                                '<img src="'+val+'" style="max-height:270px;"><div id="photo-box-file'+no_img+'"><textarea name="photo_description[]" class="form-control" style="position:absolute;bottom:0;left:0;height:80px;" placeholder="Keterangan foto.."></textarea></div>'+
-                                // '<button class="btn btn-default btn-xs btn-xs-top-right" title="Edit Description" type="button" onclick="_edit2(\'#img'+no_img+'\')" style="right:26px;"><i class="fa fa-edit"></i></button>'+
+        no_img++;
+        if (no_img >= max_img) {
+            if (no_img == max_img) {
+                setTimeout(function() {
+                    alert('Max upload photo is '+max_img);
+                }, 500);
+            }
+
+            return;
+        }
+        if (val) {
+            var photo = '<div id="img'+no_img+'" class="col-sm-6 col-md-2 no-padding" style="margin-bottom:1px;">'+
+                            '<div class="thumbnail" style="height:{{ $is_desktop ? '150px' : 'inherit' }};display:table-cell;width:inherit">'+
+                                '<img src="'+val+'" style="max-height:100px;">'+
+                                '<input type="hidden" name="photo_name[]" value="'+val+'">'+
+                                '<textarea name="photo_description[]" class="form-control" style="position:absolute;bottom:0;left:0;height:55px;" placeholder="Keterangan foto.."></textarea>'+
                                 '<button class="btn btn-default btn-xs btn-xs-top-right" title="Remove Photo" type="button" onclick="_remove(\'#img'+no_img+'\')"><i class="fa fa-minus"></i></button>'+
                             '</div>'+
                         '</div>';
             $('#photo-box').append(photo);
-            // $('#photo-box-file'+no_img).append(img_file);
         }
-        $('#zetth-modal').modal('hide');
-        $('.modal-body').html('');
     }
 
     function _remove2(id, name) {

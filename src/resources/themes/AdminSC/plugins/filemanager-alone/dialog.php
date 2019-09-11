@@ -332,14 +332,21 @@ $get_params = http_build_query($get_params);
         </style>
         <![endif]-->
         <style>
-            .breadcrumb {
-                position: fixed;
+            ul.breadcrumb {
+                /* position: fixed; */
                 z-index: 2;
                 width: 100%;
+                margin-bottom: 0;
+                border-bottom: unset;
             }
             .ff-container {
                 margin-top: 50px;
             }
+			@media (max-width: 767px) {
+				.ff-container {
+					margin-top: 10px;
+				}
+			}
         </style>
 
         <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
@@ -855,17 +862,10 @@ $files = $pagination->getResults();
         </div>
     </div>
     </div>
-</div>
-
-<!-- header div end -->
-
-    <!-- breadcrumb div start -->
-
-    <div class="row-fluid">
     <?php
     $link = "dialog.php?" . $get_params;
     ?>
-    <ul class="breadcrumb navbar-fixed-top" style="top:36px;">
+    <ul class="breadcrumb">
     <li class="pull-left"><a href="<?php echo $link?>/"><i class="icon-home"></i></a></li>
     <li><span class="divider">/</span></li>
     <?php
@@ -890,7 +890,7 @@ $files = $pagination->getResults();
 
 	<li class="pull-right">
 		<div class="btn-group">
-		<a class="btn dropdown-toggle sorting-btn" data-toggle="dropdown" href="#">
+		<a class="btn dropdown-toggle sorting-btn" data-toggle="dropdown" href="#" style="padding-bottom:0;padding-top:0;">
 		<i class="icon-signal"></i>
 		<span class="caret"></span>
 		</a>
@@ -909,8 +909,9 @@ $files = $pagination->getResults();
 	</li>
 	<?php } ?>
 	</ul>
-	</div>
-	<!-- breadcrumb div end -->
+</div>
+
+<!-- header div end -->
 	<div class="row-fluid ff-container">
 	<div class="span12">
 		<?php if( ($ftp && !$ftp->isDir($config['ftp_base_folder'].$config['upload_dir'].$rfm_subfolder.$subdir))  || (!$ftp && @opendir($config['current_path'].$rfm_subfolder.$subdir)===FALSE)){ ?>
