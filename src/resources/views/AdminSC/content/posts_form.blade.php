@@ -318,8 +318,8 @@
 
     function responsive_filemanager_callback(field_id){
       var val = $('#'+field_id).val();
-      var url = val.replace(SITE_URL, "");
-			var img = '<img src="'+url+'">';
+      var path = val.replace(SITE_URL, "");
+			var img = '<img src="'+path+'">';
       if (field_id.indexOf("featured") < 0) {
         $('.zetth-upload-new').hide();
         $('.zetth-upload-exists').show();
@@ -327,9 +327,9 @@
         $('#btn-remove').parent().show();
         $('#cover_remove').attr("checked", false);
       }/*  else {
-        url = url.replace('/storage/assets/images/upload/', "");
+        path = path.replace('/storage/assets/images/upload/', "");
       } */
-      $('#'+field_id).val(url);
+      $('#'+field_id).val(path);
     }
 
     $(document).ready(function(){

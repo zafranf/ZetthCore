@@ -40,6 +40,7 @@
                             <i class="fa fa-plus" style="font-size: {{ $is_desktop ? '80px' : '25px' }};"></i>
                             <br>
                             <span class="" style="font-size: {{ $is_desktop ? '32px' : '11px' }};">Tambah Foto</span>
+                            <input type="hidden" id="input_tmp">
                         </div>
                     </div>
                     @php $no_img=0 @endphp
@@ -103,7 +104,7 @@
             return alert('Max upload photo is '+max_img);
         }
         $('#photo-box').fancybox({
-          href : '{!! url('/larafile-standalone/dialog.php?type=1&field_id=cover&lang=id&fldr=/images') !!}',
+          href : '{!! url('/larafile-standalone/dialog.php?type=1&field_id=input_tmp&lang=id&fldr=/images') !!}',
           type : 'iframe',
           autoScale : false,
           autoSize : true,
@@ -138,7 +139,23 @@
     }
 
     function responsive_filemanager_callback(field_id){
-console.log(field_id);
+        var vals = $('#input_tmp').val();
+        console.log('ini vals', vals);
+        console.log('tipe', typeof vals);
+        try {
+            vals = JSON.parse(vals);
+        } catch (e) {
+            vals = JSON.parse('["'+vals+'"]')
+        }
+        console.log('ini vals', vals);
+        console.log('tipe', typeof vals);
+        console.log('ini vals length', vals.length);
+        $.each(vals, function(i,val) {
+            var path = val.replace(SITE_URL, "");
+            console.log('ini index',i)
+            console.log('ini value',val)
+            console.log('ini path',path)
+        })
     }
 
     function addPhoto() {
