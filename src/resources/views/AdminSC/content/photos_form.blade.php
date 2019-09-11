@@ -36,10 +36,10 @@
             <div class="row">
                 <div class="col-sm-12" style="max-height:500px;overflow:auto;" id="photo-box">
                     <div class="col-sm-6 col-md-2 no-padding" style="margin-bottom:1px;cursor:pointer;" onclick="addPhotoModal()">
-                        <div class="thumbnail text-warning" style="height:{{ $is_desktop ? '150px' : '64px' }};display:table-cell;vertical-align:middle;text-align:center;width:inherit">
-                            <i class="fa fa-plus" style="font-size: {{ $is_desktop ? '80px' : '25px' }};"></i>
+                        <div class="thumbnail text-warning" style="height:150px;display:{{ $is_desktop ? 'table-cell' : 'block' }};width:inherit;margin-bottom:1px;text-align:center;">
+                            <i class="fa fa-plus" style="font-size:80px;"></i>
                             <br>
-                            <span class="" style="font-size: {{ $is_desktop ? '32px' : '11px' }};">Tambah Foto</span>
+                            <span class="" style="font-size:32px;">Tambah Foto</span>
                             <input type="hidden" id="input_tmp">
                         </div>
                     </div>
@@ -143,8 +143,8 @@
         }
         if (val) {
             var photo = '<div id="img'+no_img+'" class="col-sm-6 col-md-2 no-padding" style="margin-bottom:1px;">'+
-                            '<div class="thumbnail" style="height:{{ $is_desktop ? '150px' : 'inherit' }};display:table-cell;width:inherit">'+
-                                '<img src="'+val+'" style="max-height:100px;">'+
+                            '<div class="thumbnail" style="height:150px;display:{{ $is_desktop ? 'table-cell' : 'block' }};width:inherit;margin-bottom:1px;">'+
+                                '<img src="'+val+'" style="height:100px;">'+
                                 '<input type="hidden" name="photo_name[]" value="'+val+'">'+
                                 '<textarea name="photo_description[]" class="form-control" style="position:absolute;bottom:0;left:0;height:55px;" placeholder="Keterangan foto.."></textarea>'+
                                 '<button class="btn btn-default btn-xs btn-xs-top-right" title="Remove Photo" type="button" onclick="_remove(\'#img'+no_img+'\')"><i class="fa fa-minus"></i></button>'+
