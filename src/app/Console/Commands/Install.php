@@ -180,6 +180,25 @@ class Install extends Command
             echo $buffer;
         });
         $this->info('The [public/files] directory has been linked.');
+
+        $this->info('Linking assets thumbs filemanager folder');
+        if ($this->option('fresh')) {
+            if (file_exists('public/thumbs')) {
+                $this->info('Removing "public/thumbs" folder');
+                $process = new Process('cd ' . public_path() . ' && rm -rf thumbs && cd ' . base_path());
+                $process->setTimeout($this->timeout);
+                $process->run(function ($type, $buffer) {
+                    echo $buffer;
+                });
+            }
+        }
+        $filemanager_path = base_path('vendor/zafranf/zetthcore/src/resources/themes/AdminSC/plugins/larafile/source/thumbs');
+        $process = new Process('cd ' . public_path() . ' && ln -s ' . $filemanager_path . ' && cd ' . base_path());
+        $process->setTimeout($this->timeout);
+        $process->run(function ($type, $buffer) {
+            echo $buffer;
+        });
+        $this->info('The [public/thumbs] directory has been linked.');
         $this->info('Link folders finished!');
     }
 
