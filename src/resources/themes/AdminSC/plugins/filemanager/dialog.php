@@ -994,10 +994,15 @@ $files = $pagination->getResults();
 		</ul>
 		<?php } ?>
 	</div>
+	</div>
+</div>
 <style>
 .pagination {
-  margin-bottom: 1px;
-  margin-right: 1px;
+	right: 12px;
+    position: fixed;
+    bottom: 2px;
+    margin: 0;
+    z-index: 2;
 }   
 .pagination a {
   color: black;
@@ -1005,10 +1010,8 @@ $files = $pagination->getResults();
 </style>
 <?php
 parse_str($get_params.rawurlencode($subdir), $page_params);
-echo $pageNumbers = '<div class="pagination navbar-fixed-bottom"><ul class="" style="float:right;" >'.$pagination->getLinks($page_params).'</ul></div>';
+echo $pageNumbers = '<div class="pagination"><ul>'.$pagination->getLinks($page_params).'</ul></div>';
 ?>
-	</div>
-</div>
 <script>
 	var files_prevent_duplicate = new Array();
 	<?php
