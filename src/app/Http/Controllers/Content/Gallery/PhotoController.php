@@ -4,9 +4,7 @@ namespace ZetthCore\Http\Controllers\Content\Gallery;
 
 use Illuminate\Http\Request;
 use ZetthCore\Http\Controllers\AdminController;
-use ZetthCore\Models\Post;
-use ZetthCore\Models\PostTerm;
-use ZetthCore\Models\Term;
+use ZetthCore\Models\Album;
 
 class PhotoController extends AdminController
 {
@@ -59,7 +57,7 @@ class PhotoController extends AdminController
             'page_subtitle' => 'Daftar Album Foto',
         ];
 
-        return view('zetthcore::AdminSC.content.photo', $data);
+        return view('zetthcore::AdminSC.content.photos', $data);
     }
 
     /**
@@ -75,23 +73,15 @@ class PhotoController extends AdminController
             'url' => '',
         ];
 
-        $categories = Term::where('type', 'category')
-            ->where('parent_id', 0)
-            ->where('status', 1)
-            ->orderBy('name', 'asc')
-            ->with('subcategory')
-            ->get();
-
         /* set variable for view */
         $data = [
             'current_url' => $this->current_url,
             'page_title' => $this->page_title,
             'breadcrumbs' => $this->breadcrumbs,
-            'page_subtitle' => 'Tambah Artikel',
-            'categories' => $categories,
+            'page_subtitle' => 'Tambah Album',
         ];
 
-        return view('zetthcore::AdminSC.content.posts_form', $data);
+        return view('zetthcore::AdminSC.content.photos_form', $data);
     }
 
     /**
@@ -141,19 +131,10 @@ class PhotoController extends AdminController
         $post->created_by = \Auth::user()->id;
         $post->save();
 
-        /* delete post relation */
-        PostTerm::where('post_id', $post->id)->delete();
-
-        /* processing categories */
-        $this->process_categories($categories, $descriptions, $parents, $post->id);
-
-        /* processing tags */
-        $this->process_tags($tags, $post->id);
-
         /* log aktifitas */
-        $this->activityLog('<b>' . \Auth::user()->fullname . '</b> menambahkan Artikel "' . $post->title . '"');
+        $this->activityLog('<b>' . \Auth::user()->fullname . '</b> menambahkan Album "' . $post->title . '"');
 
-        return redirect($this->current_url)->with('success', 'Artikel "' . $post->title . '" berhasil ditambah!');
+        return redirect($this->current_url)->with('success', 'Album "' . $post->title . '" berhasil ditambah!');
     }
 
     /**
@@ -180,24 +161,16 @@ class PhotoController extends AdminController
             'url' => '',
         ];
 
-        $categories = Term::where('type', 'category')
-            ->where('parent_id', 0)
-            ->where('status', 1)
-            ->orderBy('name', 'asc')
-            ->with('subcategory')
-            ->get();
-
         /* set variable for view */
         $data = [
             'current_url' => $this->current_url,
             'page_title' => $this->page_title,
             'breadcrumbs' => $this->breadcrumbs,
-            'page_subtitle' => 'Edit Artikel',
-            'categories' => $categories,
+            'page_subtitle' => 'Edit Album',
             'data' => $post->load('terms'),
         ];
 
-        return view('zetthcore::AdminSC.content.posts_form', $data);
+        return view('zetthcore::AdminSC.content.photos_form', $data);
     }
 
     /**
@@ -250,19 +223,10 @@ class PhotoController extends AdminController
         $post->updated_by = \Auth::user()->id;
         $post->save();
 
-        /* delete post relation */
-        PostTerm::where('post_id', $post->id)->delete();
-
-        /* processing categories */
-        $this->process_categories($categories, $descriptions, $parents, $post->id);
-
-        /* processing tags */
-        $this->process_tags($tags, $post->id);
-
         /* log aktifitas */
-        $this->activityLog('<b>' . \Auth::user()->fullname . '</b> memperbarui Artikel "' . $post->title . '"');
+        $this->activityLog('<b>' . \Auth::user()->fullname . '</b> memperbarui Album "' . $post->title . '"');
 
-        return redirect($this->current_url)->with('success', 'Artikel "' . $post->title . '" berhasil disimpan!');
+        return redirect($this->current_url)->with('success', 'Album "' . $post->title . '" berhasil disimpan!');
     }
 
     /**
@@ -274,12 +238,12 @@ class PhotoController extends AdminController
     public function destroy(Post $post)
     {
         /* log aktifitas */
-        $this->activityLog('<b>' . \Auth::user()->fullname . '</b> menghapus Artikel "' . $post->title . '"');
+        $this->activityLog('<b>' . \Auth::user()->fullname . '</b> menghapus Album "' . $post->title . '"');
 
         /* soft delete */
         $post->delete();
 
-        return redirect($this->current_url)->with('success', 'Artikel "' . $post->title . '" berhasil dihapus!');
+        return redirect($this->current_url)->with('success', 'Album "' . $post->title . '" berhasil dihapus!');
     }
 
     /**
@@ -291,7 +255,7 @@ class PhotoController extends AdminController
     public function datatable(Request $r)
     {
         /* get data */
-        $data = Post::select('id', 'title', 'slug', 'status')->where('type', 'article')->orderBy('id', 'desc')->get();
+        $data = Album::select('id', 'name', 'slug', 'status')->orderBy('id', 'desc')->get();
 
         /* generate datatable */
         if ($r->ajax()) {
@@ -299,89 +263,6 @@ class PhotoController extends AdminController
         }
 
         abort(403);
-    }
-
-    /**
-     * Undocumented function
-     *
-     * @param [type] $categories
-     * @param [type] $descriptions
-     * @param [type] $parents
-     * @param [type] $pid
-     * @return void
-     */
-    public function process_categories($categories, $descriptions, $parents, $pid)
-    {
-        foreach ($categories as $k => $category) {
-            $chkCategory = Term::where('name', str_slug($category))
-                ->where('type', 'category')
-                ->first();
-
-            if (!$chkCategory) {
-                $term = new Term;
-                $term->name = str_slug($category);
-                $term->display_name = $category;
-                $term->description = $descriptions[$k];
-                $term->parent_id = $parents[$k] ?? 0;
-                $term->type = 'category';
-                $term->status = 1;
-                $term->save();
-
-                $cid = $term->id;
-            } else {
-                $cid = $chkCategory->id;
-            }
-
-            /* process relations */
-            $this->process_postrels($pid, $cid);
-        }
-    }
-
-    /**
-     * Undocumented function
-     *
-     * @param [type] $tags
-     * @param [type] $pid
-     * @return void
-     */
-    public function process_tags($tags, $pid)
-    {
-        foreach ($tags as $tag) {
-            $chkTag = Term::where('name', str_slug($tag))->
-                where('type', 'tag')->
-                first();
-
-            if (!$chkTag) {
-                $term = new Term;
-                $term->name = str_slug($tag);
-                $term->display_name = strtolower($tag);
-                $term->type = 'tag';
-                $term->status = 1;
-                $term->save();
-
-                $tid = $term->id;
-            } else {
-                $tid = $chkTag->id;
-            }
-
-            /* process relations */
-            $this->process_postrels($pid, $tid);
-        }
-    }
-
-    /**
-     * Undocumented function
-     *
-     * @param [type] $pid
-     * @param [type] $tid
-     * @return void
-     */
-    public function process_postrels($pid, $tid)
-    {
-        $postrel = new PostTerm;
-        $postrel->post_id = $pid;
-        $postrel->term_id = $tid;
-        $postrel->save();
     }
 
 }

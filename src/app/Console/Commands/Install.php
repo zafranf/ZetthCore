@@ -124,7 +124,7 @@ class Install extends Command
             echo $buffer;
         });
 
-        $this->info('Linking plugins folder');
+        $this->info('Linking filemanager folder');
         if ($this->option('fresh')) {
             if (file_exists('public/larafile')) {
                 $this->info('Removing "public/larafile" folder');
@@ -143,6 +143,25 @@ class Install extends Command
         });
         $this->info('The [public/larafile] directory has been linked.');
 
+        $this->info('Linking filemanager-standalone folder');
+        if ($this->option('fresh')) {
+            if (file_exists('public/larafile-standalone')) {
+                $this->info('Removing "public/larafile-standalone" folder');
+                $process = new Process('cd ' . public_path() . ' && rm -rf larafile-standalone && cd ' . base_path());
+                $process->setTimeout($this->timeout);
+                $process->run(function ($type, $buffer) {
+                    echo $buffer;
+                });
+            }
+        }
+        $plugins_path = base_path('vendor/zafranf/zetthcore/src/resources/themes/AdminSC/plugins/filemanager-alone');
+        $process = new Process('cd ' . public_path() . ' && ln -s ' . $plugins_path . ' larafile-standalone && cd ' . base_path());
+        $process->setTimeout($this->timeout);
+        $process->run(function ($type, $buffer) {
+            echo $buffer;
+        });
+        $this->info('The [public/larafile-standalone] directory has been linked.');
+
         $this->info('Linking assets filemanager folder');
         if ($this->option('fresh')) {
             if (file_exists('public/files')) {
@@ -154,7 +173,7 @@ class Install extends Command
                 });
             }
         }
-        $filemanager_path = base_path('vendor/zafranf/zetthcore/src/resources/themes/AdminSC/plugins/filemanager/source/files');
+        $filemanager_path = base_path('vendor/zafranf/zetthcore/src/resources/themes/AdminSC/plugins/larafile/source/files');
         $process = new Process('cd ' . public_path() . ' && ln -s ' . $filemanager_path . ' && cd ' . base_path());
         $process->setTimeout($this->timeout);
         $process->run(function ($type, $buffer) {
