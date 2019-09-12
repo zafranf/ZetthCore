@@ -7,7 +7,7 @@
         <tr>
           <td>No.</td>
           @if ($is_desktop)
-            <td>Judul</td>
+            <td>Nama</td>
             <td>Status</td>
           @else
             <td>Halaman</td>
@@ -38,7 +38,7 @@
         ],
         "columns": [
           { "width": "30px" },
-          { "data": "title" },
+          { "data": "name" },
           { "data": "status", "width": "50px" },
           { "width": "40px" },
         ],
@@ -89,7 +89,7 @@
             "targets": 1,
             "sortable": false,
             "render": function (data, type, row, meta) {
-              let render = row.title+'<br>';
+              let render = row.name+'<br>';
               // render += '<small>'+row.description+'</small><br>';
               render += _get_status_text(row.status);
 

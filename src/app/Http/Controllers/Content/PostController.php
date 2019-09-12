@@ -288,7 +288,7 @@ class PostController extends AdminController
     public function datatable(Request $r)
     {
         /* get data */
-        $data = Post::select('id', 'title', 'slug', 'status')->where('type', 'article')->orderBy('id', 'desc')->get();
+        $data = Post::select('id', 'title', 'slug', 'status')->where('type', 'article')->get();
 
         /* generate datatable */
         if ($r->ajax()) {

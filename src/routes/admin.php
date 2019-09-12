@@ -122,6 +122,10 @@ Route::middleware('auth')->group(function () use ($prefix) {
                 Route::resources([
                     '/photos' => $prefix . '\Content\Gallery\PhotoController',
                     '/videos' => $prefix . '\Content\Gallery\VideoController',
+                ], [
+                    'parameters' => [
+                        'photos' => 'album',
+                    ],
                 ]);
             });
         });

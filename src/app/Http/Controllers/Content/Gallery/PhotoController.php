@@ -5,6 +5,7 @@ namespace ZetthCore\Http\Controllers\Content\Gallery;
 use Illuminate\Http\Request;
 use ZetthCore\Http\Controllers\AdminController;
 use ZetthCore\Models\Album;
+use ZetthCore\Models\AlbumDetail;
 
 class PhotoController extends AdminController
 {
@@ -92,10 +93,9 @@ class PhotoController extends AdminController
      */
     public function store(Request $r)
     {
-        dd($r->input());
         /* validation */
         $this->validate($r, [
-            'name' => 'required|max:100|unique:albums,title,NULL,created_at,type,photo',
+            'name' => 'required|max:100|unique:albums,name,NULL,created_at,type,photo',
             'slug' => 'unique:albums,slug,NULL,created_at,type,photo',
         ]);
 
@@ -112,6 +112,9 @@ class PhotoController extends AdminController
         $album->status = bool($r->input('status')) ? 1 : 0;
         $album->save();
 
+        /* process photos */
+        $this->process_photos($r->input('photos'), $album->id);
+
         /* log aktifitas */
         $this->activityLog('<b>' . \Auth::user()->fullname . '</b> menambahkan Album "' . $album->name . '"');
 
@@ -121,20 +124,20 @@ class PhotoController extends AdminController
     /**
      * Display the specified resource.
      *
-     * @param  \ZetthCore\Models\Post  $album
+     * @param  \ZetthCore\Models\Album  $album
      * @return \Illuminate\Http\Response
      */
-    public function show(Post $album)
+    public function show(Album $album)
     {
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \ZetthCore\Models\Post  $album
+     * @param  \ZetthCore\Models\Album  $album
      * @return \Illuminate\Http\Response
      */
-    public function edit(Post $album)
+    public function edit(Album $album)
     {
         $this->breadcrumbs[] = [
             'page' => 'Edit',
@@ -148,7 +151,7 @@ class PhotoController extends AdminController
             'page_title' => $this->page_title,
             'breadcrumbs' => $this->breadcrumbs,
             'page_subtitle' => 'Edit Album',
-            'data' => $album->load('terms'),
+            'data' => $album->load('photos'),
         ];
 
         return view('zetthcore::AdminSC.content.photos_form', $data);
@@ -158,65 +161,46 @@ class PhotoController extends AdminController
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $r
-     * @param  \ZetthCore\Models\Post  $album
+     * @param  \ZetthCore\Models\Album  $album
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $r, Post $album)
+    public function update(Request $r, Album $album)
     {
         /* validation */
         $this->validate($r, [
-            'title' => 'required|max:100|unique:posts,title,' . $album->id . ',id,type,photo',
-            // 'slug' => 'unique:posts,slug,' . $album->id . ',id,type,photo',
-            'content' => 'required',
-            'categories' => 'required',
-            'tags' => 'required',
+            'name' => 'required|max:100|unique:albums,name,' . $album->id . ',id,type,photo',
+            'slug' => 'unique:albums,slug,' . $album->id . ',id,type,photo',
         ]);
 
         /* set variables */
-        $title = $r->input('title');
-        // $slug = str_slug($r->input('slug'));
-        $categories = $r->input('categories');
-        $descriptions = $r->input('descriptions');
-        $parents = $r->input('parents');
-        $tags = explode(",", $r->input('tags'));
-        // $digit = 3;
-        // $uniq = str_random($digit);
-        $cover = str_replace(url('/'), '', $r->input('cover'));
-        $date = ($r->input('date') == '') ? date("Y-m-d") : $r->input('date');
-        $time = ($r->input('time') == '') ? date("H:i") : $r->input('time');
+        $name = $r->input('name');
+        $slug = str_slug($r->input('slug'));
 
         /* save data */
-        $album->title = $title;
-        // $album->slug = $slug;
-        $album->content = $r->input('content');
-        $album->excerpt = $r->input('excerpt');
-        $album->type = 'article';
-        $album->cover = $cover;
-        if ($r->input('cover_remove')) {
-            $album->cover = '';
-        }
-        $album->status = $r->input('status');
-        $album->share = ($r->input('share')) ? 1 : 0;
-        $album->like = ($r->input('like')) ? 1 : 0;
-        $album->comment = ($r->input('comment')) ? 1 : 0;
-        $album->published_at = $date . ' ' . $time;
-        // $album->short_url = $uniq;
-        $album->updated_by = \Auth::user()->id;
+        // $album = new Album;
+        $album->name = $name;
+        $album->slug = $slug;
+        $album->description = $r->input('description');
+        $album->type = 'photo';
+        $album->status = bool($r->input('status')) ? 1 : 0;
         $album->save();
 
-        /* log aktifitas */
-        $this->activityLog('<b>' . \Auth::user()->fullname . '</b> memperbarui Album "' . $album->title . '"');
+        /* process photos */
+        $this->process_photos($r->input('photos'), $album->id);
 
-        return redirect($this->current_url)->with('success', 'Album "' . $album->title . '" berhasil disimpan!');
+        /* log aktifitas */
+        $this->activityLog('<b>' . \Auth::user()->fullname . '</b> memperbarui Album "' . $album->name . '"');
+
+        return redirect($this->current_url)->with('success', 'Album "' . $album->name . '" berhasil disimpan!');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \ZetthCore\Models\Post  $album
+     * @param  \ZetthCore\Models\Album  $album
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Post $album)
+    public function destroy(Album $album)
     {
         /* log aktifitas */
         $this->activityLog('<b>' . \Auth::user()->fullname . '</b> menghapus Album "' . $album->title . '"');
@@ -236,7 +220,7 @@ class PhotoController extends AdminController
     public function datatable(Request $r)
     {
         /* get data */
-        $data = Album::select('id', 'name', 'slug', 'status')->orderBy('id', 'desc')->get();
+        $data = Album::select('id', 'name', 'slug', 'status')->with('cover')->withCount('photos')->get();
 
         /* generate datatable */
         if ($r->ajax()) {
@@ -244,6 +228,28 @@ class PhotoController extends AdminController
         }
 
         abort(403);
+    }
+
+    public function process_photos($photos, $album_id)
+    {
+        /* mapping photos */
+        $data = [];
+        foreach ($photos['files'] as $n => $file) {
+            $data[] = [
+                'file' => $file,
+                'description' => $photos['descriptions'][$n] ?? '',
+                'status' => 1,
+                'album_id' => $album_id,
+            ];
+        }
+
+        /* delete existings */
+        $del = AlbumDetail::where('album_id', $album_id)->forceDelete();
+
+        /* save all photos */
+        $save = AlbumDetail::insert($data);
+
+        return $save;
     }
 
 }

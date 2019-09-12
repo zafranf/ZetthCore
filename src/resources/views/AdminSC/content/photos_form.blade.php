@@ -63,11 +63,12 @@
                             @php $no_img=0 @endphp
                             @if (isset($data->photos))
                                 @foreach($data->photos as $photo)
-                                    <div id="img{{ ++$no_img }}" class="col-sm-6 col-md-2" style="margin-bottom:1px;">
-                                        <div class="thumbnail" style="height:{{ $is_desktop ? '150px' : '64px' }};display:table-cell;width:inherit;position:relative;">
-                                            <img src="{{ _get_image('assets/images/upload/'.$photo->file) }}" style="max-height:100px;"><div id="zetth-process{{ $no_img }}" class="zetth-process">
-                                            <img class="zetth-loading" src="{{ url('assets/images/loading.gif') }}"></div>
-                                            <button class="btn btn-default btn-xs btn-xs-top-right" title="Remove Photo" type="button" onclick="_remove_photo('#img{{ $no_img }}', '{{ $photo->id }}')"><i class="fa fa-minus"></i></button>
+                                <div id="img{{ $no_img }}" class="col-sm-6 col-md-2" style="padding:10px;padding-top:0;padding-bottom:20px;">
+                                        <div class="thumbnail" style="height:150px;display:{{ $is_desktop ? 'table-cell;' : 'block;' }}padding:0;width:inherit;margin-bottom:1px;background:#f8f8f8;">
+                                            <img src="{{ str_replace('/files/', '/thumbs/', $photo->file) }}" style="height:100px;">
+                                            <input type="hidden" name="photos[files][]" value="{{ $photo->file }}">
+                                            <textarea name="photos[descriptions][]" class="form-control" style="position:absoluste;bottom:0;left:0;height:50px;" placeholder="Keterangan foto..">{{ $photo->description }}</textarea>
+                                            <button class="btn btn-default btn-xs btn-xs-top-right" title="Hapus foto" type="button" onclick="_remove_photo('#img{{ $no_img }}', {{ $photo->id }})" style="top:5px;right:15px;"><i class="fa fa-minus"></i></button>
                                         </div>
                                     </div>
                                 @endforeach
@@ -161,8 +162,9 @@
             return;
         }
         if (val) {
+            val = val.replace('/files/', '/thumbs/');
             var photo = '<div id="img'+no_img+'" class="col-sm-6 col-md-2" style="padding:10px;padding-top:0;padding-bottom:20px;">'+
-                            '<div class="thumbnail" style="height:150px;display:{{ $is_desktop ? 'table-cell;' : 'block;' }}padding:0;width:inherit;margin-bottom:1px;">'+
+                            '<div class="thumbnail" style="height:150px;display:{{ $is_desktop ? 'table-cell;' : 'block;' }}padding:0;width:inherit;margin-bottom:1px;background:#f8f8f8;">'+
                                 '<img src="'+val+'" style="height:100px;">'+
                                 '<input type="hidden" name="photos[files][]" value="'+val+'">'+
                                 '<textarea name="photos[descriptions][]" class="form-control" style="position:absoluste;bottom:0;left:0;height:50px;" placeholder="Keterangan foto.."></textarea>'+
