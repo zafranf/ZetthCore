@@ -203,12 +203,12 @@ class PhotoController extends AdminController
     public function destroy(Album $album)
     {
         /* log aktifitas */
-        $this->activityLog('<b>' . \Auth::user()->fullname . '</b> menghapus Album "' . $album->title . '"');
+        $this->activityLog('<b>' . \Auth::user()->fullname . '</b> menghapus Album "' . $album->name . '"');
 
         /* soft delete */
         $album->delete();
 
-        return redirect($this->current_url)->with('success', 'Album "' . $album->title . '" berhasil dihapus!');
+        return redirect($this->current_url)->with('success', 'Album "' . $album->name . '" berhasil dihapus!');
     }
 
     /**
