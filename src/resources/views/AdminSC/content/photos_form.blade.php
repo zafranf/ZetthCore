@@ -4,7 +4,7 @@
     <div class="panel-body">
         <form class="form-horizontal" action="{{ url($current_url) }}{{ isset($data) ? '/' . $data->id : '' }}" method="post" enctype="multipart/form-data">
             <div class="row">
-                <div class="col-md-2 col-sm-12">
+                <div id="div-album" class="col-md-2 col-sm-12">
                     <h4>Album</h4>
                     <hr>
                     <div class="form-group">
@@ -47,30 +47,29 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-10 col-sm-12">
+                <div id="div-photo" class="col-md-10 col-sm-12">
                     <h4>Foto <span class="btn btn-default btn-xs pull-right" id="btn-add-photo" onclick="addPhotoModal()" style="cursor:pointer;"><i class="fa fa-plus"></i> Tambah</span></h4>
                     <hr>
                     <div class="row">
                         <div class="col-sm-12" style="max-height:400px;overflow:auto;" id="photo-box">
-                            {{-- <div class="col-sm-6 col-md-2 no-padding" style="margin-bottom:1px;cursor:pointer;" onclick="addPhotoModal()">
+                            <div class="col-sm-6 col-md-2 hidden-xs" style="padding:10px;padding-top:0;padding-bottom:20px;cursor:pointer;" onclick="addPhotoModal()">
                                 <div class="thumbnail text-warning" style="height:150px;display:{{ $is_desktop ? 'table-cell' : 'block' }};width:inherit;margin-bottom:1px;text-align:center;">
                                     <i class="fa fa-plus" style="font-size:80px;"></i>
                                     <br>
-                                    <span class="" style="font-size:28px;">Foto</span>
-                                    <input type="hidden" id="input_tmp">
+                                    <span class="" style="font-size:28px;">Tambah Foto</span>
+                                    {{-- <input type="hidden" id="input_tmp"> --}}
                                 </div>
-                            </div> --}}
+                            </div>
                             @php $no_img=0 @endphp
                             @if (isset($data->photos))
                                 @foreach($data->photos as $photo)
-                                <div id="img{{ ++$no_img }}" class="col-sm-6 col-md-2" style="margin-bottom:1px;">
-                                    <div class="thumbnail" style="height:{{ $is_desktop ? '150px' : '64px' }};display:table-cell;width:inherit;position:relative;">
-                                        <img src="{{ _get_image('assets/images/upload/'.$photo->name) }}" style="max-height:100px;"><div id="zetth-process{{ $no_img }}" class="zetth-process">
-                                        <img class="zetth-loading" src="{{ url('assets/images/loading.gif') }}"></div>
-                                        <button class="btn btn-default btn-xs btn-xs-top-right" title="Edit Description" type="button" onclick="_edit2('{{ $no_img }}', '{{ $photo->name }}')" style="right:26px;"><i class="fa fa-edit"></i></button>
-                                        <button class="btn btn-default btn-xs btn-xs-top-right" title="Remove Photo" type="button" onclick="_remove_photo('{{ $no_img }}', '{{ $photo->name }}')"><i class="fa fa-minus"></i></button>
+                                    <div id="img{{ ++$no_img }}" class="col-sm-6 col-md-2" style="margin-bottom:1px;">
+                                        <div class="thumbnail" style="height:{{ $is_desktop ? '150px' : '64px' }};display:table-cell;width:inherit;position:relative;">
+                                            <img src="{{ _get_image('assets/images/upload/'.$photo->file) }}" style="max-height:100px;"><div id="zetth-process{{ $no_img }}" class="zetth-process">
+                                            <img class="zetth-loading" src="{{ url('assets/images/loading.gif') }}"></div>
+                                            <button class="btn btn-default btn-xs btn-xs-top-right" title="Remove Photo" type="button" onclick="_remove_photo('#img{{ $no_img }}', '{{ $photo->id }}')"><i class="fa fa-minus"></i></button>
+                                        </div>
                                     </div>
-                                </div>
                                 @endforeach
                             @endif
                         </div>
@@ -100,6 +99,12 @@
     .zetth-loading {
       position: relative;
       top: 45%;
+    }
+    @media (max-width: 767px) {
+        #div-photo {
+            position: relative;
+            top: 20px;
+        }
     }
   </style>
 @endsection
@@ -156,12 +161,12 @@
             return;
         }
         if (val) {
-            var photo = '<div id="img'+no_img+'" class="col-sm-6 col-md-2" style="padding:10px;">'+
-                            '<div class="thumbnail" style="height:150px;display:{{ $is_desktop ? 'table-cell' : 'block;padding:0;' }};width:inherit;margin-bottom:1px;">'+
+            var photo = '<div id="img'+no_img+'" class="col-sm-6 col-md-2" style="padding:10px;padding-top:0;padding-bottom:20px;">'+
+                            '<div class="thumbnail" style="height:150px;display:{{ $is_desktop ? 'table-cell;' : 'block;' }}padding:0;width:inherit;margin-bottom:1px;">'+
                                 '<img src="'+val+'" style="height:100px;">'+
-                                '<input type="hidden" name="photo_file[]" value="'+val+'">'+
-                                '<textarea name="photo_description[]" class="form-control" style="position:absoluste;bottom:0;left:0;height:{{ $is_desktop ? '55px' : '50px' }};" placeholder="Keterangan foto.."></textarea>'+
-                                '<button class="btn btn-default btn-xs btn-xs-top-right" title="Remove Photo" type="button" onclick="_remove_preview(\'#img'+no_img+'\')" style="top:15px;right:15px;"><i class="fa fa-minus"></i></button>'+
+                                '<input type="hidden" name="photos[files][]" value="'+val+'">'+
+                                '<textarea name="photos[descriptions][]" class="form-control" style="position:absoluste;bottom:0;left:0;height:50px;" placeholder="Keterangan foto.."></textarea>'+
+                                '<button class="btn btn-default btn-xs btn-xs-top-right" title="Remove Photo" type="button" onclick="_remove_preview(\'#img'+no_img+'\')" style="top:5px;right:15px;"><i class="fa fa-minus"></i></button>'+
                             '</div>'+
                         '</div>';
             $('#photo-box').append(photo);
@@ -173,7 +178,14 @@
         $(id).remove();
     }
 
-    function _remove_photo(id, name) {
+    function _remove_photo(id, id_photo) {
+        no_img--;
+        $(id).remove();
+        var photodel = '<input type="hidden" name="photos[deletes][]" value="'+id_photo+'">';
+        $('#photo-box').append(photodel);
+    }
+
+    function _remove_photoX(id, name) {
         if (!CONNECT) {
             return false;
         }

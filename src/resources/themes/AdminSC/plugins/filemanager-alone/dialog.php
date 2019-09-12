@@ -3,6 +3,17 @@ $time = time();
 
 $config = include 'config/config.php';
 
+function debug()
+{
+    array_map(function ($data) {
+        echo "<pre>";
+        print_r($data);
+        echo "</pre>";
+    }, func_get_args());
+
+    die();
+}
+
 if (USE_ACCESS_KEYS == true){
 	if (!isset($_GET['akey'], $config['access_keys']) || empty($config['access_keys'])){
 		die('Access Denied!');
@@ -342,10 +353,27 @@ $get_params = http_build_query($get_params);
             .ff-container {
                 margin-top: 50px;
             }
+			.grid li {
+				margin: 2px;
+			}
 			@media (max-width: 767px) {
+                .container-fluid {
+                    /* padding: 0!important; */
+                }
 				.ff-container {
 					margin-top: 10px;
 				}
+                .grid li {
+                    margin: 0;
+                    margin-bottom: 5px;
+					width: 112px;
+                }
+                .grid .img-precontainer .img-container {
+                    background: #bbb;
+                }
+                .grid figure, .grid .img-precontainer .img-container img, .grid figcaption {
+                    width: 110px;
+                }
 			}
         </style>
 
@@ -779,7 +807,9 @@ if ($subdir != "") {
 $files = $sorted;
 
 include 'include/pagination.class.php';
-$pagination = new pagination($files, (isset($_GET['page']) ? $_GET['page'] : 1), 50);
+$page = isset($_GET['page']) ? $_GET['page'] : 1;
+$perpage = ($page == 1) ? 51 : 50;
+$pagination = new pagination($files, $page, $perpage);
 $files = $pagination->getResults();
 ?>
 <!-- header div start -->

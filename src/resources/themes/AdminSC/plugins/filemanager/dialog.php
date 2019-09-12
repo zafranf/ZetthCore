@@ -1,5 +1,17 @@
 <?php
 $config = include 'config/config.php';
+
+function debug()
+{
+    array_map(function ($data) {
+        echo "<pre>";
+        print_r($data);
+        echo "</pre>";
+    }, func_get_args());
+
+    die();
+}
+
 //TODO switch to array
 extract($config, EXTR_OVERWRITE);
 
@@ -283,10 +295,21 @@ $get_params = http_build_query($get_params);
             .ff-container {
                 margin-top: 50px;
             }
+			.grid li {
+				margin: 3px;
+			}
 			@media (max-width: 767px) {
+                .container-fluid {
+                    /* padding: 0!important; */
+                }
 				.ff-container {
 					margin-top: 10px;
 				}
+                .grid li {
+                    margin: 0;
+                    margin-bottom: 5px;
+					width: 122px;
+                }
 			}
         </style>
 	<script src="js/plugins.js"></script>
@@ -574,7 +597,9 @@ if(!$descending){
 $files=array_merge(array($prev_folder),array($current_folder),$sorted);
 
 include 'include/pagination.class.php';
-$pagination = new pagination($files, (isset($_GET['page']) ? $_GET['page'] : 1), 50);
+$page = isset($_GET['page']) ? $_GET['page'] : 1;
+$perpage = ($page == 1) ? 51 : 50;
+$pagination = new pagination($files, $page, $perpage);
 $files = $pagination->getResults();
 ?>
 <!-- header div start -->
