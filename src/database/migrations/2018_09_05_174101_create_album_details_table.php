@@ -19,8 +19,8 @@ class CreateAlbumDetailsTable extends Migration
             $table->collation = 'utf8mb4_unicode_ci';
 
             $table->increments('id')->unsigned();
-            $table->string('name');
-            $table->string('description');
+            $table->string('file');
+            $table->string('description')->default('');
             $table->boolean('status')->comment('0=inactive, 1=active')->unsigned();
             $table->integer('album_id')->unsigned();
             $table->timestamps();

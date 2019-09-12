@@ -92,68 +92,49 @@ class PhotoController extends AdminController
      */
     public function store(Request $r)
     {
+        dd($r->input());
         /* validation */
         $this->validate($r, [
-            'title' => 'required|max:100|unique:posts,title,NULL,created_at,type,article',
-            'slug' => 'unique:posts,slug,NULL,created_at,type,article',
-            'content' => 'required',
-            'categories' => 'required',
-            'tags' => 'required',
+            'name' => 'required|max:100|unique:albums,title,NULL,created_at,type,photo',
+            'slug' => 'unique:albums,slug,NULL,created_at,type,photo',
         ]);
 
         /* set variables */
-        $title = $r->input('title');
+        $name = $r->input('name');
         $slug = str_slug($r->input('slug'));
-        $categories = $r->input('categories');
-        $descriptions = $r->input('descriptions');
-        $parents = $r->input('parents');
-        $tags = explode(",", $r->input('tags'));
-        // $digit = 3;
-        // $uniq = str_random($digit);
-        $cover = str_replace(url('/'), '', $r->input('cover'));
-        $date = ($r->input('date') == '') ? date("Y-m-d") : $r->input('date');
-        $time = ($r->input('time') == '') ? date("H:i") : $r->input('time');
 
         /* save data */
-        $post = new Post;
-        $post->title = $title;
-        $post->slug = $slug;
-        $post->content = $r->input('content');
-        $post->excerpt = $r->input('excerpt');
-        $post->type = 'article';
-        $post->cover = $cover;
-        $post->status = $r->input('status');
-        $post->share = ($r->input('share')) ? 1 : 0;
-        $post->like = ($r->input('like')) ? 1 : 0;
-        $post->comment = ($r->input('comment')) ? 1 : 0;
-        $post->published_at = $date . ' ' . $time;
-        // $post->short_url = $uniq;
-        $post->created_by = \Auth::user()->id;
-        $post->save();
+        $album = new Album;
+        $album->name = $name;
+        $album->slug = $slug;
+        $album->description = $r->input('description');
+        $album->type = 'photo';
+        $album->status = bool($r->input('status')) ? 1 : 0;
+        $album->save();
 
         /* log aktifitas */
-        $this->activityLog('<b>' . \Auth::user()->fullname . '</b> menambahkan Album "' . $post->title . '"');
+        $this->activityLog('<b>' . \Auth::user()->fullname . '</b> menambahkan Album "' . $album->name . '"');
 
-        return redirect($this->current_url)->with('success', 'Album "' . $post->title . '" berhasil ditambah!');
+        return redirect($this->current_url)->with('success', 'Album "' . $album->name . '" berhasil ditambah!');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \ZetthCore\Models\Post  $post
+     * @param  \ZetthCore\Models\Post  $album
      * @return \Illuminate\Http\Response
      */
-    public function show(Post $post)
+    public function show(Post $album)
     {
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \ZetthCore\Models\Post  $post
+     * @param  \ZetthCore\Models\Post  $album
      * @return \Illuminate\Http\Response
      */
-    public function edit(Post $post)
+    public function edit(Post $album)
     {
         $this->breadcrumbs[] = [
             'page' => 'Edit',
@@ -167,7 +148,7 @@ class PhotoController extends AdminController
             'page_title' => $this->page_title,
             'breadcrumbs' => $this->breadcrumbs,
             'page_subtitle' => 'Edit Album',
-            'data' => $post->load('terms'),
+            'data' => $album->load('terms'),
         ];
 
         return view('zetthcore::AdminSC.content.photos_form', $data);
@@ -177,15 +158,15 @@ class PhotoController extends AdminController
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $r
-     * @param  \ZetthCore\Models\Post  $post
+     * @param  \ZetthCore\Models\Post  $album
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $r, Post $post)
+    public function update(Request $r, Post $album)
     {
         /* validation */
         $this->validate($r, [
-            'title' => 'required|max:100|unique:posts,title,' . $post->id . ',id,type,article',
-            // 'slug' => 'unique:posts,slug,' . $post->id . ',id,type,article',
+            'title' => 'required|max:100|unique:posts,title,' . $album->id . ',id,type,photo',
+            // 'slug' => 'unique:posts,slug,' . $album->id . ',id,type,photo',
             'content' => 'required',
             'categories' => 'required',
             'tags' => 'required',
@@ -205,45 +186,45 @@ class PhotoController extends AdminController
         $time = ($r->input('time') == '') ? date("H:i") : $r->input('time');
 
         /* save data */
-        $post->title = $title;
-        // $post->slug = $slug;
-        $post->content = $r->input('content');
-        $post->excerpt = $r->input('excerpt');
-        $post->type = 'article';
-        $post->cover = $cover;
+        $album->title = $title;
+        // $album->slug = $slug;
+        $album->content = $r->input('content');
+        $album->excerpt = $r->input('excerpt');
+        $album->type = 'article';
+        $album->cover = $cover;
         if ($r->input('cover_remove')) {
-            $post->cover = '';
+            $album->cover = '';
         }
-        $post->status = $r->input('status');
-        $post->share = ($r->input('share')) ? 1 : 0;
-        $post->like = ($r->input('like')) ? 1 : 0;
-        $post->comment = ($r->input('comment')) ? 1 : 0;
-        $post->published_at = $date . ' ' . $time;
-        // $post->short_url = $uniq;
-        $post->updated_by = \Auth::user()->id;
-        $post->save();
+        $album->status = $r->input('status');
+        $album->share = ($r->input('share')) ? 1 : 0;
+        $album->like = ($r->input('like')) ? 1 : 0;
+        $album->comment = ($r->input('comment')) ? 1 : 0;
+        $album->published_at = $date . ' ' . $time;
+        // $album->short_url = $uniq;
+        $album->updated_by = \Auth::user()->id;
+        $album->save();
 
         /* log aktifitas */
-        $this->activityLog('<b>' . \Auth::user()->fullname . '</b> memperbarui Album "' . $post->title . '"');
+        $this->activityLog('<b>' . \Auth::user()->fullname . '</b> memperbarui Album "' . $album->title . '"');
 
-        return redirect($this->current_url)->with('success', 'Album "' . $post->title . '" berhasil disimpan!');
+        return redirect($this->current_url)->with('success', 'Album "' . $album->title . '" berhasil disimpan!');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \ZetthCore\Models\Post  $post
+     * @param  \ZetthCore\Models\Post  $album
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Post $post)
+    public function destroy(Post $album)
     {
         /* log aktifitas */
-        $this->activityLog('<b>' . \Auth::user()->fullname . '</b> menghapus Album "' . $post->title . '"');
+        $this->activityLog('<b>' . \Auth::user()->fullname . '</b> menghapus Album "' . $album->title . '"');
 
         /* soft delete */
-        $post->delete();
+        $album->delete();
 
-        return redirect($this->current_url)->with('success', 'Album "' . $post->title . '" berhasil dihapus!');
+        return redirect($this->current_url)->with('success', 'Album "' . $album->title . '" berhasil dihapus!');
     }
 
     /**
