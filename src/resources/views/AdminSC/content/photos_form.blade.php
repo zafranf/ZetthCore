@@ -51,7 +51,7 @@
                                 <img src="{{ _get_image('assets/images/upload/'.$photo->name) }}" style="max-height:100px;"><div id="zetth-process{{ $no_img }}" class="zetth-process">
                                 <img class="zetth-loading" src="{{ url('assets/images/loading.gif') }}"></div>
                                 <button class="btn btn-default btn-xs btn-xs-top-right" title="Edit Description" type="button" onclick="_edit2('{{ $no_img }}', '{{ $photo->name }}')" style="right:26px;"><i class="fa fa-edit"></i></button>
-                                <button class="btn btn-default btn-xs btn-xs-top-right" title="Remove Photo" type="button" onclick="_remove2('{{ $no_img }}', '{{ $photo->name }}')"><i class="fa fa-minus"></i></button>
+                                <button class="btn btn-default btn-xs btn-xs-top-right" title="Remove Photo" type="button" onclick="_remove_photo('{{ $no_img }}', '{{ $photo->name }}')"><i class="fa fa-minus"></i></button>
                             </div>
                         </div>
                       @endforeach
@@ -101,8 +101,7 @@
 
     function addPhotoModal() {
         if (no_img >= max_img){
-            alert('Max upload photo is '+max_img);
-            return;
+            swal('Maksimal ' + max_img + ' foto');
         } else {
             $.fancybox({
                 href : '{!! url('/larafile-standalone/dialog.php?type=1&field_id=input_tmp&lang=id&fldr=/images') !!}',
@@ -135,7 +134,8 @@
         if (no_img >= max_img) {
             if (no_img == max_img) {
                 setTimeout(function() {
-                    alert('Max upload photo is '+max_img);
+                    no_img = max_img;
+                    swal('Maksimal ' + max_img + ' foto');
                 }, 500);
             }
 
@@ -147,14 +147,19 @@
                                 '<img src="'+val+'" style="height:100px;">'+
                                 '<input type="hidden" name="photo_name[]" value="'+val+'">'+
                                 '<textarea name="photo_description[]" class="form-control" style="position:absolute;bottom:0;left:0;height:55px;" placeholder="Keterangan foto.."></textarea>'+
-                                '<button class="btn btn-default btn-xs btn-xs-top-right" title="Remove Photo" type="button" onclick="_remove(\'#img'+no_img+'\')"><i class="fa fa-minus"></i></button>'+
+                                '<button class="btn btn-default btn-xs btn-xs-top-right" title="Remove Photo" type="button" onclick="_remove_preview(\'#img'+no_img+'\')"><i class="fa fa-minus"></i></button>'+
                             '</div>'+
                         '</div>';
             $('#photo-box').append(photo);
         }
     }
 
-    function _remove2(id, name) {
+    function _remove_preview(id) {
+        no_img--;
+        $(id).remove();
+    }
+
+    function _remove_photo(id, name) {
         if (!CONNECT) {
             return false;
         }
