@@ -95,7 +95,7 @@ class MenuController extends AdminController
         /* validation */
         $this->validate($r, [
             'name' => 'required',
-            'description' => 'required',
+            // 'description' => 'required',
             'group' => 'required|exists:menu_groups,id',
         ]);
 
@@ -114,6 +114,7 @@ class MenuController extends AdminController
         // $menu->order = (int) $r->input('order');
         $menu->icon = $r->input('icon');
         $menu->status = bool($r->input('status')) ? 1 : 0;
+        $menu->is_crud = bool($r->input('is_crud')) ? 1 : 0;
         $menu->index = bool($r->input('index')) ? 1 : 0;
         $menu->create = bool($r->input('create')) ? 1 : 0;
         $menu->read = bool($r->input('read')) ? 1 : 0;
@@ -182,7 +183,7 @@ class MenuController extends AdminController
         /* validation */
         $this->validate($r, [
             'name' => 'required',
-            'description' => 'required',
+            // 'description' => 'required',
             'group' => 'required|exists:menu_groups,id',
         ]);
 
@@ -207,6 +208,7 @@ class MenuController extends AdminController
         $menu->order = $r->input('order') ?? $order;
         $menu->icon = $r->input('icon');
         $menu->status = bool($r->input('status')) ? 1 : 0;
+        $menu->is_crud = bool($r->input('is_crud')) ? 1 : 0;
         $menu->index = bool($r->input('index')) ? 1 : 0;
         $menu->create = bool($r->input('create')) ? 1 : 0;
         $menu->read = bool($r->input('read')) ? 1 : 0;

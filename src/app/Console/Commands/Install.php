@@ -119,7 +119,8 @@ class Install extends Command
                 });
             }
         }
-        $process = new Process('php artisan storage:link');
+        $storage_path = storage_path('app/public');
+        $process = new Process('cd ' . public_path() . ' && ln -s ' . $storage_path . ' storage && cd ' . base_path());
         $process->setTimeout($this->timeout);
         $process->run(function ($type, $buffer) {
             echo $buffer;

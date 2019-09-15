@@ -204,20 +204,12 @@ class MenuGroupController extends AdminController
     public function datatable(Request $r)
     {
         /* where roles */
-        if (\Auth::user()->hasRole('super')) {
-            $whrRole = [
-                // ['status', 1],
-            ];
-        } else if (\Auth::user()->hasRole('admin')) {
+        $whrRole = [];
+        if (!\Auth::user()->hasRole('super')) {
             $whrRole = [
                 // ['status', 1],
                 ['id', '!=', 1],
-            ];
-        } else {
-            $whrRole = [
-                // ['status', 1],
-                ['id', '!=', 1],
-                // ['id', '!=', 2],
+                ['id', '!=', 2],
             ];
         }
 
