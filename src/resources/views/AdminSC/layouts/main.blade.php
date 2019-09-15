@@ -102,7 +102,7 @@
     </div>
   </div>
   <div class="copyright">
-    <span id="status-server" class="bg-success" data-toggle="tooltip" title="Status Koneksi">Terhubung</span> Dipersembahkan oleh <a href="https://porisweb.id" target="_blank">Poris Webdev</a>
+    <span id="status-server" class="bg-success" data-toggle="tooltip" title="Status Koneksi">Terhubung</span> Dipersembahkan oleh <a href="https://porisweb.id" target="_blank">Porisweb</a>
   </div>
   <script>
     var SITE_URL = '{{ url('/') }}';

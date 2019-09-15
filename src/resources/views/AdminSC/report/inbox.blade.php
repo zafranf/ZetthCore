@@ -54,14 +54,14 @@
             return meta.row + meta.settings._iDisplayStart + 1;
           }
         }, {
-          "targets": 3,
+          "targets": 4,
           "data": 'status',
           "sortable": false,
           "render": function (data, type, row, meta) {
             return _get_status_text(data);
           }
         }, {
-          "targets": 4,
+          "targets": 5,
           "data": 'id',
           "sortable": false,
           "render": function (data, type, row, meta) {
