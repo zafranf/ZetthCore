@@ -9,9 +9,9 @@ class ErrorLog extends Model
 {
     public $incrementing = false;
 
-    protected $primaryKey = [
-        'id', 'code', 'path', 'file', 'line', 'message',
-    ];
+    /* protected $primaryKey = [
+    'id', 'code', 'path', 'file', 'line', 'message',
+    ]; */
 
     protected $fillable = [
         'id', 'code', 'path', 'file', 'line', 'message', 'trace', 'data', 'count', 'params',

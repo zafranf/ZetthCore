@@ -5,7 +5,7 @@ trait MainTrait
 {
     public function visitorLog()
     {
-
+        /* set variable */
         $device = '';
         $agent = new \Jenssegers\Agent\Agent();
         if ($agent->isPhone()) {
@@ -28,15 +28,12 @@ trait MainTrait
         $is_robot = $agent->isRobot() ? 1 : 0;
         $robot_name = $agent->robot() ? $agent->robot : null;
 
-        $params = [
-            'id' => md5($ip . $page . $referral . $browser_agent . $browser . $browser_version . $device . $device_name . $os . $os_version . $is_robot . $robot_name),
-        ];
-
-        $q = \ZetthCore\Models\VisitorLog::where($params)->whereBetween('created_at', [date("Y-m-d H:00:00"), date("Y-m-d H:59:59")]);
-
-        $v = $q->first();
-        if (!$v) {
-            $join = array_push($params, [
+        /* save log */
+        \ZetthCore\Models\VisitorLog::updateOrCreate(
+            [
+                'id' => md5($ip . $page . $referral . $browser_agent . $browser . $browser_version . $device . $device_name . $os . $os_version . $is_robot . $robot_name),
+            ],
+            [
                 'ip' => $ip,
                 'page' => $page,
                 'referral' => $referral,
@@ -50,14 +47,8 @@ trait MainTrait
                 'is_robot' => $is_robot,
                 'robot_name' => $robot_name,
                 'count' => \DB::raw('count+1'),
-            ]);
-
-            \ZetthCore\Models\VisitorLog::create($params);
-        } else {
-            $q->update([
-                'count' => \DB::raw('count+1'),
-            ]);
-        }
+            ]
+        );
     }
 
     public function activityLog($description)
@@ -105,7 +96,7 @@ trait MainTrait
         }
 
         if ($e->getMessage()) {
-            if (\Illuminate\Support\Facades\Schema::hasTable('applications')) {
+            if (\Illuminate\Support\Facades\Schema::hasTable('error_log')) {
                 $err = \ZetthCore\Models\ErrorLog::updateOrCreate(
                     [
                         'id' => md5($log['code'] . $log['file'] . $log['line'] . $log['path'] . $log['message']),
