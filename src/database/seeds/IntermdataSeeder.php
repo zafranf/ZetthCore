@@ -12,7 +12,7 @@ class IntermdataSeeder extends Seeder
     public function run()
     {
         DB::table('interms')->insert([
-            'host' => env('APP_DOMAIN'),
+            'host' => env('APP_DOMAIN', 'localhost'),
             'param' => 'q',
             'status' => 1,
             'created_at' => date("Y-m-d H:i:s"),

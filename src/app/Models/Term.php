@@ -14,8 +14,8 @@ class Term extends Model
         return $this->hasMany('ZetthCore\Models\Term', 'parent_id', 'id')->where('status', 1)->where('type', 'category')->with('subcategory');
     }
 
-    public function allSubcategory()
+    public function subcategory_all()
     {
-        return $this->hasMany('ZetthCore\Models\Term', 'parent_id', 'id')->where('type', 'category')->with('allSubcategory');
+        return $this->hasMany('ZetthCore\Models\Term', 'parent_id', 'id')->where('type', 'category')->with('subcategory_all');
     }
 }

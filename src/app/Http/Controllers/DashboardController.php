@@ -38,6 +38,6 @@ class DashboardController extends AdminController
             'breadcrumbs' => $this->breadcrumbs,
         ];
 
-        return view('admin.AdminSC.dashboard', $data);
+        return view('zetthcore::AdminSC.dashboard', $data);
     }
 }

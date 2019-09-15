@@ -5,7 +5,7 @@ trait MainTrait
 {
     public function visitorLog()
     {
-
+        /* set variable */
         $device = '';
         $agent = new \Jenssegers\Agent\Agent();
         if ($agent->isPhone()) {
@@ -28,32 +28,27 @@ trait MainTrait
         $is_robot = $agent->isRobot() ? 1 : 0;
         $robot_name = $agent->robot() ? $agent->robot : null;
 
-        $params = [
-            'ip' => $ip,
-            'page' => $page,
-            'referral' => $referral,
-            'agent' => $browser_agent,
-            'browser' => $browser,
-            'browser_version' => $browser_version,
-            'device' => $device,
-            'device_name' => $device_name,
-            'os' => $os,
-            'os_version' => $os_version,
-            'is_robot' => $is_robot,
-            'robot_name' => $robot_name,
-        ];
-
-        $q = \ZetthCore\Models\VisitorLog::where($params)->whereBetween('created_at', [date("Y-m-d H:00:00"), date("Y-m-d H:59:59")]);
-
-        $v = $q->first();
-        if (!$v) {
-            $params['count'] = \DB::raw('count+1');
-            \ZetthCore\Models\VisitorLog::create($params);
-        } else {
-            $q->update([
+        /* save log */
+        \ZetthCore\Models\VisitorLog::updateOrCreate(
+            [
+                'id' => md5($ip . $page . $referral . $browser_agent . $browser . $browser_version . $device . $device_name . $os . $os_version . $is_robot . $robot_name),
+            ],
+            [
+                'ip' => $ip,
+                'page' => $page,
+                'referral' => $referral,
+                'agent' => $browser_agent,
+                'browser' => $browser,
+                'browser_version' => $browser_version,
+                'device' => $device,
+                'device_name' => $device_name,
+                'os' => $os,
+                'os_version' => $os_version,
+                'is_robot' => $is_robot,
+                'robot_name' => $robot_name,
                 'count' => \DB::raw('count+1'),
-            ]);
-        }
+            ]
+        );
     }
 
     public function activityLog($description)
@@ -68,6 +63,9 @@ trait MainTrait
         }
         if (isset($_POST['user_password'])) {
             $_POST['user_password'] = $sensor;
+        }
+        if (isset($_POST['_token'])) {
+            $_POST['_token'] = $sensor;
         }
 
         $act = new \ZetthCore\Models\ActivityLog;
@@ -98,16 +96,17 @@ trait MainTrait
         }
 
         if ($e->getMessage()) {
-            if (\Illuminate\Support\Facades\Schema::hasTable('applications')) {
+            if (\Illuminate\Support\Facades\Schema::hasTable('error_log')) {
                 $err = \ZetthCore\Models\ErrorLog::updateOrCreate(
+                    [
+                        'id' => md5($log['code'] . $log['file'] . $log['line'] . $log['path'] . $log['message']),
+                    ],
                     [
                         'code' => $log['code'],
                         'file' => $log['file'],
                         'line' => $log['line'],
                         'path' => $log['path'],
                         'message' => $log['message'],
-                    ],
-                    [
                         'params' => $log['params'],
                         'trace' => $log['trace'],
                         'data' => $log['data'] ?? null,
@@ -152,7 +151,7 @@ trait MainTrait
                     $mail->from($par['from']);
                 }
             } else {
-                $mail->from($cfg['username']);
+                $mail->from($this->user->email, $this->user->name);
             }
 
             /* Set Sender 'Reply To' */
@@ -469,7 +468,7 @@ trait MainTrait
             $collection = $collection->get();
         }
 
-        $make = \Datatables::collection($collection);
+        $make = \DataTables::collection($collection);
         if (bool($escape)) {
             $make = $make->escapeColumns([]);
         }

@@ -18,17 +18,17 @@ class Post extends Model
 
     public function terms()
     {
-        return $this->belongsToMany('ZetthCore\Models\Term', 'post_terms', 'post_id', 'term_id');
+        return $this->belongsToMany('ZetthCore\Models\Term', 'post_terms');
     }
 
     public function categories()
     {
-        return $this->belongsToMany('ZetthCore\Models\Term', 'post_terms', 'post_id', 'term_id')->where('type', 'category');
+        return $this->belongsToMany('ZetthCore\Models\Term', 'post_terms')->where('type', 'category');
     }
 
     public function tags()
     {
-        return $this->belongsToMany('ZetthCore\Models\Term', 'post_terms', 'post_id', 'term_id')->where('type', 'tag');
+        return $this->belongsToMany('ZetthCore\Models\Term', 'post_terms')->where('type', 'tag');
     }
 
     public function author()
@@ -43,11 +43,40 @@ class Post extends Model
 
     public function comments()
     {
-        return $this->hasMany('ZetthCore\Models\PostComment', 'post_id')->where('comment_status', 1);
+        return $this->hasMany('ZetthCore\Models\PostComment')->where('status', 1);
     }
 
-    public function comments2()
+    public function comments_all()
     {
-        return $this->hasMany('ZetthCore\Models\PostComment', 'post_id');
+        return $this->hasMany('ZetthCore\Models\PostComment');
+    }
+
+    public function scopeArticles($query)
+    {
+        return $query->where('type', 'article');
+    }
+
+    public function scopePages($query)
+    {
+        return $query->where('type', 'page');
+    }
+
+    public function scopeVideos($query)
+    {
+        return $query->where('type', 'video');
+    }
+
+    public function scopeWithCategories($query, $name)
+    {
+        return $query->whereHas('terms', function ($q) use ($name) {
+            $q->where('type', 'category')->whereIn('slug', $name);
+        });
+    }
+
+    public function scopeWithTags($query, $name)
+    {
+        return $query->whereHas('terms', function ($q) use ($name) {
+            $q->where('type', 'category')->whereIn('slug', $name);
+        });
     }
 }

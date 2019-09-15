@@ -7,33 +7,48 @@
         "intervention/image": "^2.4",
         "jenssegers/agent": "^2.6",
         "laravel/framework": "^5.8",
-        "predis/predis": "^1.1",
         "renatomarinho/laravel-page-speed": "^1.8",
         "santigarcor/laratrust": "5.2.*",
         "yajra/laravel-datatables-oracle": "~9.0",
-        "zafranf/helpers": "^1.0"
+        "zafranf/helpers": "dev-master"
     },
-    "require-dev": {
-        "barryvdh/laravel-debugbar": "^3.1"
-    },
+    "require-dev": {},
     "license": "MIT",
     "authors": [{
         "name": "Zafran Fadilah",
-        "email": "fadilah@zafran.id"
+        "email": "surel@zafran.id"
     }],
     "config": {
         "preferred-install": "dist",
         "sort-packages": true,
         "optimize-autoloader": true
     },
-    "minimum-stability": "stable",
+    "minimum-stability": "dev",
     "prefer-stable": true,
     "autoload": {
         "psr-4": {
-            "ZetthCore\\": "src/app/"
+            "ZetthCore\\": "src/app"
         },
+        "classmap": [
+            "src/database/seeds",
+            "src/database/factories"
+        ],
         "files": [
-            "src/app/helpers.php"
+            "src/app/helpers.php",
+            "src/app/queries.php"
         ]
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "ZetthCore\\Providers\\AppServiceProvider"
+            ],
+            "aliases": {
+                "DataTables": "Yajra\\DataTables\\Facades\\DataTables",
+                "Image": "Intervention\\Image\\Facades\\Image",
+                "Laratrust": "Laratrust\\LaratrustFacade",
+                "Browser": "Jenssegers\\Agent\\Facades\\Agent"
+            }
+        }
     }
 }

@@ -14,6 +14,10 @@ class CreateActivityLogsTable extends Migration
     public function up()
     {
         Schema::create('activity_logs', function (Blueprint $table) {
+            $table->engine = 'InnoDB';
+            $table->charset = 'utf8mb4';
+            $table->collation = 'utf8mb4_unicode_ci';
+
             $table->string('description');
             $table->string('method');
             $table->string('path');

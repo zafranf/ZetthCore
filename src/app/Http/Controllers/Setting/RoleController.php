@@ -56,7 +56,7 @@ class RoleController extends AdminController
             'page_subtitle' => 'Daftar Peran',
         ];
 
-        return view('admin.AdminSC.setting.roles', $data);
+        return view('zetthcore::AdminSC.setting.roles', $data);
     }
 
     /**
@@ -84,7 +84,7 @@ class RoleController extends AdminController
             'menugroups' => $menugroups,
         ];
 
-        return view('admin.AdminSC.setting.roles_form', $data);
+        return view('zetthcore::AdminSC.setting.roles_form', $data);
     }
 
     /**
@@ -161,7 +161,7 @@ class RoleController extends AdminController
             'data' => $role,
         ];
 
-        return view('admin.AdminSC.setting.roles_form', $data);
+        return view('zetthcore::AdminSC.setting.roles_form', $data);
     }
 
     /**
@@ -191,7 +191,7 @@ class RoleController extends AdminController
             $this->setPermissions($r, $role);
         } else {
             /* remove all permissions */
-            RolePermission::where('role_id', $role->id)->delete();
+            RolePermission::where('role_id', '!=', $role->id)->delete();
         }
 
         /* save menu group */
@@ -199,6 +199,9 @@ class RoleController extends AdminController
 
         /* log aktifitas */
         $this->activityLog('<b>' . \Auth::user()->fullname . '</b> memperbarui Peran "' . $role->name . '"');
+
+        /* Clear cache */
+        // \Cache::forget('cacheMenuGroupUser_role');
 
         return redirect($this->current_url . '/' . $role->id . '/edit')->with('success', 'Peran "' . $role->display_name . '" berhasil disimpan, segera atur akses menu!');
     }

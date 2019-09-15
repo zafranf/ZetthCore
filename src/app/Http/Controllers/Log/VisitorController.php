@@ -52,7 +52,7 @@ class VisitorController extends AdminController
             'page_subtitle' => 'Daftar Pengunjung',
         ];
 
-        return view('admin.AdminSC.log.visitor', $data);
+        return view('zetthcore::AdminSC.log.visitor', $data);
     }
 
     /**

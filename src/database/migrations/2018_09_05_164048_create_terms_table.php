@@ -14,9 +14,13 @@ class CreateTermsTable extends Migration
     public function up()
     {
         Schema::create('terms', function (Blueprint $table) {
+            $table->engine = 'InnoDB';
+            $table->charset = 'utf8mb4';
+            $table->collation = 'utf8mb4_unicode_ci';
+
             $table->increments('id')->unsigned();
             $table->string('name');
-            $table->string('display_name');
+            $table->string('slug');
             $table->string('description')->nullable();
             $table->enum('type', ['tag', 'category'])->default('category');
             $table->integer('parent_id')->unsigned()->default(0);

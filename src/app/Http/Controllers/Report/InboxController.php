@@ -52,7 +52,7 @@ class InboxController extends AdminController
             'page_subtitle' => 'Daftar Kotak Masuk',
         ];
 
-        return view('admin.AdminSC.report.inbox', $data);
+        return view('zetthcore::AdminSC.report.inbox', $data);
     }
 
     /**
@@ -103,7 +103,7 @@ class InboxController extends AdminController
         $inbox->read = 1;
         $inbox->save();
 
-        return view('admin.AdminSC.report.inbox_detail', $data);
+        return view('zetthcore::AdminSC.report.inbox_detail', $data);
     }
 
     /**
@@ -152,7 +152,7 @@ class InboxController extends AdminController
     public function datatable(Request $r)
     {
         /* get data */
-        $data = Inbox::select(\DB::raw('substring(message, 1, 50) as message'), 'id', 'name', 'email', 'status')->get();
+        $data = Inbox::select('id', 'name', 'email', \DB::raw('substring(message, 1, 100) as message'), 'status')->get();
 
         /* generate datatable */
         if ($r->ajax()) {

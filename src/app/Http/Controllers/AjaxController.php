@@ -3,13 +3,13 @@ namespace ZetthCore\Http\Controllers;
 
 use DB;
 use Illuminate\Http\Request;
-use ZetthCore\Http\Controllers\Controller;
+use ZetthCore\Http\Controllers\AdminController;
 use ZetthCore\Models\Post;
 use ZetthCore\Models\PostComment;
 use ZetthCore\Models\Term;
 use ZetthCore\Models\VisitorLog;
 
-class AjaxController extends Controller
+class AjaxController extends AdminController
 {
     public function term($term)
     {
@@ -40,12 +40,12 @@ class AjaxController extends Controller
         $res = [
             'rows' => [
                 [
-                    'name' => 'Visits',
+                    'name' => 'Kunjungan',
                     'data' => [],
                     'color' => 'coral',
                 ],
                 [
-                    'name' => 'Unique Visitors',
+                    'name' => 'Pengunjung Unik',
                     'data' => [],
                     'color' => 'grey',
                 ],
@@ -285,7 +285,7 @@ class AjaxController extends Controller
         if ($pops) {
             foreach ($pops as $k => $v) {
                 $cat = [];
-                $res['rows'][$k]['title'] = isDesktop() ? str_limit($v->title, 80) : str_limit($v->title, 30);
+                $res['rows'][$k]['title'] = is_desktop() ? str_limit($v->title, 80) : str_limit($v->title, 30);
                 $res['rows'][$k]['slug'] = $v->slug;
                 $res['rows'][$k]['views'] = $v->visited;
                 if (count($v->categories) > 0) {
@@ -321,9 +321,9 @@ class AjaxController extends Controller
         if ($comms) {
             foreach ($comms as $k => $v) {
                 $today = date("Y-m-d");
-                $post = isDesktop() ? str_limit($v->post->title, 60) : str_limit($v->post->title, 20);
+                $post = is_desktop() ? str_limit($v->post->title, 60) : str_limit($v->post->title, 20);
                 $res['rows'][$k]['id'] = $v->comment_id;
-                $res['rows'][$k]['text'] = isDesktop() ? str_limit(strip_tags($v->comment_text), 75) : str_limit(strip_tags($v->comment_text), 20);
+                $res['rows'][$k]['text'] = is_desktop() ? str_limit(strip_tags($v->comment_text), 75) : str_limit(strip_tags($v->comment_text), 20);
                 $res['rows'][$k]['name'] = $v->comment_name;
                 $res['rows'][$k]['post'] = '<a style="text-decoration:none;">' . $post . '</a>';
                 $res['rows'][$k]['time'] = str_replace($today, "", $v->created_at);

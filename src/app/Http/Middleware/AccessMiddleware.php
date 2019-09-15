@@ -33,26 +33,43 @@ class AccessMiddleware
         /* get route name */
         $name = \Route::current()->getName();
         $xname = explode('.', $name);
+        $sliced = array_slice($xname, 0, -1);
+        $newname = implode(".", $sliced);
+
+        /* allow datatable */
+        $is_datatable = end($xname);
+        if ($is_datatable == 'datatable') {
+            return true;
+        }
+
+        // return $user->can($name);
 
         /* check access */
         $access = null;
+        $page = null;
         if (count($xname) > 1) {
-            if ($xname[1] == "index") {
+            $access = end($xname);
+            if ($access == "index") {
                 $access = 'index';
-            } else if ($xname[1] == "create" || $xname[1] == "store") {
+            } else if ($access == "create" || $access == "store") {
                 $access = 'create';
-            } else if ($xname[1] == "show") {
+            } else if ($access == "show") {
                 $access = 'read';
-            } else if ($xname[1] == "edit" || $xname[1] == "update") {
+            } else if ($access == "edit" || $access == "update") {
                 $access = 'update';
-            } else if ($xname[1] == "destroy") {
+            } else if ($access == "destroy") {
                 $access = 'delete';
             } else {
-                throw new Exception('Undefined access');
+                throw new \Exception('Undefined access');
+            }
+
+            $page = $xname[0];
+            if ($page == 'admin') {
+                $page = $xname[1];
             }
         }
-
-        return $user->can($access . '-' . $xname[0]);
+        // dd($name, $xname, $access, $page, $newname . '.' . $access);
+        return $user->can($newname . '.' . $access);
     }
 
 }

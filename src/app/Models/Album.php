@@ -9,13 +9,18 @@ class Album extends Model
 {
     use SoftDeletes;
 
+    public function cover()
+    {
+        return $this->hasOne('ZetthCore\Models\AlbumDetail', 'album_id')->select('id', 'album_id', 'file');
+    }
+
     public function photo()
     {
-        return $this->hasOne('ZetthCore\Http\Models\AlbumDetail', 'album_id')->where('type', 'photo');
+        return $this->hasOne('ZetthCore\Models\AlbumDetail', 'album_id');
     }
 
     public function photos()
     {
-        return $this->hasMany('ZetthCore\Http\Models\AlbumDetail', 'album_id')->where('type', 'photo');
+        return $this->hasMany('ZetthCore\Models\AlbumDetail', 'album_id');
     }
 }

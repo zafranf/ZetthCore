@@ -55,7 +55,7 @@ class UserController extends AdminController
             'page_subtitle' => 'Daftar Pengguna',
         ];
 
-        return view('admin.AdminSC.data.users', $data);
+        return view('zetthcore::AdminSC.data.users', $data);
     }
 
     /**
@@ -104,7 +104,7 @@ class UserController extends AdminController
         'type' => 'user',
         ])->with('socmed')->get(); */
 
-        return view('admin.AdminSC.data.users_form', $data);
+        return view('zetthcore::AdminSC.data.users_form', $data);
     }
 
     /**
@@ -227,7 +227,7 @@ class UserController extends AdminController
             'data_id' => $user->id,
         ])->with('socmed')->get();
 
-        return view('admin.AdminSC.data.users_form', $data);
+        return view('zetthcore::AdminSC.data.users_form', $data);
     }
 
     /**
@@ -318,8 +318,26 @@ class UserController extends AdminController
      */
     public function datatable(Request $r)
     {
+        /* where roles */
+        if (\Auth::user()->hasRole('super')) {
+            $whrRole = [
+                // ['status', 1],
+            ];
+        } else if (\Auth::user()->hasRole('admin')) {
+            $whrRole = [
+                // ['status', 1],
+                ['id', '!=', 1],
+            ];
+        } else {
+            $whrRole = [
+                // ['status', 1],
+                ['id', '!=', 1],
+                ['id', '!=', 2],
+            ];
+        }
+
         /* get data */
-        $data = User::select('id', 'name', 'fullname', /* 'image', 'email', */'status')->get();
+        $data = User::select('id', 'name', 'fullname', /* 'image', 'email', */'status')->where($whrRole)->get();
 
         /* generate datatable */
         if ($r->ajax()) {

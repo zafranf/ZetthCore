@@ -27,7 +27,7 @@ class PostController extends AdminController
             'url' => url($this->adminPath . '/content/banners'),
         ];
         $this->breadcrumbs[] = [
-            'page' => 'Halaman',
+            'page' => 'Artikel',
             'icon' => '',
             'url' => $this->current_url,
         ];
@@ -54,7 +54,7 @@ class PostController extends AdminController
             'page_subtitle' => 'Daftar Artikel',
         ];
 
-        return view('admin.AdminSC.content.posts', $data);
+        return view('zetthcore::AdminSC.content.posts', $data);
     }
 
     /**
@@ -86,7 +86,7 @@ class PostController extends AdminController
             'categories' => $categories,
         ];
 
-        return view('admin.AdminSC.content.posts_form', $data);
+        return view('zetthcore::AdminSC.content.posts_form', $data);
     }
 
     /**
@@ -192,7 +192,7 @@ class PostController extends AdminController
             'data' => $post->load('terms'),
         ];
 
-        return view('admin.AdminSC.content.posts_form', $data);
+        return view('zetthcore::AdminSC.content.posts_form', $data);
     }
 
     /**
@@ -232,7 +232,9 @@ class PostController extends AdminController
         $post->content = $r->input('content');
         $post->excerpt = $r->input('excerpt');
         $post->type = 'article';
-        $post->cover = $cover;
+        if ($r->input('cover')) {
+            $post->cover = $cover;
+        }
         if ($r->input('cover_remove')) {
             $post->cover = '';
         }
@@ -286,7 +288,7 @@ class PostController extends AdminController
     public function datatable(Request $r)
     {
         /* get data */
-        $data = Post::select('id', 'title', 'slug', 'status')->where('type', 'article')->orderBy('id', 'desc')->get();
+        $data = Post::select('id', 'title', 'slug', 'status')->where('type', 'article')->get();
 
         /* generate datatable */
         if ($r->ajax()) {

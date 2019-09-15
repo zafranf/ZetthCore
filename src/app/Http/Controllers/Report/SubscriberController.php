@@ -17,10 +17,15 @@ class SubscriberController extends AdminController
     public function __construct()
     {
         parent::__construct();
-        $this->current_url = url('/report/subscribers');
-        $this->page_title = 'Pengaturan Pelanggan';
+        $this->current_url = url($this->adminPath . '/report/inbox');
+        $this->page_title = 'Kelola Langganan Info';
         $this->breadcrumbs[] = [
-            'page' => 'Pelanggan Info',
+            'page' => 'Laporan',
+            'icon' => '',
+            'url' => url($this->adminPath . '/report/inbox'),
+        ];
+        $this->breadcrumbs[] = [
+            'page' => 'Langganan Info',
             'icon' => '',
             'url' => $this->current_url,
         ];
@@ -33,14 +38,21 @@ class SubscriberController extends AdminController
      */
     public function index()
     {
+        $this->breadcrumbs[] = [
+            'page' => 'Daftar',
+            'icon' => '',
+            'url' => '',
+        ];
+
         /* set variable for view */
         $data = [
             'current_url' => $this->current_url,
+            'breadcrumbs' => $this->breadcrumbs,
             'page_title' => $this->page_title,
-            'page_subtitle' => 'Daftar Label',
+            'page_subtitle' => 'Daftar Langganan Info',
         ];
 
-        return view('admin.report.subscriber', $data);
+        return view('zetthcore::AdminSC.report.subscriber', $data);
     }
 
     /**
@@ -83,15 +95,22 @@ class SubscriberController extends AdminController
      */
     public function edit(Subscriber $subscriber)
     {
+        $this->breadcrumbs[] = [
+            'page' => 'Edit',
+            'icon' => '',
+            'url' => '',
+        ];
+
         /* set variable for view */
         $data = [
             'current_url' => $this->current_url,
+            'breadcrumbs' => $this->breadcrumbs,
             'page_title' => $this->page_title,
-            'page_subtitle' => 'Edit Pelanggan',
+            'page_subtitle' => 'Edit Langganan Info',
             'data' => $subscriber,
         ];
 
-        return view('admin.report.subscriber_form', $data);
+        return view('zetthcore::AdminSC.report.subscriber_form', $data);
     }
 
     /**
@@ -143,7 +162,7 @@ class SubscriberController extends AdminController
     public function datatable(Request $r)
     {
         /* get data */
-        $data = Subscriber::select(sequence(), 'id', 'email', 'status')->get();
+        $data = Subscriber::select('id', 'email', 'status')->get();
 
         /* generate datatable */
         if ($r->ajax()) {

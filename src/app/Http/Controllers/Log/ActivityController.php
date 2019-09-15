@@ -52,7 +52,7 @@ class ActivityController extends AdminController
             'page_subtitle' => 'Daftar Aktifitas',
         ];
 
-        return view('admin.AdminSC.log.activity', $data);
+        return view('zetthcore::AdminSC.log.activity', $data);
     }
 
     /**
@@ -127,7 +127,7 @@ class ActivityController extends AdminController
     public function datatable(Request $r)
     {
         /* get data */
-        $data = ActivityLog::select('method', 'ip', 'description', 'path')->orderBy('updated_at', 'desc')->get();
+        $data = ActivityLog::select('method', 'ip', 'description', 'path', 'created_at')->orderBy('updated_at', 'desc')->get();
 
         /* generate datatable */
         if ($r->ajax()) {

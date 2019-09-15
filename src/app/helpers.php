@@ -1,4 +1,17 @@
 <?php
+if (!function_exists('adminPath')) {
+    function adminPath()
+    {
+        $adminPath = '/admin';
+        $host = parse_url(url('/'))['host'];
+        if (strpos($host, 'admin') !== false) {
+            $adminPath = '';
+        }
+
+        return $adminPath;
+    }
+}
+
 if (!function_exists('_get_status_text')) {
     /**
      * Undocumented function
@@ -33,7 +46,7 @@ if (!function_exists('_get_access_buttons')) {
      */
     function _get_access_buttons($url = '', $btn = '')
     {
-        $add = isDesktop() ? 'TAMBAH' : '';
+        $add = is_desktop() ? 'TAMBAH' : '';
 
         /* ambil user login */
         $user = \Auth::user();
@@ -44,20 +57,22 @@ if (!function_exists('_get_access_buttons')) {
         /* ambil route name */
         $name = \Route::current()->getName();
         $xname = explode('.', $name);
+        $sliced = array_slice($xname, 0, -1);
+        $newname = implode(".", $sliced);
 
         if ($btn == 'add') {
-            if ($user->can('create-' . $xname[0])) {
+            if ($user->can($newname . '.create')) {
                 echo '<a href="' . url($url . '/create') . '" class="btn btn-default pull-right" data-toggle="tooltip" data-original-title="Tambah Data"><i class="fa fa-plus"></i>&nbsp;' . $add . '</a>';
             }
         } else {
-            if ($user->can('read-' . $xname[0])) {
-                echo "actions += '&nbsp;<a href=\"' + url + '\" class=\"btn btn-default btn-sm\" data-toggle=\"tooltip\" data-original-title=\"Detail\"><i class=\"fa fa-eye\"></i></a>';";
+            if ($user->can($newname . '.read')) {
+                echo "actions += '&nbsp;<a href=\"' + url + '\" class=\"btn btn-default btn-xs\" data-toggle=\"tooltip\" data-original-title=\"Detail\"><i class=\"fa fa-eye\"></i></a>';";
             }
-            if ($user->can('update-' . $xname[0])) {
-                echo "actions += '&nbsp;<a href=\"' + url + '/edit\" class=\"btn btn-default btn-sm\" data-toggle=\"tooltip\" data-original-title=\"Edit\"><i class=\"fa fa-edit\"></i></a>';";
+            if ($user->can($newname . '.update')) {
+                echo "actions += '&nbsp;<a href=\"' + url + '/edit\" class=\"btn btn-default btn-xs\" data-toggle=\"tooltip\" data-original-title=\"Edit\"><i class=\"fa fa-edit\"></i></a>';";
             }
-            if ($user->can('delete-' . $xname[0])) {
-                echo "actions += '&nbsp;<a href=\"#\" onclick=\"' + del + '\" class=\"btn btn-default btn-sm\" data-toggle=\"tooltip\" data-original-title=\"Hapus\"><i class=\"fa fa-trash\"></i></a>';";
+            if ($user->can($newname . '.delete')) {
+                echo "actions += '&nbsp;<a href=\"#\" onclick=\"' + del + '\" class=\"btn btn-default btn-xs\" data-toggle=\"tooltip\" data-original-title=\"Hapus\"><i class=\"fa fa-trash\"></i></a>';";
             }
         }
     }
@@ -91,9 +106,13 @@ if (!function_exists('_get_image')) {
     function _get_image($image = "", $default = '/assets/images/default.jpg')
     {
         $img = storage_path('app/public/' . $image);
+        $fm = base_path('vendor/zafranf/zetthcore/src/resources/themes/AdminSC/plugins/filemanager/source' . $image);
         if (file_exists($img) && !is_dir($img)) {
             $mtime = filemtime($img);
             $img = url('/storage/' . $image) . '?v=' . $mtime;
+        } else if (file_exists($fm) && !is_dir($fm)) {
+            $mtime = filemtime($fm);
+            $img = url($image) . '?v=' . $mtime;
         } else {
             $img = url($default);
         }
@@ -102,40 +121,32 @@ if (!function_exists('_get_image')) {
     }
 }
 
-if (!function_exists('sequence')) {
-    /**
-     * Database sequence number
-     *
-     * @return void
-     */
-    function sequence()
-    {
-        \DB::statement(\DB::raw('set @rownum=0'));
-
-        return \DB::raw('@rownum := @rownum + 1 AS no');
-    }
-}
-
-if (!function_exists('str_sanitize')) {
-    /**
-     * Sanitize string
-     */
-    function str_sanitize($string)
-    {
-        return trim(e($string));
-    }
-}
-
 if (!function_exists('getMenu')) {
-    function getMenu($group = 'admin', $cache = false)
+    function getMenu($group = 'user_role', $cache = false)
     {
-        $cacheMenuName = 'cacheMenu-Group' . ucfirst($group);
+        $user = \Auth::user() ? \Auth::user()->id : '';
+        $roleName = '';
+        if ($group == 'user_role') {
+            foreach (\Auth::user()->roles as $role) {
+                $roleName .= ucfirst($role->name);
+            }
+        }
+        $cacheMenuName = 'cacheMenuGroup' . studly_case($group) . $roleName;
         $cacheMenu = \Cache::get($cacheMenuName);
         if ($cacheMenu && $cache) {
             $menus = $cacheMenu;
         } else {
-            $groupmenu = \ZetthCore\Models\MenuGroup::where('name', $group)->with('menu.submenu')->first();
-            $menus = $groupmenu->menu;
+            if ($group == 'user_role') {
+                $menus = collect([]);
+                foreach (\Auth::user()->roles as $role) {
+                    foreach ($role->menu_groups as $group) {
+                        $menus = $menus->merge($group->menu);
+                    }
+                }
+            } else {
+                $groupmenu = \ZetthCore\Models\MenuGroup::where('name', $group)->with('menu', 'menu.submenu')->first();
+                $menus = $groupmenu->menu;
+            }
 
             \Cache::put($cacheMenuName, $menus, 10 * 60);
         }
@@ -150,9 +161,10 @@ if (!function_exists('generateMenu')) {
      *
      * @return void
      */
-    function generateMenu($group = 'admin')
+    function generateMenu($group = 'user_role')
     {
-        $menus = getMenu($group);
+        /* get all menus */
+        $menus = getMenu($group, true);
 
         echo '<ul class="nav navbar-nav">';
         foreach ($menus as $menu) {
@@ -193,9 +205,9 @@ if (!function_exists('generateSubmenu')) {
             $sublink = count($submenu->submenu) ? ' dropdown-toggle submenu' : '';
             $subtoggle = count($submenu->submenu) ? ' data-toggle="dropdown" role="button"' : '';
             $icon = ($submenu->icon != '') ? '<i class="' . $submenu->icon . '"></i>' : '';
-            $caret_class = !isMobile() ? ' style="position: absolute;right: 10px;top: 3px;"' : ' class="pull-right"';
-            $direction = isMobile() ? 'down' : 'right';
-            $caret = !isMobile() ? 'fa fa-caret-' . $direction : 'caret';
+            $caret_class = !is_mobile() ? ' style="position: absolute;right: 10px;top: 3px;"' : ' class="pull-right"';
+            $direction = is_mobile() ? 'down' : 'right';
+            $caret = !is_mobile() ? 'fa fa-caret-' . $direction : 'caret';
             $caret = (count($submenu->submenu) > 0) ? '<span ' . $caret_class . '><span class="' . $caret . '"></span></span>' : '';
             echo '<li class="' . $dropdown . '">';
             echo '<a ' . ($href ?? '') . ' class="dropdown-item' . ($sublink ?? '') . ' ' . $active . '" ' . ($subtoggle ?? '') . ' target="' . $submenu->target . '">' . $icon . ' ' . $submenu->name . $caret . '</a>';
@@ -265,7 +277,7 @@ if (!function_exists('generateDate')) {
      * @param  [type] $lang [description]
      * @return [type]             [description]
      */
-    function generateDate($date = null, $lang = 'id')
+    function generateDate($date = null, string $lang = 'id')
     {
         $date = $date ?? date("Y-m-d");
         $format = ($lang == 'id') ? 'dddd, Do MMMM YYYY' : 'dddd, MMMM Do YYYY';
@@ -274,23 +286,77 @@ if (!function_exists('generateDate')) {
     }
 }
 
-if (!function_exists('isMobile')) {
-    function isMobile()
+if (!function_exists('is_mobile')) {
+    function is_mobile()
     {
         return (new \Jenssegers\Agent\Agent())->isMobile();
     }
 }
 
-if (!function_exists('isTablet')) {
-    function isTablet()
+if (!function_exists('is_tablet')) {
+    function is_tablet()
     {
         return (new \Jenssegers\Agent\Agent())->isTablet();
     }
 }
 
-if (!function_exists('isDesktop')) {
-    function isDesktop()
+if (!function_exists('is_desktop')) {
+    function is_desktop()
     {
         return (new \Jenssegers\Agent\Agent())->isDesktop();
+    }
+}
+
+if (!function_exists('_admin_css')) {
+    /**
+     * Generate link stylesheet tag
+     *
+     * @param string $file
+     * @param array $attributes
+     * @return string
+     */
+    function _admin_css($file = "", $attributes = [])
+    {
+        $path = str_replace("themes/admin", "themes", $file);
+        $path = dirname(__DIR__) . '/resources/' . ltrim($path, '/');
+        if (file_exists($path)) {
+            $mtime = filemtime($path);
+            $attr = ' rel="stylesheet" type="text/css"';
+            if (!empty($attributes)) {
+                $attr = '';
+                foreach ($attributes as $key => $value) {
+                    $attr .= ' ' . $key . '="' . $value . '"';
+                }
+            }
+
+            return '<link href="' . url($file) . '?' . $mtime . '"' . $attr . '>';
+        }
+    }
+}
+
+if (!function_exists('_admin_js')) {
+    /**
+     * Generate script tag
+     *
+     * @param string $file
+     * @param array $attributes
+     * @return string
+     */
+    function _admin_js($file = "", $attributes = [])
+    {
+        $path = str_replace("themes/admin", "themes", $file);
+        $path = dirname(__DIR__) . '/resources/' . ltrim($path, '/');
+        if (file_exists($path)) {
+            $mtime = filemtime($path);
+            $attr = ' type="text/javascript"';
+            if (!empty($attributes)) {
+                $attr = '';
+                foreach ($attributes as $key => $value) {
+                    $attr .= ' ' . $key . '="' . $value . '"';
+                }
+            }
+
+            return '<script src="' . url($file) . '?' . $mtime . '"' . $attr . '></script>';
+        }
     }
 }

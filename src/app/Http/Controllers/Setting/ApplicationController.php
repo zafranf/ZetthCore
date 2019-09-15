@@ -59,7 +59,7 @@ class ApplicationController extends AdminController
             'type' => 'config',
         ])->with('socmed')->get();
 
-        return view('admin.AdminSC.setting.application', $data);
+        return view('zetthcore::AdminSC.setting.application', $data);
     }
 
     /**
@@ -115,7 +115,7 @@ class ApplicationController extends AdminController
     public function update(Request $r, $id)
     {
         /* validation */
-        $this->validate($r, [
+        $r->validate([
             'logo' => 'mimes:jpg,jpeg,png,svg|max:384|dimensions:max_width=512,max_height=512',
             'icon' => 'mimes:jpg,jpeg,png,svg,ico|max:96|dimensions:max_width=128,max_height=128',
             'name' => 'required|max:50',
