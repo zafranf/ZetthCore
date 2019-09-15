@@ -8,12 +8,12 @@
 					<td>No.</td>
 					@if ($is_desktop)
 						<td>Sumber</td>
-						<td>Kata Kunci</td>
+						<td>Kata Pencarian</td>
 						<td>Jumlah</td>
 					@else
-						<td>Kata Kunci</td>
+						<td>Kata Pencarian</td>
 					@endif
-					<td>Akses</td>
+					{{-- <td>Akses</td> --}}
 				</tr>
 			</thead>
 		</table>
@@ -31,7 +31,7 @@
       let options = {
         "processing": true,
         "serverSide": true,
-        "ajax": SITE_URL + "{{ $adminPath }}/report/subscribers/data",
+        "ajax": SITE_URL + "{{ $adminPath }}/report/incoming-terms/data",
         "pageLength": 20,
         "lengthMenu": [
           [10, 20, 50, 100, -1], 
@@ -42,7 +42,7 @@
           { "data": "host", "width": "250px" },
           { "data": "text" },
           { "data": "count", "width": "50px" },
-          { "width": "40px" },
+          // { "width": "40px" },
         ],
         "columnDefs": [{
           "targets": 0,
@@ -51,20 +51,20 @@
           "render": function (data, type, row, meta) {
             return meta.row + meta.settings._iDisplayStart + 1;
           }
-        }, {
+        }/* , {
           "targets": 4,
           "data": 'id',
           "sortable": false,
           "render": function (data, type, row, meta) {
             let actions = '';
-            let url = SITE_URL + "{{ $adminPath }}/report/subscribers/" + data;
+            let url = SITE_URL + "{{ $adminPath }}/report/incoming-terms/" + data;
             let del = "_delete('" + url + "')";
             {!! _get_access_buttons() !!}
             $('[data-toggle="tooltip"]').tooltip();
 
             return actions;
           }
-        }],
+        } */],
       };
 
       @if (!$is_desktop)
@@ -95,7 +95,7 @@
             "sortable": false,
             "render": function (data, type, row, meta) {
               let actions = '';
-              let url = SITE_URL + "{{ $adminPath }}/report/subscribers/" + data;
+              let url = SITE_URL + "{{ $adminPath }}/report/incoming-terms/" + data;
               let del = "_delete('" + url + "')";
               {!! _get_access_buttons() !!}
               $('[data-toggle="tooltip"]').tooltip();
