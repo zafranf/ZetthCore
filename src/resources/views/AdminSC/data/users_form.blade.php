@@ -85,7 +85,7 @@
 					</div>
 				</div>
 				<div class="col-md-6">
-					<h4>Media Sosial <span class="btn btn-default btn-xs pull-right" id="btn-add-socmed"><i class="fa fa-plus"></i> Tambah</span></h4>
+					<h4>Media Sosial <span class="btn btn-default btn-xs pull-right" id="btn-add-socmed"><i class="fa fa-plus"></i></span></h4>
 					<hr>
 					<div class="form-group">
 						<label for="label" class="col-md-4 control-label">Akun</label>

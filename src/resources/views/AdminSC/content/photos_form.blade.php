@@ -48,7 +48,7 @@
                     </div>
                 </div>
                 <div id="div-photo" class="col-md-10 col-sm-12">
-                    <h4>Foto <span class="btn btn-default btn-xs pull-right" id="btn-add-photo" onclick="addPhotoModal()" style="cursor:pointer;"><i class="fa fa-plus"></i> Tambah</span></h4>
+                    <h4>Foto <span class="btn btn-default btn-xs pull-right" id="btn-add-photo" onclick="addPhotoModal()" style="cursor:pointer;"><i class="fa fa-plus"></i></span></h4>
                     <hr>
                     <div class="row">
                         <div class="col-sm-12" style="max-height:400px;overflow:auto;" id="photo-box">
