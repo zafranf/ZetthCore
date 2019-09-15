@@ -86,12 +86,12 @@
         <div class="col-sm-4">
           <div class="checkbox">
             <label>
-              <input type="checkbox" id="is_crud" name="is_crud" {{ (isset($data) && $data->is_crud == 0) ? '' : 'checked' }}> Ya
+              <input type="checkbox" id="is_crud" name="is_crud" {{ (isset($data) && $data->is_crud == 1) ? 'checked' : '' }}> Ya
             </label>
           </div>
         </div>
       </div>
-      <div class="form-group" id="access-fields" {!! (isset($data) && $data->is_crud == 0) ? 'style="display:none;"' : '' !!}>
+      <div class="form-group" id="access-fields" {!! (isset($data) && $data->is_crud == 1) ? '' : 'style="display:none;"' !!}>
         <label for="status" class="col-sm-2 control-label">Akses</label>
         <div class="col-sm-4">
           <div class="checkbox">
