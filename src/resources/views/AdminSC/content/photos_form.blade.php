@@ -40,7 +40,7 @@
                     </div>
                     <div class="form-group">
                         <div class="col-sm-12">
-                            <input type="hidden" id="input_tmp">
+                            <input type="hidden" id="input_tmp" name="photos[]">
                             {{ isset($data->id) ? method_field('PUT') : '' }}
                             {{ csrf_field() }}
                             {{ _get_button_post($current_url, true, $data->id ?? '') }}

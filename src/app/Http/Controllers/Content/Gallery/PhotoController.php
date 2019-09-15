@@ -97,7 +97,9 @@ class PhotoController extends AdminController
         $this->validate($r, [
             'name' => 'required|max:100|unique:albums,name,NULL,created_at,type,photo',
             'slug' => 'unique:albums,slug,NULL,created_at,type,photo',
-            'photos.files.*' => 'required',
+            'photos.*' => 'required',
+        ], [
+            'photos.*' => 'The photos field is required',
         ]);
 
         /* save data */
@@ -167,7 +169,9 @@ class PhotoController extends AdminController
         $this->validate($r, [
             'name' => 'required|max:100|unique:albums,name,' . $album->id . ',id,type,photo',
             'slug' => 'unique:albums,slug,' . $album->id . ',id,type,photo',
-            'photos.files.*' => 'required',
+            'photos.*' => 'required',
+        ], [
+            'photos.*' => 'The photos field is required',
         ]);
 
         /* save data */
@@ -231,7 +235,7 @@ class PhotoController extends AdminController
         foreach ($photos['files'] as $n => $file) {
             $data[] = [
                 'file' => $file,
-                'description' => $photos['descriptions'][$n] ?? '',
+                'description' => $photos['descriptions'][$n],
                 'status' => 1,
                 'album_id' => $album_id,
             ];
