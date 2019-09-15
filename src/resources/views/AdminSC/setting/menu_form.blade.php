@@ -22,7 +22,7 @@
         </div>
       </div>
       <div class="form-group">
-        <label for="url" class="col-sm-2 control-label">URL</label>
+        <label for="url" class="col-sm-2 control-label">Tautan</label>
         <div class="col-sm-4">
           <select id="url" name="url" class="form-control select2">
             <option value="#">[Tidak ada]</option>

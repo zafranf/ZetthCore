@@ -95,7 +95,7 @@ class MenuController extends AdminController
         /* validation */
         $this->validate($r, [
             'name' => 'required',
-            'description' => 'required',
+            // 'description' => 'required',
             'group' => 'required|exists:menu_groups,id',
         ]);
 
@@ -182,7 +182,7 @@ class MenuController extends AdminController
         /* validation */
         $this->validate($r, [
             'name' => 'required',
-            'description' => 'required',
+            // 'description' => 'required',
             'group' => 'required|exists:menu_groups,id',
         ]);
 
