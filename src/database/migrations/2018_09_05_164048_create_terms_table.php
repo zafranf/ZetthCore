@@ -20,7 +20,7 @@ class CreateTermsTable extends Migration
 
             $table->increments('id')->unsigned();
             $table->string('name');
-            $table->string('display_name');
+            $table->string('slug');
             $table->string('description')->nullable();
             $table->enum('type', ['tag', 'category'])->default('category');
             $table->integer('parent_id')->unsigned()->default(0);

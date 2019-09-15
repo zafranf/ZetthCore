@@ -94,18 +94,17 @@ class MenuGroupController extends AdminController
         ]);
 
         /* save data */
-        $name = $r->input('name');
         $menugroup = new MenuGroup;
-        $menugroup->name = str_slug($name);
-        $menugroup->display_name = $name;
+        $menugroup->name = $r->input('name');
+        $menugroup->sodium_crypto_secretstream_xchacha20poly1305_keygen = str_slug($menugroup->name);
         $menugroup->description = $r->input('description');
         $menugroup->status = bool($r->input('status')) ? 1 : 0;
         $menugroup->save();
 
         /* activity log */
-        $this->activityLog('<b>' . \Auth::user()->fullname . '</b> menambahkan Grup Menu "' . $menugroup->display_name . '"');
+        $this->activityLog('<b>' . \Auth::user()->fullname . '</b> menambahkan Grup Menu "' . $menugroup->name . '"');
 
-        return redirect($this->current_url . '/' . $menugroup->id . '/edit')->with('success', 'Peran "' . $menugroup->display_name . '" berhasil ditambah, segera atur daftar menu!');
+        return redirect($this->current_url . '/' . $menugroup->id . '/edit')->with('success', 'Peran "' . $menugroup->name . '" berhasil ditambah, segera atur daftar menu!');
     }
 
     /**
@@ -161,9 +160,8 @@ class MenuGroupController extends AdminController
 
         /* save data */
         // $menugroup = MenuGroup::find($id);
-        $name = $r->input('name');
-        $menugroup->name = str_slug($name);
-        $menugroup->display_name = $name;
+        $menugroup->name = $r->input('name');
+        $menugroup->slug = str_slug($menugroup->name);
         $menugroup->description = $r->input('description');
         $menugroup->status = bool($r->input('status')) ? 1 : 0;
         $menugroup->save();
@@ -172,12 +170,12 @@ class MenuGroupController extends AdminController
         $save = $this->sortMenu($r);
 
         /* activity log */
-        $this->activityLog('<b>' . \Auth::user()->fullname . '</b> memperbarui Grup Menu "' . $menugroup->display_name . '"');
+        $this->activityLog('<b>' . \Auth::user()->fullname . '</b> memperbarui Grup Menu "' . $menugroup->name . '"');
 
         /* clear cache */
         \Cache::forget('cacheMenu-Group' . ucfirst($menugroup->name));
 
-        return redirect($this->current_url . '/' . $menugroup->id . '/edit')->with('success', 'Peran "' . $menugroup->display_name . '" berhasil disimpan, segera atur daftar menu!');
+        return redirect($this->current_url . '/' . $menugroup->id . '/edit')->with('success', 'Peran "' . $menugroup->name . '" berhasil disimpan, segera atur daftar menu!');
     }
 
     /**
@@ -189,7 +187,7 @@ class MenuGroupController extends AdminController
     public function destroy(Request $r, MenuGroup $menugroup)
     {
         /* activity log */
-        $this->activityLog('<b>' . \Auth::user()->fullname . '</b> menghapus Grup Menu "' . $menugroup->display_name . '"');
+        $this->activityLog('<b>' . \Auth::user()->fullname . '</b> menghapus Grup Menu "' . $menugroup->name . '"');
 
         /* soft delete */
         $menugroup->delete();
@@ -197,7 +195,7 @@ class MenuGroupController extends AdminController
         /* clear cache */
         \Cache::forget('cacheMenu-Group' . ucfirst($menugroup->name));
 
-        return redirect($this->current_url)->with('success', 'Grup Menu "' . $menugroup->display_name . '" berhasil dihapus!');
+        return redirect($this->current_url)->with('success', 'Grup Menu "' . $menugroup->name . '" berhasil dihapus!');
     }
 
     /**
@@ -224,7 +222,7 @@ class MenuGroupController extends AdminController
         }
 
         /* get data */
-        $data = MenuGroup::select('id', 'display_name as name', 'description', 'status')->where($whrRole)->get();
+        $data = MenuGroup::select('id', 'name', 'description', 'status')->where($whrRole)->get();
 
         /* generate datatable */
         if ($r->ajax()) {

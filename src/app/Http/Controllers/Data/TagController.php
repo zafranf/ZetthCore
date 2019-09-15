@@ -94,19 +94,18 @@ class TagController extends AdminController
         ]);
 
         /* save data */
-        $name = str_sanitize($r->input('name'));
         $tag = new Term;
-        $tag->name = str_slug($name);
-        $tag->display_name = $name;
-        $tag->description = str_sanitize($r->input('description'));
+        $tag->name = $r->input('name');
+        $tag->slug = str_slug($tag->name);
+        $tag->description = $r->input('description');
         $tag->type = 'tag';
         $tag->status = bool($r->input('status')) ? 1 : 0;
         $tag->save();
 
         /* log aktifitas */
-        $this->activityLog('<b>' . \Auth::user()->fullname . '</b> menambahkan Label "' . $tag->display_name . '"');
+        $this->activityLog('<b>' . \Auth::user()->fullname . '</b> menambahkan Label "' . $tag->name . '"');
 
-        return redirect($this->current_url)->with('success', 'Label ' . $tag->display_name . ' berhasil ditambah!');
+        return redirect($this->current_url)->with('success', 'Label ' . $tag->name . ' berhasil ditambah!');
     }
 
     /**
@@ -162,18 +161,17 @@ class TagController extends AdminController
         ]);
 
         /* save data */
-        $name = str_sanitize($r->input('name'));
-        $tag->name = str_slug($name);
-        $tag->display_name = $name;
-        $tag->description = str_sanitize($r->input('description'));
+        $tag->name = $r->input('name');
+        $tag->slug = str_slug($tag->name);
+        $tag->description = $r->input('description');
         $tag->type = 'tag';
         $tag->status = bool($r->input('status')) ? 1 : 0;
         $tag->save();
 
         /* log aktifitas */
-        $this->activityLog('<b>' . \Auth::user()->fullname . '</b> memperbarui Label "' . $tag->display_name . '"');
+        $this->activityLog('<b>' . \Auth::user()->fullname . '</b> memperbarui Label "' . $tag->name . '"');
 
-        return redirect($this->current_url)->with('success', 'Label ' . $tag->display_name . ' berhasil disimpan!');
+        return redirect($this->current_url)->with('success', 'Label ' . $tag->name . ' berhasil disimpan!');
     }
 
     /**
@@ -185,12 +183,12 @@ class TagController extends AdminController
     public function destroy(Term $tag)
     {
         /* log aktifitas */
-        $this->activityLog('<b>' . \Auth::user()->fullname . '</b> menghapus Label "' . $tag->display_name . '"');
+        $this->activityLog('<b>' . \Auth::user()->fullname . '</b> menghapus Label "' . $tag->name . '"');
 
         /* soft delete */
         $tag->delete();
 
-        return redirect($this->current_url)->with('success', 'Label ' . $tag->display_name . ' berhasil dihapus!');
+        return redirect($this->current_url)->with('success', 'Label ' . $tag->name . ' berhasil dihapus!');
     }
 
     /**
@@ -199,7 +197,7 @@ class TagController extends AdminController
     public function datatable(Request $r)
     {
         /* get data */
-        $data = Term::select('id', 'display_name as name', 'description', 'status')->where('type', 'tag')->get();
+        $data = Term::select('id', 'name', 'description', 'status')->where('type', 'tag')->get();
 
         /* generate datatable */
         if ($r->ajax()) {

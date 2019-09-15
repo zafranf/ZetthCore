@@ -1,9 +1,4 @@
 <?php
-use \ZetthCore\Models\Album;
-use \ZetthCore\Models\AlbumPhoto;
-use \ZetthCore\Models\Banner;
-use \ZetthCore\Models\Post;
-
 function _getBanners($limit = 3, $active = 1)
 {
     /* cek cache */
@@ -13,11 +8,11 @@ function _getBanners($limit = 3, $active = 1)
     }
 
     /* inisiasi query */
-    $banners = Banner::orderBy('order', 'DESC');
+    $banners = \ZetthCore\Models\Banner::orderBy('order');
 
     /* cek status */
     if ($active != "all") {
-        $banners->where('banner_status', $active);
+        $banners->where('status', $active);
     }
 
     /* cek limit */
@@ -33,7 +28,7 @@ function _getBanners($limit = 3, $active = 1)
     return $banners;
 }
 
-function _getArticles($pars = '', $limit = 10, $active = 1, $order = "desc")
+function _getPosts($pars = '', $limit = 10, $active = 1, $order = "desc")
 {
     /* cek cache */
     $cache = Cache::get('_getArticles' . $pars . $limit . $active . $order);
@@ -42,7 +37,7 @@ function _getArticles($pars = '', $limit = 10, $active = 1, $order = "desc")
     }
 
     /* inisiasi query */
-    $posts = Post::articles()->orderBy('post_time', $order);
+    $posts = \ZetthCore\Models\Post::articles()->orderBy('published_at', $order);
 
     /* pisah parameter */
     $params = explode('|', $pars);
@@ -101,7 +96,7 @@ function _getArticles($pars = '', $limit = 10, $active = 1, $order = "desc")
 
     /* cek status */
     if ($active != "all") {
-        $posts->where('post_status', $active);
+        $posts->where('status', $active);
     }
 
     /* cek limit */
@@ -117,6 +112,44 @@ function _getArticles($pars = '', $limit = 10, $active = 1, $order = "desc")
     return $posts;
 }
 
+function _getTerms($type = 'category', $name = '', $limit = 5, $active = 1, $order_by = 'display_name', $order_sort = 'asc')
+{
+    /* cek cache */
+    $cache = Cache::get('_getTerms' . $name . $type . $limit . $active);
+    if ($cache) {
+        return $cache;
+    }
+
+    /* inisiasi query */
+    $terms = \ZetthCore\Models\Term::orderBy($order_by, $order_sort);
+
+    /* cek nama term */
+    if ($name != '') {
+        $terms->where('slug', $name);
+    }
+    /* cek type */
+    if ($type != '') {
+        $terms->where('type', $type);
+    }
+
+    /* cek status */
+    if ($active != "all") {
+        $terms->where('status', $active);
+    }
+
+    /* cek limit */
+    if ($limit > 1) {
+        $terms = $terms->paginate($limit);
+    } else {
+        $terms = $terms->first();
+    }
+
+    /* simpan ke cache */
+    Cache::put('_getTerms' . $name . $type . $limit . $active, $terms, 10 * 60);
+
+    return $terms;
+}
+
 function _getPages($limit = 5, $active = 1)
 {
     /* cek cache */
@@ -126,11 +159,11 @@ function _getPages($limit = 5, $active = 1)
     }
 
     /* inisiasi query */
-    $pages = Post::pages()->orderBy('post_id', 'DESC');
+    $pages = \ZetthCore\Models\Post::pages()->orderBy('post_id', 'DESC');
 
     /* cek status */
     if ($active != "all") {
-        $pages->where('post_status', $active);
+        $pages->where('status', $active);
     }
 
     /* cek limit */
@@ -146,35 +179,6 @@ function _getPages($limit = 5, $active = 1)
     return $pages;
 }
 
-function _getVideos($limit = 5, $active = 1)
-{
-    /* cek cache */
-    $cache = Cache::get('_getVideos' . $limit . $active);
-    if ($cache) {
-        return $cache;
-    }
-
-    /* inisiasi query */
-    $videos = Post::videos()->orderBy('post_id', 'DESC');
-
-    /* cek status */
-    if ($active != "all") {
-        $videos->where('post_status', $active);
-    }
-
-    /* cek limit */
-    if ($limit > 1) {
-        $videos = $videos->paginate($limit);
-    } else {
-        $videos = $videos->first();
-    }
-
-    /* simpan ke cache */
-    Cache::put('_getVideos' . $limit . $active, $videos, 10 * 60);
-
-    return $videos;
-}
-
 function _getAlbums($name = '', $limit = 5, $active = 1)
 {
     $page = \Request::input('page') ? \Request::input('page') : 1;
@@ -186,11 +190,11 @@ function _getAlbums($name = '', $limit = 5, $active = 1)
     }
 
     /* inisiasi query */
-    $albums = Album::orderBy('album_id', 'DESC');
+    $albums = \ZetthCore\Models\Album::orderBy('id', 'DESC');
 
-    // cek nama album
+    /* cek nama album */
     if ($name != '') {
-        $albums->where('album_slug', $name);
+        $albums->where('slug', $name);
         $albums->with('photos');
     } else {
         $albums->with('photo');
@@ -198,7 +202,7 @@ function _getAlbums($name = '', $limit = 5, $active = 1)
 
     /* cek status */
     if ($active != "all") {
-        $albums->where('album_status', $active);
+        $albums->where('status', $active);
     }
 
     /* cek limit */
@@ -223,11 +227,11 @@ function _getPhotos($limit = 5, $active = 1)
     }
 
     /* inisiasi query */
-    $photos = AlbumPhoto::orderBy('photo_id', 'DESC');
+    $photos = \ZetthCore\Models\AlbumPhoto::orderBy('id', 'DESC');
 
     /* cek status */
     if ($active != "all") {
-        $photos->where('photo_status', $active);
+        $photos->where('status', $active);
     }
 
     /* cek limit */
@@ -241,4 +245,33 @@ function _getPhotos($limit = 5, $active = 1)
     Cache::put('_getPhotos' . $limit . $active, $photos, 10 * 60);
 
     return $photos;
+}
+
+function _getVideos($limit = 5, $active = 1)
+{
+    /* cek cache */
+    $cache = Cache::get('_getVideos' . $limit . $active);
+    if ($cache) {
+        return $cache;
+    }
+
+    /* inisiasi query */
+    $videos = \ZetthCore\Models\Post::videos()->orderBy('published_at', 'DESC');
+
+    /* cek status */
+    if ($active != "all") {
+        $videos->where('status', $active);
+    }
+
+    /* cek limit */
+    if ($limit > 1) {
+        $videos = $videos->paginate($limit);
+    } else {
+        $videos = $videos->first();
+    }
+
+    /* simpan ke cache */
+    Cache::put('_getVideos' . $limit . $active, $videos, 10 * 60);
+
+    return $videos;
 }
