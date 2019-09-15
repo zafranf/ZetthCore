@@ -10,7 +10,7 @@
 | contains the "web" middleware group. Now create something great!
 |
  */
-Route::get('/themes/{path}', 'Controllers\Controller@themes')->where('path', '.*')->name('themes.site');
+Route::get('/themes/{path}', 'Controller@themes')->where('path', '.*')->name('themes.site');
 
 /* Site Routes */
 Route::name('web.')->middleware('visitor_log')->group(function () {
