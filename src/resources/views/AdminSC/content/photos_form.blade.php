@@ -67,7 +67,7 @@
                                         <div class="thumbnail" style="height:150px;display:{{ $is_desktop ? 'table-cell;' : 'block;' }}padding:0;width:inherit;margin-bottom:1px;background:#f8f8f8;">
                                             <img src="{{ str_replace('/files/', '/thumbs/', $photo->file) }}" style="height:100px;">
                                             <input type="hidden" name="photos[files][]" value="{{ $photo->file }}">
-                                            <textarea name="photos[descriptions][]" class="form-control" style="position:absoluste;bottom:0;left:0;height:50px;" placeholder="Keterangan foto..">{{ $photo->description }}</textarea>
+                                            <textarea name="photos[descriptions][]" class="form-control" style="bottom:0;left:0;height:50px;" placeholder="Keterangan foto..">{{ $photo->description }}</textarea>
                                             <button class="btn btn-default btn-xs btn-xs-top-right" title="Hapus foto" type="button" onclick="_remove_photo('#img{{ $no_img }}', {{ $photo->id }})" style="top:5px;right:15px;"><i class="fa fa-minus"></i></button>
                                         </div>
                                     </div>
@@ -185,51 +185,6 @@
         $(id).remove();
         var photodel = '<input type="hidden" name="photos[deletes][]" value="'+id_photo+'">';
         $('#photo-box').append(photodel);
-    }
-
-    function _remove_photoX(id, name) {
-        if (!CONNECT) {
-            return false;
-        }
-
-        swal({
-            title: "Are you sure?",
-            type: "warning",   
-            showCancelButton: true,   
-            confirmButtonColor: '#d33',
-            confirmButtonText: "Yes, delete it!"
-        }).then(function(isConfirm){
-            if (isConfirm) {
-                $('#zetth-process'+id).show();
-                $.ajax({
-                    url: "{{ url('ajax/delete/photo/') }}",
-                    data: {
-                        filename: name
-                    },
-                    type: 'post'
-                }).done(function(data) {
-                    if (data.status) {
-                        no_img--;
-                        $("#img"+id).remove();
-                        swal({
-                            title: 'Sukses!',
-                            text: "Foto berhasil dihapus",
-                            type: "success",
-                            confirmButtonColor: "coral"
-                        });
-                    } else {
-                        swal({
-                            title: 'Oops!',
-                            text: "Gagal menghapus foto",
-                            type: "error",
-                            confirmButtonColor: "coral"
-                        });
-                    }
-
-                    $('#zetth-process'+id).hide();
-                });
-            }
-        });
     }
   </script>
 @endsection

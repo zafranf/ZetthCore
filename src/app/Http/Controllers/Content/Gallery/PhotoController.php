@@ -97,16 +97,13 @@ class PhotoController extends AdminController
         $this->validate($r, [
             'name' => 'required|max:100|unique:albums,name,NULL,created_at,type,photo',
             'slug' => 'unique:albums,slug,NULL,created_at,type,photo',
+            'photos.files.*' => 'required',
         ]);
-
-        /* set variables */
-        $name = $r->input('name');
-        $slug = str_slug($r->input('slug'));
 
         /* save data */
         $album = new Album;
-        $album->name = $name;
-        $album->slug = $slug;
+        $album->name = $r->input('name');
+        $album->slug = str_slug($album->name);
         $album->description = $r->input('description');
         $album->type = 'photo';
         $album->status = bool($r->input('status')) ? 1 : 0;
@@ -170,16 +167,13 @@ class PhotoController extends AdminController
         $this->validate($r, [
             'name' => 'required|max:100|unique:albums,name,' . $album->id . ',id,type,photo',
             'slug' => 'unique:albums,slug,' . $album->id . ',id,type,photo',
+            'photos.files.*' => 'required',
         ]);
-
-        /* set variables */
-        $name = $r->input('name');
-        $slug = str_slug($r->input('slug'));
 
         /* save data */
         // $album = new Album;
-        $album->name = $name;
-        $album->slug = $slug;
+        $album->name = $r->input('name');
+        $album->slug = str_slug($album->name);
         $album->description = $r->input('description');
         $album->type = 'photo';
         $album->status = bool($r->input('status')) ? 1 : 0;
