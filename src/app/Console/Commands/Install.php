@@ -107,9 +107,10 @@ class Install extends Command
     public function linkFolders()
     {
         $this->info('Link folders');
+
         $this->info('Linking storage folder');
         if ($this->option('fresh')) {
-            if (file_exists('public/storage')) {
+            if (is_link(public_path('storage'))) {
                 $this->info('Removing "public/storage" folder');
                 $process = new Process('cd ' . public_path() . ' && rm -rf storage && cd ' . base_path());
                 $process->setTimeout($this->timeout);
@@ -126,7 +127,7 @@ class Install extends Command
 
         $this->info('Linking filemanager folder');
         if ($this->option('fresh')) {
-            if (file_exists('public/larafile')) {
+            if (is_link(public_path('larafile'))) {
                 $this->info('Removing "public/larafile" folder');
                 $process = new Process('cd ' . public_path() . ' && rm -rf larafile && cd ' . base_path());
                 $process->setTimeout($this->timeout);
@@ -145,7 +146,7 @@ class Install extends Command
 
         $this->info('Linking filemanager-standalone folder');
         if ($this->option('fresh')) {
-            if (file_exists('public/larafile-standalone')) {
+            if (is_link(public_path('larafile-standalone'))) {
                 $this->info('Removing "public/larafile-standalone" folder');
                 $process = new Process('cd ' . public_path() . ' && rm -rf larafile-standalone && cd ' . base_path());
                 $process->setTimeout($this->timeout);
@@ -164,7 +165,7 @@ class Install extends Command
 
         $this->info('Linking assets filemanager folder');
         if ($this->option('fresh')) {
-            if (file_exists('public/files')) {
+            if (is_link(public_path('files'))) {
                 $this->info('Removing "public/files" folder');
                 $process = new Process('cd ' . public_path() . ' && rm -rf files && cd ' . base_path());
                 $process->setTimeout($this->timeout);
@@ -183,7 +184,7 @@ class Install extends Command
 
         $this->info('Linking assets thumbs filemanager folder');
         if ($this->option('fresh')) {
-            if (file_exists('public/thumbs')) {
+            if (is_link(public_path('thumbs'))) {
                 $this->info('Removing "public/thumbs" folder');
                 $process = new Process('cd ' . public_path() . ' && rm -rf thumbs && cd ' . base_path());
                 $process->setTimeout($this->timeout);
