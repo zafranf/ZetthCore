@@ -780,20 +780,20 @@ class MenuTableSeeder extends Seeder
 
         /* menu catatan kunjungan */
         /* $logVisitor = new Menu;
-        $logVisitor->name = 'Kunjungan';
-        $logVisitor->description = 'Menu catatan kunjungan';
-        $logVisitor->route_name = 'admin.log.visitors.index';
-        // $logVisitor->icon = 'fa fa-list-ul';
-        $logVisitor->order = $logOrder++;
-        $logVisitor->status = 1;
-        $logVisitor->parent_id = $log->id;
-        $logVisitor->index = 1;
-        $logVisitor->create = 0;
-        $logVisitor->read = 1;
-        $logVisitor->update = 0;
-        $logVisitor->delete = 0;
-        $logVisitor->group_id = 2;
-        $logVisitor->save(); */
+    $logVisitor->name = 'Kunjungan';
+    $logVisitor->description = 'Menu catatan kunjungan';
+    $logVisitor->route_name = 'admin.log.visitors.index';
+    // $logVisitor->icon = 'fa fa-list-ul';
+    $logVisitor->order = $logOrder++;
+    $logVisitor->status = 1;
+    $logVisitor->parent_id = $log->id;
+    $logVisitor->index = 1;
+    $logVisitor->create = 0;
+    $logVisitor->read = 1;
+    $logVisitor->update = 0;
+    $logVisitor->delete = 0;
+    $logVisitor->group_id = 2;
+    $logVisitor->save(); */
     }
 
     public function web()
@@ -802,7 +802,8 @@ class MenuTableSeeder extends Seeder
         $dash = new Menu;
         $dash->name = 'Beranda Website';
         $dash->description = 'Halaman utama website';
-        $dash->route_name = 'root';
+        // $dash->route_name = 'root';
+        $dash->url = '/';
         // $dash->icon = 'fa fa-dashboard';
         $dash->target = '_self';
         // $dash->order = $mainOrder++;

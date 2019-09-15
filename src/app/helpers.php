@@ -144,7 +144,7 @@ if (!function_exists('getMenu')) {
                     }
                 }
             } else {
-                $groupmenu = \ZetthCore\Models\MenuGroup::where('name', $group)->with('menu', 'menu.submenu')->first();
+                $groupmenu = \ZetthCore\Models\MenuGroup::where('slug', $group)->with('menu', 'menu.submenu')->first();
                 $menus = $groupmenu->menu;
             }
 

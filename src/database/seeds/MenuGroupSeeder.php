@@ -27,7 +27,7 @@ class MenuGroupSeeder extends Seeder
         ]);
         DB::table('menu_groups')->insert([
             'name' => "Website",
-            'slug' => "web",
+            'slug' => "website",
             'description' => "Grup menu untuk web",
             'status' => 1,
             'created_at' => date("Y-m-d H:i:s"),
