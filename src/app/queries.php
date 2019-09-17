@@ -1,6 +1,9 @@
 <?php
-function _getBanners($limit = 3, $active = 1)
+function _getBanners($limit = null, $active = 1)
 {
+    /* set limit */
+    $limit = $limit ?? app('setting')->perpage;
+
     /* cek cache */
     $cache = Cache::get('_getBanners' . $limit . $active);
     if ($cache) {
@@ -30,8 +33,11 @@ function _getBanners($limit = 3, $active = 1)
     return $banners;
 }
 
-function _getPosts($pars = '', $limit = 10, $active = 1, $order = "desc")
+function _getPosts($pars = '', $limit = null, $active = 1, $order = "desc")
 {
+    /* set limit */
+    $limit = $limit ?? app('setting')->perpage;
+
     /* cek cache */
     $cache = Cache::get('_getArticles' . $pars . $limit . $active . $order);
     if ($cache) {
@@ -116,8 +122,11 @@ function _getPosts($pars = '', $limit = 10, $active = 1, $order = "desc")
     return $posts;
 }
 
-function _getTerms($type = 'category', $name = '', $limit = 5, $active = 1, $order_by = 'display_name', $order_sort = 'asc')
+function _getTerms($type = 'category', $name = '', $limit = null, $active = 1, $order_by = 'display_name', $order_sort = 'asc')
 {
+    /* set limit */
+    $limit = $limit ?? app('setting')->perpage;
+
     /* cek cache */
     $cache = Cache::get('_getTerms' . $name . $type . $limit . $active);
     if ($cache) {
@@ -156,8 +165,11 @@ function _getTerms($type = 'category', $name = '', $limit = 5, $active = 1, $ord
     return $terms;
 }
 
-function _getPages($limit = 5, $active = 1)
+function _getPages($limit = null, $active = 1)
 {
+    /* set limit */
+    $limit = $limit ?? app('setting')->perpage;
+
     /* cek cache */
     $cache = Cache::get('_getPages' . $limit . $active);
     if ($cache) {
@@ -187,9 +199,12 @@ function _getPages($limit = 5, $active = 1)
     return $pages;
 }
 
-function _getAlbums($name = '', $limit = 5, $active = 1)
+function _getAlbums($name = '', $limit = null, $active = 1)
 {
     $page = \Request::input('page') ? \Request::input('page') : 1;
+
+    /* set limit */
+    $limit = $limit ?? app('setting')->perpage;
 
     /* cek cache */
     $cache = Cache::get('_getAlbums' . $name . $limit . $active . $page);
@@ -228,8 +243,11 @@ function _getAlbums($name = '', $limit = 5, $active = 1)
     return $albums;
 }
 
-function _getPhotos($limit = 5, $active = 1)
+function _getPhotos($limit = null, $active = 1)
 {
+    /* set limit */
+    $limit = $limit ?? app('setting')->perpage;
+
     /* cek cache */
     $cache = Cache::get('_getPhotos' . $limit . $active);
     if ($cache) {
@@ -259,8 +277,11 @@ function _getPhotos($limit = 5, $active = 1)
     return $photos;
 }
 
-function _getVideos($limit = 5, $active = 1)
+function _getVideos($limit = null, $active = 1)
 {
+    /* set limit */
+    $limit = $limit ?? app('setting')->perpage;
+
     /* cek cache */
     $cache = Cache::get('_getVideos' . $limit . $active);
     if ($cache) {
