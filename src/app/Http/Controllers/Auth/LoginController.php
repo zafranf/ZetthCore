@@ -46,7 +46,11 @@ class LoginController extends AdminController
      */
     public function showLoginForm()
     {
-        return view('zetthcore::AdminSC.auth.login');
+        $data = [
+            'current_url' => '/login',
+        ];
+
+        return view('zetthcore::AdminSC.auth.login', $data);
     }
 
     /**

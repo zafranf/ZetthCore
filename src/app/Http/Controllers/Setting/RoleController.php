@@ -160,6 +160,7 @@ class RoleController extends AdminController
             'menus' => (new Role)->roleMenus($role),
             'data' => $role,
         ];
+        // dd($data);
 
         return view('zetthcore::AdminSC.setting.roles_form', $data);
     }
@@ -277,7 +278,8 @@ class RoleController extends AdminController
             foreach ($access as $key => $val) {
                 // $role->attachPermission($key . '-' . $module);
                 $permissions[] = Permission::firstOrCreate([
-                    'name' => $key . '-' . $module,
+                    'name' => $module . '.' . $key,
+                ], [
                     'display_name' => ucfirst($key) . ' ' . ucfirst($module),
                     'description' => ucfirst($key) . ' ' . ucfirst($module),
                 ])->id;

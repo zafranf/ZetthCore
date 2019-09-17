@@ -285,7 +285,7 @@ class AjaxController extends AdminController
         if ($pops) {
             foreach ($pops as $k => $v) {
                 $cat = [];
-                $res['rows'][$k]['title'] = is_desktop() ? str_limit($v->title, 80) : str_limit($v->title, 30);
+                $res['rows'][$k]['title'] = app('is_desktop') ? str_limit($v->title, 80) : str_limit($v->title, 30);
                 $res['rows'][$k]['slug'] = $v->slug;
                 $res['rows'][$k]['views'] = $v->visited;
                 if (count($v->categories) > 0) {
@@ -321,9 +321,9 @@ class AjaxController extends AdminController
         if ($comms) {
             foreach ($comms as $k => $v) {
                 $today = date("Y-m-d");
-                $post = is_desktop() ? str_limit($v->post->title, 60) : str_limit($v->post->title, 20);
+                $post = app('is_desktop') ? str_limit($v->post->title, 60) : str_limit($v->post->title, 20);
                 $res['rows'][$k]['id'] = $v->comment_id;
-                $res['rows'][$k]['text'] = is_desktop() ? str_limit(strip_tags($v->comment_text), 75) : str_limit(strip_tags($v->comment_text), 20);
+                $res['rows'][$k]['text'] = app('is_desktop') ? str_limit(strip_tags($v->comment_text), 75) : str_limit(strip_tags($v->comment_text), 20);
                 $res['rows'][$k]['name'] = $v->comment_name;
                 $res['rows'][$k]['post'] = '<a style="text-decoration:none;">' . $post . '</a>';
                 $res['rows'][$k]['time'] = str_replace($today, "", $v->created_at);
