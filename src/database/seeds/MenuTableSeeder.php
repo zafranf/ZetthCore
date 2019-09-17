@@ -800,8 +800,8 @@ class MenuTableSeeder extends Seeder
     {
         /* menu dashboard */
         $dash = new Menu;
-        $dash->name = 'Beranda Website';
-        $dash->description = 'Halaman utama website';
+        $dash->name = 'Beranda';
+        $dash->description = 'Halaman utama';
         // $dash->route_name = 'root';
         $dash->url = '/';
         // $dash->icon = 'fa fa-dashboard';

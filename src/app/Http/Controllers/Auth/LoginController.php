@@ -47,7 +47,7 @@ class LoginController extends AdminController
     public function showLoginForm()
     {
         $data = [
-            'current_url' => '/login',
+            'current_url' => app('admin_path') . '/login',
         ];
 
         return view('zetthcore::AdminSC.auth.login', $data);
@@ -92,7 +92,7 @@ class LoginController extends AdminController
 
         /* set redirect for user admin */
         if (\Auth::user()->is_admin) {
-            $this->redirectTo = $this->adminPath . '/dashboard';
+            $this->redirectTo = app('admin_path') . '/dashboard';
         }
 
         return $this->authenticated($r, $this->guard()->user())
@@ -110,7 +110,7 @@ class LoginController extends AdminController
         /* set redirect */
         $redirect = '/';
         if (\Auth::user()->is_admin) {
-            $redirect = $this->adminPath . '/login';
+            $redirect = app('admin_path') . '/login';
         }
 
         /* log aktifitas */

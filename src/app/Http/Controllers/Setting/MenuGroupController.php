@@ -18,12 +18,12 @@ class MenuGroupController extends AdminController
     public function __construct()
     {
         parent::__construct();
-        $this->current_url = url($this->adminPath . '/setting/menu-groups');
+        $this->current_url = url(app('admin_path') . '/setting/menu-groups');
         $this->page_title = 'Kelola Grup Menu';
         $this->breadcrumbs[] = [
             'page' => 'Pengaturan',
             'icon' => '',
-            'url' => url($this->adminPath . '/setting/application'),
+            'url' => url(app('admin_path') . '/setting/application'),
         ];
         $this->breadcrumbs[] = [
             'page' => 'Menu',
@@ -63,6 +63,7 @@ class MenuGroupController extends AdminController
      */
     public function create()
     {
+        /* set breadcrumbs */
         $this->breadcrumbs[] = [
             'page' => 'Tambah',
             'icon' => '',
@@ -126,11 +127,19 @@ class MenuGroupController extends AdminController
      */
     public function edit(MenuGroup $menugroup)
     {
+        /* set breadcrumbs */
         $this->breadcrumbs[] = [
             'page' => 'Edit',
             'icon' => '',
             'url' => '',
         ];
+
+        /* prevent access */
+        if (!\Auth::user()->hasRole('super')) {
+            if (in_array($menugroup->id, [1, 2])) {
+                abort(404);
+            }
+        }
 
         /* set variable for view */
         $data = [
