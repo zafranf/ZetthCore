@@ -16,8 +16,10 @@ if (isset($data->id) && ($key = array_search($data->id, $orders)) !== false) {;
 	<div class="panel-body">
 		<form class="form-horizontal" action="{{ url($current_url) }}{{ isset($data->id) ? '/' . $data->id : '' }}" method="post" enctype="multipart/form-data">
 			<div class="form-group">
-				<label for="image" class="col-sm-2 control-label">Gambar Spanduk 
-          <small class="help-block">Maksimal dimensi spanduk adalah 1600x600 px dengan ukuran maksimal 1024 KB</small></label>
+				<label for="image" class="col-sm-2 control-label">
+					Gambar Spanduk 
+					<small class="help-block">Maksimal dimensi spanduk adalah 1600x600 px dengan ukuran maksimal 1024 KB</small>
+				</label>
 				<div class="col-sm-4">
 					<div class="zetth-upload">
 						<div class="zetth-upload-new thumbnail">
@@ -53,22 +55,18 @@ if (isset($data->id) && ($key = array_search($data->id, $orders)) !== false) {;
 						<option value="external" {{ (isset($data->id) && ($data->url_external) ) ? 'selected' : '' }}>[Tautan Luar]</option>
 						<option value="/" {{ (isset($data->id) && $data->url == "/" ) ? 'selected' : '' }}>Beranda</option>
 						@php $type = ''; @endphp
-							@foreach($post_opts as $n => $post)
-								@if ($type != $post->type)
-									{!! ($n > 0) ? '</optgroup>' : '' !!}
-									@php $type = $post->type @endphp
-									<optgroup label="{{ ucfirst($type) }}">
-								@endif
-								@if ($post->type == "video")
-									<option value="{{ $post->slug }}" {{ $post->slug == "#" ? 'disabled' : '' }} {{ (isset($data->id) && $post->slug == $data->url) ? 'selected' : '' }}>{{ $post->title }}</option>
-								@endif
-								@if ($post->type=="page")
-									<option value="{{ $post->slug }}" {{ $post->slug == "#" ? 'disabled' : '' }} {{ (isset($data->id) && $post->slug == $data->url)?'selected':'' }}>{{ $post->title }}</option>
-								@endif
-								@if ($post->type=="article")
-									<option value="{{ 'article/' . $post->slug }}" {{ $post->slug == "#" ? 'disabled' : '' }} {{ (isset($data->id) && 'article/' . $post->slug == $data->url) ? 'selected' : '' }}>{{ $post->title }}</option>
-								@endif
-							@endforeach
+						@foreach($post_opts as $n => $post)
+							@if ($type != $post->type)
+								{!! ($n > 0) ? '</optgroup>' : '' !!}
+								@php $type = $post->type @endphp
+								<optgroup label="{{ ucfirst($type) }}">
+							@endif
+							@if ($post->type == "page" || $post->type == "video")
+								<option value="{{ $post->slug }}" {{ $post->slug == "#" ? 'disabled' : '' }} {{ (isset($data->id) && $post->slug == $data->url) ? 'selected' : '' }}>{{ $post->title }}</option>
+							@elseif ($post->type=="article")
+								<option value="{{ 'article/' . $post->slug }}" {{ $post->slug == "#" ? 'disabled' : '' }} {{ (isset($data->id) && 'article/' . $post->slug == $data->url) ? 'selected' : '' }}>{{ $post->title }}</option>
+							@endif
+						@endforeach
 					</select>
 					<input type="text" class="form-control" id="url_external" name="url_external" value="{{ isset($data->id) ? $data->url : '' }}" placeholder="http://external.link" {!! (isset($data->id) && ($data->url_external)) ? 'style="margin-top:5px;"' : 'style="margin-top:5px;display:none;" disabled' !!}>
 				</div>
@@ -137,7 +135,7 @@ if (isset($data->id) && ($key = array_search($data->id, $orders)) !== false) {;
 @endsection
 
 @section('scripts')
-  {!! _admin_js('themes/admin/AdminSC/plugins/fancybox/2.1.5/js/jquery.fancybox.js') !!}
+  	{!! _admin_js('themes/admin/AdminSC/plugins/fancybox/2.1.5/js/jquery.fancybox.js') !!}
 	{!! _admin_js('themes/admin/AdminSC/plugins/select2/4.0.0/js/select2.min.js') !!}
 	<script>
 		$(function(){
