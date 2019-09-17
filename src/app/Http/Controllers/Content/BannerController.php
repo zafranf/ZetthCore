@@ -5,7 +5,6 @@ namespace ZetthCore\Http\Controllers\Content;
 use Illuminate\Http\Request;
 use ZetthCore\Http\Controllers\AdminController;
 use ZetthCore\Models\Banner;
-use ZetthCore\Models\Post;
 
 class BannerController extends AdminController
 {
@@ -333,34 +332,5 @@ class BannerController extends AdminController
         }
 
         return $updates;
-    }
-
-    public function getAdditionalData()
-    {
-        /* get banners */
-        $banners = Banner::select('id', 'order', 'title')->orderBy('order')->get();
-
-        /* get ~30 posts */
-        $pages = Post::select('type', 'slug', 'title')->where([
-            'type' => 'page',
-            'status' => 1,
-        ])->take(10)->get();
-        $articles = Post::select('type', 'slug', 'title')->where([
-            'type' => 'article',
-            'status' => 1,
-        ])->take(10)->get();
-        $videos = Post::select('type', 'slug', 'title')->where([
-            'type' => 'video',
-            'status' => 1,
-        ])->take(10)->get();
-        $posts = collect();
-        $posts = $posts->merge($pages);
-        $posts = $posts->merge($articles);
-        $posts = $posts->merge($videos);
-
-        return [
-            'banners' => $banners,
-            'posts' => $posts,
-        ];
     }
 }

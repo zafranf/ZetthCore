@@ -19,7 +19,7 @@ class CreateBannersTable extends Migration
             $table->collation = 'utf8mb4_unicode_ci';
 
             $table->increments('id')->unsigned();
-            $table->string('title');
+            $table->string('title')->nullable();
             $table->string('description')->nullable();
             $table->string('image')->nullable();
             $table->string('url')->nullable();
