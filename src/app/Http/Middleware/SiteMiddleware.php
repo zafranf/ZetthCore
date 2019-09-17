@@ -16,16 +16,17 @@ class SiteMiddleware
      */
     public function handle($request, Closure $next)
     {
-        if ($request->isMethod('post') && strpos($request->url(), '/subscribe') !== false) {
-            return $next($request);
-        }
-
         /* check date */
         $this->check_date();
 
         /* set uri */
         $uri = $request->route()->uri();
         $status = app('setting')->status;
+
+        /* next on subscribe */
+        if ($request->isMethod('post') && $uri != "subscribe") {
+            return $next($request);
+        }
 
         /* check status */
         if ($status == 0) {

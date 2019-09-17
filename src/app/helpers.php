@@ -360,3 +360,25 @@ if (!function_exists('_admin_js')) {
         }
     }
 }
+
+if (!function_exists('carbon')) {
+    function carbon(\Carbon\Carbon $carbon = null, $timezone = null)
+    {
+        /* set default timezone */
+        $timezone = $timezone ?? app('setting')->timezone;
+        $timezone = $timezone ?? env('APP_TIMEZONE', 'UTC');
+
+        /* check user timezone */
+        $user_settings = \Auth::user() ? json_decode(\Auth::user()->settings) : '[]';
+        if (isset($user_settings->timezone)) {
+            $timezone = $user_settings->timezone;
+        }
+
+        /* initialize new carbon */
+        if (is_null($carbon)) {
+            $carbon = new \Carbon\Carbon;
+        }
+
+        return $carbon->timezone($timezone);
+    }
+}
