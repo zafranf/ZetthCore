@@ -28,7 +28,6 @@ class CreateApplicationTable extends Migration
             $table->string('keywords')->nullable();
             $table->integer('template_id')->unsigned()->nullable();
             $table->string('timezone')->default('Asia/Jakarta');
-            $table->boolean('status')->comment('0=coming soon, 1=active, 2=maintenance')->unsigned();
             $table->string('email')->nullable();
             $table->string('phone')->nullable();
             $table->text('address')->nullable();
@@ -39,6 +38,7 @@ class CreateApplicationTable extends Migration
             $table->boolean('enable_share')->comment('0=no, 1=yes')->default(1);
             $table->boolean('enable_comment')->comment('0=no, 1=yes')->default(1);
             $table->tinyInteger('perpage')->unsigned()->default(10);
+            $table->boolean('status')->comment('0=coming soon, 1=active, 2=maintenance')->unsigned();
             $table->dateTime('active_at');
             $table->timestamps();
         });

@@ -21,7 +21,7 @@ class SiteMiddleware
         }
 
         /* check date */
-        $is_next = $this->check_date();
+        $this->check_date();
 
         /* set uri */
         $uri = $request->route()->uri();
@@ -29,11 +29,11 @@ class SiteMiddleware
 
         /* check status */
         if ($status == 0) {
-            if ($uri != "comingsoon" && !$is_next) {
+            if ($uri != "comingsoon") {
                 return redirect('comingsoon');
             }
         } else if ($status == 2) {
-            if ($uri != "maintenance" && !$is_next) {
+            if ($uri != "maintenance") {
                 return redirect('maintenance');
             }
         } else {
