@@ -71,7 +71,7 @@ class BannerController extends AdminController
         ];
 
         /* get additional data */
-        $additional = $this->getAdditionalData();
+        $additional = $this->getAdditionalDataOpts();
 
         /* set variable for view */
         $data = [
@@ -165,7 +165,7 @@ class BannerController extends AdminController
         ];
 
         /* get additional data */
-        $additional = $this->getAdditionalData();
+        $additional = $this->getAdditionalDataOpts();
 
         /* set variable for view */
         $data = [

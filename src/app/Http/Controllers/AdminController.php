@@ -51,7 +51,7 @@ class AdminController extends BaseController
         abort(404);
     }
 
-    public function getAdditionalData()
+    public function getAdditionalDataOpts()
     {
         /* get banners */
         $banners = \ZetthCore\Models\Banner::select('id', 'order', 'title')->orderBy('order')->get();
@@ -60,15 +60,15 @@ class AdminController extends BaseController
         $pages = \ZetthCore\Models\Post::select('type', 'slug', 'title')->where([
             'type' => 'page',
             'status' => 1,
-        ])->take(10)->get();
+        ])->orderBy('published_at', 'desc')->take(10)->get();
         $articles = \ZetthCore\Models\Post::select('type', 'slug', 'title')->where([
             'type' => 'article',
             'status' => 1,
-        ])->take(10)->get();
+        ])->orderBy('published_at', 'desc')->take(10)->get();
         $videos = \ZetthCore\Models\Post::select('type', 'slug', 'title')->where([
             'type' => 'video',
             'status' => 1,
-        ])->take(10)->get();
+        ])->orderBy('published_at', 'desc')->take(10)->get();
         $posts = collect();
         $posts = $posts->merge($pages);
         $posts = $posts->merge($articles);
