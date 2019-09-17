@@ -104,17 +104,17 @@
             <label for="visitor">Pengunjung</label><br>
             <div class="col-sm-4 col-xs-4 no-padding">
               <label>
-                <input name="comment" type="checkbox" {{ (isset($data) && ($data->comment)) ? 'checked' : ($apps->enable_comment) ? 'checked' : '' }}> Komentar
+                <input name="comment" type="checkbox" {{ (isset($data) && ($data->comment)) ? 'checked' : (app('setting')->enable_comment) ? 'checked' : '' }}> Komentar
               </label>
             </div>
             <div class="col-sm-4 col-xs-4 no-padding">
               <label>
-                <input name="like" type="checkbox" {{ (isset($data) && ($data->like)) ? 'checked' : ($apps->enable_like) ? 'checked' : '' }}> Suka
+                <input name="like" type="checkbox" {{ (isset($data) && ($data->like)) ? 'checked' : (app('setting')->enable_like) ? 'checked' : '' }}> Suka
               </label>
             </div>
             <div class="col-sm-4 col-xs-4 no-padding">
               <label>
-                <input name="share" type="checkbox" {{ (isset($data) && ($data->share)) ? 'checked' : ($apps->enable_share) ? 'checked' : '' }}> Sebar
+                <input name="share" type="checkbox" {{ (isset($data) && ($data->share)) ? 'checked' : (app('setting')->enable_share) ? 'checked' : '' }}> Sebar
               </label>
             </div>
           </div>
@@ -166,7 +166,7 @@
       position: absolute;
       right: 10px;
     }
-    /* @if ($is_desktop)
+    /* @if (app('is_desktop'))
       textarea#mceu_34 {
         height: 458px!important;
       }

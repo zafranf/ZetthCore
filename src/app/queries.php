@@ -255,7 +255,7 @@ function _getPhotos($limit = null, $active = 1)
     }
 
     /* inisiasi query */
-    $photos = \ZetthCore\Models\AlbumPhoto::orderBy('id', 'DESC');
+    $photos = \ZetthCore\Models\AlbumDetail::orderBy('id', 'DESC');
 
     /* cek status */
     if ($active != "all") {

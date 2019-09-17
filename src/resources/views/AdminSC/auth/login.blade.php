@@ -9,10 +9,10 @@ $page_title = 'Masuk Aplikasi';
           <!-- <div class="panel-heading">Login Form</div> -->
           <div class="panel-body">
             @php
-              $w = $is_mobile ? 150 : 250;
+              $w = app('is_mobile') ? 150 : 250;
             @endphp
             <center>
-              <img src="{{ _get_image("/assets/images/" . $apps->logo, url("themes/admin/AdminSC/images/" . ($apps->logo ?? 'logo.v2.png'))) }}" alt="{{ $apps->name }} Logo" style="margin-bottom: 20px; width: {{ $w }}px;">
+              <img src="{{ _get_image("assets/images/" . app('setting')->logo, url("themes/admin/AdminSC/images/" . (app('setting')->logo ?? 'logo.v2.png'))) }}" alt="{{ app('setting')->name }} Logo" style="margin-bottom: 20px; width: {{ $w }}px;">
             </center>
             <form class="form-horizontal" role="form" method="POST" action="{{ url($adminPath . '/login') }}">
               

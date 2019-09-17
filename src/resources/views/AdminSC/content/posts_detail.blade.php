@@ -64,7 +64,7 @@
     <div class="panel-body no-padding-top">
         <h2>{{ $post->post_title }}</h2>
         <i class="fa fa-calendar"></i> {{ _generate_date($post->post_time, false, 'id') }} &nbsp;
-        @if (!$is_desktop)
+        @if (!app('is_desktop'))
             <br>
         @endif
         <i class="fa fa-bookmark"></i> 
@@ -76,7 +76,7 @@
         @endforeach
         {{ implode($cat, ", ") }}
         <br>
-        @if ($is_desktop)
+        @if (app('is_desktop'))
             <a class="zetth-share-button" onclick="_open_window('https://www.facebook.com/sharer/sharer.php?u={{ $link }}&amp;src=sdkpreparse')"><i class="fa fa-facebook-square"></i> Share</a>
             <a class="zetth-share-button" onclick="_open_window('https://twitter.com/intent/tweet?text={{ $post->post_title.' '.$link }}')"><i class="fa fa-twitter"></i> Tweet</a>
             <a class="zetth-share-button" onclick="_open_window('https://plus.google.com/share?url={{ $link }}')"><i class="fa fa-google-plus"></i> Share</a>

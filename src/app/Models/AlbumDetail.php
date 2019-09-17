@@ -24,6 +24,11 @@ class AlbumDetail extends Model
      * @var array
      */
     protected $hidden = [
-        'id', 'album_id',
+        // 'id', 'album_id',
     ];
+
+    public function album()
+    {
+        return $this->belongsTo('ZetthCore\Models\Album');
+    }
 }

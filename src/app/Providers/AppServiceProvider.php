@@ -15,58 +15,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $router = $this->app['router'];
-        $router->aliasMiddleware('access', \ZetthCore\Http\Middleware\AccessMiddleware::class);
-        $router->aliasMiddleware('visitor_log', \ZetthCore\Http\Middleware\VisitorLogMiddleware::class);
-        $router->middleware([
-            \RenatoMarinho\LaravelPageSpeed\Middleware\InlineCss::class,
-            \RenatoMarinho\LaravelPageSpeed\Middleware\ElideAttributes::class,
-            \RenatoMarinho\LaravelPageSpeed\Middleware\InsertDNSPrefetch::class,
-            \RenatoMarinho\LaravelPageSpeed\Middleware\RemoveComments::class,
-            \RenatoMarinho\LaravelPageSpeed\Middleware\TrimUrls::class,
-            \RenatoMarinho\LaravelPageSpeed\Middleware\RemoveQuotes::class,
-            \RenatoMarinho\LaravelPageSpeed\Middleware\CollapseWhitespace::class,
-        ]);
-
-        $this->loadRoutesFrom(__DIR__ . '/../../routes/routes.php');
-        $this->loadViewsFrom(__DIR__ . '/../../resources/views', 'zetthcore');
-        $this->loadMigrationsFrom(__DIR__ . '/../../database/migrations');
-        // $this->loadSeedsFrom(__DIR__ . '/../../database/seeds');
-        if ($this->app->runningInConsole()) {
-            $this->commands([
-                \ZetthCore\Console\Commands\Install::class,
-                \ZetthCore\Console\Commands\Reinstall::class,
-            ]);
-        }
-
-        /* $this->publishes([
-        __DIR__ . '/../../database' => database_path(),
-        ], 'zetthmigrate'); */
-        $publishable_path = '/../../../publishable';
-        $this->publishes([
-            __DIR__ . $publishable_path . '/config/auth.php' => config_path('auth.php'),
-            __DIR__ . $publishable_path . '/config/database.php' => config_path('database.php'),
-            __DIR__ . $publishable_path . '/config/image.php' => config_path('image.php'),
-            __DIR__ . $publishable_path . '/config/laratrust.php' => config_path('laratrust.php'),
-            __DIR__ . $publishable_path . '/config/laratrust_seeder.php' => config_path('laratrust_seeder.php'),
-        ], 'zetthconfig');
-        // $this->publishes([
-        //     __DIR__ . $publishable_path.'/config/auth.php' => config_path('auth.php'),
-        // ], 'zetthauth');
-        $this->publishes([
-            __DIR__ . $publishable_path . '/Exceptions/Handler.php' => app_path('Exceptions/Handler.php'),
-        ], 'zetthhandler');
-        $this->publishes([
-            __DIR__ . $publishable_path . '/Middleware/Authenticate.php' => app_path('Http/Middleware/Authenticate.php'),
-            __DIR__ . $publishable_path . '/Middleware/RedirectIfAuthenticated.php' => app_path('Http/Middleware/RedirectIfAuthenticated.php'),
-        ], 'zetthmiddleware');
-        $this->publishes([
-            __DIR__ . $publishable_path . '/routes/web.php' => base_path('routes/web.php'),
-        ], 'zetthroutes');
-
-        /* set default varchar */
-        Schema::defaultStringLength(191);
-
         /* check config */
         if (!$this->app->runningInConsole()) {
             if (!Schema::hasTable('applications')) {
@@ -101,26 +49,79 @@ class AppServiceProvider extends ServiceProvider
                 'isAdminPanel' => $isAdminPanel,
             ]);
 
-            /* send application data to all views */
+            /* set application data to global */
             $apps = \ZetthCore\Models\Application::where('domain', $host)->with('socmed_data', 'socmed_data.socmed')->first();
             if (!$apps) {
                 throw new \Exception("Application config not found", 1);
             }
-            View::share('apps', $apps);
-
-            /* set application data to global */
             $this->app->singleton('setting', function () use ($apps) {
                 return $apps;
             });
 
-            /* send device type to all views */
+            /* set device type to global */
             $agent = new \Jenssegers\Agent\Agent();
-            View::share([
-                'is_mobile' => $agent->isMobile(),
-                'is_tablet' => $agent->isTablet(),
-                'is_desktop' => $agent->isDesktop(),
+            $this->app->singleton('is_mobile', function () use ($agent) {
+                return $agent->isMobile();
+            });
+            $this->app->singleton('is_tablet', function () use ($agent) {
+                return $agent->isTablet();
+            });
+            $this->app->singleton('is_desktop', function () use ($agent) {
+                return $agent->isDesktop();
+            });
+        } else if ($this->app->runningInConsole()) {
+            $this->commands([
+                \ZetthCore\Console\Commands\Install::class,
+                \ZetthCore\Console\Commands\Reinstall::class,
             ]);
         }
+
+        /* set middleware */
+        $router = $this->app['router'];
+        $router->aliasMiddleware('access', \ZetthCore\Http\Middleware\AccessMiddleware::class);
+        $router->aliasMiddleware('visitor_log', \ZetthCore\Http\Middleware\VisitorLogMiddleware::class);
+        $router->middleware([
+            \RenatoMarinho\LaravelPageSpeed\Middleware\InlineCss::class,
+            \RenatoMarinho\LaravelPageSpeed\Middleware\ElideAttributes::class,
+            \RenatoMarinho\LaravelPageSpeed\Middleware\InsertDNSPrefetch::class,
+            \RenatoMarinho\LaravelPageSpeed\Middleware\RemoveComments::class,
+            \RenatoMarinho\LaravelPageSpeed\Middleware\TrimUrls::class,
+            \RenatoMarinho\LaravelPageSpeed\Middleware\RemoveQuotes::class,
+            \RenatoMarinho\LaravelPageSpeed\Middleware\CollapseWhitespace::class,
+        ]);
+
+        $this->loadRoutesFrom(__DIR__ . '/../../routes/routes.php');
+        $this->loadViewsFrom(__DIR__ . '/../../resources/views', 'zetthcore');
+        $this->loadMigrationsFrom(__DIR__ . '/../../database/migrations');
+        // $this->loadSeedsFrom(__DIR__ . '/../../database/seeds');
+
+        /* $this->publishes([
+        __DIR__ . '/../../database' => database_path(),
+        ], 'zetthmigrate'); */
+        $publishable_path = '/../../../publishable';
+        $this->publishes([
+            __DIR__ . $publishable_path . '/config/auth.php' => config_path('auth.php'),
+            __DIR__ . $publishable_path . '/config/database.php' => config_path('database.php'),
+            __DIR__ . $publishable_path . '/config/image.php' => config_path('image.php'),
+            __DIR__ . $publishable_path . '/config/laratrust.php' => config_path('laratrust.php'),
+            __DIR__ . $publishable_path . '/config/laratrust_seeder.php' => config_path('laratrust_seeder.php'),
+        ], 'zetthconfig');
+        // $this->publishes([
+        //     __DIR__ . $publishable_path.'/config/auth.php' => config_path('auth.php'),
+        // ], 'zetthauth');
+        $this->publishes([
+            __DIR__ . $publishable_path . '/Exceptions/Handler.php' => app_path('Exceptions/Handler.php'),
+        ], 'zetthhandler');
+        $this->publishes([
+            __DIR__ . $publishable_path . '/Middleware/Authenticate.php' => app_path('Http/Middleware/Authenticate.php'),
+            __DIR__ . $publishable_path . '/Middleware/RedirectIfAuthenticated.php' => app_path('Http/Middleware/RedirectIfAuthenticated.php'),
+        ], 'zetthmiddleware');
+        $this->publishes([
+            __DIR__ . $publishable_path . '/routes/web.php' => base_path('routes/web.php'),
+        ], 'zetthroutes');
+
+        /* set default varchar */
+        Schema::defaultStringLength(191);
     }
 
     /**

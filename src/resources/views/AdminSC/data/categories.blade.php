@@ -6,7 +6,7 @@
       <thead>
         <tr>
           <td>No.</td>
-          @if ($is_desktop)
+          @if (app('is_desktop'))
             <td>Kategori</td>
             <td>Deskripsi</td>
             <td>Status</td>
@@ -76,7 +76,7 @@
         }],
       };
 
-      @if (!$is_desktop)
+      @if (!app('is_desktop'))
         options.columns = [
           { "width": "30px" },
           { },

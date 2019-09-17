@@ -189,7 +189,7 @@
     });
     var start = moment();
     var end = moment();
-    var min = moment('{{ $apps->created_at }}');
+    var min = moment('{{ app('setting')->created_at }}');
     var max = moment();
     var yr = moment();
     var mn = moment();
@@ -214,7 +214,7 @@
       yr = start.format('YYYY');
       mn = start.format('MM')-1;
       dt = start.format('DD');
-      @if ($is_desktop)
+      @if (app('is_desktop'))
         var range = start.format('MMMM DD, YYYY') + ' - ' + end.format('MMMM DD, YYYY');
       @else
         var range = label;
@@ -309,7 +309,7 @@
       var html = '';
       if (data.length > 0) {
         $.each(data, function(k,v){
-          @if ($is_desktop)
+          @if (app('is_desktop'))
           var time = 'on '+v.time;
           @else
           var time = ''; 
@@ -365,7 +365,7 @@
           }*/
         },
         legend: {
-          {!! !$is_desktop ? 'layout: \'vertical\',' : '' !!}
+          {!! !app('is_desktop') ? 'layout: \'vertical\',' : '' !!}
           align: 'right',
           verticalAlign: 'top',
           floating: true,

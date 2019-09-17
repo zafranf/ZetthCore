@@ -1,6 +1,6 @@
 <?php
 /* template site route */
-Route::get('/themes/{path}', 'SiteController@themes')->where('path', '.*')->name('themes.site');
+Route::get('/themes/{path}', '\App\Http\Controllers\SiteController@themes')->where('path', '.*')->name('themes.site');
 
 /* template admin route */
 Route::get('/themes/admin/{path}', '\ZetthCore\Http\Controllers\AdminController@themes')->where('path', '.*')->name('themes.admin');
