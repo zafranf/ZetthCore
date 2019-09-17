@@ -144,17 +144,17 @@ class ApplicationController extends AdminController
         $app->keywords = $r->input('keywords');
         $app->tagline = $r->input('tagline');
         $app->status = bool($r->input('status')) ? 1 : 0;
-        $app->active_at = $r->input('active_at');
         $app->email = $r->input('email');
         $app->address = $r->input('address');
         $app->phone = $r->input('phone');
         $app->coordinate = str_replace(" ", "", $r->input('coordinate'));
         $app->perpage = $r->input('perpage');
-        $app->enable_subscribe = bool($r->enable_subscribe) ? 1 : 0;
-        $app->enable_like = bool($r->enable_like) ? 1 : 0;
-        $app->enable_share = bool($r->enable_share) ? 1 : 0;
-        $app->enable_comment = bool($r->enable_comment) ? 1 : 0;
+        $app->enable_subscribe = bool($r->input('enable_subscribe')) ? 1 : 0;
+        $app->enable_like = bool($r->input('enable_like')) ? 1 : 0;
+        $app->enable_share = bool($r->input('enable_share')) ? 1 : 0;
+        $app->enable_comment = bool($r->input('enable_comment')) ? 1 : 0;
         $app->google_analytics = $r->input('google_analytics');
+        $app->active_at = $r->input('active_at') ?? date("Y-m-d H:i:s");
 
         /* upload logo */
         if ($r->input('logo_remove')) {

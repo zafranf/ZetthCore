@@ -27,9 +27,9 @@
 									<a href="#" class="btn btn-default fileinput-exists" data-dismiss="fileinput">Batal</a>
 									@if (isset(app('setting')->logo))
 										<small class="help-inline-table">
-										<label class="pull-right">
-											<input type="checkbox" name="logo_remove" id="logo_remove"> Hapus
-										</label>
+											<label class="pull-right">
+												<input type="checkbox" name="logo_remove" id="logo_remove"> Hapus
+											</label>
 										</small>
 									@endif
 								</div>
@@ -156,7 +156,7 @@
 					<div class="form-group" {!! (app('setting')->status == 1) ? 'style="display:none;"' : '' !!} id="d-active-at">
 						<label for="active_at" class="col-md-4 control-label">Aktif pada</label>
 						<div class="col-md-8">
-							<input type="text" class="form-control" id="active-at" name="active_at" value="{{ isset($apps) ? date("Y-m-d", strtotime(app('setting')->active_at)) : '' }}" {!! (app('setting')->status == 1) ? 'readonly' : '' !!} placeholder="Dibuka pada..">
+							<input type="text" class="form-control" id="active-at" name="active_at" value="{{ isset(app('setting')->active_at) ? date("Y-m-d", strtotime(app('setting')->active_at)) : '' }}" {!! (app('setting')->status == 1) ? 'readonly' : '' !!} placeholder="Dibuka pada..">
 						</div>
 					</div>
 				</div>
@@ -179,22 +179,22 @@
 											<select class="form-control custom-select2" id="socmed-id-{{ $rand }}" name="socmed_id[]">
 												<option value="">--Pilih--</option>
 												@if (isset($socmeds))
-                          @foreach ($socmeds as $socmed)
-                            @php 
-                              $sl = ($socmed->id==$val->socmed->id) ? 'selected' : ''
-                            @endphp
-                            <option value="{{ $socmed->id }}" {{ $sl }}>{{ $socmed->name }}</option>
-                          @endforeach
+													@foreach ($socmeds as $socmed)
+														@php 
+														$sl = ($socmed->id==$val->socmed->id) ? 'selected' : ''
+														@endphp
+														<option value="{{ $socmed->id }}" {{ $sl }}>{{ $socmed->name }}</option>
+													@endforeach
 												@endif
 											</select>
 										</div>
 										<div class="col-md-9 col-xs-6 no-padding">
 											@if ($key > 0)
 												<div class="input-group">
-                          <input type="text" class="form-control" id="socmed-uname-{{ $rand }}" name="socmed_uname[]" placeholder="Nama/ID akun.." maxlength="50" value="{{ $val->username }}">
-                          <span class="input-group-btn">
-                            <button type="button" class="btn" style="background:white;border:1px solid #ccc;" onclick="_remove('#div-socmed-{{ $rand }}')"><i class="fa fa-minus"></i></button>
-                          </span>
+													<input type="text" class="form-control" id="socmed-uname-{{ $rand }}" name="socmed_uname[]" placeholder="Nama/ID akun.." maxlength="50" value="{{ $val->username }}">
+													<span class="input-group-btn">
+														<button type="button" class="btn" style="background:white;border:1px solid #ccc;" onclick="_remove('#div-socmed-{{ $rand }}')"><i class="fa fa-minus"></i></button>
+													</span>
 												</div>
 											@else
 												<input type="text" class="form-control" id="socmed-uname-{{ $rand }}" name="socmed_uname[]" placeholder="Nama/ID akun.." value="{{ $val->username }}">
@@ -204,7 +204,7 @@
 								@endforeach
 							@else
 								<div class="col-md-3 col-xs-6 no-padding">
-                  <select class="form-control custom-select2" id="socmed-id" name="socmed_id[]">
+                  					<select class="form-control custom-select2" id="socmed-id" name="socmed_id[]">
 										<option value="">--Pilih--</option>
 										@if (isset($socmeds))
 											@foreach ($socmeds as $socmed)
@@ -214,7 +214,7 @@
 									</select>
 								</div>
 								<div class="col-md-9 col-xs-6 no-padding">
-                  <input type="text" class="form-control" id="socmed-uname" name="socmed_uname[]" placeholder="Nama/ID akun.." maxlength="50">
+                  					<input type="text" class="form-control" id="socmed-uname" name="socmed_uname[]" placeholder="Nama/ID akun.." maxlength="50">
 								</div>
 							@endif
 							<div id="div-socmed"></div>
@@ -239,9 +239,9 @@
 					</div>
 					<div class="form-group">
 						<label for="google_analytics" class="col-md-4 control-label">
-              Google Analytics
+              				Google Analytics
 							<small class="help-block">Kode untuk analitik website dari Google</small>
-            </label>
+            			</label>
 						<div class="col-md-8">
 							<input type="text" class="form-control" id="google-analytics" name="google_analytics" value="{{ app('setting')->google_analytics ?? '' }}" placeholder="Kode Google Analytics.." maxlength="20">
 						</div>
@@ -267,9 +267,9 @@
 			</div>
 			<div class="form-group">
 				<div class="col-md-offset-2 col-md-10">
-					{{ isset($apps) ? method_field('PUT') : '' }}
+					{{ isset(app('setting')->id) ? method_field('PUT') : '' }}
 					{{ csrf_field() }}
-				  {{ _get_button_post(url($adminPath . '/dashboard')) }}
+				  	{{ _get_button_post(url($adminPath . '/dashboard')) }}
 				</div>
 			</div>
 		</form>
@@ -308,7 +308,7 @@
 		$(function() {
 			$('#active-at').datetimepicker({
 				format: 'YYYY-MM-DD'
-      });
+      		});
       
 			$(".custom-select2").select2({
 				minimumResultsForSearch: Infinity
@@ -320,7 +320,7 @@
 				if ($('#status').val()!=1){
 					$('#d-active-at').show();
 					$('#active-at').attr('readonly', false);
-				}else{
+				} else {
 					$('#d-active-at').hide();
 					$('#active-at').attr('readonly', true);
 				}

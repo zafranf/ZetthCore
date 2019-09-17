@@ -29,17 +29,17 @@ class CreateApplicationTable extends Migration
             $table->integer('template_id')->unsigned()->nullable();
             $table->string('timezone')->default('Asia/Jakarta');
             $table->boolean('status')->comment('0=coming soon, 1=active, 2=maintenance')->unsigned();
-            $table->dateTime('active_at');
             $table->string('email')->nullable();
+            $table->string('phone')->nullable();
             $table->text('address')->nullable();
             $table->string('coordinate')->comment('latitude, longitude')->nullable();
-            $table->string('phone')->nullable();
             $table->string('google_analytics')->nullable();
             $table->boolean('enable_subscribe')->comment('0=no, 1=yes')->default(1);
             $table->boolean('enable_like')->comment('0=no, 1=yes')->default(1);
             $table->boolean('enable_share')->comment('0=no, 1=yes')->default(1);
             $table->boolean('enable_comment')->comment('0=no, 1=yes')->default(1);
-            $table->tinyInteger('perpage')->unsigned()->default(20);
+            $table->tinyInteger('perpage')->unsigned()->default(10);
+            $table->dateTime('active_at');
             $table->timestamps();
         });
     }
