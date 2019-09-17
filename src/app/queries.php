@@ -18,12 +18,14 @@ function _getBanners($limit = 3, $active = 1)
     /* cek limit */
     if ($limit > 1) {
         $banners = $banners->paginate($limit);
-    } else {
+    } else if ($limit == 1) {
         $banners = $banners->first();
+    } else {
+        $banners = $banners->get();
     }
 
     /* simpan ke cache */
-    Cache::put('_getBanners' . $limit . $active, $banners, 10 * 60);
+    Cache::put('_getBanners' . $limit . $active, $banners, 60 * (env('APP_ENV') != 'production' ? 1 : env('CACHE_TIME', 10)));
 
     return $banners;
 }
@@ -102,12 +104,14 @@ function _getPosts($pars = '', $limit = 10, $active = 1, $order = "desc")
     /* cek limit */
     if ($limit > 1) {
         $posts = $posts->paginate($limit);
-    } else {
+    } else if ($limit == 1) {
         $posts = $posts->first();
+    } else {
+        $posts = $posts->get();
     }
 
     /* simpan ke cache */
-    Cache::put('_getArticles' . $pars . $limit . $active . $order, $posts, 10 * 60);
+    Cache::put('_getArticles' . $pars . $limit . $active . $order, $posts, 60 * (env('APP_ENV') != 'production' ? 1 : env('CACHE_TIME', 10)));
 
     return $posts;
 }
@@ -140,12 +144,14 @@ function _getTerms($type = 'category', $name = '', $limit = 5, $active = 1, $ord
     /* cek limit */
     if ($limit > 1) {
         $terms = $terms->paginate($limit);
-    } else {
+    } else if ($limit == 1) {
         $terms = $terms->first();
+    } else {
+        $terms = $terms->get();
     }
 
     /* simpan ke cache */
-    Cache::put('_getTerms' . $name . $type . $limit . $active, $terms, 10 * 60);
+    Cache::put('_getTerms' . $name . $type . $limit . $active, $terms, 60 * (env('APP_ENV') != 'production' ? 1 : env('CACHE_TIME', 10)));
 
     return $terms;
 }
@@ -169,12 +175,14 @@ function _getPages($limit = 5, $active = 1)
     /* cek limit */
     if ($limit > 1) {
         $pages = $pages->paginate($limit);
-    } else {
+    } else if ($limit == 1) {
         $pages = $pages->first();
+    } else {
+        $pages = $pages->get();
     }
 
     /* simpan ke cache */
-    Cache::put('_getPages' . $limit . $active, $pages, 10 * 60);
+    Cache::put('_getPages' . $limit . $active, $pages, 60 * (env('APP_ENV') != 'production' ? 1 : env('CACHE_TIME', 10)));
 
     return $pages;
 }
@@ -208,12 +216,14 @@ function _getAlbums($name = '', $limit = 5, $active = 1)
     /* cek limit */
     if ($limit > 1) {
         $albums = $albums->paginate($limit);
-    } else {
+    } else if ($limit == 1) {
         $albums = $albums->first();
+    } else {
+        $albums = $albums->get();
     }
 
     /* simpan ke cache */
-    Cache::put('_getAlbums' . $name . $limit . $active . $page, $albums, 10 * 60);
+    Cache::put('_getAlbums' . $name . $limit . $active . $page, $albums, 60 * (env('APP_ENV') != 'production' ? 1 : env('CACHE_TIME', 10)));
 
     return $albums;
 }
@@ -237,12 +247,14 @@ function _getPhotos($limit = 5, $active = 1)
     /* cek limit */
     if ($limit > 1) {
         $photos = $photos->paginate($limit);
-    } else {
+    } else if ($limit == 1) {
         $photos = $photos->first();
+    } else {
+        $photos = $photos->get();
     }
 
     /* simpan ke cache */
-    Cache::put('_getPhotos' . $limit . $active, $photos, 10 * 60);
+    Cache::put('_getPhotos' . $limit . $active, $photos, 60 * (env('APP_ENV') != 'production' ? 1 : env('CACHE_TIME', 10)));
 
     return $photos;
 }
@@ -266,12 +278,14 @@ function _getVideos($limit = 5, $active = 1)
     /* cek limit */
     if ($limit > 1) {
         $videos = $videos->paginate($limit);
-    } else {
+    } else if ($limit == 1) {
         $videos = $videos->first();
+    } else {
+        $videos = $videos->get();
     }
 
     /* simpan ke cache */
-    Cache::put('_getVideos' . $limit . $active, $videos, 10 * 60);
+    Cache::put('_getVideos' . $limit . $active, $videos, 60 * (env('APP_ENV') != 'production' ? 1 : env('CACHE_TIME', 10)));
 
     return $videos;
 }
