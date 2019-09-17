@@ -14,7 +14,7 @@ $page_title = 'Masuk Aplikasi';
             <center>
               <img src="{{ _get_image("assets/images/" . app('setting')->logo, url("themes/admin/AdminSC/images/" . (app('setting')->logo ?? 'logo.v2.png'))) }}" alt="{{ app('setting')->name }} Logo" style="margin-bottom: 20px; width: {{ $w }}px;">
             </center>
-            <form class="form-horizontal" role="form" method="POST" action="{{ url($adminPath . '/login') }}">
+            <form class="form-horizontal" role="form" method="POST" action="{{ url(app('admin_path') . '/login') }}">
               
               <div class="form-group{{ isset($errors) && $errors->has('name') ? ' has-error' : '' }}">
                 <label class="col-md-4 control-label">Pengguna</label>
@@ -55,7 +55,7 @@ $page_title = 'Masuk Aplikasi';
                   <button type="submit" class="btn btn-default">
                     <i class="fa fa-btn fa-sign-in"></i> Masuk
                   </button>
-                  <a class="btn btn-link" href="{{ url($adminPath . '/password/reset') }}">Lupa sandi?</a>
+                  <a class="btn btn-link" href="{{ url(app('admin_path') . '/password/reset') }}">Lupa sandi?</a>
                   {!! csrf_field() !!}
                 </div>
               </div>

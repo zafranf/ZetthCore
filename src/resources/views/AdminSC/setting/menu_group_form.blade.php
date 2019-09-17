@@ -1,5 +1,5 @@
 @php
-  function sortMenu($data, $level = 0, $adminPath = '') {
+  function sortMenu($data, $level = 0, app('admin_path') = '') {
     echo ($level == 0) ? 'Geser untuk atur posisi' : '';
     echo ($level == 0) ? '<ol class="default vertical">' : '<ol>';
     echo count($data) == 0 ? '<span style="color:grey">Belum ada menu yang terdaftar..</span>' : '';
@@ -10,11 +10,11 @@
         echo '<i class="' . $menu->icon . '"></i> ';
       }
       echo $menu->name;
-      echo '<a onclick="_delete(\'' . url($adminPath . '/setting/menus/'.$menu->id. '?group='.$menu->group_id).'\')" class="btn btn-default btn-xs pull-right" data-toggle="tooltip" title="Hapus"><i class="fa fa-trash"></i></a>';
-      echo '<a href="' . url($adminPath . '/setting/menus/' . $menu->id . '/edit?group=' . $menu->group_id) . '" class="btn btn-default btn-xs pull-right" data-toggle="tooltip" title="Edit"><i class="fa fa-edit"></i></a>';
+      echo '<a onclick="_delete(\'' . url(app('admin_path') . '/setting/menus/'.$menu->id. '?group='.$menu->group_id).'\')" class="btn btn-default btn-xs pull-right" data-toggle="tooltip" title="Hapus"><i class="fa fa-trash"></i></a>';
+      echo '<a href="' . url(app('admin_path') . '/setting/menus/' . $menu->id . '/edit?group=' . $menu->group_id) . '" class="btn btn-default btn-xs pull-right" data-toggle="tooltip" title="Edit"><i class="fa fa-edit"></i></a>';
       echo '</span>';
       if (count($menu->submenu) > 0) {
-        sortMenu($menu->submenu, $level + 1, $adminPath);
+        sortMenu($menu->submenu, $level + 1, app('admin_path'));
       }
       echo '<ol></ol>';
       echo '</li>';
@@ -56,9 +56,9 @@
         </div>
         <div class="col-md-6">
           @if (isset($data))
-            <h4>Daftar Menu <a href="{{ url($adminPath.'/setting/menus/create?group='.$data->id) }}" class="btn btn-default btn-xs pull-right" data-toggle="tooltip" title="Tambah"><i class="fa fa-plus"></i></a></h4>
+            <h4>Daftar Menu <a href="{{ url(app('admin_path').'/setting/menus/create?group='.$data->id) }}" class="btn btn-default btn-xs pull-right" data-toggle="tooltip" title="Tambah"><i class="fa fa-plus"></i></a></h4>
             <hr>
-            {!! sortMenu($data->allMenu, 0, $adminPath) !!}
+            {!! sortMenu($data->allMenu, 0, app('admin_path')) !!}
           @endif
         </div>
       </div>

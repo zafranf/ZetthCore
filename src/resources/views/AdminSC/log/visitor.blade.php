@@ -27,7 +27,7 @@
       var table = $('#table-data').DataTable({
         "processing": true,
         "serverSide": true,
-        "ajax": SITE_URL + "{{ $adminPath }}/log/visitors/data",
+        "ajax": SITE_URL + "{{ app('admin_path') }}/log/visitors/data",
         "pageLength": 20,
         "lengthMenu": [
           [10, 20, 50, 100, -1], 
@@ -71,7 +71,7 @@
           "sortable": false,
           "render": function (data, type, row, meta) {
             var actions = '';
-            var url = SITE_URL + "{{ $adminPath }}/log/visitors/" + data;
+            var url = SITE_URL + "{{ app('admin_path') }}/log/visitors/" + data;
             var del = "_delete('" + url + "')";
             {!! _get_access_buttons() !!}
             $('[data-toggle="tooltip"]').tooltip();

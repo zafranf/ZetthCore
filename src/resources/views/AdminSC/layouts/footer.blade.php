@@ -20,7 +20,7 @@
   </div>
   <script>
     var SITE_URL = '{{ url('/') }}';
-    var ADMIN_URL = '{{ url($adminPath) }}';
+    var ADMIN_URL = '{{ url(app('admin_path')) }}';
     var CURRENT_URL = '{{ url($current_url) }}';
     var TOKEN = '{{ csrf_token() }}';
     var CONNECT = true;

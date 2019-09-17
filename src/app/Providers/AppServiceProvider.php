@@ -3,7 +3,6 @@
 namespace ZetthCore\Providers;
 
 use Illuminate\Support\Facades\Schema;
-use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -42,18 +41,29 @@ class AppServiceProvider extends ServiceProvider
                 $isAdminPanel = true;
             }
 
-            /* share admin panel variable */
-            View::share([
-                'adminPath' => $adminPath,
-                'isAdminSubdomain' => $isAdminSubdomain,
-                'isAdminPanel' => $isAdminPanel,
-            ]);
+            /* View::share([
+            'adminPath' => $adminPath,
+            'isAdminSubdomain' => $isAdminSubdomain,
+            'isAdminPanel' => $isAdminPanel,
+            ]); */
+            /* share admin panel to global */
+            $this->app->singleton('admin_path', function () use ($adminPath) {
+                return $adminPath;
+            });
+            $this->app->singleton('is_admin_subdomain', function () use ($isAdminSubdomain) {
+                return $isAdminSubdomain;
+            });
+            $this->app->singleton('is_admin_panel', function () use ($isAdminPanel) {
+                return $isAdminPanel;
+            });
 
-            /* set application data to global */
+            /* get application setting */
             $apps = \ZetthCore\Models\Application::where('domain', $host)->with('socmed_data', 'socmed_data.socmed')->first();
             if (!$apps) {
                 throw new \Exception("Application config not found", 1);
             }
+
+            /* set application setting to global */
             $this->app->singleton('setting', function () use ($apps) {
                 return $apps;
             });
