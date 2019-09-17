@@ -121,15 +121,15 @@ class ApplicationController extends AdminController
             'name' => 'required|max:50',
             'tagline' => 'nullable|max:100',
             'email' => 'nullable|max:100|email',
-            'phone' => 'nullable|max:16|integer',
+            'phone' => 'nullable|numeric|max:999999999999999',
             'perpage' => 'required|integer|min:3|max:100',
 
             /* socmed */
             'socmed_uname.*' => 'max:50',
 
             /* seo */
-            'keywords' => 'nullable|max:50',
-            'description' => 'nullable|max:150',
+            'keywords' => 'nullable|max:191',
+            'description' => 'nullable|max:191',
             'google_analytics' => 'nullable|20',
 
             /* location */
@@ -202,18 +202,7 @@ class ApplicationController extends AdminController
         $app->save();
 
         /* processing socmed */
-        $del = SocmedData::where([
-            'type' => 'config',
-        ])->forceDelete();
-        foreach ($r->input('socmed_id') as $key => $val) {
-            if ($r->input('socmed_id')[$key] != "" && $r->input('socmed_uname')[$key] != "") {
-                $socmed = new SocmedData;
-                $socmed->username = $r->input('socmed_uname')[$key];
-                $socmed->type = 'config';
-                $socmed->socmed_id = $r->input('socmed_id')[$key];
-                $socmed->save();
-            }
-        }
+        $this->process_socmed($r);
 
         /* log aktifitas */
         $this->activityLog('<b>' . \Auth::user()->fullname . '</b> memperbarui Pengaturan - Aplikasi');
@@ -230,5 +219,24 @@ class ApplicationController extends AdminController
     public function destroy(Application $app)
     {
         abort(403);
+    }
+
+    public function process_socmed(Request $r)
+    {
+        $del = SocmedData::where([
+            'type' => 'config',
+        ])->forceDelete();
+        foreach ($r->input('socmed_id') as $key => $val) {
+            if ($r->input('socmed_id')[$key] != "" && $r->input('socmed_uname')[$key] != "") {
+                $socmed = new SocmedData;
+                $socmed->username = $r->input('socmed_uname')[$key];
+                $socmed->type = 'config';
+                $socmed->socmed_id = $r->input('socmed_id')[$key];
+                $socmed->data_id = 1;
+                $socmed->save();
+            }
+        }
+
+        return $socmed;
     }
 }

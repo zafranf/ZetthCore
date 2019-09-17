@@ -11,12 +11,12 @@ class Menu extends Model
 
     public function submenu()
     {
-        return $this->hasMany('ZetthCore\Models\Menu', 'parent_id', 'id')->where('status', 1)->orderBy('order')->with('submenu');
+        return $this->hasMany('ZetthCore\Models\Menu', 'parent_id', 'id')->where('status', 1)->orderBy('order')->with('submenu')->orderBy('order');
     }
 
     public function allSubmenu()
     {
-        return $this->hasMany('ZetthCore\Models\Menu', 'parent_id', 'id')->orderBy('order')->with('allSubmenu');
+        return $this->hasMany('ZetthCore\Models\Menu', 'parent_id', 'id')->orderBy('order')->with('allSubmenu')->orderBy('order');
     }
 
     public function group()
