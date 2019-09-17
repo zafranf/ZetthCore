@@ -13,7 +13,7 @@
 // Route::get('/themes/{path}', 'Controller@themes')->where('path', '.*')->name('themes.site');
 
 /* Site Routes */
-Route::name('web.')->middleware('visitor_log')->group(function () {
+Route::name('web.')->middleware(['site', 'visitor_log'])->group(function () {
     /* Front Routes */
     Route::get('/', 'Site\MainController@index')->name('root');
     Route::get('/contact', 'Site\MainController@contact')->name('contact');

@@ -115,8 +115,8 @@
 					</div>
 					<div class="form-group">
 						<label for="enable" class="col-md-4 control-label">
-							Aktifkan
-							<small class="help-block">Fitur untuk pengunjung situs</small>
+							Akses Pengunjung
+							{{-- <small class="help-block">Fitur untuk pengunjung situs</small> --}}
 						</label>
 						<div class="col-md-8">
 							<div class="checkbox">

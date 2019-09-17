@@ -144,7 +144,7 @@ class ApplicationController extends AdminController
         $app->description = $r->input('description');
         $app->keywords = $r->input('keywords');
         $app->tagline = $r->input('tagline');
-        $app->status = bool($r->input('status')) ? 1 : 0;
+        $app->status = $r->input('status');
         $app->email = $r->input('email');
         $app->address = $r->input('address');
         $app->phone = $r->input('phone');
@@ -238,6 +238,6 @@ class ApplicationController extends AdminController
             }
         }
 
-        return $socmed;
+        return true;
     }
 }

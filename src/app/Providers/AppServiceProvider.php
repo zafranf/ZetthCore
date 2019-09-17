@@ -89,6 +89,7 @@ class AppServiceProvider extends ServiceProvider
         /* set middleware */
         $router = $this->app['router'];
         $router->aliasMiddleware('access', \ZetthCore\Http\Middleware\AccessMiddleware::class);
+        $router->aliasMiddleware('site', \ZetthCore\Http\Middleware\SiteMiddleware::class);
         $router->aliasMiddleware('visitor_log', \ZetthCore\Http\Middleware\VisitorLogMiddleware::class);
         $router->middleware([
             \RenatoMarinho\LaravelPageSpeed\Middleware\InlineCss::class,
