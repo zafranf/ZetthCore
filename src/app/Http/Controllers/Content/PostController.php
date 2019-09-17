@@ -316,8 +316,8 @@ class PostController extends AdminController
 
             if (!$chkCategory) {
                 $term = new Term;
-                $term->name = str_slug($category);
-                $term->display_name = $category;
+                $term->name = $category;
+                $term->slug = str_slug($term->name);
                 $term->description = $descriptions[$k];
                 $term->parent_id = $parents[$k] ?? 0;
                 $term->type = 'category';
@@ -350,8 +350,8 @@ class PostController extends AdminController
 
             if (!$chkTag) {
                 $term = new Term;
-                $term->name = str_slug($tag);
-                $term->display_name = strtolower($tag);
+                $term->name = strtolower($tag);
+                $term->slug = str_slug($term->name);
                 $term->type = 'tag';
                 $term->status = 1;
                 $term->save();

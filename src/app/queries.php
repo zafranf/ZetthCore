@@ -122,7 +122,7 @@ function _getPosts($pars = '', $limit = null, $active = 1, $order = "desc")
     return $posts;
 }
 
-function _getTerms($type = 'category', $name = '', $limit = null, $active = 1, $order_by = 'display_name', $order_sort = 'asc')
+function _getTerms($type = 'category', $name = '', $limit = null, $active = 1, $order_by = 'name', $order_sort = 'asc')
 {
     /* set limit */
     $limit = $limit ?? app('setting')->perpage;

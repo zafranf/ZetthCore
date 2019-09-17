@@ -22,13 +22,13 @@ class AjaxController extends AdminController
             abort(404);
         }
 
-        $data = Term::select('display_name')->
+        $data = Term::select('name')->
             where('type', $type)->
             where('status', 1)->
             get();
 
         foreach ($data as $value) {
-            $arr[] = $value->display_name;
+            $arr[] = $value->name;
         }
 
         return response()->json($arr);

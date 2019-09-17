@@ -66,11 +66,11 @@
 						<label for="password" class="col-md-4 control-label">Peran</label>
 						<div class="col-md-8">
 							<select name="role" id="role" class="form-control custom-select2">
-                @if (isset($roles))
-                  @foreach($roles as $role)
-                    <option value="{{ $role->id }}" {{ (isset($data) && $data->role_ids[0]->role_id == $role->id) ? 'selected' : '' }} >{{ $role->display_name }}</option>
-                  @endforeach
-                @endif
+							@if (isset($roles))
+								@foreach($roles as $role)
+									<option value="{{ $role->id }}" {{ (isset($data) && $data->role_ids[0]->role_id == $role->id) ? 'selected' : '' }} >{{ $role->display_name }}</option>
+								@endforeach
+							@endif
 							</select>
 						</div>
 					</div>
