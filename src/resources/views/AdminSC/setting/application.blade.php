@@ -154,7 +154,7 @@
 						</div>
 					</div>
 					<div class="form-group" {!! ($apps->status == 1) ? 'style="display:none;"' : '' !!} id="d-active-at">
-						<label for="active_at" class="col-md-4 control-label">Dibuka pada</label>
+						<label for="active_at" class="col-md-4 control-label">Aktif pada</label>
 						<div class="col-md-8">
 							<input type="text" class="form-control" id="active-at" name="active_at" value="{{ isset($apps) ? date("Y-m-d", strtotime($apps->active_at)) : '' }}" {!! ($apps->status == 1) ? 'readonly' : '' !!} placeholder="Dibuka pada..">
 						</div>

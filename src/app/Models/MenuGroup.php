@@ -14,13 +14,13 @@ class MenuGroup extends Model
         return $this->hasMany('ZetthCore\Models\Menu', 'group_id')->where([
             'parent_id' => 0,
             'status' => 1,
-        ]);
+        ])->orderBy('order');
     }
 
     public function allMenu()
     {
         return $this->hasMany('ZetthCore\Models\Menu', 'group_id')->where([
             'parent_id' => 0,
-        ]);
+        ])->orderBy('order');
     }
 }

@@ -102,11 +102,16 @@ class AppServiceProvider extends ServiceProvider
             ]);
 
             /* send application data to all views */
-            $apps = \ZetthCore\Models\Application::where('domain', $host)->first();
+            $apps = \ZetthCore\Models\Application::where('domain', $host)->with('socmed_data', 'socmed_data.socmed')->first();
             if (!$apps) {
                 throw new \Exception("Application config not found", 1);
             }
             View::share('apps', $apps);
+
+            /* set application data to global */
+            $this->app->singleton('setting', function () use ($apps) {
+                return $apps;
+            });
 
             /* send device type to all views */
             $agent = new \Jenssegers\Agent\Agent();

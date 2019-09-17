@@ -78,7 +78,7 @@ class MenuController extends AdminController
             'breadcrumbs' => $this->breadcrumbs,
             'page_title' => $this->page_title,
             'page_subtitle' => 'Tambah Menu',
-            'menus' => Menu::where('parent_id', 0)->with('allSubmenu')->orderBy('order')->get(),
+            'menus' => Menu::where('group_id', _get('group'))->where('parent_id', 0)->with('allSubmenu')->orderBy('order')->get(),
         ];
 
         return view('zetthcore::AdminSC.setting.menu_form', $data);
@@ -164,7 +164,7 @@ class MenuController extends AdminController
             'breadcrumbs' => $this->breadcrumbs,
             'page_title' => $this->page_title,
             'page_subtitle' => 'Edit Menu',
-            'menus' => Menu::where('parent_id', 0)->with('allSubmenu')->orderBy('order')->get(),
+            'menus' => Menu::where('group_id', _get('group'))->where('parent_id', 0)->with('allSubmenu')->orderBy('order')->get(),
             'data' => $menu,
         ];
 
