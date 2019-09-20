@@ -174,7 +174,7 @@ function _getTerms($type = 'category', $name = '', $limit = null, $active = 1, $
     return $terms;
 }
 
-function _getPages($limit = null, $active = 1)
+function _getPages($pars = '', $limit = null, $active = 1)
 {
     /* set limit */
     $limit = $limit ?? app('setting')->perpage;
@@ -186,7 +186,20 @@ function _getPages($limit = null, $active = 1)
     }
 
     /* inisiasi query */
-    $pages = \ZetthCore\Models\Post::pages()->orderBy('post_id', 'DESC');
+    $pages = \ZetthCore\Models\Post::pages()->orderBy('id', 'DESC');
+
+    /* pisah parameter */
+    $params = explode('|', $pars);
+    foreach ($params as $par) {
+        /* cek slug */
+        if (str_contains($par, 'slug')) {
+            $slug = explode('=', $par);
+            if (isset($slug[1])) {
+                $pages->where('slug', $slug[1]);
+                $limit = 1;
+            }
+        }
+    }
 
     /* cek status */
     if ($active != "all") {
