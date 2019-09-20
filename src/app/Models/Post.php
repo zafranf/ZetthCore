@@ -9,7 +9,7 @@ class Post extends Model
 {
     use SoftDeletes;
 
-    protected $dates = ['deleted_at'];
+    protected $dates = ['published_at', 'deleted_at'];
 
     public function rels()
     {
@@ -44,6 +44,11 @@ class Post extends Model
     public function comments()
     {
         return $this->hasMany('ZetthCore\Models\PostComment')->where('status', 1);
+    }
+
+    public function comments_sub()
+    {
+        return $this->hasMany('ZetthCore\Models\PostComment')->where('status', 1)->with('subcomments');
     }
 
     public function comments_all()

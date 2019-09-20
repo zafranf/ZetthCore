@@ -26,7 +26,7 @@
         <div class="col-sm-8 col-md-9 left-side no-padding">
           <input type="text" id="title" class="form-control {{ isset($data)   ? '' :   'autofocus' }} no-border-top-right no-border-left no-radius input-lg" name="title" placeholder="Judul.." maxlength="100" value="{{ isset($data) ? $data->title : '' }}">
           <div class="input-group">
-            <span class="input-group-addon no-border-top-right no-border-left no-radius input-sm" id="url_span">{{ url('/post/') }}/</span>
+            <span class="input-group-addon no-border-top-right no-border-left no-radius input-sm" id="url_span">{{ url('/article/') }}/</span>
             <input type="text" id="slug" class="form-control no-border-top-right no-radius input-sm" name="slug" placeholder="Tautan.. (klik 2x untuk edit)" readonly value="{{ isset($data) ? $data->slug : '' }}">
           </div>
           <textarea id="excerpt" name="excerpt" class="form-control no-border-top-right no-border-left no-radius input-xlarge" placeholder="Kutipan.." rows="3">{{ isset($data) ? $data->excerpt : '' }}</textarea>

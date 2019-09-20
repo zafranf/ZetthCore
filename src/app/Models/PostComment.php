@@ -18,4 +18,9 @@ class PostComment extends Model
     {
         return $this->belongsTo('ZetthCore\Http\Models\User', 'approved_by');
     }
+
+    public function subcomments()
+    {
+        return $this->hasMany('ZetthCore\Models\PostComment', 'parent_id', 'id')->where('status', 1)->with('subcomment');
+    }
 }

@@ -50,6 +50,15 @@ function _getPosts($pars = '', $limit = null, $active = 1, $order = "desc")
     /* pisah parameter */
     $params = explode('|', $pars);
     foreach ($params as $par) {
+        /* cek slug */
+        if (str_contains($par, 'slug')) {
+            $slug = explode('=', $par);
+            if (isset($slug[1])) {
+                $posts->where('slug', $slug[1]);
+                $limit = 1;
+            }
+        }
+
         /* cek parameter kategori */
         if (str_contains($par, "categories")) {
             $posts->with('categories');

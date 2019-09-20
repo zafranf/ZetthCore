@@ -249,7 +249,7 @@ if (!function_exists('generateBreadcrumb')) {
      * @param  [type] $breadcrumb [description]
      * @return [type]             [description]
      */
-    function generateBreadcrumb($breadcrumb)
+    function generateBreadcrumb($breadcrumb, $with_date = true)
     {
         echo '<ol class="breadcrumb">';
         foreach ($breadcrumb as $bread) {
@@ -265,7 +265,12 @@ if (!function_exists('generateBreadcrumb')) {
                 echo '</a></li>';
             }
         }
-        echo '<span class="today pull-right">' . generateDate() . '</span>';
+
+        /* generate date */
+        if ($with_date) {
+            echo '<span class="today pull-right">' . generateDate() . '</span>';
+        }
+
         echo '</ol>';
     }
 }
@@ -362,7 +367,7 @@ if (!function_exists('_admin_js')) {
 }
 
 if (!function_exists('carbon')) {
-    function carbon(\Carbon\Carbon $carbon = null, $timezone = null)
+    function carbon(\Carbon\Carbon $carbon = null, $timezone = null, $lang = 'id')
     {
         /* set default timezone */
         $timezone = $timezone ?? app('setting')->timezone;
@@ -379,6 +384,6 @@ if (!function_exists('carbon')) {
             $carbon = new \Carbon\Carbon;
         }
 
-        return $carbon->timezone($timezone);
+        return $carbon->timezone($timezone)->locale($lang);
     }
 }

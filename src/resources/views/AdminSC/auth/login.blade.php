@@ -66,7 +66,7 @@ $page_title = 'Masuk Aplikasi';
     </div>
   </div>
 
-  <div class="copyright" style="padding-left: 10px;">
+  {{-- <div class="copyright" style="padding-left: 10px;">
     Dipersembahkan oleh <a href="https://porisweb.id" target="_blank">Porisweb</a>
-  </div>
+  </div> --}}
 @include('zetthcore::AdminSC.layouts.footer')

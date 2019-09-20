@@ -119,7 +119,7 @@ class PostController extends AdminController
         // $uniq = str_random($digit);
         $cover = str_replace(url('/'), '', $r->input('cover'));
         $date = ($r->input('date') == '') ? date("Y-m-d") : $r->input('date');
-        $time = ($r->input('time') == '') ? date("H:i") : $r->input('time');
+        $time = ($r->input('time') == '') ? date("H:i:s") : $r->input('time');
 
         /* save data */
         $post = new Post;
