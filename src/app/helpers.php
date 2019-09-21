@@ -148,7 +148,7 @@ if (!function_exists('getMenu')) {
                 $menus = $groupmenu->menu;
             }
 
-            \Cache::put($cacheMenuName, $menus, 10 * 60);
+            \Cache::put($cacheMenuName, $menus, 60 * (env('APP_ENV') != 'production' ? 1 : env('CACHE_TIME', 10)));
         }
 
         return $menus;

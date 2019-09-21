@@ -165,3 +165,6 @@ Route::middleware('auth')->group(function () use ($prefix) {
 
     });
 });
+
+/* include additional menu admin */
+include base_path('routes') . '/admin.php';

@@ -14,6 +14,11 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        /* check admin page */
+        $adminPath = '/' . env('ADMIN_PATH', 'admin');
+        $isAdminSubdomain = false;
+        $isAdminPanel = false;
+
         /* check config */
         if (!$this->app->runningInConsole()) {
             if (!Schema::hasTable('applications')) {
@@ -21,11 +26,6 @@ class AppServiceProvider extends ServiceProvider
                 throw new \Exception("You have to install this app first", 1);
                 // redirect(url('/install'))->send();
             }
-
-            /* check admin page */
-            $adminPath = '/' . env('ADMIN_PATH', 'admin');
-            $isAdminSubdomain = false;
-            $isAdminPanel = false;
 
             /* check admin on uri */
             $uri = _server('REQUEST_URI');
@@ -40,22 +40,6 @@ class AppServiceProvider extends ServiceProvider
                 $isAdminSubdomain = true;
                 $isAdminPanel = true;
             }
-
-            /* View::share([
-            'adminPath' => $adminPath,
-            'isAdminSubdomain' => $isAdminSubdomain,
-            'isAdminPanel' => $isAdminPanel,
-            ]); */
-            /* share admin panel to global */
-            $this->app->singleton('admin_path', function () use ($adminPath) {
-                return $adminPath;
-            });
-            $this->app->singleton('is_admin_subdomain', function () use ($isAdminSubdomain) {
-                return $isAdminSubdomain;
-            });
-            $this->app->singleton('is_admin_panel', function () use ($isAdminPanel) {
-                return $isAdminPanel;
-            });
 
             /* get application setting */
             $apps = \ZetthCore\Models\Application::where('domain', $host)->with('socmed_data', 'socmed_data.socmed')->first();
@@ -85,6 +69,17 @@ class AppServiceProvider extends ServiceProvider
                 \ZetthCore\Console\Commands\Reinstall::class,
             ]);
         }
+
+        /* share admin panel to global */
+        $this->app->singleton('admin_path', function () use ($adminPath) {
+            return $adminPath;
+        });
+        $this->app->singleton('is_admin_subdomain', function () use ($isAdminSubdomain) {
+            return $isAdminSubdomain;
+        });
+        $this->app->singleton('is_admin_panel', function () use ($isAdminPanel) {
+            return $isAdminPanel;
+        });
 
         /* set middleware */
         $router = $this->app['router'];
