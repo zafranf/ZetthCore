@@ -5,7 +5,7 @@
 		<form class="form-horizontal" action="{{ url($current_url) }}/{{ app('setting')->id ?? '' }}" method="post" enctype="multipart/form-data">
 			<div class="row">
 				<div class="col-md-6">
-				<h4>Informasi Utama {{ app('setting')->active_at }}</h4>
+					<h4>Informasi Utama</h4>
 					<hr>
 					<div class="form-group">
 						<label for="name" class="col-md-4 control-label">

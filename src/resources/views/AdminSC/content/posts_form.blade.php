@@ -164,7 +164,7 @@
   <style>
     #mceu_15 {
       position: absolute;
-      right: 10px;
+      right: 5px;
     }
     /* @if (app('is_desktop'))
       textarea#mceu_34 {
@@ -383,7 +383,15 @@
         filemanager_title:"Filemanager",
         filemanager_folder: '/images',
         filemanager_language: 'id',
-        external_plugins: { "filemanager" : "{{ asset('/themes/admin/AdminSC/plugins/filemanager/plugin.min.js') }}" }
+        external_plugins: { "filemanager" : "{{ asset('/themes/admin/AdminSC/plugins/filemanager/plugin.min.js') }}" },
+        setup : function(ed) {
+            ed.on('init', function() 
+            {
+                // this.getDoc().body.style.fontSize = '12px';
+                this.getDoc().body.style.fontFamily = 'arial, helvetica, sans-serif';
+                // this.getDoc().body.style.fontWeight = '300';
+            });
+        }
       });
 
       /* $('#btn-add-featured-image').on('click', function(){
