@@ -51,7 +51,8 @@
     }
     #mceu_14 {
       position: absolute;
-      right: 5px;
+      right: 4px;
+      top: 4px;
     }
   </style>
 @endsection

@@ -164,7 +164,8 @@
   <style>
     #mceu_15 {
       position: absolute;
-      right: 5px;
+      right: 4px;
+      top: 4px;
     }
     /* @if (app('is_desktop'))
       textarea#mceu_34 {
