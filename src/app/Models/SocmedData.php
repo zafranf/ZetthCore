@@ -9,7 +9,7 @@ class SocmedData extends Model
 {
     use SoftDeletes;
 
-    protected $primaryKey = 'id';
+    // protected $primaryKey = 'id';
 
     public function socmed()
     {
