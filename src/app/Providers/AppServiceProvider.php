@@ -21,7 +21,7 @@ class AppServiceProvider extends ServiceProvider
 
         /* check config */
         if (!$this->app->runningInConsole()) {
-            if (!Schema::hasTable('applications')) {
+            if (!Schema::hasTable('sites')) {
                 /* sementara, nanti redirect ke halaman install */
                 throw new \Exception("You have to install this app first", 1);
                 // redirect(url('/install'))->send();
@@ -42,9 +42,9 @@ class AppServiceProvider extends ServiceProvider
             }
 
             /* get application setting */
-            $apps = \ZetthCore\Models\Application::where('domain', $host)->with('socmed_data', 'socmed_data.socmed')->first();
+            $apps = \ZetthCore\Models\Site::where('domain', $host)->with('socmed_data', 'socmed_data.socmed')->first();
             if (!$apps) {
-                throw new \Exception("Application config not found", 1);
+                throw new \Exception("Site config not found", 1);
             }
 
             /* set application setting to global */
