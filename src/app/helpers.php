@@ -387,8 +387,3 @@ if (!function_exists('carbon')) {
         return $carbon->timezone($timezone)->locale($lang);
     }
 }
-
-/* include cms helpers */
-if (file_exists(app_path('helpers.php'))) {
-    include app_path('helpers.php');
-}

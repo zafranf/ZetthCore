@@ -265,8 +265,3 @@ function _getVideos($limit = null, $order = 'desc')
 
     return $videos;
 }
-
-/* include cms queries */
-if (file_exists(app_path('queries.php'))) {
-    include app_path('queries.php');
-}
