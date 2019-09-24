@@ -130,8 +130,8 @@ class AppServiceProvider extends ServiceProvider
         Schema::defaultStringLength(191);
 
         /* set default timezone */
-        // date_default_timezone_set(app('setting')->timezone);
-        // config(['app.timezone' => app('setting')->timezone]);
+        // date_default_timezone_set(app('site')->timezone);
+        // config(['app.timezone' => app('site')->timezone]);
     }
 
     /**

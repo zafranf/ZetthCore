@@ -370,7 +370,7 @@ if (!function_exists('carbon')) {
     function carbon(\Carbon\Carbon $carbon = null, $timezone = null, $lang = 'id')
     {
         /* set default timezone */
-        $timezone = $timezone ?? app('setting')->timezone;
+        $timezone = $timezone ?? app('site')->timezone;
         $timezone = $timezone ?? env('APP_TIMEZONE', 'UTC');
 
         /* check user timezone */

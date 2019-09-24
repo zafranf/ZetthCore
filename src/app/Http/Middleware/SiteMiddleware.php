@@ -21,7 +21,7 @@ class SiteMiddleware
 
         /* set uri */
         $uri = $request->route()->uri();
-        $status = app('setting')->status;
+        $status = app('site')->status;
 
         /* next on subscribe */
         if ($request->isMethod('post') && $uri != "subscribe") {
@@ -49,9 +49,9 @@ class SiteMiddleware
     public function check_date()
     {
         $now = time();
-        $active_at = app('setting')->active_at->getTimestamp();
+        $active_at = app('site')->active_at->getTimestamp();
         if ($now >= $active_at) {
-            $setting = app('setting');
+            $setting = app('site');
             $setting->status = 1;
             $setting->save();
 

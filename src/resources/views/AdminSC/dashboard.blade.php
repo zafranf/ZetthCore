@@ -189,7 +189,7 @@
     });
     var start = moment();
     var end = moment();
-    var min = moment('{{ app('setting')->created_at }}');
+    var min = moment('{{ app('site')->created_at }}');
     var max = moment();
     var yr = moment();
     var mn = moment();
