@@ -4,7 +4,7 @@ namespace ZetthCore\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Application extends Model
+class Site extends Model
 {
     protected $dates = ['active_at'];
 
