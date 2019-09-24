@@ -27,6 +27,7 @@ class CreatePostCommentsTable extends Migration
             $table->boolean('status')->comment('0=pending, 1=active')->unsigned();
             $table->integer('parent_id')->unsigned()->default(0);
             $table->integer('post_id')->unsigned()->default(0);
+            $table->integer('user_id')->unsigned()->nullable();
             $table->integer('approved_by')->unsigned()->nullable();
             $table->integer('created_by')->unsigned()->nullable();
             $table->integer('updated_by')->unsigned()->nullable();

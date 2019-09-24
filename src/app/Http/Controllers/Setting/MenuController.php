@@ -17,21 +17,21 @@ class MenuController extends AdminController
     public function __construct()
     {
         parent::__construct();
-        $this->current_url = url($this->adminPath . '/setting/menus');
+        $this->current_url = url(app('admin_path') . '/setting/menus');
         $this->page_title = 'Kelola Menu';
         $this->breadcrumbs[] = [
             'page' => 'Pengaturan',
             'icon' => '',
-            'url' => url($this->adminPath . '/setting/application'),
+            'url' => url(app('admin_path') . '/setting/application'),
         ];
         $this->breadcrumbs[] = [
             'page' => 'Menu',
             'icon' => '',
-            'url' => url($this->adminPath . '/setting/menu-groups'),
+            'url' => url(app('admin_path') . '/setting/menu-groups'),
         ];
 
         if (!request()->input('group') && !\App::runningInConsole()) {
-            return redirect($this->adminPath . '/setting/menu-groups')->send();
+            return redirect(app('admin_path') . '/setting/menu-groups')->send();
         }
     }
 
@@ -42,6 +42,7 @@ class MenuController extends AdminController
      */
     public function index(Request $r)
     {
+        /* set breadcrumbs */
         $this->breadcrumbs[] = [
             'page' => 'Daftar',
             'icon' => '',
@@ -66,11 +67,15 @@ class MenuController extends AdminController
      */
     public function create()
     {
+        /* set breadcrumbs */
         $this->breadcrumbs[] = [
             'page' => 'Tambah',
             'icon' => '',
             'url' => '',
         ];
+
+        /* get additional data */
+        $additional = $this->getAdditionalDataOpts();
 
         /* set variable for view */
         $data = [
@@ -79,6 +84,7 @@ class MenuController extends AdminController
             'page_title' => $this->page_title,
             'page_subtitle' => 'Tambah Menu',
             'menus' => Menu::where('group_id', _get('group'))->where('parent_id', 0)->with('allSubmenu')->orderBy('order')->get(),
+            'post_opts' => $additional['posts'],
         ];
 
         return view('zetthcore::AdminSC.setting.menu_form', $data);
@@ -130,7 +136,7 @@ class MenuController extends AdminController
         /* clear cache */
         // \Cache::flush();
 
-        return redirect($this->adminPath . '/setting/menu-groups/' . $menu->group_id . '/edit')->with('success', 'Menu "' . $menu->name . '" berhasil ditambah!');
+        return redirect(app('admin_path') . '/setting/menu-groups/' . $menu->group_id . '/edit')->with('success', 'Menu "' . $menu->name . '" berhasil ditambah!');
     }
 
     /**
@@ -152,11 +158,15 @@ class MenuController extends AdminController
      */
     public function edit(Menu $menu)
     {
+        /* set breadcrumbs */
         $this->breadcrumbs[] = [
             'page' => 'Edit',
             'icon' => '',
             'url' => '',
         ];
+
+        /* get additional data */
+        $additional = $this->getAdditionalDataOpts();
 
         /* set variable for view */
         $data = [
@@ -165,6 +175,7 @@ class MenuController extends AdminController
             'page_title' => $this->page_title,
             'page_subtitle' => 'Edit Menu',
             'menus' => Menu::where('group_id', _get('group'))->where('parent_id', 0)->with('allSubmenu')->orderBy('order')->get(),
+            'post_opts' => $additional['posts'],
             'data' => $menu,
         ];
 
@@ -224,7 +235,7 @@ class MenuController extends AdminController
         /* clear cache */
         // \Cache::flush();
 
-        return redirect($this->adminPath . '/setting/menu-groups/' . $menu->group_id . '/edit')->with('success', 'Menu "' . $menu->name . '" berhasil disimpan!');
+        return redirect(app('admin_path') . '/setting/menu-groups/' . $menu->group_id . '/edit')->with('success', 'Menu "' . $menu->name . '" berhasil disimpan!');
     }
 
     /**
@@ -249,7 +260,7 @@ class MenuController extends AdminController
         /* clear cache */
         // \Cache::flush();
 
-        return redirect($this->adminPath . '/setting/menu-groups/' . $menu->group_id . '/edit')->with('success', 'Menu "' . $menu->name . '" berhasil dihapus!');
+        return redirect(app('admin_path') . '/setting/menu-groups/' . $menu->group_id . '/edit')->with('success', 'Menu "' . $menu->name . '" berhasil dihapus!');
     }
 
     /**

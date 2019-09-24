@@ -95,13 +95,21 @@ class Install extends Command
 
     public function seedingTable()
     {
-        $this->info('Seeding tables');
+        $this->info('Seeding default seeder');
         $process = new Process('php artisan db:seed --class=ZetthSeeder');
         $process->setTimeout($this->timeout);
         $process->run(function ($type, $buffer) {
             echo $buffer;
         });
-        $this->info('Seeding finished!');
+        $this->info('Seeding default seeder finished!');
+
+        $this->info('Seeding additional seeder');
+        $process = new Process('php artisan db:seed');
+        $process->setTimeout($this->timeout);
+        $process->run(function ($type, $buffer) {
+            echo $buffer;
+        });
+        $this->info('Seeding additional seeder finished!');
     }
 
     public function linkFolders()

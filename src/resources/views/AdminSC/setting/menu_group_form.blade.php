@@ -56,9 +56,9 @@
         </div>
         <div class="col-md-6">
           @if (isset($data))
-            <h4>Daftar Menu <a href="{{ url($adminPath.'/setting/menus/create?group='.$data->id) }}" class="btn btn-default btn-xs pull-right" data-toggle="tooltip" title="Tambah"><i class="fa fa-plus"></i></a></h4>
+            <h4>Daftar Menu <a href="{{ url(app('admin_path').'/setting/menus/create?group='.$data->id) }}" class="btn btn-default btn-xs pull-right" data-toggle="tooltip" title="Tambah"><i class="fa fa-plus"></i></a></h4>
             <hr>
-            {!! sortMenu($data->allMenu, 0, $adminPath) !!}
+            {!! sortMenu($data->allMenu, 0, app('admin_path')) !!}
           @endif
         </div>
       </div>

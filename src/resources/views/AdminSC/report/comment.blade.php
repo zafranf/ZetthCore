@@ -6,7 +6,7 @@
 			<thead>
 				<tr>
 					<td>No.</td>
-					@if ($is_desktop)
+					@if (app('is_desktop'))
 						<td>Nama</td>
 						<td>Surel</td>
 						<td>Komentar</td>
@@ -32,7 +32,7 @@
       let options = {
         "processing": true,
         "serverSide": true,
-        "ajax": SITE_URL + "{{ $adminPath }}/report/comments/data",
+        "ajax": SITE_URL + "{{ app('admin_path') }}/report/comments/data",
         "pageLength": 20,
         "lengthMenu": [
           [10, 20, 50, 100, -1], 
@@ -66,7 +66,7 @@
           "sortable": false,
           "render": function (data, type, row, meta) {
             let actions = '';
-            let url = SITE_URL + "{{ $adminPath }}/report/comments/" + data;
+            let url = SITE_URL + "{{ app('admin_path') }}/report/comments/" + data;
             let del = "_delete('" + url + "')";
             {!! _get_access_buttons() !!}
             $('[data-toggle="tooltip"]').tooltip();
@@ -76,7 +76,7 @@
         }],
       };
 
-      @if (!$is_desktop)
+      @if (!app('is_desktop'))
         options.columns = [
           { "width": "30px" },
           { },
@@ -105,7 +105,7 @@
             "sortable": false,
             "render": function (data, type, row, meta) {
               let actions = '';
-              let url = SITE_URL + "{{ $adminPath }}/report/comments/" + data;
+              let url = SITE_URL + "{{ app('admin_path') }}/report/comments/" + data;
               let del = "_delete('" + url + "')";
               {!! _get_access_buttons() !!}
               $('[data-toggle="tooltip"]').tooltip();

@@ -40,7 +40,7 @@
                     </div>
                     <div class="form-group">
                         <div class="col-sm-12">
-                            <input type="hidden" id="input_tmp" name="photos[]">
+                            <input type="hidden" id="input_tmp">
                             {{ isset($data->id) ? method_field('PUT') : '' }}
                             {{ csrf_field() }}
                             {{ _get_button_post($current_url, true, $data->id ?? '') }}
@@ -53,18 +53,18 @@
                     <div class="row">
                         <div class="col-sm-12" style="max-height:400px;overflow:auto;" id="photo-box">
                             <div class="col-sm-6 col-md-2 hidden-xs" style="padding:10px;padding-top:0;padding-bottom:20px;cursor:pointer;" onclick="addPhotoModal()">
-                                <div class="thumbnail text-warning" style="height:150px;display:{{ $is_desktop ? 'table-cell' : 'block' }};width:inherit;margin-bottom:1px;text-align:center;">
+                                <div class="thumbnail text-warning" style="height:150px;display:{{ app('is_desktop') ? 'table-cell' : 'block' }};width:inherit;margin-bottom:1px;text-align:center;">
                                     <i class="fa fa-plus" style="font-size:80px;"></i>
                                     <br>
                                     <span class="" style="font-size:28px;">Tambah Foto</span>
                                     {{-- <input type="hidden" id="input_tmp"> --}}
                                 </div>
                             </div>
-                            @php $no_img=0 @endphp
+                            @php $no_img = 0 @endphp
                             @if (isset($data->photos))
                                 @foreach($data->photos as $photo)
-                                <div id="img{{ $no_img }}" class="col-sm-6 col-md-2" style="padding:10px;padding-top:0;padding-bottom:20px;">
-                                        <div class="thumbnail" style="height:150px;display:{{ $is_desktop ? 'table-cell;' : 'block;' }}padding:0;width:inherit;margin-bottom:1px;background:#f8f8f8;">
+                                    <div id="img{{ ++$no_img }}" class="col-sm-6 col-md-2" style="padding:10px;padding-top:0;padding-bottom:20px;">
+                                        <div class="thumbnail" style="height:150px;display:{{ app('is_desktop') ? 'table-cell;' : 'block;' }}padding:0;width:inherit;margin-bottom:1px;background:#f8f8f8;">
                                             <img src="{{ str_replace('/files/', '/thumbs/', $photo->file) }}" style="height:100px;">
                                             <input type="hidden" name="photos[files][]" value="{{ $photo->file }}">
                                             <textarea name="photos[descriptions][]" class="form-control" style="bottom:0;left:0;height:50px;" placeholder="Keterangan foto..">{{ $photo->description }}</textarea>
@@ -162,13 +162,12 @@
             return;
         }
         if (val) {
-            val = val.replace('/files/', '/thumbs/');
-            var photo = '<div id="img'+no_img+'" class="col-sm-6 col-md-2" style="padding:10px;padding-top:0;padding-bottom:20px;">'+
-                            '<div class="thumbnail" style="height:150px;display:{{ $is_desktop ? 'table-cell;' : 'block;' }}padding:0;width:inherit;margin-bottom:1px;background:#f8f8f8;">'+
-                                '<img src="'+val+'" style="height:100px;">'+
-                                '<input type="hidden" name="photos[files][]" value="'+val+'">'+
+            var photo = '<div id="img' + no_img + '" class="col-sm-6 col-md-2" style="padding:10px;padding-top:0;padding-bottom:20px;">'+
+                            '<div class="thumbnail" style="height:150px;display:{{ app('is_desktop') ? 'table-cell' : 'block' }};padding:0;width:inherit;margin-bottom:1px;background:#f8f8f8;">'+
+                                '<img src="' + val.replace('/files/', '/thumbs/') + '" style="height:100px;">'+
+                                '<input type="hidden" name="photos[files][]" value="' + val + '">'+
                                 '<textarea name="photos[descriptions][]" class="form-control" style="position:absoluste;bottom:0;left:0;height:50px;" placeholder="Keterangan foto.."></textarea>'+
-                                '<button class="btn btn-default btn-xs btn-xs-top-right" title="Remove Photo" type="button" onclick="_remove_preview(\'#img'+no_img+'\')" style="top:5px;right:15px;"><i class="fa fa-minus"></i></button>'+
+                                '<button class="btn btn-default btn-xs btn-xs-top-right" title="Remove Photo" type="button" onclick="_remove_preview(\'#img' + no_img + '\')" style="top:5px;right:15px;"><i class="fa fa-minus"></i></button>'+
                             '</div>'+
                         '</div>';
             $('#photo-box').append(photo);
@@ -183,7 +182,7 @@
     function _remove_photo(id, id_photo) {
         no_img--;
         $(id).remove();
-        var photodel = '<input type="hidden" name="photos[deletes][]" value="'+id_photo+'">';
+        var photodel = '<input type="hidden" name="photos[deletes][]" value="' + id_photo + '">';
         $('#photo-box').append(photodel);
     }
   </script>

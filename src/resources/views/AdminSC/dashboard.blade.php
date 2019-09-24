@@ -5,7 +5,7 @@
     <div class="row">
       <div id="btn-quick-box" class="col-sm-12">
         <div class="btn btn-default btn-quick">
-          <a href="{{ url($adminPath . '/content/posts/create') }}">
+          <a href="{{ url(app('admin_path') . '/content/posts/create') }}">
             <div class="row">
               <div class="col-sm-12" title="Create a new Post">
                 <i class="fa fa-edit"></i>
@@ -17,7 +17,7 @@
           </a>
         </div>
         <div class="btn btn-default btn-quick">
-          <a href="{{ url($adminPath . '/content/pages/create') }}">
+          <a href="{{ url(app('admin_path') . '/content/pages/create') }}">
             <div class="row">
               <div class="col-sm-12" title="Create a new Page">
                 <i class="fa fa-file-o"></i>
@@ -29,7 +29,7 @@
           </a>
         </div>
         <div class="btn btn-default btn-quick">
-          <a href="{{ url($adminPath . '/report/comments') }}">
+          <a href="{{ url(app('admin_path') . '/report/comments') }}">
             <div class="row">
               <div class="col-sm-12" title="Check for new comments">
                 <i class="fa fa-comment-o"></i>
@@ -42,7 +42,7 @@
           </a>
         </div>
         <div class="btn btn-default btn-quick">
-          <a href="{{ url($adminPath . '/report/inbox') }}">
+          <a href="{{ url(app('admin_path') . '/report/inbox') }}">
             <div class="row">
               <div class="col-sm-12" title="Get inbox">
                 <i class="fa fa-envelope-o"></i>
@@ -69,7 +69,7 @@
           <div class="panel panel-default">
             <div class="panel-heading">
               Artikel Populer
-              <a href="{{ url($adminPath . '/content/article/posts') }}" class="btn btn-default btn-sm pull-right"><i class="fa fa-eye"></i> Semua</a>
+              <a href="{{ url(app('admin_path') . '/content/article/posts') }}" class="btn btn-default btn-sm pull-right"><i class="fa fa-eye"></i> Semua</a>
             </div>
             <div class="panel-body no-padding">
               <div class="loading">Memuat<img src="{{ url('themes/admin/AdminSC/images/loading-flat.gif') }}"></div>
@@ -90,7 +90,7 @@
         <div class="panel panel-default">
           <div class="panel-heading">
             Komentar Terbaru
-            <a href="{{ url($adminPath . '/report/comments') }}" class="btn btn-default btn-sm pull-right"><i class="fa fa-eye"></i> Semua</a>
+            <a href="{{ url(app('admin_path') . '/report/comments') }}" class="btn btn-default btn-sm pull-right"><i class="fa fa-eye"></i> Semua</a>
           </div>
           <div class="panel-body no-padding">
             <div class="loading">Memuat<img src="{{ url('themes/admin/AdminSC/images/loading-flat.gif') }}"></div>
@@ -189,7 +189,7 @@
     });
     var start = moment();
     var end = moment();
-    var min = moment('{{ $apps->created_at }}');
+    var min = moment('{{ app('site')->created_at }}');
     var max = moment();
     var yr = moment();
     var mn = moment();
@@ -214,7 +214,7 @@
       yr = start.format('YYYY');
       mn = start.format('MM')-1;
       dt = start.format('DD');
-      @if ($is_desktop)
+      @if (app('is_desktop'))
         var range = start.format('MMMM DD, YYYY') + ' - ' + end.format('MMMM DD, YYYY');
       @else
         var range = label;
@@ -238,7 +238,7 @@
       if (CONNECT){
         /* get data pageview */
         $.ajax({
-          url: "{{ url($adminPath . '/ajax/pageview') }}",
+          url: "{{ url(app('admin_path') . '/ajax/pageview') }}",
           data: {
             range: rangetype,
             start: start.format('YYYY-MM-DD'),
@@ -254,7 +254,7 @@
 
         /* get data popular post */
         $.ajax({
-          url: "{{ url($adminPath . '/ajax/popularpost') }}",
+          url: "{{ url(app('admin_path') . '/ajax/popularpost') }}",
           data: {
             start: start.format('YYYY-MM-DD'),
             end: end.format('YYYY-MM-DD')
@@ -269,7 +269,7 @@
 
         /* get data recent comment */
         $.ajax({
-          url: "{{ url($adminPath . '/ajax/recentcomment') }}",
+          url: "{{ url(app('admin_path') . '/ajax/recentcomment') }}",
           data: {
             start: start.format('YYYY-MM-DD'),
             end: end.format('YYYY-MM-DD')
@@ -309,7 +309,7 @@
       var html = '';
       if (data.length > 0) {
         $.each(data, function(k,v){
-          @if ($is_desktop)
+          @if (app('is_desktop'))
           var time = 'on '+v.time;
           @else
           var time = ''; 
@@ -365,7 +365,7 @@
           }*/
         },
         legend: {
-          {!! !$is_desktop ? 'layout: \'vertical\',' : '' !!}
+          {!! !app('is_desktop') ? 'layout: \'vertical\',' : '' !!}
           align: 'right',
           verticalAlign: 'top',
           floating: true,

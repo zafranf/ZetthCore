@@ -92,6 +92,14 @@ $(document).ready(function(){
        filemanager_title:"Filemanager" ,
        external_plugins: { "filemanager" : "{{ url('assets/plugins/filemanager/plugin.min.js') }}" },
        /*extended_valid_elements : "script[language|type]"*/
+        setup : function(ed) {
+            ed.on('init', function() 
+            {
+                // this.getDoc().body.style.fontSize = '12px';
+                this.getDoc().body.style.fontFamily = 'arial, helvetica, sans-serif';
+                // this.getDoc().body.style.fontWeight = '300';
+            });
+        }
     });
 });
 </script>

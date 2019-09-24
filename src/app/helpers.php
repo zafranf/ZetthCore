@@ -46,7 +46,7 @@ if (!function_exists('_get_access_buttons')) {
      */
     function _get_access_buttons($url = '', $btn = '')
     {
-        $add = is_desktop() ? 'TAMBAH' : '';
+        $add = app('is_desktop') ? 'TAMBAH' : '';
 
         /* ambil user login */
         $user = \Auth::user();
@@ -148,7 +148,7 @@ if (!function_exists('getMenu')) {
                 $menus = $groupmenu->menu;
             }
 
-            \Cache::put($cacheMenuName, $menus, 10 * 60);
+            \Cache::put($cacheMenuName, $menus, 60 * (env('APP_ENV') != 'production' ? 1 : env('CACHE_TIME', 10)));
         }
 
         return $menus;
@@ -205,9 +205,9 @@ if (!function_exists('generateSubmenu')) {
             $sublink = count($submenu->submenu) ? ' dropdown-toggle submenu' : '';
             $subtoggle = count($submenu->submenu) ? ' data-toggle="dropdown" role="button"' : '';
             $icon = ($submenu->icon != '') ? '<i class="' . $submenu->icon . '"></i>' : '';
-            $caret_class = !is_mobile() ? ' style="position: absolute;right: 10px;top: 3px;"' : ' class="pull-right"';
-            $direction = is_mobile() ? 'down' : 'right';
-            $caret = !is_mobile() ? 'fa fa-caret-' . $direction : 'caret';
+            $caret_class = !app('is_mobile') ? ' style="position: absolute;right: 10px;top: 3px;"' : ' class="pull-right"';
+            $direction = app('is_mobile') ? 'down' : 'right';
+            $caret = !app('is_mobile') ? 'fa fa-caret-' . $direction : 'caret';
             $caret = (count($submenu->submenu) > 0) ? '<span ' . $caret_class . '><span class="' . $caret . '"></span></span>' : '';
             echo '<li class="' . $dropdown . '">';
             echo '<a ' . ($href ?? '') . ' class="dropdown-item' . ($sublink ?? '') . ' ' . $active . '" ' . ($subtoggle ?? '') . ' target="' . $submenu->target . '">' . $icon . ' ' . $submenu->name . $caret . '</a>';
@@ -249,7 +249,7 @@ if (!function_exists('generateBreadcrumb')) {
      * @param  [type] $breadcrumb [description]
      * @return [type]             [description]
      */
-    function generateBreadcrumb($breadcrumb)
+    function generateBreadcrumb($breadcrumb, $with_date = true)
     {
         echo '<ol class="breadcrumb">';
         foreach ($breadcrumb as $bread) {
@@ -265,7 +265,12 @@ if (!function_exists('generateBreadcrumb')) {
                 echo '</a></li>';
             }
         }
-        echo '<span class="today pull-right">' . generateDate() . '</span>';
+
+        /* generate date */
+        if ($with_date) {
+            echo '<span class="today pull-right">' . generateDate() . '</span>';
+        }
+
         echo '</ol>';
     }
 }
@@ -286,26 +291,26 @@ if (!function_exists('generateDate')) {
     }
 }
 
-if (!function_exists('is_mobile')) {
-    function is_mobile()
-    {
-        return (new \Jenssegers\Agent\Agent())->isMobile();
-    }
+/* if (!function_exists('is_mobile')) {
+function app('is_mobile')
+{
+return (new \Jenssegers\Agent\Agent())->isMobile();
+}
 }
 
-if (!function_exists('is_tablet')) {
-    function is_tablet()
-    {
-        return (new \Jenssegers\Agent\Agent())->isTablet();
-    }
+if (!function_exists('app('is_tablet')')) {
+function app('is_tablet')()
+{
+return (new \Jenssegers\Agent\Agent())->isTablet();
+}
 }
 
-if (!function_exists('is_desktop')) {
-    function is_desktop()
-    {
-        return (new \Jenssegers\Agent\Agent())->isDesktop();
-    }
+if (!function_exists('app('is_desktop')')) {
+function app('is_desktop')()
+{
+return (new \Jenssegers\Agent\Agent())->isDesktop();
 }
+} */
 
 if (!function_exists('_admin_css')) {
     /**
@@ -358,5 +363,27 @@ if (!function_exists('_admin_js')) {
 
             return '<script src="' . url($file) . '?' . $mtime . '"' . $attr . '></script>';
         }
+    }
+}
+
+if (!function_exists('carbon')) {
+    function carbon(\Carbon\Carbon $carbon = null, $timezone = null, $lang = 'id')
+    {
+        /* set default timezone */
+        $timezone = $timezone ?? app('site')->timezone;
+        $timezone = $timezone ?? env('APP_TIMEZONE', 'UTC');
+
+        /* check user timezone */
+        $user_settings = \Auth::user() ? json_decode(\Auth::user()->settings) : '[]';
+        if (isset($user_settings->timezone)) {
+            $timezone = $user_settings->timezone;
+        }
+
+        /* initialize new carbon */
+        if (is_null($carbon)) {
+            $carbon = new \Carbon\Carbon;
+        }
+
+        return $carbon->timezone($timezone)->locale($lang);
     }
 }

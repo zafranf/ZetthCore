@@ -17,12 +17,12 @@ class VisitorController extends AdminController
     public function __construct()
     {
         parent::__construct();
-        $this->current_url = url($this->adminPath . '/log/visitors');
+        $this->current_url = url(app('admin_path') . '/log/visitors');
         $this->page_title = 'Catatan Pengunjung';
         $this->breadcrumbs[] = [
             'page' => 'Catatan',
             'icon' => '',
-            'url' => url($this->adminPath . '/log/activities'),
+            'url' => url(app('admin_path') . '/log/activities'),
         ];
         $this->breadcrumbs[] = [
             'page' => 'Pengunjung',
@@ -38,6 +38,7 @@ class VisitorController extends AdminController
      */
     public function index()
     {
+        /* set breadcrumbs */
         $this->breadcrumbs[] = [
             'page' => 'Daftar',
             'icon' => '',

@@ -20,12 +20,12 @@ class UserController extends AdminController
     public function __construct()
     {
         parent::__construct();
-        $this->current_url = url($this->adminPath . '/data/users');
+        $this->current_url = url(app('admin_path') . '/data/users');
         $this->page_title = 'Kelola Pengguna';
         $this->breadcrumbs[] = [
             'page' => 'Data',
             'icon' => '',
-            'url' => url($this->adminPath . '/data/users'),
+            'url' => url(app('admin_path') . '/data/users'),
         ];
         $this->breadcrumbs[] = [
             'page' => 'Pengguna',
@@ -41,6 +41,7 @@ class UserController extends AdminController
      */
     public function index(Request $r)
     {
+        /* set breadcrumbs */
         $this->breadcrumbs[] = [
             'page' => 'Daftar',
             'icon' => '',
@@ -65,6 +66,7 @@ class UserController extends AdminController
      */
     public function create()
     {
+        /* set breadcrumbs */
         $this->breadcrumbs[] = [
             'page' => 'Tambah',
             'icon' => '',
@@ -186,11 +188,19 @@ class UserController extends AdminController
      */
     public function edit(User $user)
     {
+        /* set breadcrumbs */
         $this->breadcrumbs[] = [
             'page' => 'Edit',
             'icon' => '',
             'url' => '',
         ];
+
+        /* prevent access */
+        if (!\Auth::user()->hasRole('super')) {
+            if (in_array($user->id, [1])) {
+                abort(404);
+            }
+        }
 
         /* where roles */
         if (\Auth::user()->hasRole('super')) {

@@ -9,12 +9,12 @@ $page_title = 'Masuk Aplikasi';
           <!-- <div class="panel-heading">Login Form</div> -->
           <div class="panel-body">
             @php
-              $w = $is_mobile ? 150 : 250;
+              $w = app('is_mobile') ? 150 : 250;
             @endphp
             <center>
-              <img src="{{ _get_image("/assets/images/" . $apps->logo, url("themes/admin/AdminSC/images/" . ($apps->logo ?? 'logo.v2.png'))) }}" alt="{{ $apps->name }} Logo" style="margin-bottom: 20px; width: {{ $w }}px;">
+              <img src="{{ _get_image("assets/images/" . app('site')->logo, url("themes/admin/AdminSC/images/" . (app('site')->logo ?? 'logo.v2.png'))) }}" alt="{{ app('site')->name }} Logo" style="margin-bottom: 20px; width: {{ $w }}px;">
             </center>
-            <form class="form-horizontal" role="form" method="POST" action="{{ url($adminPath . '/login') }}">
+            <form class="form-horizontal" role="form" method="POST" action="{{ url(app('admin_path') . '/login') }}">
               
               <div class="form-group{{ isset($errors) && $errors->has('name') ? ' has-error' : '' }}">
                 <label class="col-md-4 control-label">Pengguna</label>
@@ -55,7 +55,7 @@ $page_title = 'Masuk Aplikasi';
                   <button type="submit" class="btn btn-default">
                     <i class="fa fa-btn fa-sign-in"></i> Masuk
                   </button>
-                  <a class="btn btn-link" href="{{ url($adminPath . '/password/reset') }}">Lupa sandi?</a>
+                  <a class="btn btn-link" href="{{ url(app('admin_path') . '/password/reset') }}">Lupa sandi?</a>
                   {!! csrf_field() !!}
                 </div>
               </div>
@@ -66,7 +66,7 @@ $page_title = 'Masuk Aplikasi';
     </div>
   </div>
 
-  <div class="copyright" style="padding-left: 10px;">
+  {{-- <div class="copyright" style="padding-left: 10px;">
     Dipersembahkan oleh <a href="https://porisweb.id" target="_blank">Porisweb</a>
-  </div>
+  </div> --}}
 @include('zetthcore::AdminSC.layouts.footer')

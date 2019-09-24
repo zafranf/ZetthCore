@@ -12,8 +12,8 @@
         </button>
 
         {{-- Branding Image --}}
-        <a class="navbar-brand" href="{{ url($adminPath . '/dashboard') }}">
-          <img src="{{ _get_image("/assets/images/" . $apps->logo, url("themes/admin/AdminSC/images/" . ($apps->logo ?? 'logo.v2.png'))) }}">
+        <a class="navbar-brand" href="{{ url(app('admin_path') . '/dashboard') }}">
+          <img src="{{ _get_image("assets/images/" . app('site')->logo, url("themes/admin/AdminSC/images/" . (app('site')->logo ?? 'logo.v2.png'))) }}">
         </a>
       </div>
 
@@ -22,7 +22,7 @@
         {{ generateMenu() }}
         {{-- Right Side Of Navbar --}}
         <ul class="nav navbar-nav navbar-right">
-          <li data-toggle="tooltip" title="Kunjungi website" data-placement="bottom"><a href="{{ url('/') }}" target="_blank">{!! $is_mobile ? 'Kunjungi website&nbsp;<span class="pull-right"><i class="fa fa-external-link"></span>' : '<i class="fa fa-globe">' !!}</i></a></li>
+          <li data-toggle="tooltip" title="Kunjungi website" data-placement="bottom"><a href="{{ url('/') }}" target="_blank">{!! app('is_mobile') ? 'Kunjungi website&nbsp;<span class="pull-right"><i class="fa fa-external-link"></span>' : '<i class="fa fa-globe">' !!}</i></a></li>
           {{-- <li><a href="{{ url('admin/help') }}" title="Help"><i class="fa fa-question-circle-o"></i></a></li> --}}
           {{-- <li><a href="#" title="Notifications"><i class="fa fa-bell-o"></i></a></li> --}}
           {{-- Authentication Links --}}
@@ -84,37 +84,4 @@
   </div>
 
   @yield('content2')
-
-  <div id="zetth-modal" class="modal" role="dialog">
-    <div class="modal-dialog {{ !$is_desktop ? 'modal-sm' : '' }}">
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title">Modal Header</h4>
-        </div>
-        <div class="modal-body">
-          <p>Some text in the modal.</p>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="copyright">
-    <span id="status-server" class="bg-success" data-toggle="tooltip" title="Status Koneksi">Terhubung</span> Dipersembahkan oleh <a href="https://porisweb.id" target="_blank">Porisweb</a>
-  </div>
-  <script>
-    var SITE_URL = '{{ url('/') }}';
-    var ADMIN_URL = '{{ url($adminPath) }}';
-    var CURRENT_URL = '{{ url($current_url) }}';
-    var TOKEN = '{{ csrf_token() }}';
-    var CONNECT = true;
-    var IS_MOBILE = {{ $is_mobile ? 'true' : 'false' }};
-  </script>
-  {!! _admin_js('themes/admin/AdminSC/plugins/jquery/2.2.4/js/jquery.min.js') !!}
-  {!! _admin_js('themes/admin/AdminSC/plugins/bootstrap/3.3.6/js/bootstrap.min.js') !!}
-  {!! _admin_js('themes/admin/AdminSC/plugins/sweetalert2/js/sweetalert2.min.js') !!}
-  @yield('scripts')
-  {!! _admin_js('themes/admin/AdminSC/js/app.js') !!}
 @include('zetthcore::AdminSC.layouts.footer')

@@ -90,7 +90,7 @@ class LaratrustSeeder extends Seeder
                         $permissionValue = $mapPermission->get($perm);
                         $permissions[] = \ZetthCore\Models\Permission::firstOrCreate([
                             'name' => $permissionValue . '-' . $module,
-                            'display_name' => ucfirst($permissionValue) . ' ' . ucfirst($module),
+                            'display_name' => 'test' . ucfirst($permissionValue) . ' ' . ucfirst($module),
                             'description' => ucfirst($permissionValue) . ' ' . ucfirst($module),
                         ])->id;
 

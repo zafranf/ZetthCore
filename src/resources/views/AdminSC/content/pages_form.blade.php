@@ -46,9 +46,13 @@
 
 @section('styles')
   <style>
+    .mce-fullscreen {
+        z-index: 9999!important;
+    }
     #mceu_14 {
       position: absolute;
-      right: 10px;
+      right: 4px;
+      top: 4px;
     }
   </style>
 @endsection
@@ -88,6 +92,14 @@
         filemanager_folder: '/images',
         filemanager_language: 'id',
         external_plugins: { "filemanager" : "{{ asset('themes/admin/AdminSC/plugins/filemanager/plugin.min.js') }}" },
+        setup : function(ed) {
+            ed.on('init', function() 
+            {
+                // this.getDoc().body.style.fontSize = '12px';
+                this.getDoc().body.style.fontFamily = 'arial, helvetica, sans-serif';
+                // this.getDoc().body.style.fontWeight = '300';
+            });
+        }
       });
     });
   </script>

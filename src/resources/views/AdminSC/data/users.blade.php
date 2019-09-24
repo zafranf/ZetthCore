@@ -6,7 +6,7 @@
 			<thead>
 				<tr>
 					<td>No.</td>
-					@if ($is_desktop)
+					@if (app('is_desktop'))
 						<td>Nama Akses</td>
 						<td>Nama Lengkap</td>
 						<td>Status</td>
@@ -31,7 +31,7 @@
       let options = {
         "processing": true,
         "serverSide": true,
-        "ajax": SITE_URL + "{{ $adminPath }}/data/users/data",
+        "ajax": SITE_URL + "{{ app('admin_path') }}/data/users/data",
         "pageLength": 20,
         "lengthMenu": [
           [10, 20, 50, 100, -1], 
@@ -64,7 +64,7 @@
           "sortable": false,
           "render": function (data, type, row, meta) {
             var actions = '';
-            var url = SITE_URL + "{{ $adminPath }}/data/users/" + data;
+            var url = SITE_URL + "{{ app('admin_path') }}/data/users/" + data;
             var del = "_delete('" + url + "')";
             {!! _get_access_buttons() !!}
             $('[data-toggle="tooltip"]').tooltip();
@@ -74,7 +74,7 @@
         }],
       };
 
-      @if (!$is_desktop)
+      @if (!app('is_desktop'))
         options.columns = [
           { "width": "30px" },
           { },
@@ -103,7 +103,7 @@
             "sortable": false,
             "render": function (data, type, row, meta) {
               let actions = '';
-              let url = SITE_URL + "{{ $adminPath }}/data/users/" + data;
+              let url = SITE_URL + "{{ app('admin_path') }}/data/users/" + data;
               let del = "_delete('" + url + "')";
               {!! _get_access_buttons() !!}
               $('[data-toggle="tooltip"]').tooltip();

@@ -3,7 +3,6 @@
 namespace ZetthCore\Providers;
 
 use Illuminate\Support\Facades\Schema;
-use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -15,8 +14,77 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        /* check admin page */
+        $adminPath = '/' . env('ADMIN_PATH', 'admin');
+        $isAdminSubdomain = false;
+        $isAdminPanel = false;
+
+        /* check config */
+        if (!$this->app->runningInConsole()) {
+            if (!Schema::hasTable('applications')) {
+                /* sementara, nanti redirect ke halaman install */
+                throw new \Exception("You have to install this app first", 1);
+                // redirect(url('/install'))->send();
+            }
+
+            /* check admin on uri */
+            $uri = _server('REQUEST_URI');
+            if (strpos($uri, env('ADMIN_PATH', 'admin')) !== false) {
+                $isAdminPanel = true;
+            }
+
+            /* check admin on host */
+            $host = parse_url(url('/'))['host'];
+            if (strpos($host, env('ADMIN_SUBDOMAIN', 'admin')) !== false) {
+                $adminPath = '';
+                $isAdminSubdomain = true;
+                $isAdminPanel = true;
+            }
+
+            /* get application setting */
+            $apps = \ZetthCore\Models\Application::where('domain', $host)->with('socmed_data', 'socmed_data.socmed')->first();
+            if (!$apps) {
+                throw new \Exception("Application config not found", 1);
+            }
+
+            /* set application setting to global */
+            $this->app->singleton('setting', function () use ($apps) {
+                return $apps;
+            });
+
+            /* set device type to global */
+            $agent = new \Jenssegers\Agent\Agent();
+            $this->app->singleton('is_mobile', function () use ($agent) {
+                return $agent->isMobile();
+            });
+            $this->app->singleton('is_tablet', function () use ($agent) {
+                return $agent->isTablet();
+            });
+            $this->app->singleton('is_desktop', function () use ($agent) {
+                return $agent->isDesktop();
+            });
+        } else if ($this->app->runningInConsole()) {
+            $this->commands([
+                \ZetthCore\Console\Commands\Install::class,
+                \ZetthCore\Console\Commands\Reinstall::class,
+            ]);
+        }
+
+        /* share admin panel to global */
+        $this->app->singleton('admin_path', function () use ($adminPath) {
+            return $adminPath;
+        });
+        $this->app->singleton('is_admin_subdomain', function () use ($isAdminSubdomain) {
+            return $isAdminSubdomain;
+        });
+        $this->app->singleton('is_admin_panel', function () use ($isAdminPanel) {
+            return $isAdminPanel;
+        });
+
+        /* set middleware */
         $router = $this->app['router'];
         $router->aliasMiddleware('access', \ZetthCore\Http\Middleware\AccessMiddleware::class);
+        $router->aliasMiddleware('site', \ZetthCore\Http\Middleware\SiteMiddleware::class);
         $router->aliasMiddleware('visitor_log', \ZetthCore\Http\Middleware\VisitorLogMiddleware::class);
         $router->middleware([
             \RenatoMarinho\LaravelPageSpeed\Middleware\InlineCss::class,
@@ -32,12 +100,6 @@ class AppServiceProvider extends ServiceProvider
         $this->loadViewsFrom(__DIR__ . '/../../resources/views', 'zetthcore');
         $this->loadMigrationsFrom(__DIR__ . '/../../database/migrations');
         // $this->loadSeedsFrom(__DIR__ . '/../../database/seeds');
-        if ($this->app->runningInConsole()) {
-            $this->commands([
-                \ZetthCore\Console\Commands\Install::class,
-                \ZetthCore\Console\Commands\Reinstall::class,
-            ]);
-        }
 
         /* $this->publishes([
         __DIR__ . '/../../database' => database_path(),
@@ -67,60 +129,9 @@ class AppServiceProvider extends ServiceProvider
         /* set default varchar */
         Schema::defaultStringLength(191);
 
-        /* check config */
-        if (!$this->app->runningInConsole()) {
-            if (!Schema::hasTable('applications')) {
-                /* sementara, nanti redirect ke halaman install */
-                throw new \Exception("You have to install this app first", 1);
-                // redirect(url('/install'))->send();
-            }
-
-            /* check admin page */
-            $adminPath = '/' . env('ADMIN_PATH', 'admin');
-            $isAdminSubdomain = false;
-            $isAdminPanel = false;
-
-            /* check admin on uri */
-            $uri = _server('REQUEST_URI');
-            if (strpos($uri, env('ADMIN_PATH', 'admin')) !== false) {
-                $isAdminPanel = true;
-            }
-
-            /* check admin on host */
-            $host = parse_url(url('/'))['host'];
-            if (strpos($host, env('ADMIN_SUBDOMAIN', 'admin')) !== false) {
-                $adminPath = '';
-                $isAdminSubdomain = true;
-                $isAdminPanel = true;
-            }
-
-            /* share admin panel variable */
-            View::share([
-                'adminPath' => $adminPath,
-                'isAdminSubdomain' => $isAdminSubdomain,
-                'isAdminPanel' => $isAdminPanel,
-            ]);
-
-            /* send application data to all views */
-            $apps = \ZetthCore\Models\Application::where('domain', $host)->with('socmed_data', 'socmed_data.socmed')->first();
-            if (!$apps) {
-                throw new \Exception("Application config not found", 1);
-            }
-            View::share('apps', $apps);
-
-            /* set application data to global */
-            $this->app->singleton('setting', function () use ($apps) {
-                return $apps;
-            });
-
-            /* send device type to all views */
-            $agent = new \Jenssegers\Agent\Agent();
-            View::share([
-                'is_mobile' => $agent->isMobile(),
-                'is_tablet' => $agent->isTablet(),
-                'is_desktop' => $agent->isDesktop(),
-            ]);
-        }
+        /* set default timezone */
+        // date_default_timezone_set(app('site')->timezone);
+        // config(['app.timezone' => app('site')->timezone]);
     }
 
     /**

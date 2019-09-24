@@ -18,17 +18,17 @@ class PhotoController extends AdminController
     public function __construct()
     {
         parent::__construct();
-        $this->current_url = url($this->adminPath . '/content/gallery/photos');
+        $this->current_url = url(app('admin_path') . '/content/gallery/photos');
         $this->page_title = 'Kelola Foto';
         $this->breadcrumbs[] = [
             'page' => 'Konten',
             'icon' => '',
-            'url' => url($this->adminPath . '/content/banners'),
+            'url' => url(app('admin_path') . '/content/banners'),
         ];
         $this->breadcrumbs[] = [
             'page' => 'Galeri',
             'icon' => '',
-            'url' => url($this->adminPath . '/content/gallery/photos'),
+            'url' => url(app('admin_path') . '/content/gallery/photos'),
         ];
         $this->breadcrumbs[] = [
             'page' => 'Foto',
@@ -44,6 +44,7 @@ class PhotoController extends AdminController
      */
     public function index()
     {
+        /* set breadcrumbs */
         $this->breadcrumbs[] = [
             'page' => 'Daftar',
             'icon' => '',
@@ -68,6 +69,7 @@ class PhotoController extends AdminController
      */
     public function create()
     {
+        /* set breadcrumbs */
         $this->breadcrumbs[] = [
             'page' => 'Tambah',
             'icon' => '',
@@ -97,9 +99,9 @@ class PhotoController extends AdminController
         $this->validate($r, [
             'name' => 'required|max:100|unique:albums,name,NULL,created_at,type,photo',
             'slug' => 'unique:albums,slug,NULL,created_at,type,photo',
-            'photos.*' => 'required',
+            'photos.files.*' => 'required',
         ], [
-            'photos.*' => 'The photos field is required',
+            'photos.files.*' => 'The photos field is required',
         ]);
 
         /* save data */
@@ -138,6 +140,7 @@ class PhotoController extends AdminController
      */
     public function edit(Album $album)
     {
+        /* set breadcrumbs */
         $this->breadcrumbs[] = [
             'page' => 'Edit',
             'icon' => '',
@@ -169,9 +172,9 @@ class PhotoController extends AdminController
         $this->validate($r, [
             'name' => 'required|max:100|unique:albums,name,' . $album->id . ',id,type,photo',
             'slug' => 'unique:albums,slug,' . $album->id . ',id,type,photo',
-            'photos.*' => 'required',
+            'photos.files.*' => 'required',
         ], [
-            'photos.*' => 'The photos field is required',
+            'photos.files.*' => 'The photos field is required',
         ]);
 
         /* save data */
@@ -218,7 +221,7 @@ class PhotoController extends AdminController
     public function datatable(Request $r)
     {
         /* get data */
-        $data = Album::select('id', 'name', 'slug', 'status')->with('cover')->withCount('photos')->get();
+        $data = Album::select('id', 'name', 'slug', 'status')->with('photo')->withCount('photos')->get();
 
         /* generate datatable */
         if ($r->ajax()) {

@@ -17,12 +17,12 @@ class TagController extends AdminController
     public function __construct()
     {
         parent::__construct();
-        $this->current_url = url($this->adminPath . '/data/tags');
+        $this->current_url = url(app('admin_path') . '/data/tags');
         $this->page_title = 'Kelola Label';
         $this->breadcrumbs[] = [
             'page' => 'Data',
             'icon' => '',
-            'url' => url($this->adminPath . '/data/users'),
+            'url' => url(app('admin_path') . '/data/users'),
         ];
         $this->breadcrumbs[] = [
             'page' => 'Label',
@@ -38,6 +38,7 @@ class TagController extends AdminController
      */
     public function index()
     {
+        /* set breadcrumbs */
         $this->breadcrumbs[] = [
             'page' => 'Daftar',
             'icon' => '',
@@ -62,6 +63,7 @@ class TagController extends AdminController
      */
     public function create()
     {
+        /* set breadcrumbs */
         $this->breadcrumbs[] = [
             'page' => 'Tambah',
             'icon' => '',
@@ -127,6 +129,7 @@ class TagController extends AdminController
      */
     public function edit(Term $tag)
     {
+        /* set breadcrumbs */
         $this->breadcrumbs[] = [
             'page' => 'Edit',
             'icon' => '',

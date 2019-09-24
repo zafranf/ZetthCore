@@ -12,6 +12,6 @@ class ActivityLog extends Model
 
     public function user()
     {
-        return $this->belongsTo('App\Http\Models\User');
+        return $this->belongsTo('ZetthCore\Models\User');
     }
 }

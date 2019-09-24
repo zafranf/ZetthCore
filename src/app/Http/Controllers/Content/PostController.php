@@ -19,12 +19,12 @@ class PostController extends AdminController
     public function __construct()
     {
         parent::__construct();
-        $this->current_url = url($this->adminPath . '/content/posts');
+        $this->current_url = url(app('admin_path') . '/content/posts');
         $this->page_title = 'Kelola Artikel';
         $this->breadcrumbs[] = [
             'page' => 'Konten',
             'icon' => '',
-            'url' => url($this->adminPath . '/content/banners'),
+            'url' => url(app('admin_path') . '/content/banners'),
         ];
         $this->breadcrumbs[] = [
             'page' => 'Artikel',
@@ -40,6 +40,7 @@ class PostController extends AdminController
      */
     public function index()
     {
+        /* set breadcrumbs */
         $this->breadcrumbs[] = [
             'page' => 'Daftar',
             'icon' => '',
@@ -64,6 +65,7 @@ class PostController extends AdminController
      */
     public function create()
     {
+        /* set breadcrumbs */
         $this->breadcrumbs[] = [
             'page' => 'Tambah',
             'icon' => '',
@@ -117,7 +119,7 @@ class PostController extends AdminController
         // $uniq = str_random($digit);
         $cover = str_replace(url('/'), '', $r->input('cover'));
         $date = ($r->input('date') == '') ? date("Y-m-d") : $r->input('date');
-        $time = ($r->input('time') == '') ? date("H:i") : $r->input('time');
+        $time = ($r->input('time') == '') ? date("H:i:s") : $r->input('time');
 
         /* save data */
         $post = new Post;
@@ -169,6 +171,7 @@ class PostController extends AdminController
      */
     public function edit(Post $post)
     {
+        /* set breadcrumbs */
         $this->breadcrumbs[] = [
             'page' => 'Edit',
             'icon' => '',
@@ -316,8 +319,8 @@ class PostController extends AdminController
 
             if (!$chkCategory) {
                 $term = new Term;
-                $term->name = str_slug($category);
-                $term->display_name = $category;
+                $term->name = $category;
+                $term->slug = str_slug($term->name);
                 $term->description = $descriptions[$k];
                 $term->parent_id = $parents[$k] ?? 0;
                 $term->type = 'category';
@@ -350,8 +353,8 @@ class PostController extends AdminController
 
             if (!$chkTag) {
                 $term = new Term;
-                $term->name = str_slug($tag);
-                $term->display_name = strtolower($tag);
+                $term->name = strtolower($tag);
+                $term->slug = str_slug($term->name);
                 $term->type = 'tag';
                 $term->status = 1;
                 $term->save();

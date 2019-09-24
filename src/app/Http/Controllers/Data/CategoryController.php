@@ -17,12 +17,12 @@ class CategoryController extends AdminController
     public function __construct()
     {
         parent::__construct();
-        $this->current_url = url($this->adminPath . '/data/categories');
+        $this->current_url = url(app('admin_path') . '/data/categories');
         $this->page_title = 'Kelola Kategori';
         $this->breadcrumbs[] = [
             'page' => 'Data',
             'icon' => '',
-            'url' => url($this->adminPath . '/data/users'),
+            'url' => url(app('admin_path') . '/data/users'),
         ];
         $this->breadcrumbs[] = [
             'page' => 'Kategori',
@@ -38,6 +38,7 @@ class CategoryController extends AdminController
      */
     public function index()
     {
+        /* set breadcrumbs */
         $this->breadcrumbs[] = [
             'page' => 'Daftar',
             'icon' => '',
@@ -62,6 +63,7 @@ class CategoryController extends AdminController
      */
     public function create()
     {
+        /* set breadcrumbs */
         $this->breadcrumbs[] = [
             'page' => 'Tambah',
             'icon' => '',
@@ -128,6 +130,7 @@ class CategoryController extends AdminController
      */
     public function edit(Term $category)
     {
+        /* set breadcrumbs */
         $this->breadcrumbs[] = [
             'page' => 'Edit',
             'icon' => '',

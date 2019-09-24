@@ -26,8 +26,8 @@
         <div class="col-sm-8 col-md-9 left-side no-padding">
           <input type="text" id="title" class="form-control {{ isset($data)   ? '' :   'autofocus' }} no-border-top-right no-border-left no-radius input-lg" name="title" placeholder="Judul.." maxlength="100" value="{{ isset($data) ? $data->title : '' }}">
           <div class="input-group">
-            <span class="input-group-addon no-border-top-right no-border-left no-radius input-sm" id="url_span">{{ url('/post/') }}/</span>
-            <input type="text" id="slug" class="form-control no-border-top-right no-radius input-sm" name="slug" placeholder="Tautan.. (klik 2x untuk edit)" readonly value="{{ isset($data) ? $data->slug : '' }}">
+            <span class="input-group-addon no-border-top-right no-border-left no-radius input-sm" id="url_span">{{ url('/article/') }}/</span>
+            <input type="text" id="slug" class="form-control no-border-top-right no-radius input-sm" name="slug" placeholder="Sesuaikan tautan.. (klik 2x untuk edit)" readonly value="{{ isset($data) ? $data->slug : '' }}">
           </div>
           <textarea id="excerpt" name="excerpt" class="form-control no-border-top-right no-border-left no-radius input-xlarge" placeholder="Kutipan.." rows="3">{{ isset($data) ? $data->excerpt : '' }}</textarea>
           <textarea id="content" name="content" class="form-control no-border-top-right no-border-bottom no-radius input-xlarge" placeholder="Ketikkan tulisan anda di sini...">{{ isset($data) ? $data->content : '' }}</textarea>
@@ -104,17 +104,17 @@
             <label for="visitor">Pengunjung</label><br>
             <div class="col-sm-4 col-xs-4 no-padding">
               <label>
-                <input name="comment" type="checkbox" {{ (isset($data) && ($data->comment)) ? 'checked' : ($apps->enable_comment) ? 'checked' : '' }}> Komentar
+                <input name="comment" type="checkbox" {{ (isset($data) && ($data->comment)) ? 'checked' : (app('site')->enable_comment) ? 'checked' : '' }}> Komentar
               </label>
             </div>
             <div class="col-sm-4 col-xs-4 no-padding">
               <label>
-                <input name="like" type="checkbox" {{ (isset($data) && ($data->like)) ? 'checked' : ($apps->enable_like) ? 'checked' : '' }}> Suka
+                <input name="like" type="checkbox" {{ (isset($data) && ($data->like)) ? 'checked' : (app('site')->enable_like) ? 'checked' : '' }}> Suka
               </label>
             </div>
             <div class="col-sm-4 col-xs-4 no-padding">
               <label>
-                <input name="share" type="checkbox" {{ (isset($data) && ($data->share)) ? 'checked' : ($apps->enable_share) ? 'checked' : '' }}> Sebar
+                <input name="share" type="checkbox" {{ (isset($data) && ($data->share)) ? 'checked' : (app('site')->enable_share) ? 'checked' : '' }}> Sebar
               </label>
             </div>
           </div>
@@ -164,9 +164,10 @@
   <style>
     #mceu_15 {
       position: absolute;
-      right: 10px;
+      right: 4px;
+      top: 4px;
     }
-    /* @if ($is_desktop)
+    /* @if (app('is_desktop'))
       textarea#mceu_34 {
         height: 458px!important;
       }
@@ -383,7 +384,15 @@
         filemanager_title:"Filemanager",
         filemanager_folder: '/images',
         filemanager_language: 'id',
-        external_plugins: { "filemanager" : "{{ asset('/themes/admin/AdminSC/plugins/filemanager/plugin.min.js') }}" }
+        external_plugins: { "filemanager" : "{{ asset('/themes/admin/AdminSC/plugins/filemanager/plugin.min.js') }}" },
+        setup : function(ed) {
+            ed.on('init', function() 
+            {
+                // this.getDoc().body.style.fontSize = '12px';
+                this.getDoc().body.style.fontFamily = 'arial, helvetica, sans-serif';
+                // this.getDoc().body.style.fontWeight = '300';
+            });
+        }
       });
 
       /* $('#btn-add-featured-image').on('click', function(){
@@ -513,7 +522,7 @@
         datumTokenizer: Bloodhound.tokenizers.obj.whitespace('name'),
         queryTokenizer: Bloodhound.tokenizers.whitespace,
         prefetch: {
-          url: "{{ url($adminPath . '/ajax/term/categories') }}",
+          url: "{{ url(app('admin_path') . '/ajax/term/categories') }}",
           cache: false,
           filter: function(list) {
             return $.map(list, function(category) {
@@ -552,7 +561,7 @@
         datumTokenizer: Bloodhound.tokenizers.obj.whitespace('name'),
         queryTokenizer: Bloodhound.tokenizers.whitespace,
         prefetch: {
-          url: "{{ url($adminPath . '/ajax/term/tags') }}",
+          url: "{{ url(app('admin_path') . '/ajax/term/tags') }}",
           cache: false,
           filter: function(list) {
           return $.map(list, function(tag) {

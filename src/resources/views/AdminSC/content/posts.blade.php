@@ -6,7 +6,7 @@
 			<thead>
 				<tr>
 					<td>No.</td>
-					@if ($is_desktop)
+					@if (app('is_desktop'))
 						<td>Judul</td>
 						<td>Status</td>
 					@else
@@ -107,7 +107,7 @@
       let options = {
         "processing": true,
         "serverSide": true,
-        "ajax": SITE_URL + "{{ $adminPath }}/content/posts/data",
+        "ajax": SITE_URL + "{{ app('admin_path') }}/content/posts/data",
         "pageLength": 20,
         "lengthMenu": [
           [10, 20, 50, 100, -1], 
@@ -139,7 +139,7 @@
           "sortable": false,
           "render": function (data, type, row, meta) {
             var actions = '';
-            var url = SITE_URL + "{{ $adminPath }}/content/posts/" + data;
+            var url = SITE_URL + "{{ app('admin_path') }}/content/posts/" + data;
             var del = "_delete('" + url + "')";
             {!! _get_access_buttons() !!}
             $('[data-toggle="tooltip"]').tooltip();
@@ -149,7 +149,7 @@
         }],
       };
 
-      @if (!$is_desktop)
+      @if (!app('is_desktop'))
         options.columns = [
           { "width": "30px" },
           { },
@@ -178,7 +178,7 @@
             "sortable": false,
             "render": function (data, type, row, meta) {
               let actions = '';
-              let url = SITE_URL + "{{ $adminPath }}/content/posts/" + data;
+              let url = SITE_URL + "{{ app('admin_path') }}/content/posts/" + data;
               let del = "_delete('" + url + "')";
               {!! _get_access_buttons() !!}
               $('[data-toggle="tooltip"]').tooltip();

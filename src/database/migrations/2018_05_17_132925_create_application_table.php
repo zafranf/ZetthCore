@@ -13,7 +13,7 @@ class CreateApplicationTable extends Migration
      */
     public function up()
     {
-        Schema::create('applications', function (Blueprint $table) {
+        Schema::create('sites', function (Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->charset = 'utf8mb4';
             $table->collation = 'utf8mb4_unicode_ci';
@@ -28,18 +28,19 @@ class CreateApplicationTable extends Migration
             $table->string('keywords')->nullable();
             $table->integer('template_id')->unsigned()->nullable();
             $table->string('timezone')->default('Asia/Jakarta');
-            $table->boolean('status')->comment('0=coming soon, 1=active, 2=maintenance')->unsigned();
-            $table->dateTime('active_at');
+            $table->string('language')->default('id');
             $table->string('email')->nullable();
+            $table->string('phone')->nullable();
             $table->text('address')->nullable();
             $table->string('coordinate')->comment('latitude, longitude')->nullable();
-            $table->string('phone')->nullable();
             $table->string('google_analytics')->nullable();
             $table->boolean('enable_subscribe')->comment('0=no, 1=yes')->default(1);
             $table->boolean('enable_like')->comment('0=no, 1=yes')->default(1);
             $table->boolean('enable_share')->comment('0=no, 1=yes')->default(1);
             $table->boolean('enable_comment')->comment('0=no, 1=yes')->default(1);
-            $table->tinyInteger('perpage')->unsigned()->default(20);
+            $table->tinyInteger('perpage')->unsigned()->default(10);
+            $table->boolean('status')->comment('0=coming soon, 1=active, 2=maintenance')->unsigned();
+            $table->dateTime('active_at');
             $table->timestamps();
         });
     }
@@ -51,6 +52,6 @@ class CreateApplicationTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('applications');
+        Schema::dropIfExists('sites');
     }
 }

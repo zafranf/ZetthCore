@@ -11,11 +11,16 @@ class PostComment extends Model
 
     public function post()
     {
-        return $this->belongsTo('ZetthCore\Http\Models\Post');
+        return $this->belongsTo('ZetthCore\Models\Post');
     }
 
     public function approval()
     {
-        return $this->belongsTo('ZetthCore\Http\Models\User', 'approved_by');
+        return $this->belongsTo('ZetthCore\Models\User', 'approved_by');
+    }
+
+    public function subcomments()
+    {
+        return $this->hasMany('ZetthCore\Models\PostComment', 'parent_id', 'id')->where('status', 1)->with('subcomment');
     }
 }

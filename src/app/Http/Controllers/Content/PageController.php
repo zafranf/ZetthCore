@@ -17,12 +17,12 @@ class PageController extends AdminController
     public function __construct()
     {
         parent::__construct();
-        $this->current_url = url($this->adminPath . '/content/pages');
+        $this->current_url = url(app('admin_path') . '/content/pages');
         $this->page_title = 'Kelola Halaman';
         $this->breadcrumbs[] = [
             'page' => 'Konten',
             'icon' => '',
-            'url' => url($this->adminPath . '/content/pages'),
+            'url' => url(app('admin_path') . '/content/pages'),
         ];
         $this->breadcrumbs[] = [
             'page' => 'Halaman',
@@ -38,6 +38,7 @@ class PageController extends AdminController
      */
     public function index()
     {
+        /* set breadcrumbs */
         $this->breadcrumbs[] = [
             'page' => 'Daftar',
             'icon' => '',
@@ -62,6 +63,7 @@ class PageController extends AdminController
      */
     public function create()
     {
+        /* set breadcrumbs */
         $this->breadcrumbs[] = [
             'page' => 'Tambah',
             'icon' => '',
@@ -129,6 +131,7 @@ class PageController extends AdminController
      */
     public function edit(Post $page)
     {
+        /* set breadcrumbs */
         $this->breadcrumbs[] = [
             'page' => 'Edit',
             'icon' => '',

@@ -28,26 +28,19 @@
             <option value="#">[Tidak ada]</option>
             <option value="external" {{ (isset($data) && ($data->url_external) ) ? 'selected' : '' }}>[Tautan Luar]</option>
             <option value="/" {{ (isset($data) && $data->url == "/" ) ? 'selected' : '' }}>Beranda</option>
-            {{-- <option value="/albums">Album Foto</option>
-            <option value="/videos">Video</option> --}}
-            {{-- @php $type = ''; @endphp
-            @foreach($post_opt as $n => $post)
-              @if ($type!=$post->post_type)
-                {!! ($n>0) ? '</optgroup>' : '' !!}
-                @php $type=($post->post_type=="video") ? "Video":$post->post_type; @endphp
-                <optgroup label="{{ ucfirst($type) }}">
-              @endif
-              @if ($post->post_type=="video")
-                <option value="{{ $post->post_slug }}" {{ $post->post_slug=="#" ? 'disabled' : '' }}  {{ (isset($data) && $post->post_slug==$data->url) ? 'selected' : '' }}>{{ $post->post_title }}</option>
-              @endif
-              @if ($post->post_type=="page")
-                <option value="{{ $post->post_slug }}" {{ $post->post_slug=="#" ? 'disabled' : '' }}  {{ (isset($data) && $post->post_slug==$data->url) ? 'selected' : '' }}>{{ $post->post_title }}</option>
-              @endif
-              @if ($post->post_type=="article")
-                <option value="{{ 'blog/'.$post->post_slug }}" {{ $post->post_slug=="# " ?'disabled' : '' }}  {{ (isset($data) && 'blog/'.$post->post_slug==$data->url) ? 'selected' : '' }}>{{ $post->post_title }}</option>
-              @endif
-              @php $type = $post->post_type; @endphp
-            @endforeach --}}
+            @php $type = ''; @endphp
+						@foreach($post_opts as $n => $post)
+							@if ($type != $post->type)
+								{!! ($n > 0) ? '</optgroup>' : '' !!}
+								@php $type = $post->type @endphp
+								<optgroup label="{{ ucfirst($type) }}">
+							@endif
+							@if ($post->type == "page" || $post->type == "video")
+								<option value="{{ $post->slug }}" {{ $post->slug == "#" ? 'disabled' : '' }} {{ (isset($data->id) && $post->slug == $data->url) ? 'selected' : '' }}>{{ $post->title }}</option>
+							@elseif ($post->type=="article")
+								<option value="{{ 'article/' . $post->slug }}" {{ $post->slug == "#" ? 'disabled' : '' }} {{ (isset($data->id) && 'article/' . $post->slug == $data->url) ? 'selected' : '' }}>{{ $post->title }}</option>
+							@endif
+						@endforeach
           </select>
           <input type="text" class="form-control" id="url_external" name="url_external" value="{{ isset($data) ? (($data->url=="#") ? '' : $data->url) : '' }}" placeholder="http://example.com" {!! (isset($data) && ($data->url_external) ) ? 'style="margin-top:5px;"' : 'style="margin-top:5px;display:none;" disabled' !!}>
         </div>

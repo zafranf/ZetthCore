@@ -26,7 +26,7 @@
       var table = $('#table-data').DataTable({
         "processing": true,
         "serverSide": true,
-        "ajax": SITE_URL + "{{ $adminPath }}/log/activities/data",
+        "ajax": SITE_URL + "{{ app('admin_path') }}/log/activities/data",
         "pageLength": 20,
         "lengthMenu": [
           [10, 20, 50, 100, -1], 

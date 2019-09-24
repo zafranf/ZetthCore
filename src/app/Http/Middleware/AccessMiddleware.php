@@ -68,7 +68,7 @@ class AccessMiddleware
                 $page = $xname[1];
             }
         }
-        // dd($name, $xname, $access, $page, $newname . '.' . $access);
+
         return $user->can($newname . '.' . $access);
     }
 

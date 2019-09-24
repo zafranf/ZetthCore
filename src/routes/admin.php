@@ -1,29 +1,20 @@
 <?php
 $prefix = '\ZetthCore\Http\Controllers';
-$fm_route_prefix = "/larafile/";
-$fm_routes = [
-    'index.php' => ['get'],
-    'ajax_calls.php' => ['get', 'post'],
-    'dialog.php' => ['get'],
-    'execute.php' => ['post'],
-    'force_download.php' => ['post'],
-    'upload.php' => ['get', 'post'],
-];
 
 Route::get('/', function () {
     return redirect(adminPath() . '/login');
 })->name('index');
 Route::get('/login', $prefix . '\Auth\LoginController@showLoginForm')->name('login.form');
 Route::post('/login', $prefix . '\Auth\LoginController@login')->name('login.post');
+Route::get('/test/connection', function () {
+    return response()->json(['status' => true]);
+})->name('test.connection');
 
 Route::middleware('auth')->group(function () use ($prefix) {
     Route::post('/logout', $prefix . '\Auth\LoginController@logout')->name('logout.post');
     if (env('APP_DEBUG')) {
         Route::get('/logout', $prefix . '\Auth\LoginController@logout')->name('logout.get');
     }
-    Route::get('/test/connection', function () {
-        return response()->json(['status' => true]);
-    })->name('test.connection');
 
     /* api ajax */
     Route::get('/ajax/pageview', $prefix . '\AjaxController@pageview')->name('ajax.pageview');
@@ -174,3 +165,6 @@ Route::middleware('auth')->group(function () use ($prefix) {
 
     });
 });
+
+/* include additional menu admin */
+include base_path('routes') . '/admin.php';

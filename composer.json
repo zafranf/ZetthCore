@@ -34,8 +34,7 @@
             "src/database/factories"
         ],
         "files": [
-            "src/app/helpers.php",
-            "src/app/queries.php"
+            "src/app/helpers.php"
         ]
     },
     "extra": {
