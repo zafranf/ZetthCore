@@ -42,14 +42,14 @@ class AppServiceProvider extends ServiceProvider
             }
 
             /* get application setting */
-            $apps = \ZetthCore\Models\Site::where('domain', $host)->with('socmed_data', 'socmed_data.socmed')->first();
-            if (!$apps) {
+            $site = \ZetthCore\Models\Site::where('domain', $host)->with('socmed_data', 'socmed_data.socmed')->first();
+            if (!$site) {
                 throw new \Exception("Site config not found", 1);
             }
 
             /* set application setting to global */
-            $this->app->singleton('setting', function () use ($apps) {
-                return $apps;
+            $this->app->singleton('site', function () use ($site) {
+                return $site;
             });
 
             /* set device type to global */
@@ -127,7 +127,7 @@ class AppServiceProvider extends ServiceProvider
         ], 'zetthroutes');
 
         /* set default varchar */
-        Schema::defaultStringLength(191);
+        // Schema::defaultStringLength(255);
 
         /* set default timezone */
         // date_default_timezone_set(app('site')->timezone);
