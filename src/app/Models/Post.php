@@ -56,9 +56,19 @@ class Post extends Model
         return $this->hasMany('ZetthCore\Models\PostComment');
     }
 
+    public function scopePosts($query)
+    {
+        return $query->where('type', 'article');
+    }
+
     public function scopeArticles($query)
     {
         return $query->where('type', 'article');
+    }
+
+    public function scopeActive($query)
+    {
+        return $query->where('status', 1);
     }
 
     public function scopePages($query)

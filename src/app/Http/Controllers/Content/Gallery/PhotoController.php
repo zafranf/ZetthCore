@@ -239,8 +239,9 @@ class PhotoController extends AdminController
             $data[] = [
                 'file' => $file,
                 'description' => $photos['descriptions'][$n],
-                'status' => 1,
+                // 'status' => 1,
                 'album_id' => $album_id,
+                'created_at' => \Carbon\Carbon::now(),
             ];
         }
 
