@@ -49,5 +49,5 @@ Route::name('web.')->middleware(['site', 'visitor_log'])->group(function () {
     Route::get('/event/{slug}', 'Site\EventController@detail')->name('event');
 
     /* Page Route */
-    Route::get('/{slug?}', 'Site\PageController@index')->name('page');
+    Route::get('/{slug?}', 'Site\MainController@page')->name('page');
 });
