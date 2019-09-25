@@ -28,7 +28,7 @@
 				<div class="col-sm-offset-2 col-sm-10">
 					<div class="checkbox">
 						<label>
-							<input type="checkbox" name="status" {{ (isset($data) && $data->status==0) ? '' : 'checked' }}> Aktif
+							<input type="checkbox" name="status" {{ (isset($data) && $data->status == 0) ? '' : 'checked' }}> Aktif
 						</label>
 					</div>
 				</div>
@@ -76,7 +76,7 @@
         selector: '#content',
         skin: 'custom',
         language: 'id',
-        height: 300,
+        height: 200,
         plugins: [
           "advlist autolink link image lists charmap print preview hr anchor pagebreak",
           "searchreplace wordcount visualblocks visualchars insertdatetime media nonbreaking",

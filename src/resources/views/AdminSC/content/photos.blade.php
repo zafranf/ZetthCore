@@ -101,7 +101,7 @@
             "sortable": false,
             "render": function (data, type, row, meta) {
               let actions = '';
-              let url = SITE_URL + "{{ app('admin_path') }}/content//gallery/photos/" + data;
+              let url = SITE_URL + "{{ app('admin_path') }}/content/gallery/photos/" + data;
               let del = "_delete('" + url + "')";
               {!! _get_access_buttons() !!}
               $('[data-toggle="tooltip"]').tooltip();

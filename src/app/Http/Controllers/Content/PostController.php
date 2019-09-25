@@ -109,8 +109,8 @@ class PostController extends AdminController
         ]);
 
         /* set variables */
-        $title = $r->input('title');
-        $slug = str_slug($r->input('slug'));
+        // $title = $r->input('title');
+        // $slug = str_slug($r->input('slug'));
         $categories = $r->input('categories');
         $descriptions = $r->input('descriptions');
         $parents = $r->input('parents');
@@ -123,10 +123,10 @@ class PostController extends AdminController
 
         /* save data */
         $post = new Post;
-        $post->title = $title;
-        $post->slug = $slug;
+        $post->title = $r->input('title');
+        $post->slug = str_slug($post->title);
         $post->content = $r->input('content');
-        $post->excerpt = $r->input('excerpt');
+        $post->excerpt = $r->input('excerpt') ?? substr(strip_tags($post->content), 0, 255);
         $post->type = 'article';
         $post->cover = $cover;
         $post->status = $r->input('status');
@@ -217,7 +217,7 @@ class PostController extends AdminController
         ]);
 
         /* set variables */
-        $title = $r->input('title');
+        // $title = $r->input('title');
         // $slug = str_slug($r->input('slug'));
         $categories = $r->input('categories');
         $descriptions = $r->input('descriptions');
@@ -230,10 +230,10 @@ class PostController extends AdminController
         $time = ($r->input('time') == '') ? date("H:i") : $r->input('time');
 
         /* save data */
-        $post->title = $title;
+        $post->title = $r->input('title');
         // $post->slug = $slug;
         $post->content = $r->input('content');
-        $post->excerpt = $r->input('excerpt');
+        $post->excerpt = $r->input('excerpt') ?? substr(strip_tags($post->content), 0, 255);
         $post->type = 'article';
         if ($r->input('cover')) {
             $post->cover = $cover;
