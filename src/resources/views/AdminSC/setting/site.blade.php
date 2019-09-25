@@ -156,7 +156,7 @@
 					<div class="form-group" {!! (app('site')->status == 1) ? 'style="display:none;"' : '' !!} id="d-active-at">
 						<label for="active_at" class="col-md-4 control-label">Aktif pada</label>
 						<div class="col-md-8">
-							<input type="text" class="form-control" id="active-at" name="active_at" value="{{ isset(app('site')->active_at) ? date("Y-m-d", strtotime(app('site')->active_at)) : '' }}" {!! (app('site')->status == 1) ? 'readonly' : '' !!} placeholder="Dibuka pada..">
+							<input type="text" class="form-control" id="active-at" name="active_at" value="{{ isset(app('site')->active_at) ? carbon(app('site')->active_at)->format('Y-m-d') : '' }}" {!! (app('site')->status == 1) ? 'readonly' : '' !!} placeholder="Dibuka pada..">
 						</div>
 					</div>
 				</div>
