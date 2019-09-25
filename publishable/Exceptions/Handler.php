@@ -34,7 +34,7 @@ class Handler extends ExceptionHandler
      *
      * This is a great spot to send exceptions to Sentry, Bugsnag, etc.
      *
-     * @param  \Exception  $exception
+     * @param  \Exception  $e
      * @return void
      */
     public function report(Exception $e)
@@ -48,34 +48,36 @@ class Handler extends ExceptionHandler
      * Render an exception into an HTTP response.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \Exception  $exception
+     * @param  \Exception  $e
      * @return \Illuminate\Http\Response
      */
-    public function render($request, Exception $exception)
+    public function render($request, Exception $e)
     {
 
-        if ($this->isHttpException($exception)) {
+        if ($this->isHttpException($e)) {
             $theme = 'md30';
             if (app('is_admin_panel')) {
                 $theme = 'zetthcore::AdminSC';
             }
-            if (view()->exists($theme . '.errors.' . $exception->getStatusCode())) {
-                return response()->view($theme . '.errors.' . $exception->getStatusCode(), [
-                    'breadcrumbs' => [[
-                        'page' => 'Beranda',
-                        'icon' => '',
-                        'url' => url('/'),
-                    ], [
-                        'page' => $exception->getStatusCode(),
-                        'icon' => '',
-                        'url' => '',
-                    ]],
-                ], $exception->getStatusCode());
+            if (view()->exists($theme . '.errors.' . $e->getStatusCode())) {
+                return response()->view($theme . '.errors.' . $e->getStatusCode(), [
+                    'breadcrumbs' => [
+                        [
+                            'page' => 'Beranda',
+                            'icon' => '',
+                            'url' => url('/'),
+                        ], [
+                            'page' => $e->getStatusCode(),
+                            'icon' => '',
+                            'url' => '',
+                        ],
+                    ],
+                ], $e->getStatusCode());
             }
-        } else if ($exception instanceof ModelNotFoundException) {
+        } else if ($e instanceof ModelNotFoundException) {
             abort(404);
         }
 
-        return parent::render($request, $exception);
+        return parent::render($request, $e);
     }
 }
