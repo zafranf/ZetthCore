@@ -105,6 +105,7 @@ class PageController extends AdminController
         $page->type = 'page';
         $page->status = bool($r->input('status')) ? 1 : 0;
         $page->created_by = \Auth::user()->id;
+        $page->published_at = now();
         $page->save();
 
         /* log aktifitas */

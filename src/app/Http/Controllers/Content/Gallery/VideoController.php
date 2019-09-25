@@ -106,6 +106,7 @@ class VideoController extends AdminController
         $video->cover = $r->input('cover');
         $video->status = bool($r->input('status')) ? 1 : 0;
         $video->created_by = \Auth::user()->id;
+        $video->published_at = now();
         $video->save();
 
         /* log aktifitas */
