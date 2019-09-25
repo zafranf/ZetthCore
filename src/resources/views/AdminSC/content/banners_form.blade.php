@@ -54,6 +54,11 @@ if (isset($data->id) && ($key = array_search($data->id, $orders)) !== false) {;
 						<option value="#">[Tidak ada]</option>
 						<option value="external" {{ (isset($data->id) && ($data->url_external) ) ? 'selected' : '' }}>[Tautan Luar]</option>
 						<option value="/" {{ (isset($data->id) && $data->url == "/" ) ? 'selected' : '' }}>Beranda</option>
+						<option value="articles" {{ (isset($data->id) && $data->url == "articles" ) ? 'selected' : '' }}>Artikel</option>
+						{{-- <option value="pages" {{ (isset($data->id) && $data->url == "pages" ) ? 'selected' : '' }}>Halaman</option> --}}
+						<option value="albums" {{ (isset($data->id) && $data->url == "albums" ) ? 'selected' : '' }}>Galeri Foto</option>
+						<option value="videos" {{ (isset($data->id) && $data->url == "videos" ) ? 'selected' : '' }}>Galeri Video</option>
+						<option value="contact" {{ (isset($data->id) && $data->url == "contact" ) ? 'selected' : '' }}>Kontak</option>
 						@php $type = ''; @endphp
 						@foreach($post_opts as $n => $post)
 							@if ($type != $post->type)

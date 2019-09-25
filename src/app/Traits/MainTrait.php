@@ -16,14 +16,14 @@ trait MainTrait
             $device = 'desktop';
         }
         $device_name = $agent->device();
-        $ip = (_server('REMOTE_ADDR') == null) ? _server('REMOTE_ADDR') : '127.0.0.1';
+        $ip = _server('REMOTE_ADDR') ?? '127.0.0.1';
         $browser_agent = $agent->getUserAgent();
         $browser = $agent->browser();
         $browser_version = $agent->version($browser);
         $os = $agent->platform();
         $os_version = $agent->version($os);
-        $page = (_server('REQUEST_URI') == null) ? _server('REQUEST_URI') : '/';
-        $referrer = (_server('HTTP_REFERER') == null) ? _server('HTTP_REFERER') : null;
+        $page = _server('REQUEST_URI') ?? '/';
+        $referrer = _server('HTTP_REFERER') ?? null;
         $referral = str_replace(url('/'), "", $referrer);
         $is_robot = $agent->isRobot() ? 1 : 0;
         $robot_name = $agent->robot() ? $agent->robot : null;

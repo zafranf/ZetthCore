@@ -23,4 +23,9 @@ class Album extends Model
     {
         return $this->hasMany('ZetthCore\Models\AlbumDetail', 'album_id');
     }
+
+    public function scopeActive($query)
+    {
+        return $query->where('status', 1);
+    }
 }
