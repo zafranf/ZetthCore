@@ -203,6 +203,7 @@ function _getAlbums($limit = null, $order = 'desc')
     /* inisiasi query */
     $albums = \ZetthCore\Models\Album::where('status', 1);
     $albums->with('photo');
+    $albums->withCount('photos');
 
     /* check order */
     if (in_array($order, ['rand', 'random'])) {
