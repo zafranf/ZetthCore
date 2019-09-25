@@ -8,7 +8,7 @@
 					<h4>Informasi Utama</h4>
 					<hr>
 					<div class="form-group">
-						<label for="name" class="col-md-4 control-label">
+						<label for="logo" class="col-md-4 control-label">
 							Logo
 							<small class="help-block">Maksimal dimensi logo adalah 512x512 px dengan ukuran maksimal 384 KB</small>
 						</label>
@@ -37,7 +37,7 @@
 						</div>
 					</div>
 					<div class="form-group">
-						<label for="name" class="col-md-4 control-label">
+						<label for="icon" class="col-md-4 control-label">
 							Ikon
 							<small class="help-block">Maksimal dimensi ikon adalah 128x128 px dengan ukuran maksimal 96 KB</small>
 						</label>
