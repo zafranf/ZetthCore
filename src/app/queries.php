@@ -53,11 +53,18 @@ function _getPosts($type = 'simple', $limit = null, $order = "desc")
     }
 
     /* inisiasi query */
-    $posts = \ZetthCore\Models\Post::posts()->active()->orderBy('published_at', $order);
+    $posts = \ZetthCore\Models\Post::posts()->active();
 
     /* check complete params */
     if ($complete) {
         $posts->with('comments', 'categories', 'tags', 'author', 'editor');
+    }
+
+    /* check order */
+    if (in_array($order, ['rand', 'random'])) {
+        $posts->random();
+    } else {
+        $posts->orderBy('published_at', $order);
     }
 
     /* cek limit */
@@ -102,7 +109,14 @@ function _getTerms($type = 'category', $limit = null, $order = 'desc')
     }
 
     /* inisiasi query */
-    $terms = \ZetthCore\Models\Term::where('type', $type)->where('status', 1)->orderBy('name', $order);
+    $terms = \ZetthCore\Models\Term::where('type', $type)->where('status', 1);
+
+    /* check order */
+    if (in_array($order, ['rand', 'random'])) {
+        $terms->random();
+    } else {
+        $terms->orderBy('name', $order);
+    }
 
     /* cek limit */
     if ($limit > 1) {
@@ -146,7 +160,14 @@ function _getPages($limit = null, $order = 'desc')
     }
 
     /* inisiasi query */
-    $pages = \ZetthCore\Models\Post::pages()->active()->orderBy('created_at', $order);
+    $pages = \ZetthCore\Models\Post::pages()->active();
+
+    /* check order */
+    if (in_array($order, ['rand', 'random'])) {
+        $pages->random();
+    } else {
+        $pages->orderBy('created_at', $order);
+    }
 
     /* cek limit */
     if ($limit > 1) {
@@ -180,8 +201,15 @@ function _getAlbums($limit = null, $order = 'desc')
     }
 
     /* inisiasi query */
-    $albums = \ZetthCore\Models\Album::where('status', 1)->orderBy('created_at', $order);
+    $albums = \ZetthCore\Models\Album::where('status', 1);
     $albums->with('photo');
+
+    /* check order */
+    if (in_array($order, ['rand', 'random'])) {
+        $albums->random();
+    } else {
+        $albums->orderBy('created_at', $order);
+    }
 
     /* cek limit */
     if ($limit > 1) {
@@ -215,21 +243,28 @@ function _getPhotos($limit = null, $order = 'desc')
     }
 
     /* inisiasi query */
-    $albums = \ZetthCore\Models\AlbumDetail::orderBy('created_at', $order);
+    $photos = \ZetthCore\Models\AlbumDetail::with('album');
+
+    /* check order */
+    if (in_array($order, ['rand', 'random'])) {
+        $photos->random();
+    } else {
+        $photos->orderBy('created_at', $order);
+    }
 
     /* cek limit */
     if ($limit > 1) {
-        $albums = $albums->paginate($limit);
+        $photos = $photos->paginate($limit);
     } else if ($limit == 1) {
-        $albums = $albums->first();
+        $photos = $photos->first();
     } else {
-        $albums = $albums->get();
+        $photos = $photos->get();
     }
 
     /* simpan ke cache */
-    Cache::put($cache_name, $albums, $cache_time);
+    Cache::put($cache_name, $photos, $cache_time);
 
-    return $albums;
+    return $photos;
 }
 
 function _getVideos($limit = null, $order = 'desc')
@@ -249,7 +284,14 @@ function _getVideos($limit = null, $order = 'desc')
     }
 
     /* inisiasi query */
-    $videos = \ZetthCore\Models\Post::videos()->where('status', 1)->orderBy('published_at', $order);
+    $videos = \ZetthCore\Models\Post::videos()->active();
+
+    /* check order */
+    if (in_array($order, ['rand', 'random'])) {
+        $videos->random();
+    } else {
+        $videos->orderBy('created_at', $order);
+    }
 
     /* cek limit */
     if ($limit > 1) {

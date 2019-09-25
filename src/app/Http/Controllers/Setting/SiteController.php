@@ -4,11 +4,11 @@ namespace ZetthCore\Http\Controllers\Setting;
 
 use Illuminate\Http\Request;
 use ZetthCore\Http\Controllers\AdminController;
-use ZetthCore\Models\Application;
+use ZetthCore\Models\Site;
 use ZetthCore\Models\Socmed;
 use ZetthCore\Models\SocmedData;
 
-class ApplicationController extends AdminController
+class SiteController extends AdminController
 {
     private $current_url;
     private $page_title;
@@ -19,8 +19,8 @@ class ApplicationController extends AdminController
     public function __construct()
     {
         parent::__construct();
-        $this->current_url = url(app('admin_path') . '/setting/application');
-        $this->page_title = 'Kelola Aplikasi';
+        $this->current_url = url(app('admin_path') . '/setting/site');
+        $this->page_title = 'Kelola Situs';
         $this->breadcrumbs[] = [
             'page' => 'Pengaturan',
             'icon' => '',
@@ -37,7 +37,7 @@ class ApplicationController extends AdminController
     {
         /* set breadcrumbs */
         $this->breadcrumbs[] = [
-            'page' => 'Aplikasi',
+            'page' => 'Situs',
             'icon' => '',
             'url' => $this->current_url,
         ];
@@ -52,15 +52,15 @@ class ApplicationController extends AdminController
             'current_url' => $this->current_url,
             'breadcrumbs' => $this->breadcrumbs,
             'page_title' => $this->page_title,
-            'page_subtitle' => 'Aplikasi',
+            'page_subtitle' => 'Situs',
         ];
 
         $data['socmeds'] = Socmed::where('status', 1)->get();
         $data['socmed_data'] = SocmedData::where([
-            'type' => 'config',
+            'type' => 'site',
         ])->with('socmed')->get();
 
-        return view('zetthcore::AdminSC.setting.application', $data);
+        return view('zetthcore::AdminSC.setting.site', $data);
     }
 
     /**
@@ -139,7 +139,7 @@ class ApplicationController extends AdminController
         ]);
 
         /* save data */
-        $app = Application::find($id);
+        $app = Site::find($id);
         $app->name = $r->input('name');
         $app->description = $r->input('description');
         $app->keywords = $r->input('keywords');
@@ -206,9 +206,9 @@ class ApplicationController extends AdminController
         $this->process_socmed($r);
 
         /* log aktifitas */
-        $this->activityLog('<b>' . \Auth::user()->fullname . '</b> memperbarui Pengaturan - Aplikasi');
+        $this->activityLog('<b>' . \Auth::user()->fullname . '</b> memperbarui Pengaturan - Situs');
 
-        return redirect()->back()->with('success', 'Pengaturan Aplikasi berhasil disimpan!');
+        return redirect()->back()->with('success', 'Pengaturan Situs berhasil disimpan!');
     }
 
     /**
@@ -225,13 +225,13 @@ class ApplicationController extends AdminController
     public function process_socmed(Request $r)
     {
         $del = SocmedData::where([
-            'type' => 'config',
+            'type' => 'site',
         ])->forceDelete();
         foreach ($r->input('socmed_id') as $key => $val) {
             if ($r->input('socmed_id')[$key] != "" && $r->input('socmed_uname')[$key] != "") {
                 $socmed = new SocmedData;
                 $socmed->username = $r->input('socmed_uname')[$key];
-                $socmed->type = 'config';
+                $socmed->type = 'site';
                 $socmed->socmed_id = $r->input('socmed_id')[$key];
                 $socmed->data_id = 1;
                 $socmed->save();

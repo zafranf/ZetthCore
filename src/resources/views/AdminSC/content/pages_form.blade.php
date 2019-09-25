@@ -28,7 +28,7 @@
 				<div class="col-sm-offset-2 col-sm-10">
 					<div class="checkbox">
 						<label>
-							<input type="checkbox" name="status" {{ (isset($data) && $data->status==0) ? '' : 'checked' }}> Aktif
+							<input type="checkbox" name="status" {{ (isset($data) && $data->status == 0) ? '' : 'checked' }}> Aktif
 						</label>
 					</div>
 				</div>
@@ -49,7 +49,7 @@
     .mce-fullscreen {
         z-index: 9999!important;
     }
-    #mceu_14 {
+    #mceu_9 {
       position: absolute;
       right: 4px;
       top: 4px;
@@ -76,14 +76,14 @@
         selector: '#content',
         skin: 'custom',
         language: 'id',
-        height: 300,
+        height: 200,
         plugins: [
           "advlist autolink link image lists charmap print preview hr anchor pagebreak",
           "searchreplace wordcount visualblocks visualchars insertdatetime media nonbreaking",
           "table contextmenu directionality emoticons paste textcolor responsivefilemanager code",
           "placeholder youtube fullscreen"
         ],
-        toolbar1: "undo redo | bullist numlist blockquote | link unlink | youtube image table | styleselect fontselect | fontsizeselect code | fullscreen",
+        toolbar1: "undo redo | bold italic underline blockquote | link unlink | image | fullscreen",
         image_advtab: true,
         image_caption: true,
         menubar : false,

@@ -10,7 +10,6 @@
 | contains the "web" middleware group. Now create something great!
 |
  */
-// Route::get('/themes/{path}', 'Controller@themes')->where('path', '.*')->name('themes.site');
 
 /* Site Routes */
 Route::name('web.')->middleware(['site', 'visitor_log'])->group(function () {
@@ -28,8 +27,8 @@ Route::name('web.')->middleware(['site', 'visitor_log'])->group(function () {
     /* Gallery Routes */
     Route::get('/albums', 'Site\GalleryController@album')->name('albums');
     Route::get('/album/{slug}', 'Site\GalleryController@album_detail')->name('album');
-    Route::get('/photos', 'Site\GalleryController@photo')->name('photos');
-    Route::get('/photo/{slug}', 'Site\GalleryController@photo_detail')->name('photo');
+    // Route::get('/photos', 'Site\GalleryController@photo')->name('photos');
+    // Route::get('/photo/{slug}', 'Site\GalleryController@photo_detail')->name('photo');
     Route::get('/videos', 'Site\GalleryController@video')->name('videos');
     Route::get('/video/{slug}', 'Site\GalleryController@video_detail')->name('video');
 
@@ -39,11 +38,15 @@ Route::name('web.')->middleware(['site', 'visitor_log'])->group(function () {
     Route::get('/thankyou', 'Site\MiscController@thankyou')->name('thankyou');
 
     /* Term Routes */
-    Route::get('/{type:category|tag}/{slug}', 'Site\TermController@index')->name('term');
+    Route::get('/{term_type}/{slug}', 'Site\TermController@index')->name('term')->where('term_type', 'category|tag');
 
     /* Post Routes */
-    Route::get('/{type:posts|articles|news}', 'Site\PostController@index')->name('posts');
-    Route::get('/{type:posts|articles|news}/{slug}', 'Site\PostController@detail')->name('post');
+    Route::get('/{type}', 'Site\PostController@index')->name('posts')->where('type', 'posts|articles|news');
+    Route::get('/{type}/{slug}', 'Site\PostController@detail')->name('post')->where('type', 'post|article|news');
+
+    /* Event Routes */
+    Route::get('/events', 'Site\EventController@index')->name('events');
+    Route::get('/event/{slug}', 'Site\EventController@detail')->name('event');
 
     /* Page Route */
     Route::get('/{slug?}', 'Site\PageController@index')->name('page');

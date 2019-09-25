@@ -367,11 +367,10 @@ if (!function_exists('_admin_js')) {
 }
 
 if (!function_exists('carbon')) {
-    function carbon(\Carbon\Carbon $carbon = null, $timezone = null, $lang = 'id')
+    function carbon($carbon = null, $lang = 'id', $type = 'display')
     {
         /* set default timezone */
-        $timezone = $timezone ?? app('site')->timezone;
-        $timezone = $timezone ?? env('APP_TIMEZONE', 'UTC');
+        $timezone = app('site')->timezone ?? env('APP_TIMEZONE', 'UTC');
 
         /* check user timezone */
         $user_settings = \Auth::user() ? json_decode(\Auth::user()->settings) : '[]';
@@ -382,8 +381,22 @@ if (!function_exists('carbon')) {
         /* initialize new carbon */
         if (is_null($carbon)) {
             $carbon = new \Carbon\Carbon;
+        } else if (is_string($carbon)) {
+            $carbon = \Carbon\Carbon::parse($carbon, $timezone);
+        }
+
+        /* set timezone as UTC for storing to database */
+        if ($type == 'store') {
+            return $carbon->timezone('UTC');
         }
 
         return $carbon->timezone($timezone)->locale($lang);
+    }
+}
+
+if (!function_exists('carbon_store')) {
+    function carbon_store($carbon = null)
+    {
+        return carbon($carbon, null, 'store');
     }
 }

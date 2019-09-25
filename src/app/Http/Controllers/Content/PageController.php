@@ -99,11 +99,13 @@ class PageController extends AdminController
         /* save data */
         $page = new Post;
         $page->title = $r->input('title');
-        $page->slug = str_slug($r->input('slug'));
+        $page->slug = str_slug($page->title);
         $page->content = $r->input('content');
+        $page->excerpt = substr(strip_tags($page->content), 0, 255);
         $page->type = 'page';
         $page->status = bool($r->input('status')) ? 1 : 0;
         $page->created_by = \Auth::user()->id;
+        $page->published_at = now();
         $page->save();
 
         /* log aktifitas */
@@ -168,8 +170,9 @@ class PageController extends AdminController
 
         /* save data */
         $page->title = $r->input('title');
-        $page->slug = str_slug($r->input('slug'));
+        // $page->slug = str_slug($r->input('slug'));
         $page->content = $r->input('content');
+        $page->excerpt = substr(strip_tags($page->content), 0, 255);
         $page->type = 'page';
         $page->status = bool($r->input('status')) ? 1 : 0;
         $page->updated_by = \Auth::user()->id;
