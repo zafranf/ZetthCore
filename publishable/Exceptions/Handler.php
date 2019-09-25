@@ -3,6 +3,7 @@
 namespace App\Exceptions;
 
 use Exception;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 
 class Handler extends ExceptionHandler
@@ -52,6 +53,29 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $exception)
     {
+
+        if ($this->isHttpException($exception)) {
+            $theme = 'md30';
+            if (app('is_admin_panel')) {
+                $theme = 'zetthcore::AdminSC';
+            }
+            if (view()->exists($theme . '.errors.' . $exception->getStatusCode())) {
+                return response()->view($theme . '.errors.' . $exception->getStatusCode(), [
+                    'breadcrumbs' => [[
+                        'page' => 'Beranda',
+                        'icon' => '',
+                        'url' => url('/'),
+                    ], [
+                        'page' => $exception->getStatusCode(),
+                        'icon' => '',
+                        'url' => '',
+                    ]],
+                ], $exception->getStatusCode());
+            }
+        } else if ($exception instanceof ModelNotFoundException) {
+            abort(404);
+        }
+
         return parent::render($request, $exception);
     }
 }
