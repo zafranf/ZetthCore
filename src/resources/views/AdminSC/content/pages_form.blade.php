@@ -49,7 +49,7 @@
     .mce-fullscreen {
         z-index: 9999!important;
     }
-    #mceu_14 {
+    #mceu_9 {
       position: absolute;
       right: 4px;
       top: 4px;
@@ -83,7 +83,7 @@
           "table contextmenu directionality emoticons paste textcolor responsivefilemanager code",
           "placeholder youtube fullscreen"
         ],
-        toolbar1: "undo redo | bullist numlist blockquote | link unlink | youtube image table | styleselect fontselect | fontsizeselect code | fullscreen",
+        toolbar1: "undo redo | bold italic underline blockquote | link unlink | image | fullscreen",
         image_advtab: true,
         image_caption: true,
         menubar : false,
