@@ -23,7 +23,7 @@ class MenuTableSeeder extends Seeder
         /* menu dashboard */
         $dash = new Menu;
         $dash->name = 'Dasbor';
-        $dash->description = 'Halaman utama aplikasi';
+        $dash->description = 'Halaman utama situs';
         $dash->route_name = 'admin.dashboard.index';
         // $dash->icon = 'fa fa-dashboard';
         $dash->target = '_self';
@@ -44,11 +44,11 @@ class MenuTableSeeder extends Seeder
         $set->index = 1;
         $set->save();
 
-        /* menu aplikasi */
+        /* menu situs */
         $setApl = new Menu;
-        $setApl->name = 'Aplikasi';
-        $setApl->description = 'Menu pengaturan aplikasi';
-        $setApl->route_name = 'admin.setting.application.index';
+        $setApl->name = 'Situs';
+        $setApl->description = 'Menu pengaturan situs';
+        $setApl->route_name = 'admin.setting.site.index';
         // $setApl->icon = 'fa fa-desktop';
         $setApl->order = $setOrder++;
         $setApl->status = 1;
@@ -400,7 +400,7 @@ class MenuTableSeeder extends Seeder
         /* menu dashboard */
         $dash = new Menu;
         $dash->name = 'Dasbor';
-        $dash->description = 'Halaman utama aplikasi';
+        $dash->description = 'Halaman utama situs';
         $dash->route_name = 'admin.dashboard.index';
         // $dash->icon = 'fa fa-dashboard';
         $dash->target = '_self';
@@ -423,11 +423,11 @@ class MenuTableSeeder extends Seeder
         $set->group_id = 2;
         $set->save();
 
-        /* menu aplikasi */
+        /* menu situs */
         $setApl = new Menu;
-        $setApl->name = 'Aplikasi';
-        $setApl->description = 'Menu pengaturan aplikasi';
-        $setApl->route_name = 'admin.setting.application.index';
+        $setApl->name = 'Situs';
+        $setApl->description = 'Menu pengaturan situs';
+        $setApl->route_name = 'admin.setting.site.index';
         // $setApl->icon = 'fa fa-desktop';
         $setApl->order = $setOrder++;
         $setApl->status = 1;

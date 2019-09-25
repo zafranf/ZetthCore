@@ -20,7 +20,7 @@ class CreateSocmedDatasTable extends Migration
 
             $table->increments('id')->unsigned();
             $table->string('username');
-            $table->enum('type', ['config', 'user'])->default('user');
+            $table->enum('type', ['site', 'user'])->default('user');
             $table->integer('socmed_id')->unsigned();
             $table->integer('data_id')->unsigned()->nullable()->index();
             $table->timestamps();

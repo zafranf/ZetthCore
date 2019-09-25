@@ -4,11 +4,11 @@ namespace ZetthCore\Http\Controllers\Setting;
 
 use Illuminate\Http\Request;
 use ZetthCore\Http\Controllers\AdminController;
-use ZetthCore\Models\Application;
+use ZetthCore\Models\Site;
 use ZetthCore\Models\Socmed;
 use ZetthCore\Models\SocmedData;
 
-class ApplicationController extends AdminController
+class SiteController extends AdminController
 {
     private $current_url;
     private $page_title;
@@ -19,7 +19,7 @@ class ApplicationController extends AdminController
     public function __construct()
     {
         parent::__construct();
-        $this->current_url = url(app('admin_path') . '/setting/application');
+        $this->current_url = url(app('admin_path') . '/setting/site');
         $this->page_title = 'Kelola Aplikasi';
         $this->breadcrumbs[] = [
             'page' => 'Pengaturan',
@@ -57,10 +57,10 @@ class ApplicationController extends AdminController
 
         $data['socmeds'] = Socmed::where('status', 1)->get();
         $data['socmed_data'] = SocmedData::where([
-            'type' => 'config',
+            'type' => 'site',
         ])->with('socmed')->get();
 
-        return view('zetthcore::AdminSC.setting.application', $data);
+        return view('zetthcore::AdminSC.setting.site', $data);
     }
 
     /**
@@ -139,7 +139,7 @@ class ApplicationController extends AdminController
         ]);
 
         /* save data */
-        $app = Application::find($id);
+        $app = Site::find($id);
         $app->name = $r->input('name');
         $app->description = $r->input('description');
         $app->keywords = $r->input('keywords');
@@ -225,13 +225,13 @@ class ApplicationController extends AdminController
     public function process_socmed(Request $r)
     {
         $del = SocmedData::where([
-            'type' => 'config',
+            'type' => 'site',
         ])->forceDelete();
         foreach ($r->input('socmed_id') as $key => $val) {
             if ($r->input('socmed_id')[$key] != "" && $r->input('socmed_uname')[$key] != "") {
                 $socmed = new SocmedData;
                 $socmed->username = $r->input('socmed_uname')[$key];
-                $socmed->type = 'config';
+                $socmed->type = 'site';
                 $socmed->socmed_id = $r->input('socmed_id')[$key];
                 $socmed->data_id = 1;
                 $socmed->save();

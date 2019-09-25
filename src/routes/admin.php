@@ -48,7 +48,7 @@ Route::middleware('auth')->group(function () use ($prefix) {
 
             /* main menu */
             Route::resources([
-                '/application' => $prefix . '\Setting\ApplicationController',
+                '/site' => $prefix . '\Setting\SiteController',
                 '/menus' => $prefix . '\Setting\MenuController',
                 '/menu-groups' => $prefix . '\Setting\MenuGroupController',
                 '/roles' => $prefix . '\Setting\RoleController',
