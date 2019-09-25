@@ -48,7 +48,7 @@
 						<div class="col-md-8">
 							<div class="fileinput fileinput-new" data-provides="fileinput">
 								<div class="fileinput-new thumbnail">
-									<img src="{{ _get_image('/storage/assets/images/user/' . (isset($data) ? $data->image : '')) }}">
+									<img src="{{ _get_image('/storage/assets/images/user/' . (isset($data) ? $data->image : ''), url("themes/admin/AdminSC/images/no-image.png")) }}">
 								</div>
 								<div class="fileinput-preview fileinput-exists thumbnail"></div>
 								<div>

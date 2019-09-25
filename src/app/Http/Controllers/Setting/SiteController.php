@@ -117,8 +117,8 @@ class SiteController extends AdminController
     {
         /* validation */
         $r->validate([
-            'logo' => 'mimes:jpg,jpeg,png,svg|max:384|dimensions:max_width=512,max_height=512',
-            'icon' => 'mimes:jpg,jpeg,png,svg,ico|max:96|dimensions:max_width=128,max_height=128',
+            'logo' => 'mimes:jpg,jpeg,png,svg,gif|max:384|dimensions:max_width=512,max_height=512',
+            'icon' => 'mimes:jpg,jpeg,png,svg,gif,ico|max:96|dimensions:max_width=128,max_height=128',
             'name' => 'required|max:50',
             'tagline' => 'nullable|max:100',
             'email' => 'nullable|max:100|email',
@@ -159,7 +159,7 @@ class SiteController extends AdminController
 
         /* upload logo */
         if ($r->input('logo_remove')) {
-            $app->logo = '';
+            $app->logo = null;
         } else if ($r->hasFile('logo')) {
             $file = $r->file('logo');
             $par = [
@@ -177,7 +177,7 @@ class SiteController extends AdminController
 
         /* upload icon */
         if ($r->input('icon_remove')) {
-            $app->icon = '';
+            $app->icon = null;
         } else {
             if ($r->input('use_logo')) {
                 if ($app->logo) {
