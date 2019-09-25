@@ -20,7 +20,7 @@ class SiteController extends AdminController
     {
         parent::__construct();
         $this->current_url = url(app('admin_path') . '/setting/site');
-        $this->page_title = 'Kelola Aplikasi';
+        $this->page_title = 'Kelola Situs';
         $this->breadcrumbs[] = [
             'page' => 'Pengaturan',
             'icon' => '',
@@ -37,7 +37,7 @@ class SiteController extends AdminController
     {
         /* set breadcrumbs */
         $this->breadcrumbs[] = [
-            'page' => 'Aplikasi',
+            'page' => 'Situs',
             'icon' => '',
             'url' => $this->current_url,
         ];
@@ -52,7 +52,7 @@ class SiteController extends AdminController
             'current_url' => $this->current_url,
             'breadcrumbs' => $this->breadcrumbs,
             'page_title' => $this->page_title,
-            'page_subtitle' => 'Aplikasi',
+            'page_subtitle' => 'Situs',
         ];
 
         $data['socmeds'] = Socmed::where('status', 1)->get();
@@ -206,9 +206,9 @@ class SiteController extends AdminController
         $this->process_socmed($r);
 
         /* log aktifitas */
-        $this->activityLog('<b>' . \Auth::user()->fullname . '</b> memperbarui Pengaturan - Aplikasi');
+        $this->activityLog('<b>' . \Auth::user()->fullname . '</b> memperbarui Pengaturan - Situs');
 
-        return redirect()->back()->with('success', 'Pengaturan Aplikasi berhasil disimpan!');
+        return redirect()->back()->with('success', 'Pengaturan Situs berhasil disimpan!');
     }
 
     /**
