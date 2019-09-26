@@ -162,11 +162,11 @@ class SubscriberController extends AdminController
     public function datatable(Request $r)
     {
         /* get data */
-        $data = Subscriber::select('id', 'email', 'status')->get();
+        $data = Subscriber::select('id', 'email', 'status')->orderBy('created_at', 'desc');
 
         /* generate datatable */
         if ($r->ajax()) {
-            return $this->generateDataTable($r, $data);
+            return $this->generateDataTable($data);
         }
 
         abort(403);

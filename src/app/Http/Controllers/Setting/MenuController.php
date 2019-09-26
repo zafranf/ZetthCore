@@ -269,11 +269,11 @@ class MenuController extends AdminController
     public function datatable(Request $r)
     {
         /* get data */
-        $data = Menu::select('id', 'name', 'description', 'status')->get();
+        $data = Menu::select('id', 'name', 'description', 'status');
 
         /* generate datatable */
         if ($r->ajax()) {
-            return $this->generateDataTable($r, $data);
+            return $this->generateDataTable($data);
         }
 
         abort(403);

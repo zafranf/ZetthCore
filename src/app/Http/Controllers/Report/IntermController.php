@@ -152,11 +152,11 @@ class IntermController extends AdminController
     public function datatable(Request $r)
     {
         /* get data */
-        $data = IntermData::select('id', 'host', 'text', 'count')->get();
+        $data = IntermData::select('id', 'host', 'text', 'count')->orderBy('created_at', 'desc');
 
         /* generate datatable */
         if ($r->ajax()) {
-            return $this->generateDataTable($r, $data);
+            return $this->generateDataTable($data);
         }
 
         abort(403);

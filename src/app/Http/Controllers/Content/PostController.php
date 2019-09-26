@@ -102,7 +102,7 @@ class PostController extends AdminController
         /* validation */
         $this->validate($r, [
             'title' => 'required|max:100|unique:posts,title,NULL,created_at,type,article',
-            'slug' => 'unique:posts,slug,NULL,created_at,type,article',
+            'slug' => 'required|max:100|unique:posts,slug,NULL,created_at,type,article',
             'content' => 'required',
             'categories' => 'required',
             'tags' => 'required',
@@ -148,7 +148,7 @@ class PostController extends AdminController
         $this->process_tags($tags, $post->id);
 
         /* log aktifitas */
-        $this->activityLog('<b>' . \Auth::user()->fullname . '</b> menambahkan Artikel "' . $post->title . '"');
+        $this->activityLog('<b>' . \Auth::user()->fullname . '</b> menambahkan artikel "' . $post->title . '"');
 
         return redirect($this->current_url)->with('success', 'Artikel "' . $post->title . '" berhasil ditambah!');
     }
@@ -260,7 +260,7 @@ class PostController extends AdminController
         $this->process_tags($tags, $post->id);
 
         /* log aktifitas */
-        $this->activityLog('<b>' . \Auth::user()->fullname . '</b> memperbarui Artikel "' . $post->title . '"');
+        $this->activityLog('<b>' . \Auth::user()->fullname . '</b> memperbarui artikel "' . $post->title . '"');
 
         return redirect($this->current_url)->with('success', 'Artikel "' . $post->title . '" berhasil disimpan!');
     }
@@ -274,7 +274,7 @@ class PostController extends AdminController
     public function destroy(Post $post)
     {
         /* log aktifitas */
-        $this->activityLog('<b>' . \Auth::user()->fullname . '</b> menghapus Artikel "' . $post->title . '"');
+        $this->activityLog('<b>' . \Auth::user()->fullname . '</b> menghapus artikel "' . $post->title . '"');
 
         /* soft delete */
         $post->delete();
@@ -291,11 +291,11 @@ class PostController extends AdminController
     public function datatable(Request $r)
     {
         /* get data */
-        $data = Post::select('id', 'title', 'slug', 'status')->where('type', 'article')->get();
+        $data = Post::select('id', 'title', 'slug', 'status')->where('type', 'article')->orderBy('created_at', 'desc');
 
         /* generate datatable */
         if ($r->ajax()) {
-            return $this->generateDataTable($r, $data);
+            return $this->generateDataTable($data);
         }
 
         abort(403);

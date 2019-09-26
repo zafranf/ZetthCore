@@ -133,7 +133,7 @@ class BannerController extends AdminController
         $this->sortQuery($r, $orders);
 
         /* log aktifitas */
-        $this->activityLog('<b>' . \Auth::user()->fullname . '</b> menambahkan Spanduk "' . $banner->title . '"');
+        $this->activityLog('<b>' . \Auth::user()->fullname . '</b> menambahkan spanduk "' . $banner->title . '"');
 
         return redirect($this->current_url)->with('success', 'Spanduk berhasil ditambah!');
     }
@@ -229,7 +229,7 @@ class BannerController extends AdminController
         $this->sortQuery($r, $orders);
 
         /* log aktifitas */
-        $this->activityLog('<b>' . \Auth::user()->fullname . '</b> memperbarui Spanduk "' . $banner->title . '"');
+        $this->activityLog('<b>' . \Auth::user()->fullname . '</b> memperbarui spanduk "' . $banner->title . '"');
 
         return redirect($this->current_url)->with('success', 'Spanduk berhasil disimpan!');
     }
@@ -243,7 +243,7 @@ class BannerController extends AdminController
     public function destroy(Banner $banner)
     {
         /* log aktifitas */
-        $this->activityLog('<b>' . \Auth::user()->fullname . '</b> menghapus Spanduk "' . $banner->title . '"');
+        $this->activityLog('<b>' . \Auth::user()->fullname . '</b> menghapus spanduk "' . $banner->title . '"');
 
         /* soft delete */
         $banner->delete();
@@ -260,11 +260,11 @@ class BannerController extends AdminController
     public function datatable(Request $r)
     {
         /* get data */
-        $data = Banner::select('id', 'title', 'description', 'image', 'order', 'status')->get();
+        $data = Banner::select('id', 'title', 'description', 'image', 'order', 'status')->orderBy('order');
 
         /* generate datatable */
         if ($r->ajax()) {
-            return $this->generateDataTable($r, $data);
+            return $this->generateDataTable($data);
         }
 
         abort(403);

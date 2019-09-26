@@ -164,7 +164,7 @@ class UserController extends AdminController
         $this->saveSocmed($user, $r);
 
         /* log aktifitas */
-        $this->activityLog('<b>' . \Auth::user()->fullname . '</b> menambahkan Pengguna "' . $user->name . '"');
+        $this->activityLog('<b>' . \Auth::user()->fullname . '</b> menambahkan pengguna "' . $user->name . '"');
 
         return redirect($this->current_url)->with('success', 'Pengguna "' . $user->name . '" berhasil ditambah!');
     }
@@ -301,7 +301,7 @@ class UserController extends AdminController
         $this->saveSocmed($user, $r);
 
         /* log aktifitas */
-        $this->activityLog('<b>' . \Auth::user()->fullname . '</b> memperbarui Pengguna "' . $user->name . '"');
+        $this->activityLog('<b>' . \Auth::user()->fullname . '</b> memperbarui pengguna "' . $user->name . '"');
 
         return redirect($this->current_url)->with('success', 'Pengguna "' . $user->name . '" berhasil disimpan!');
     }
@@ -315,7 +315,7 @@ class UserController extends AdminController
     public function destroy(Request $r, User $user)
     {
         /* log aktifitas */
-        $this->activityLog('<b>' . \Auth::user()->fullname . '</b> menghapus Pengguna "' . $user->name . '"');
+        $this->activityLog('<b>' . \Auth::user()->fullname . '</b> menghapus pengguna "' . $user->name . '"');
 
         /* soft delete */
         $user->delete();
@@ -347,11 +347,11 @@ class UserController extends AdminController
         }
 
         /* get data */
-        $data = User::select('id', 'name', 'fullname', /* 'image', 'email', */'status')->where($whrRole)->get();
+        $data = User::select('id', 'name', 'fullname', /* 'image', 'email', */'status')->where($whrRole)->orderBy('fullname');
 
         /* generate datatable */
         if ($r->ajax()) {
-            return $this->generateDataTable($r, $data);
+            return $this->generateDataTable($data);
         }
 
         abort(403);

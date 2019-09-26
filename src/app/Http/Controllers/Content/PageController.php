@@ -109,7 +109,7 @@ class PageController extends AdminController
         $page->save();
 
         /* log aktifitas */
-        $this->activityLog('<b>' . \Auth::user()->fullname . '</b> menambahkan Halaman "' . $page->title . '"');
+        $this->activityLog('<b>' . \Auth::user()->fullname . '</b> menambahkan halaman "' . $page->title . '"');
 
         return redirect($this->current_url)->with('success', 'Halaman "' . $page->title . '" berhasil ditambah!');
     }
@@ -164,7 +164,7 @@ class PageController extends AdminController
         /* validation */
         $this->validate($r, [
             'title' => 'required|max:100|unique:posts,title,' . $page->id . ',id,type,page',
-            'slug' => 'required|max:100|unique:posts,slug,' . $page->id . ',id,type,page',
+            // 'slug' => 'required|max:100|unique:posts,slug,' . $page->id . ',id,type,page',
             'content' => 'required',
         ]);
 
@@ -179,7 +179,7 @@ class PageController extends AdminController
         $page->save();
 
         /* log aktifitas */
-        $this->activityLog('<b>' . \Auth::user()->fullname . '</b> memperbarui Halaman "' . $page->title . '"');
+        $this->activityLog('<b>' . \Auth::user()->fullname . '</b> memperbarui halaman "' . $page->title . '"');
 
         return redirect($this->current_url)->with('success', 'Halaman "' . $page->title . '" berhasil disimpan!');
     }
@@ -193,7 +193,7 @@ class PageController extends AdminController
     public function destroy(Post $page)
     {
         /* log aktifitas */
-        $this->activityLog('<b>' . \Auth::user()->fullname . '</b> menghapus Halaman "' . $page->title . '"');
+        $this->activityLog('<b>' . \Auth::user()->fullname . '</b> menghapus halaman "' . $page->title . '"');
 
         /* soft delete */
         $page->delete();
@@ -207,11 +207,11 @@ class PageController extends AdminController
     public function datatable(Request $r)
     {
         /* get data */
-        $data = Post::select('id', 'title', /* 'slug', */'status')->where('type', 'page')->get();
+        $data = Post::select('id', 'title', /* 'slug', */'status')->where('type', 'page')->orderBy('created_at', 'desc');
 
         /* generate datatable */
         if ($r->ajax()) {
-            return $this->generateDataTable($r, $data);
+            return $this->generateDataTable($data);
         }
 
         abort(403);
