@@ -117,7 +117,7 @@ class PhotoController extends AdminController
         $this->process_photos($r->input('photos'), $album->id);
 
         /* log aktifitas */
-        $this->activityLog('<b>' . \Auth::user()->fullname . '</b> menambahkan Album "' . $album->name . '"');
+        $this->activityLog('<b>' . \Auth::user()->fullname . '</b> menambahkan album "' . $album->name . '"');
 
         return redirect($this->current_url)->with('success', 'Album "' . $album->name . '" berhasil ditambah!');
     }
@@ -190,7 +190,7 @@ class PhotoController extends AdminController
         $this->process_photos($r->input('photos'), $album->id);
 
         /* log aktifitas */
-        $this->activityLog('<b>' . \Auth::user()->fullname . '</b> memperbarui Album "' . $album->name . '"');
+        $this->activityLog('<b>' . \Auth::user()->fullname . '</b> memperbarui album "' . $album->name . '"');
 
         return redirect($this->current_url)->with('success', 'Album "' . $album->name . '" berhasil disimpan!');
     }
@@ -204,7 +204,7 @@ class PhotoController extends AdminController
     public function destroy(Album $album)
     {
         /* log aktifitas */
-        $this->activityLog('<b>' . \Auth::user()->fullname . '</b> menghapus Album "' . $album->name . '"');
+        $this->activityLog('<b>' . \Auth::user()->fullname . '</b> menghapus album "' . $album->name . '"');
 
         /* soft delete */
         $album->delete();
@@ -221,11 +221,11 @@ class PhotoController extends AdminController
     public function datatable(Request $r)
     {
         /* get data */
-        $data = Album::select('id', 'name', 'slug', 'status')->with('photo')->withCount('photos')->get();
+        $data = Album::select('id', 'name', 'slug', 'status')->with('photo')->withCount('photos')->orderBy('created_at', 'desc');
 
         /* generate datatable */
         if ($r->ajax()) {
-            return $this->generateDataTable($r, $data);
+            return $this->generateDataTable($data);
         }
 
         abort(403);

@@ -128,11 +128,11 @@ class VisitorController extends AdminController
     public function datatable(Request $r)
     {
         /* get data */
-        $data = VisitorLog::select('ip', 'page', \DB::raw("if(referral='', '-', referral) as referral"), 'count', 'updated_at')->orderBy('updated_at', 'desc')->get();
+        $data = VisitorLog::select('ip', 'page', \DB::raw("if(referral='', '-', referral) as referral"), 'count', 'updated_at')->orderBy('updated_at', 'desc');
 
         /* generate datatable */
         if ($r->ajax()) {
-            return $this->generateDataTable($r, $data);
+            return $this->generateDataTable($data);
         }
 
         abort(403);

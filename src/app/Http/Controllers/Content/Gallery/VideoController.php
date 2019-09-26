@@ -110,7 +110,7 @@ class VideoController extends AdminController
         $video->save();
 
         /* log aktifitas */
-        $this->activityLog('<b>' . \Auth::user()->fullname . '</b> menambahkan Video "' . $video->title . '"');
+        $this->activityLog('<b>' . \Auth::user()->fullname . '</b> menambahkan video "' . $video->title . '"');
 
         return redirect($this->current_url)->with('success', 'Video "' . $video->title . '" berhasil ditambah!');
     }
@@ -180,7 +180,7 @@ class VideoController extends AdminController
         $video->save();
 
         /* log aktifitas */
-        $this->activityLog('<b>' . \Auth::user()->fullname . '</b> memperbarui Video "' . $video->title . '"');
+        $this->activityLog('<b>' . \Auth::user()->fullname . '</b> memperbarui video "' . $video->title . '"');
 
         return redirect($this->current_url)->with('success', 'Video "' . $video->title . '" berhasil disimpan!');
     }
@@ -194,7 +194,7 @@ class VideoController extends AdminController
     public function destroy(Post $video)
     {
         /* log aktifitas */
-        $this->activityLog('<b>' . \Auth::user()->fullname . '</b> menghapus Video "' . $video->title . '"');
+        $this->activityLog('<b>' . \Auth::user()->fullname . '</b> menghapus video "' . $video->title . '"');
 
         /* soft delete */
         $video->delete();
@@ -211,11 +211,11 @@ class VideoController extends AdminController
     public function datatable(Request $r)
     {
         /* get data */
-        $data = Post::select('id', 'title', 'slug', 'status')->where('type', 'video')->orderBy('id', 'desc')->get();
+        $data = Post::select('id', 'title', 'slug', 'status')->where('type', 'video')->orderBy('created_at', 'desc');
 
         /* generate datatable */
         if ($r->ajax()) {
-            return $this->generateDataTable($r, $data);
+            return $this->generateDataTable($data);
         }
 
         abort(403);

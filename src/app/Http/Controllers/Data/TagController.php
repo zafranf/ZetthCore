@@ -105,7 +105,7 @@ class TagController extends AdminController
         $tag->save();
 
         /* log aktifitas */
-        $this->activityLog('<b>' . \Auth::user()->fullname . '</b> menambahkan Label "' . $tag->name . '"');
+        $this->activityLog('<b>' . \Auth::user()->fullname . '</b> menambahkan label "' . $tag->name . '"');
 
         return redirect($this->current_url)->with('success', 'Label ' . $tag->name . ' berhasil ditambah!');
     }
@@ -172,7 +172,7 @@ class TagController extends AdminController
         $tag->save();
 
         /* log aktifitas */
-        $this->activityLog('<b>' . \Auth::user()->fullname . '</b> memperbarui Label "' . $tag->name . '"');
+        $this->activityLog('<b>' . \Auth::user()->fullname . '</b> memperbarui label "' . $tag->name . '"');
 
         return redirect($this->current_url)->with('success', 'Label ' . $tag->name . ' berhasil disimpan!');
     }
@@ -186,7 +186,7 @@ class TagController extends AdminController
     public function destroy(Term $tag)
     {
         /* log aktifitas */
-        $this->activityLog('<b>' . \Auth::user()->fullname . '</b> menghapus Label "' . $tag->name . '"');
+        $this->activityLog('<b>' . \Auth::user()->fullname . '</b> menghapus label "' . $tag->name . '"');
 
         /* soft delete */
         $tag->delete();
@@ -200,11 +200,11 @@ class TagController extends AdminController
     public function datatable(Request $r)
     {
         /* get data */
-        $data = Term::select('id', 'name', 'description', 'status')->where('type', 'tag')->get();
+        $data = Term::select('id', 'name', 'description', 'status')->where('type', 'tag')->orderBy('created_at', 'desc');
 
         /* generate datatable */
         if ($r->ajax()) {
-            return $this->generateDataTable($r, $data);
+            return $this->generateDataTable($data);
         }
 
         abort(403);

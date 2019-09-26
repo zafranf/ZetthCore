@@ -106,7 +106,7 @@ class CategoryController extends AdminController
         $category->save();
 
         /* log aktifitas */
-        $this->activityLog('<b>' . \Auth::user()->fullname . '</b> menambahkan Kategori "' . $category->name . '"');
+        $this->activityLog('<b>' . \Auth::user()->fullname . '</b> menambahkan kategori "' . $category->name . '"');
 
         return redirect($this->current_url)->with('success', 'Kategori ' . $category->name . ' berhasil ditambah!');
     }
@@ -174,7 +174,7 @@ class CategoryController extends AdminController
         $category->save();
 
         /* log aktifitas */
-        $this->activityLog('<b>' . \Auth::user()->fullname . '</b> memperbarui Kategori "' . $category->name . '"');
+        $this->activityLog('<b>' . \Auth::user()->fullname . '</b> memperbarui kategori "' . $category->name . '"');
 
         return redirect($this->current_url)->with('success', 'Kategori ' . $category->name . ' berhasil disimpan!');
     }
@@ -188,7 +188,7 @@ class CategoryController extends AdminController
     public function destroy(Term $category)
     {
         /* log aktifitas */
-        $this->activityLog('<b>' . \Auth::user()->fullname . '</b> menghapus Kategori "' . $category->name . '"');
+        $this->activityLog('<b>' . \Auth::user()->fullname . '</b> menghapus kategori "' . $category->name . '"');
 
         /* soft delete */
         $category->delete();
@@ -202,11 +202,11 @@ class CategoryController extends AdminController
     public function datatable(Request $r)
     {
         /* get data */
-        $data = Term::select('id', 'name', 'description', 'status')->where('type', 'category')->get();
+        $data = Term::select('id', 'name', 'description', 'status')->where('type', 'category')->orderBy('created_at', 'desc');
 
         /* generate datatable */
         if ($r->ajax()) {
-            return $this->generateDataTable($r, $data);
+            return $this->generateDataTable($data);
         }
 
         abort(403);

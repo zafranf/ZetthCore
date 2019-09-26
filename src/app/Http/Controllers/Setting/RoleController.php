@@ -257,11 +257,11 @@ class RoleController extends AdminController
         }
 
         /* get data */
-        $data = Role::select('id', 'display_name as name', 'description', 'status')->where($whrRole)->get();
+        $data = Role::select('id', 'display_name as name', 'description', 'status')->where($whrRole);
 
         /* generate datatable */
         if ($r->ajax()) {
-            return $this->generateDataTable($r, $data);
+            return $this->generateDataTable($data);
         }
 
         abort(403);

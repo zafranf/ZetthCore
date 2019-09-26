@@ -152,11 +152,11 @@ class CommentController extends AdminController
     public function datatable(Request $r)
     {
         /* get data */
-        $data = PostComment::select('id', 'name', 'email', \DB::raw('substring(comment, 1, 100) as comment'), 'status')->get();
+        $data = PostComment::select('id', 'name', 'email', \DB::raw('substring(comment, 1, 100) as comment'), 'status')->orderBy('created_at', 'desc');
 
         /* generate datatable */
         if ($r->ajax()) {
-            return $this->generateDataTable($r, $data);
+            return $this->generateDataTable($data);
         }
 
         abort(403);

@@ -462,16 +462,9 @@ trait MainTrait
      * @param [type] $collection
      * @return void
      */
-    protected function generateDataTable($request, $collection, $escape = false)
+    protected function generateDataTable($builder)
     {
-        if ($collection instanceof Illuminate\Database\Eloquent\Builder) {
-            $collection = $collection->get();
-        }
-
-        $make = \DataTables::collection($collection);
-        if (bool($escape)) {
-            $make = $make->escapeColumns([]);
-        }
+        $make = \DataTables::eloquent($builder);
         $make = $make->make();
 
         return $make;

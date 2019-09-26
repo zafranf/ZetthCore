@@ -128,11 +128,11 @@ class ErrorController extends AdminController
     public function datatable(Request $r)
     {
         /* get data */
-        $data = ErrorLog::select('message', \DB::raw("replace(file, '" . base_path() . "', '') as file"), 'line', 'count', 'updated_at')->orderBy('updated_at', 'desc')->get();
+        $data = ErrorLog::select('message', \DB::raw("replace(file, '" . base_path() . "', '') as file"), 'line', 'count', 'updated_at')->orderBy('updated_at', 'desc');
 
         /* generate datatable */
         if ($r->ajax()) {
-            return $this->generateDataTable($r, $data);
+            return $this->generateDataTable($data);
         }
 
         abort(403);

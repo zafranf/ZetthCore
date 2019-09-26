@@ -105,7 +105,7 @@ class MenuGroupController extends AdminController
         /* activity log */
         $this->activityLog('<b>' . \Auth::user()->fullname . '</b> menambahkan Grup Menu "' . $menugroup->name . '"');
 
-        return redirect($this->current_url . '/' . $menugroup->id . '/edit')->with('success', 'Peran "' . $menugroup->name . '" berhasil ditambah, segera atur daftar menu!');
+        return redirect($this->current_url . '/' . $menugroup->id . '/edit')->with('success', 'Grup menu "' . $menugroup->name . '" berhasil ditambah, segera atur daftar menu!');
     }
 
     /**
@@ -184,7 +184,7 @@ class MenuGroupController extends AdminController
         /* clear cache */
         \Cache::forget('cacheMenu-Group' . ucfirst($menugroup->name));
 
-        return redirect($this->current_url . '/' . $menugroup->id . '/edit')->with('success', 'Peran "' . $menugroup->name . '" berhasil disimpan, segera atur daftar menu!');
+        return redirect($this->current_url . '/' . $menugroup->id . '/edit')->with('success', 'Grup menu "' . $menugroup->name . '" berhasil disimpan, segera atur daftar menu!');
     }
 
     /**
@@ -196,7 +196,7 @@ class MenuGroupController extends AdminController
     public function destroy(Request $r, MenuGroup $menugroup)
     {
         /* activity log */
-        $this->activityLog('<b>' . \Auth::user()->fullname . '</b> menghapus Grup Menu "' . $menugroup->name . '"');
+        $this->activityLog('<b>' . \Auth::user()->fullname . '</b> menghapus grup menu "' . $menugroup->name . '"');
 
         /* soft delete */
         $menugroup->delete();
@@ -204,7 +204,7 @@ class MenuGroupController extends AdminController
         /* clear cache */
         \Cache::forget('cacheMenu-Group' . ucfirst($menugroup->name));
 
-        return redirect($this->current_url)->with('success', 'Grup Menu "' . $menugroup->name . '" berhasil dihapus!');
+        return redirect($this->current_url)->with('success', 'Grup menu "' . $menugroup->name . '" berhasil dihapus!');
     }
 
     /**
@@ -223,11 +223,11 @@ class MenuGroupController extends AdminController
         }
 
         /* get data */
-        $data = MenuGroup::select('id', 'name', 'description', 'status')->where($whrRole)->get();
+        $data = MenuGroup::select('id', 'name', 'description', 'status')->where($whrRole);
 
         /* generate datatable */
         if ($r->ajax()) {
-            return $this->generateDataTable($r, $data);
+            return $this->generateDataTable($data);
         }
 
         abort(403);
