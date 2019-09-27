@@ -38,8 +38,19 @@
               </a>
 
               <ul class="dropdown-menu" role="menu">
-                <li><a href="{{ url('admin/account') }}"><i class="fa fa-btn fa-user"></i> Account</a></li>
-                <li><a href="{{ url('admin/logout') }}"><i class="fa fa-btn fa-sign-out"></i> Logout</a></li>
+                <li>
+                  <a href="{{ route('admin.user.account') }}">
+                    <i class="fa fa-btn fa-user"></i> Akun
+                  </a>
+                </li>
+                <li>
+                  <a onclick="$('#form-logout').submit();" style="cursor:pointer;">
+                    <i class="fa fa-btn fa-sign-out"></i> Keluar
+                  </a>
+                  <form id="form-logout" method="POST" action="{{ route('admin.logout.post') }}" style="display:none;">
+                    @csrf
+                  </form>
+                </li>
               </ul>
             </li>
           @endif
@@ -60,7 +71,7 @@
         {{ session('success') }}
       </div>
     @endif
-    @if (count($errors) > 0)
+    @if ($errors->any() > 0)
       <div class="alert alert-danger">
         <ul>
           @foreach ($errors->all() as $error)

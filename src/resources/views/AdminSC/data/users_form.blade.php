@@ -48,7 +48,7 @@
 						<div class="col-md-8">
 							<div class="fileinput fileinput-new" data-provides="fileinput">
 								<div class="fileinput-new thumbnail">
-									<img src="{{ _get_image('/storage/assets/images/user/' . (isset($data) ? $data->image : ''), url("themes/admin/AdminSC/images/no-image.png")) }}">
+									<img src="{{ _get_image('/assets/images/user/' . (isset($data) ? $data->image : ''), url("themes/admin/AdminSC/images/no-image.png")) }}">
 								</div>
 								<div class="fileinput-preview fileinput-exists thumbnail"></div>
 								<div>
@@ -102,7 +102,7 @@
                         @if (isset($socmeds))
                           @foreach($socmeds as $socmed)
                             @php
-                              $sl = ($socmed->id==$val->socmed->id) ? 'selected' : '';
+                              $sl = ($socmed->id == $val->socmed->id) ? 'selected' : '';
                             @endphp
                             <option value="{{ $socmed->id }}" {{ $sl }}>{{ $socmed->name }}</option>
                           @endforeach
@@ -160,8 +160,8 @@
 @endsection
 
 @section('scripts')
-{!! _admin_js('themes/admin/AdminSC/plugins/jasny-bootstrap/3.1.3/js/jasny-bootstrap.min.js') !!}
-{!! _admin_js('themes/admin/AdminSC/plugins/select2/4.0.0/js/select2.min.js') !!}
+	{!! _admin_js('themes/admin/AdminSC/plugins/jasny-bootstrap/3.1.3/js/jasny-bootstrap.min.js') !!}
+	{!! _admin_js('themes/admin/AdminSC/plugins/select2/4.0.0/js/select2.min.js') !!}
   <script>
     $(function(){
       $(".custom-select2").select2({

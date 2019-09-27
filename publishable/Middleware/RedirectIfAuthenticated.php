@@ -22,7 +22,7 @@ class RedirectIfAuthenticated
                 return redirect(route('admin.dashboard.index'));
             }
 
-            return redirect(route('root'));
+            return redirect(route('web.root'));
         }
 
         return $next($request);

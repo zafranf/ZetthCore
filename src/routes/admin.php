@@ -16,6 +16,9 @@ Route::middleware('auth')->group(function () use ($prefix) {
         Route::get('/logout', $prefix . '\Auth\LoginController@logout')->name('logout.get');
     }
 
+    Route::get('/account', $prefix . '\AccountController@index')->name('user.account');
+    Route::put('/account', $prefix . '\AccountController@update')->name('user.account.update');
+
     /* api ajax */
     Route::get('/ajax/pageview', $prefix . '\AjaxController@pageview')->name('ajax.pageview');
     Route::get('/ajax/popularpost', $prefix . '\AjaxController@popularpost')->name('ajax.popularpost');

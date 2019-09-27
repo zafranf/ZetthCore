@@ -316,8 +316,8 @@ trait MainTrait
         $img = \Image::make($par['file']);
 
         /* folder check */
-        $folder = storage_path('app/public/');
-        $folders = explode('/', $par['folder']);
+        $folder = storage_path('app/public');
+        $folders = explode('/', trim($par['folder'], '/'));
         foreach ($folders as $foldr) {
             $folder .= '/' . $foldr;
             if (!is_dir($folder)) {
