@@ -71,7 +71,7 @@
         {{ session('success') }}
       </div>
     @endif
-    @if (count($errors) > 0)
+    @if ($errors->any() > 0)
       <div class="alert alert-danger">
         <ul>
           @foreach ($errors->all() as $error)

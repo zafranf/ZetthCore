@@ -3,6 +3,7 @@
 namespace ZetthCore\Http\Controllers;
 
 use App\Http\Controllers\Controller as BaseController;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 
 class AdminController extends BaseController
@@ -71,5 +72,27 @@ class AdminController extends BaseController
             'banners' => $banners,
             'posts' => $posts,
         ];
+    }
+
+    /**
+     * Save user's social media
+     */
+    public function saveSocmed($user, Request $r)
+    {
+        /* processing socmed */
+        $del = \ZetthCore\Models\SocmedData::where([
+            'type' => 'user',
+            'data_id' => $user->id,
+        ])->forceDelete();
+        foreach ($r->input('socmed_id') as $key => $val) {
+            if ($r->input('socmed_id')[$key] != "" && $r->input('socmed_uname')[$key] != "") {
+                $socmed = new \ZetthCore\Models\SocmedData;
+                $socmed->username = $r->input('socmed_uname')[$key];
+                $socmed->type = 'user';
+                $socmed->socmed_id = $r->input('socmed_id')[$key];
+                $socmed->data_id = $user->id;
+                $socmed->save();
+            }
+        }
     }
 }

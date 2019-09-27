@@ -250,26 +250,25 @@ class UserController extends AdminController
     public function update(Request $r, User $user)
     {
         /* validation */
-        $this->validate($r, [
+        $validation = [
             'name' => 'required|alpha_num|min:3|max:30|unique:users,name,' . $user->id . ',id',
-            'fullname' => 'required|min:1|max:100',
+            'fullname' => 'required|max:100',
             'email' => 'required|email',
             'image' => 'mimes:jpg,jpeg,png,svg|max:512|dimensions:max_width=512,max_height=512',
-        ]);
-
-        /* validasi password jika ada */
+        ];
         if ($r->input('password') !== null || $r->input('password_confirmation') !== null) {
-            $this->validate($r, [
-                'password' => 'required|min:6',
-                'password_confirmation' => 'same:password',
-            ]);
+            $validation['password'] = 'required|min:6';
+            $validation['password_confirmation'] = 'same:password';
         }
+        $this->validate($r, $validation);
 
         /* save data */
         $user->name = $r->input('name');
         $user->fullname = $r->input('fullname');
         $user->email = $r->input('email');
-        $user->password = bcrypt($r->input('password'));
+        if ($r->input('password') !== null) {
+            $user->password = bcrypt($r->input('password'));
+        }
         $user->biography = $r->input('biography');
         $user->is_admin = bool($r->input('is_admin')) ? 1 : 0;
         $user->status = bool($r->input('status')) ? 1 : 0;
@@ -280,7 +279,7 @@ class UserController extends AdminController
             $par = [
                 'file' => $file,
                 'folder' => '/assets/images/users/',
-                'name' => str_slug($r->input('name')),
+                'name' => str_slug($user->name),
                 'type' => $file->getMimeType(),
                 'ext' => $file->getClientOriginalExtension(),
             ];
@@ -369,27 +368,5 @@ class UserController extends AdminController
 
         /* tambah role baru */
         $user->attachRole($newRole);
-    }
-
-    /**
-     * Save user's social media
-     */
-    public function saveSocmed($user, Request $r)
-    {
-        /* processing socmed */
-        $del = SocmedData::where([
-            'type' => 'user',
-            'data_id' => $user->id,
-        ])->forceDelete();
-        foreach ($r->input('socmed_id') as $key => $val) {
-            if ($r->input('socmed_id')[$key] != "" && $r->input('socmed_uname')[$key] != "") {
-                $socmed = new SocmedData;
-                $socmed->username = $r->input('socmed_uname')[$key];
-                $socmed->type = 'user';
-                $socmed->socmed_id = $r->input('socmed_id')[$key];
-                $socmed->data_id = $user->id;
-                $socmed->save();
-            }
-        }
     }
 }
