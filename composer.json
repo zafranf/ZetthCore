@@ -49,6 +49,9 @@
                 "Laratrust": "Laratrust\\LaratrustFacade",
                 "Browser": "Jenssegers\\Agent\\Facades\\Agent"
             }
+        },
+        "branch-alias": {
+            "dev-master": "0.0-dev"
         }
     }
 }
