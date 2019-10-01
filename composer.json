@@ -12,6 +12,7 @@
         "yajra/laravel-datatables-oracle": "~9.0",
         "zafranf/helpers": "dev-master"
     },
+
     "require-dev": {},
     "license": "MIT",
     "authors": [{
