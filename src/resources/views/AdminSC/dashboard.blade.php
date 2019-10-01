@@ -231,9 +231,9 @@
         rangetype = 'daily';
       }
 
-      // $('#pageview-chart').html("Memuat<img src=\"{{ url('themes/admin/AdminSC/images/loading-flat.gif') }}\">");
-      // $('#box-popular-post').addClass('hide');
-      // $('#box-recent-comment').addClass('hide');
+      /* $('#pageview-chart').html("Memuat<img src=\"{{ url('themes/admin/AdminSC/images/loading-flat.gif') }}\">");
+      $('#box-popular-post').addClass('hide');
+      $('#box-recent-comment').addClass('hide'); */
       $('.loading').removeClass('hide');
       if (CONNECT){
         /* get data pageview */
