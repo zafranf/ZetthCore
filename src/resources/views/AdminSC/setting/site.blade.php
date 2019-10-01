@@ -44,13 +44,13 @@
 						<div class="col-md-8">
 							<div class="fileinput fileinput-new input-group" data-provides="fileinput">
 								<div class="form-control" data-trigger="fileinput">
-									<div class="fileinput-new thumbnail" style="width:20px;padding:0;margin-bottom:8px;position:absolute;left:5px;">
+									<div class="fileinput-new thumbnail" style="width:20px!important;padding:0;margin-bottom:8px;position:absolute;left:5px;">
 										<img src="{{ _get_image("assets/images/" . app('site')->icon, url("themes/admin/AdminSC/images/" . (app('site')->logo ?? 'logo.v2.png'))) }}" width="20">
 									</div>
-									<div class="fileinput-preview fileinput-exists thumbnail" style="width:20px;padding:0;margin-bottom:8px;position:absolute;left:5px;"></div>
+									<div class="fileinput-preview fileinput-exists thumbnail" style="width:20px!important;padding:0;margin-bottom:8px;position:absolute;left:5px;"></div>
 									<span class="fileinput-filename" style="margin-bottom:5px;position:relative;left:20px;"></span>
 								</div>
-								<span class="input-group-addon btn btn-default btn-file" style="border-left:1px solid coral;">
+								<span class="input-group-addon btn btn-default btn-file" style="border-left:1px solid coral!important;">
 									<span class="fileinput-new">Pilih</span>
 									<span class="fileinput-exists">Ganti</span>
                   					<input type="file" id="icon" name="icon" accept="image/*">
