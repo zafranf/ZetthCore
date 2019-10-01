@@ -131,7 +131,7 @@ class SiteController extends AdminController
             /* seo */
             'keywords' => 'nullable|max:191',
             'description' => 'nullable|max:191',
-            'google_analytics' => 'nullable|20',
+            'google_analytics' => 'nullable|max:20',
 
             /* location */
             'address' => 'nullable|max:280',
