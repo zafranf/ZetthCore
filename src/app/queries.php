@@ -6,8 +6,8 @@ function _doGetData(array $params)
         'model' => '',
         'search' => '',
         'type' => '',
-        'with' => [],
-        'with_count' => [],
+        'with' => '',
+        'with_count' => '',
         'limit' => null,
         'order' => 'desc',
         'complete' => false,
@@ -26,8 +26,12 @@ function _doGetData(array $params)
 
     /* set params string for cache name*/
     $params_string = $params;
-    $params_string['with'] = implode('.', $params['with']);
-    $params_string['with_count'] = implode('.', $params['with_count']);
+    if (is_array($params['with'])) {
+        $params_string['with'] = implode('.', $params['with']);
+    }
+    if (is_array($params['with_count'])) {
+        $params_string['with_count'] = implode('.', $params['with_count']);
+    }
     $params_string['limit'] = $limit;
     $params_string['page'] = $page;
 
@@ -42,10 +46,12 @@ function _doGetData(array $params)
     }
 
     /* inisiasi query */
-    if ($params['status']) {
-        $data = $params['model']::active();
-    } else {
+    if (is_null($params['status'])) {
         $data = new $params['model'];
+    } else if ($params['status'] == 1) {
+        $data = $params['model']::active();
+    } else if ($params['status'] >= 0) {
+        $data = $params['model']::where('status', $params['status']);
     }
 
     /* query search */
@@ -63,12 +69,16 @@ function _doGetData(array $params)
 
     /* check complete params */
     if ($is_posts) {
-        if ($params['type'] == 'article') {
-            $data->posts();
-        } else if ($params['type'] == 'page') {
-            $data->pages();
-        } else if ($params['type'] == 'video') {
-            $data->videos();
+        if (isset($params['type']) && !empty($params['type'])) {
+            if ($params['type'] == 'article') {
+                $data->posts();
+            } else if ($params['type'] == 'page') {
+                $data->pages();
+            } else if ($params['type'] == 'video') {
+                $data->videos();
+            } else {
+                $data->where('type', $params['type']);
+            }
         }
 
         if (isset($params['complete']) && bool($params['complete'])) {
@@ -82,17 +92,17 @@ function _doGetData(array $params)
     }
 
     /* check relation */
-    if (isset($params['with']) && !empty($params['with'])) {
+    if (!empty($params['with'])) {
         $data->with($params['with']);
     }
-    if (isset($params['with_count']) && !empty($params['with_count'])) {
+    if (!empty($params['with_count'])) {
         $data->withCount($params['with_count']);
     }
 
     /* check order */
-    if (isset($params['order'])) {
+    if (!empty($params['order'])) {
         if (in_array($params['order'], ['rand', 'random'])) {
-            $data->random();
+            $data->inRandomOrder();
         } else {
             if ($is_posts) {
                 $data->orderBy('published_at', $params['order']);
@@ -127,9 +137,9 @@ function _getBanners($limit = null)
     ]);
 }
 
-function _getPost($slug = '', $type = 'simple')
+function _getPost($slug = '', $complete = false)
 {
-    return _getPosts($type, 1, 'desc', $slug);
+    return _getPosts(1, 'desc', $complete, $slug);
 }
 
 function _getPosts($limit = null, $order = "desc", $complete = false, $slug = '')
@@ -156,7 +166,7 @@ function _getPostsComplete($limit = null, $order = "desc")
 
 function _getCategoryPosts($slug = '', $limit = null, $order = 'desc')
 {
-
+    return _getPosts('simple', null, 'desc');
 }
 
 function _getTerms($type = 'category', $limit = null, $order = 'desc', $slug = '')
@@ -216,8 +226,8 @@ function _getAlbums($limit = null, $order = 'desc', $slug = '')
     return _doGetData([
         'model' => \ZetthCore\Models\Album::class,
         'slug' => $slug,
-        'with' => ['photo'],
-        'with_count' => ['photos'],
+        'with' => 'photo',
+        'with_count' => 'photos',
         'limit' => $limit,
         'order' => $order,
     ]);
