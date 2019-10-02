@@ -1,12 +1,11 @@
 <?php
-function _getBanners($limit = null)
+function _doGetData($cache_name, $data, $limit = null)
 {
     /* set page limit */
     $page = \Request::input('page') ? \Request::input('page') : 1;
     $limit = $limit ?? app('site')->perpage;
 
     /* set cache */
-    $cache_name = '_getBanners' . $limit . $page;
     $cache_time = 60 * (env('APP_ENV') != 'production' ? 1 : env('CACHE_TIME', 10));
 
     /* cek cache */
@@ -14,72 +13,73 @@ function _getBanners($limit = null)
     if ($cache) {
         return $cache;
     }
-
-    /* inisiasi query */
-    $banners = \ZetthCore\Models\Banner::where('status', 1)->orderBy('order', 'asc');
 
     /* cek limit */
     if ($limit > 1) {
-        $banners = $banners->paginate($limit);
+        $data = $data->paginate($limit);
     } else if ($limit == 1) {
-        $banners = $banners->first();
+        $data = $data->first();
     } else {
-        $banners = $banners->get();
+        $data = $data->get();
     }
 
     /* simpan ke cache */
-    Cache::put($cache_name, $banners, $cache_time);
+    Cache::put($cache_name, $data, $cache_time);
 
-    return $banners;
+    return $data;
 }
 
-function _getPosts($type = 'simple', $limit = null, $order = "desc")
+function _getBanners($limit = null)
 {
-    /* check is it's complete request */
+    /* inisiasi query */
+    $banners = \ZetthCore\Models\Banner::active()->orderBy('order', 'asc');
+
+    return _doGetData('_getBanner' . $limit, $banners, $limit);
+}
+
+function _getPost($slug, $type = 'complete')
+{
+    return _getPosts($type, 1, 'desc', $slug);
+}
+
+function _getPosts($type = 'simple', $limit = null, $order = "desc", $slug = '')
+{
+    /* check it's complete request */
     $complete = $type == 'complete';
 
-    /* set page limit */
-    $page = \Request::input('page') ? \Request::input('page') : 1;
-    $limit = $limit ?? app('site')->perpage;
-
-    /* set cache */
-    $cache_name = '_getPosts' . $type . $limit . $order . $page;
-    $cache_time = 60 * (env('APP_ENV') != 'production' ? 1 : env('CACHE_TIME', 10));
-
-    /* cek cache */
-    $cache = Cache::get($cache_name);
-    if ($cache) {
-        return $cache;
-    }
+    /* cache name */
+    $cache_name = '_getPosts' . $type . $limit . $order . $slug;
 
     /* inisiasi query */
     $posts = \ZetthCore\Models\Post::posts()->active();
+    if (!empty($slug)) {
+        if (in_array($type, ['category', 'tag'])) {
+            if ($type == 'category') {
+                $posts->withCategory($slug);
+            } else if ($type == 'tag') {
+                $posts->withTag($slug);
+            }
+        } else {
+            $posts->where('slug', $slug)->orWhere('title', 'like', '%' . $slug . '%');
+        }
+    }
 
     /* check complete params */
     if ($complete) {
         $posts->with('comments', 'categories', 'tags', 'author', 'editor');
+    } else {
+        $posts->with('categories', 'author');
+        $posts->withCount('comments');
     }
 
     /* check order */
     if (in_array($order, ['rand', 'random'])) {
-        $posts->random();
+        $posts->inRandomOrder();
     } else {
         $posts->orderBy('published_at', $order);
     }
 
-    /* cek limit */
-    if ($limit > 1) {
-        $posts = $posts->paginate($limit);
-    } else if ($limit == 1) {
-        $posts = $posts->first();
-    } else {
-        $posts = $posts->get();
-    }
-
-    /* simpan ke cache */
-    Cache::put($cache_name, $posts, $cache_time);
-
-    return $posts;
+    return _doGetData($cache_name, $posts, $limit);
 }
 
 function _getPostsSimple($limit = null, $order = "desc")
@@ -92,45 +92,37 @@ function _getPostsComplete($limit = null, $order = "desc")
     return _getPosts('complete', $limit, $order);
 }
 
+function _getCategoryPosts($slug, $limit = null, $order = 'desc')
+{
+    return _getPosts('category', $limit, $order, $slug);
+}
+
+function _getTagPosts($slug, $limit = null, $order = 'desc')
+{
+    return _getPosts('tag', $limit, $order, $slug);
+}
+
 function _getTerms($type = 'category', $limit = null, $order = 'desc')
 {
-    /* set page limit */
-    $page = \Request::input('page') ? \Request::input('page') : 1;
-    $limit = $limit ?? app('site')->perpage;
-
-    /* set cache time */
-    $cache_name = '_getTerms' . $type . $limit . $order . $page;
-    $cache_time = 60 * (env('APP_ENV') != 'production' ? 1 : env('CACHE_TIME', 10));
-
-    /* cek cache */
-    $cache = Cache::get($cache_name);
-    if ($cache) {
-        return $cache;
-    }
+    /* cache name */
+    $cache_name = '_getTerms' . $type . $limit . $order;
 
     /* inisiasi query */
-    $terms = \ZetthCore\Models\Term::where('type', $type)->where('status', 1);
+    $terms = \ZetthCore\Models\Term::active()->where('type', $type);
 
     /* check order */
     if (in_array($order, ['rand', 'random'])) {
-        $terms->random();
+        $terms->inRandomOrder();
     } else {
         $terms->orderBy('name', $order);
     }
 
-    /* cek limit */
-    if ($limit > 1) {
-        $terms = $terms->paginate($limit);
-    } else if ($limit == 1) {
-        $terms = $terms->first();
-    } else {
-        $terms = $terms->get();
-    }
+    return _doGetData($cache_name, $terms, $limit);
+}
 
-    /* simpan ke cache */
-    Cache::put($cache_name, $terms, $cache_time);
-
-    return $terms;
+function _getCategory()
+{
+    return _getCategories(1);
 }
 
 function _getCategories($limit = null, $order = 'desc')
@@ -138,173 +130,113 @@ function _getCategories($limit = null, $order = 'desc')
     return _getTerms('categories', $limit, $order);
 }
 
-function _getTags($limit = null, $order = 'desc')
+function _getTag()
 {
-    return _getTerms('tags', $limit, $order);
+    return _getTags(1);
 }
 
-function _getPages($limit = null, $order = 'desc')
+function _getTags($limit = null, $order = 'desc')
 {
-    /* set page limit */
-    $page = \Request::input('page') ? \Request::input('page') : 1;
-    $limit = $limit ?? app('site')->perpage;
+    return _getTerms('tag', $limit, $order);
+}
 
-    /* set cache time */
-    $cache_name = '_getPages' . $limit . $order . $page;
-    $cache_time = 60 * (env('APP_ENV') != 'production' ? 1 : env('CACHE_TIME', 10));
+function getPage($slug)
+{
+    return _getPages(1, 'desc', $slug);
+}
 
-    /* cek cache */
-    $cache = Cache::get($cache_name);
-    if ($cache) {
-        return $cache;
-    }
+function _getPages($limit = null, $order = 'desc', $slug = '')
+{
+    /* cache name */
+    $cache_name = '_getPages' . $limit . $order . $slug;
 
     /* inisiasi query */
     $pages = \ZetthCore\Models\Post::pages()->active();
+    if (!empty($slug)) {
+        $pages->where('slug', $slug)->orWhere('title', 'like', '%' . $slug . '%');
+    }
 
     /* check order */
     if (in_array($order, ['rand', 'random'])) {
-        $pages->random();
+        $pages->inRandomOrder();
     } else {
         $pages->orderBy('created_at', $order);
     }
 
-    /* cek limit */
-    if ($limit > 1) {
-        $pages = $pages->paginate($limit);
-    } else if ($limit == 1) {
-        $pages = $pages->first();
-    } else {
-        $pages = $pages->get();
-    }
-
-    /* simpan ke cache */
-    Cache::put($cache_name, $pages, $cache_time);
-
-    return $pages;
+    return _doGetData($cache_name, $pages, $limit);
 }
 
-function _getAlbums($limit = null, $order = 'desc')
+function _getAlbum($slug)
 {
-    /* set page limit */
-    $page = \Request::input('page') ? \Request::input('page') : 1;
-    $limit = $limit ?? app('site')->perpage;
+    return _getAlbums(1, 'desc', $slug);
+}
 
-    /* set cache time */
-    $cache_name = '_getAlbums' . $limit . $order . $page;
-    $cache_time = 60 * (env('APP_ENV') != 'production' ? 1 : env('CACHE_TIME', 10));
-
-    /* cek cache */
-    $cache = Cache::get($cache_name);
-    if ($cache) {
-        return $cache;
-    }
+function _getAlbums($limit = null, $order = 'desc', $slug = '')
+{
+    /* cache name */
+    $cache_name = '_getAlbums' . $limit . $order . $slug;
 
     /* inisiasi query */
     $albums = \ZetthCore\Models\Album::where('status', 1);
-    $albums->with('photo');
-    $albums->withCount('photos');
+    if (!empty($slug)) {
+        $albums->where('slug', $slug)->orWhere('name', 'like', '%' . $slug . '%');
+    }
+
+    /* relation */
+    if ($limit == 1) {
+        $albums->with('photos');
+    } else {
+        $albums->with('photo');
+        $albums->withCount('photos');
+    }
 
     /* check order */
     if (in_array($order, ['rand', 'random'])) {
-        $albums->random();
+        $albums->inRandomOrder();
     } else {
         $albums->orderBy('created_at', $order);
     }
 
-    /* cek limit */
-    if ($limit > 1) {
-        $albums = $albums->paginate($limit);
-    } else if ($limit == 1) {
-        $albums = $albums->first();
-    } else {
-        $albums = $albums->get();
-    }
-
-    /* simpan ke cache */
-    Cache::put($cache_name, $albums, $cache_time);
-
-    return $albums;
+    return _doGetData($cache_name, $albums, $limit);
 }
 
 function _getPhotos($limit = null, $order = 'desc')
 {
-    /* set page limit */
-    $page = \Request::input('page') ? \Request::input('page') : 1;
-    $limit = $limit ?? app('site')->perpage;
-
-    /* set cache time */
-    $cache_name = '_getPhotos' . $limit . $order . $page;
-    $cache_time = 60 * (env('APP_ENV') != 'production' ? 1 : env('CACHE_TIME', 10));
-
-    /* cek cache */
-    $cache = Cache::get($cache_name);
-    if ($cache) {
-        return $cache;
-    }
+    /* cache name */
+    $cache_name = '_getPhotos' . $limit . $order;
 
     /* inisiasi query */
     $photos = \ZetthCore\Models\AlbumDetail::with('album');
 
     /* check order */
     if (in_array($order, ['rand', 'random'])) {
-        $photos->random();
+        $photos->inRandomOrder();
     } else {
         $photos->orderBy('created_at', $order);
     }
 
-    /* cek limit */
-    if ($limit > 1) {
-        $photos = $photos->paginate($limit);
-    } else if ($limit == 1) {
-        $photos = $photos->first();
-    } else {
-        $photos = $photos->get();
-    }
-
-    /* simpan ke cache */
-    Cache::put($cache_name, $photos, $cache_time);
-
-    return $photos;
+    return _doGetData($cache_name, $photos, $limit);
 }
 
-function _getVideos($limit = null, $order = 'desc')
+function _getVideo($slug = '')
 {
-    /* set page limit */
-    $page = \Request::input('page') ? \Request::input('page') : 1;
-    $limit = $limit ?? app('site')->perpage;
+    return _getVideo(1, 'desc', $slug);
+}
 
-    /* set cache time */
-    $cache_name = '_getVideos' . $limit . $order . $page;
-    $cache_time = 60 * (env('APP_ENV') != 'production' ? 1 : env('CACHE_TIME', 10));
-
-    /* cek cache */
-    $cache = Cache::get($cache_name);
-    if ($cache) {
-        return $cache;
-    }
+function _getVideos($limit = null, $order = 'desc', $slug = '')
+{
+    /* cache name */
+    $cache_name = '_getVideos' . $limit . $order . $slug;
 
     /* inisiasi query */
     $videos = \ZetthCore\Models\Post::videos()->active();
 
     /* check order */
     if (in_array($order, ['rand', 'random'])) {
-        $videos->random();
+        $videos->inRandomOrder();
     } else {
         $videos->orderBy('created_at', $order);
     }
 
-    /* cek limit */
-    if ($limit > 1) {
-        $videos = $videos->paginate($limit);
-    } else if ($limit == 1) {
-        $videos = $videos->first();
-    } else {
-        $videos = $videos->get();
-    }
-
-    /* simpan ke cache */
-    Cache::put($cache_name, $videos, $cache_time);
-
-    return $videos;
+    return _doGetData($cache_name, $videos, $limit);
 }

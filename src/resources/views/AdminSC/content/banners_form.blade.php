@@ -73,7 +73,7 @@ if (isset($data->id) && ($key = array_search($data->id, $orders)) !== false) {;
 							@endif
 						@endforeach
 					</select>
-					<input type="text" class="form-control" id="url_external" name="url_external" value="{{ isset($data->id) ? $data->url : '' }}" placeholder="http://external.link" {!! (isset($data->id) && ($data->url_external)) ? 'style="margin-top:5px;"' : 'style="margin-top:5px;display:none;" disabled' !!}>
+					<input type="text" class="form-control" id="url_external" name="url_external" value="{{ isset($data->id) ? $data->url : '' }}" placeholder="http://external.link" {!! (isset($data->id) && ($data->url_external)) ? 'style="margin-top:5px;" ' : 'style="margin-top:5px;display:none;" disabled ' !!}>
 				</div>
 			</div>
 			<div class="form-group">
@@ -89,14 +89,14 @@ if (isset($data->id) && ($key = array_search($data->id, $orders)) !== false) {;
 				<label for="target" class="col-sm-2 control-label">Urutan</label>
 				<div class="col-sm-4">
 					<input type="hidden" name="orders" value="{{ implode(',', $orders) }}">
-          <select id="order" name="order" class="form-control custom-select2">
-            <option value="first">Pertama</option>
-            @foreach ($banners as $banner)
-              @if (!isset($data->id) || (isset($data->id) && $banner->id != $data->id))
-                <option value="{{ $banner->id }}" {{ (isset($data->id) && ($banner->order == ($data->order - 1))) ? 'selected' : '' }}>Setelah {{ $banner->title != '' ? $banner->title : $banner->order }}</option>
-              @endif
-            @endforeach
-          </select>
+					<select id="order" name="order" class="form-control custom-select2">
+						<option value="first">Pertama</option>
+						@foreach ($banners as $banner)
+							@if (!isset($data->id) || (isset($data->id) && $banner->id != $data->id))
+								<option value="{{ $banner->id }}" {{ (isset($data->id) && ($banner->order == ($data->order - 1))) ? 'selected' : '' }}>Setelah {{ $banner->title != '' ? $banner->title : $banner->order }}</option>
+							@endif
+						@endforeach
+					</select>
 				</div>
 			</div>
 			<div class="form-group">
@@ -146,7 +146,7 @@ if (isset($data->id) && ($key = array_search($data->id, $orders)) !== false) {;
 		$(function(){
 			$(".select2").select2({
 				placeholder: "[None]"
-      });
+      		});
       
 			$(".custom-select2").select2({
 				minimumResultsForSearch: Infinity
@@ -174,9 +174,9 @@ if (isset($data->id) && ($key = array_search($data->id, $orders)) !== false) {;
 
 			$('.select2').on('change',function(){
 				if ($('#url').val()=="external"){
-					$('#url_ext').attr("disabled", false).show();
+					$('#url_external').attr("disabled", false).show();
 				}else{
-					$('#url_ext').attr("disabled", true).hide();
+					$('#url_external').attr("disabled", true).hide();
 				}
 			});
 			$('#btn-upload').fancybox({
