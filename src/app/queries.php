@@ -37,7 +37,7 @@ function _getBanners($limit = null)
     return _doGetData('_getBanner' . $limit, $banners, $limit);
 }
 
-function _getPost($slug = '', $type = 'complete')
+function _getPost($slug, $type = 'complete')
 {
     return _getPosts($type, 1, 'desc', $slug);
 }
@@ -140,7 +140,7 @@ function _getTags($limit = null, $order = 'desc')
     return _getTerms('tag', $limit, $order);
 }
 
-function getPage($slug = '')
+function getPage($slug)
 {
     return _getPages(1, 'desc', $slug);
 }
@@ -166,7 +166,7 @@ function _getPages($limit = null, $order = 'desc', $slug = '')
     return _doGetData($cache_name, $pages, $limit);
 }
 
-function _getAlbum($slug = '')
+function _getAlbum($slug)
 {
     return _getAlbums(1, 'desc', $slug);
 }
@@ -183,8 +183,12 @@ function _getAlbums($limit = null, $order = 'desc', $slug = '')
     }
 
     /* relation */
-    $albums->with('photo');
-    $albums->withCount('photos');
+    if ($limit == 1) {
+        $albums->with('photos');
+    } else {
+        $albums->with('photo');
+        $albums->withCount('photos');
+    }
 
     /* check order */
     if (in_array($order, ['rand', 'random'])) {
