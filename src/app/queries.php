@@ -6,6 +6,7 @@ function _doGetData($cache_name, $data, $limit = null)
     $limit = $limit ?? app('site')->perpage;
 
     /* set cache */
+    $cache_name .= $limit . $page;
     $cache_time = 60 * (env('APP_ENV') != 'production' ? 1 : env('CACHE_TIME', 10));
 
     /* cek cache */
@@ -34,7 +35,7 @@ function _getBanners($limit = null)
     /* inisiasi query */
     $banners = \ZetthCore\Models\Banner::active()->orderBy('order', 'asc');
 
-    return _doGetData('_getBanner' . $limit, $banners, $limit);
+    return _doGetData('_getBanners', $banners, $limit);
 }
 
 function _getPost($slug, $type = 'complete')
@@ -48,7 +49,7 @@ function _getPosts($type = 'simple', $limit = null, $order = "desc", $slug = '')
     $complete = $type == 'complete';
 
     /* cache name */
-    $cache_name = '_getPosts' . $type . $limit . $order . $slug;
+    $cache_name = '_getPosts' . $type . $order . $slug;
 
     /* inisiasi query */
     $posts = \ZetthCore\Models\Post::posts()->active();
@@ -105,7 +106,7 @@ function _getTagPosts($slug, $limit = null, $order = 'desc')
 function _getTerms($type = 'category', $limit = null, $order = 'desc')
 {
     /* cache name */
-    $cache_name = '_getTerms' . $type . $limit . $order;
+    $cache_name = '_getTerms' . $type . $order;
 
     /* inisiasi query */
     $terms = \ZetthCore\Models\Term::active()->where('type', $type);
@@ -148,7 +149,7 @@ function getPage($slug)
 function _getPages($limit = null, $order = 'desc', $slug = '')
 {
     /* cache name */
-    $cache_name = '_getPages' . $limit . $order . $slug;
+    $cache_name = '_getPages' . $order . $slug;
 
     /* inisiasi query */
     $pages = \ZetthCore\Models\Post::pages()->active();
@@ -174,7 +175,7 @@ function _getAlbum($slug)
 function _getAlbums($limit = null, $order = 'desc', $slug = '')
 {
     /* cache name */
-    $cache_name = '_getAlbums' . $limit . $order . $slug;
+    $cache_name = '_getAlbums' . $order . $slug;
 
     /* inisiasi query */
     $albums = \ZetthCore\Models\Album::where('status', 1);
@@ -203,7 +204,7 @@ function _getAlbums($limit = null, $order = 'desc', $slug = '')
 function _getPhotos($limit = null, $order = 'desc')
 {
     /* cache name */
-    $cache_name = '_getPhotos' . $limit . $order;
+    $cache_name = '_getPhotos' . $order;
 
     /* inisiasi query */
     $photos = \ZetthCore\Models\AlbumDetail::with('album');
@@ -226,7 +227,7 @@ function _getVideo($slug = '')
 function _getVideos($limit = null, $order = 'desc', $slug = '')
 {
     /* cache name */
-    $cache_name = '_getVideos' . $limit . $order . $slug;
+    $cache_name = '_getVideos' . $order . $slug;
 
     /* inisiasi query */
     $videos = \ZetthCore\Models\Post::videos()->active();
