@@ -96,6 +96,8 @@ function _doGetData(array $params)
         } else {
             if ($is_posts) {
                 $data->orderBy('published_at', $params['order']);
+            } else if ($model_name == 'Banner') {
+                $data->orderBy('order', 'asc');
             } else {
                 $data->orderBy('created_at', $params['order']);
             }
