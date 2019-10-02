@@ -35,14 +35,14 @@
         ],
         "columns": [
           { "width": "30px" },
-          // { "data": "image", "width": "80px" },
+          /* { "data": "image", "width": "80px" }, */
           { "data": "ip", "width": "100px" },
           { "data": "page" },
           { "data": "referral" },
           { "data": "count", "width": "50px" },
-          // { "data": "email", "width": "200px" },
-          // { "data": "method", "width": "50px" },
-          // { "width": "100px" },
+          /* { "data": "email", "width": "200px" }, */
+          /* { "data": "method", "width": "50px" }, */
+          /* { "width": "100px" }, */
         ],
         "columnDefs": [{
           "targets": 0,

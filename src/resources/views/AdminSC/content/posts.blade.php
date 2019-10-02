@@ -167,7 +167,7 @@
             "sortable": false,
             "render": function (data, type, row, meta) {
               let render = row.title+'<br>';
-              // render += '<small>'+row.description+'</small><br>';
+              /* render += '<small>'+row.description+'</small><br>'; */
               render += _get_status_text(row.status);
 
               return render;

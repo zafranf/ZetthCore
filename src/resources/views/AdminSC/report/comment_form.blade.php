@@ -95,9 +95,9 @@ $(document).ready(function(){
         setup : function(ed) {
             ed.on('init', function() 
             {
-                // this.getDoc().body.style.fontSize = '12px';
+                /* this.getDoc().body.style.fontSize = '12px'; */
                 this.getDoc().body.style.fontFamily = 'arial, helvetica, sans-serif';
-                // this.getDoc().body.style.fontWeight = '300';
+                /* this.getDoc().body.style.fontWeight = '300'; */
             });
         }
     });
