@@ -81,10 +81,24 @@ class Post extends Model
         return $query->where('type', 'video');
     }
 
+    public function scopeWithCategory($query, $name)
+    {
+        return $query->whereHas('terms', function ($q) use ($name) {
+            $q->where('type', 'category')->where('slug', $name);
+        });
+    }
+
     public function scopeWithCategories($query, $name)
     {
         return $query->whereHas('terms', function ($q) use ($name) {
             $q->where('type', 'category')->whereIn('slug', $name);
+        });
+    }
+
+    public function scopeWithTag($query, $name)
+    {
+        return $query->whereHas('terms', function ($q) use ($name) {
+            $q->where('type', 'tag')->where('slug', $name);
         });
     }
 
