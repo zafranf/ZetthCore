@@ -336,7 +336,7 @@
     $(document).ready(function(){
       var wFB = window.innerWidth - 30;
       var hFB = window.innerHeight - 60;
-      // var fImage = {{ isset($data->images) ? count($data->images) : 1 }};
+      /* var fImage = {{ isset($data->images) ? count($data->images) : 1 }}; */
       
       $('input').on('keypress', function(e){
         key = e.keyCode;
@@ -388,9 +388,9 @@
         setup : function(ed) {
             ed.on('init', function() 
             {
-                // this.getDoc().body.style.fontSize = '12px';
+                /* this.getDoc().body.style.fontSize = '12px'; */
                 this.getDoc().body.style.fontFamily = 'arial, helvetica, sans-serif';
-                // this.getDoc().body.style.fontWeight = '300';
+                /* this.getDoc().body.style.fontWeight = '300'; */
             });
         }
       });
@@ -573,7 +573,7 @@
       
       $('#tags').tagsinput({
         tagClass: function(item){
-          // return 'label label-warning'
+          /* return 'label label-warning' */
         },
         typeaheadjs: {
           name: 'tags',

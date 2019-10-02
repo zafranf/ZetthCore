@@ -42,7 +42,7 @@
           { "data": "host", "width": "250px" },
           { "data": "text" },
           { "data": "count", "width": "50px" },
-          // { "width": "40px" },
+          /* { "width": "40px" }, */
         ],
         "columnDefs": [{
           "targets": 0,

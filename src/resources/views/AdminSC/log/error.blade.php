@@ -34,7 +34,7 @@
           [10, 20, 50, 100, -1], 
           [10, 20, 50, 100, "All"]
         ],
-        // "order": [[ 0, "desc" ]],
+        /* "order": [[ 0, "desc" ]], */
         "columns": [
           { "width": "30px" },
           { "data": "updated_at", "width": "120px" },
