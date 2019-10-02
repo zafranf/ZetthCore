@@ -42,12 +42,12 @@
 							@endif
 							@if ($post->type == "page" || $post->type == "video")
 								<option value="{{ $post->slug }}" {{ $post->slug == "#" ? 'disabled' : '' }} {{ (isset($data->id) && $post->slug == $data->url) ? 'selected' : '' }}>{{ $post->title }}</option>
-							@elseif ($post->type=="article")
+							@elseif ($post->type == "article")
 								<option value="{{ 'article/' . $post->slug }}" {{ $post->slug == "#" ? 'disabled' : '' }} {{ (isset($data->id) && 'article/' . $post->slug == $data->url) ? 'selected' : '' }}>{{ $post->title }}</option>
 							@endif
 						@endforeach
           </select>
-          <input type="text" class="form-control" id="url_external" name="url_external" value="{{ isset($data) ? (($data->url=="#") ? '' : $data->url) : '' }}" placeholder="http://example.com" {!! (isset($data) && ($data->url_external) ) ? 'style="margin-top:5px;"' : 'style="margin-top:5px;display:none;" disabled' !!}>
+          <input type="text" class="form-control" id="url_external" name="url_external" value="{{ isset($data) ? (($data->url=="#") ? '' : $data->url) : '' }}" placeholder="http://example.com" {!! (isset($data) && ($data->url_external) ) ? 'style="margin-top:5px;" ' : 'style="margin-top:5px;display:none;" disabled ' !!}>
         </div>
       </div>
       {{-- <div class="form-group">

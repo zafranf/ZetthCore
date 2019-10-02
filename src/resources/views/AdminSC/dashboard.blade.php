@@ -69,7 +69,7 @@
           <div class="panel panel-default">
             <div class="panel-heading">
               Artikel Populer
-              <a href="{{ url(app('admin_path') . '/content/article/posts') }}" class="btn btn-default btn-sm pull-right"><i class="fa fa-eye"></i> Semua</a>
+              <a href="{{ url(app('admin_path') . '/content/posts') }}" class="btn btn-default btn-sm pull-right"><i class="fa fa-eye"></i> Semua</a>
             </div>
             <div class="panel-body no-padding">
               <div class="loading">Memuat<img src="{{ url('themes/admin/AdminSC/images/loading-flat.gif') }}"></div>

@@ -9,6 +9,11 @@ class Term extends Model
 {
     use SoftDeletes;
 
+    public function scopeActive($query)
+    {
+        return $query->where('status', 1);
+    }
+
     public function subcategory()
     {
         return $this->hasMany('ZetthCore\Models\Term', 'parent_id', 'id')->where('status', 1)->where('type', 'category')->with('subcategory');

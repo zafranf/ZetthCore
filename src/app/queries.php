@@ -1,12 +1,17 @@
 <?php
-function _getBanners($limit = null)
+function _doGetData($model, $search = '', $type = '', $with = [], $limit = null, $order = 'desc', $complete = false)
 {
+    /* check if model is post */
+    $model_ex = explode('\\', $model);
+    $model_name = end($model_ex);
+    $is_posts = ucfirst($model_name) == 'Post';
+
     /* set page limit */
     $page = \Request::input('page') ? \Request::input('page') : 1;
     $limit = $limit ?? app('site')->perpage;
 
     /* set cache */
-    $cache_name = '_getBanners' . $limit . $page;
+    $cache_name = '_get' . str_slug($model) . $search . $type . implode('', $with) . $limit . $order . $page;
     $cache_time = 60 * (env('APP_ENV') != 'production' ? 1 : env('CACHE_TIME', 10));
 
     /* cek cache */
@@ -16,70 +21,88 @@ function _getBanners($limit = null)
     }
 
     /* inisiasi query */
-    $banners = \ZetthCore\Models\Banner::where('status', 1)->orderBy('order', 'asc');
+    $data = $model::active();
 
-    /* cek limit */
-    if ($limit > 1) {
-        $banners = $banners->paginate($limit);
-    } else if ($limit == 1) {
-        $banners = $banners->first();
-    } else {
-        $banners = $banners->get();
+    /* query search */
+    if (!empty($search)) {
+        if (in_array($model_name, ['Post', 'Banner'])) {
+            $data->where('title', 'like', '%' . $search . '%');
+
+            if ($is_posts) {
+                $data->orWhere('slug', $search);
+            }
+        } else {
+            $data->where('name', 'like', '%' . $search . '%')->orWhere('slug', $search);
+        }
     }
-
-    /* simpan ke cache */
-    Cache::put($cache_name, $banners, $cache_time);
-
-    return $banners;
-}
-
-function _getPosts($type = 'simple', $limit = null, $order = "desc")
-{
-    /* check is it's complete request */
-    $complete = $type == 'complete';
-
-    /* set page limit */
-    $page = \Request::input('page') ? \Request::input('page') : 1;
-    $limit = $limit ?? app('site')->perpage;
-
-    /* set cache */
-    $cache_name = '_getPosts' . $type . $limit . $order . $page;
-    $cache_time = 60 * (env('APP_ENV') != 'production' ? 1 : env('CACHE_TIME', 10));
-
-    /* cek cache */
-    $cache = Cache::get($cache_name);
-    if ($cache) {
-        return $cache;
-    }
-
-    /* inisiasi query */
-    $posts = \ZetthCore\Models\Post::posts()->active();
 
     /* check complete params */
-    if ($complete) {
-        $posts->with('comments', 'categories', 'tags', 'author', 'editor');
+    if ($is_posts) {
+        if ($type == 'article') {
+            $data->posts();
+        } else if ($type == 'page') {
+            $data->pages();
+        } else if ($type == 'video') {
+            $data->videos();
+        }
+
+        if ($complete) {
+            $data->with('comments', 'categories', 'tags', 'author', 'editor');
+        } else {
+            $data->with('categories', 'author');
+            $data->withCount('comments');
+        }
+    } else if ($model_name == 'Term') {
+        $data->where('type', $type);
+    }
+
+    /* check relation */
+    if (!empty($with)) {
+        $data->with($with);
     }
 
     /* check order */
     if (in_array($order, ['rand', 'random'])) {
-        $posts->random();
+        $data->random();
     } else {
-        $posts->orderBy('published_at', $order);
+        if ($is_posts) {
+            $data->orderBy('published_at', $order);
+        } else {
+            $data->orderBy('created_at', $order);
+        }
     }
 
     /* cek limit */
     if ($limit > 1) {
-        $posts = $posts->paginate($limit);
+        $data = $data->paginate($limit);
     } else if ($limit == 1) {
-        $posts = $posts->first();
+        $data = $data->first();
     } else {
-        $posts = $posts->get();
+        $data = $data->get();
     }
 
     /* simpan ke cache */
-    Cache::put($cache_name, $posts, $cache_time);
+    Cache::put($cache_name, $data, $cache_time);
 
-    return $posts;
+    return $data;
+}
+
+function _getBanners($limit = null)
+{
+    return _doGetData(\ZetthCore\Models\Banner::class, '', '', [], $limit);
+}
+
+function _getPost($slug = '', $type = 'simple')
+{
+    return _getPosts($type, 1, 'desc', $slug);
+}
+
+function _getPosts($type = 'simple', $limit = null, $order = "desc", $slug = '')
+{
+    /* check it's complete request */
+    $complete = $type == 'complete';
+
+    return _doGetData(\ZetthCore\Models\Post::class, $slug, 'article', [], $limit, $order, $complete);
 }
 
 function _getPostsSimple($limit = null, $order = "desc")
@@ -92,45 +115,19 @@ function _getPostsComplete($limit = null, $order = "desc")
     return _getPosts('complete', $limit, $order);
 }
 
-function _getTerms($type = 'category', $limit = null, $order = 'desc')
+function _getCategoryPosts($slug = '', $limit = null, $order = 'desc')
 {
-    /* set page limit */
-    $page = \Request::input('page') ? \Request::input('page') : 1;
-    $limit = $limit ?? app('site')->perpage;
 
-    /* set cache time */
-    $cache_name = '_getTerms' . $type . $limit . $order . $page;
-    $cache_time = 60 * (env('APP_ENV') != 'production' ? 1 : env('CACHE_TIME', 10));
+}
 
-    /* cek cache */
-    $cache = Cache::get($cache_name);
-    if ($cache) {
-        return $cache;
-    }
+function _getTerms($type = 'category', $limit = null, $order = 'desc', $slug = '')
+{
+    return _doGetData(\ZetthCore\Models\Term::class, $slug, $type, [], $limit, $order);
+}
 
-    /* inisiasi query */
-    $terms = \ZetthCore\Models\Term::where('type', $type)->where('status', 1);
-
-    /* check order */
-    if (in_array($order, ['rand', 'random'])) {
-        $terms->random();
-    } else {
-        $terms->orderBy('name', $order);
-    }
-
-    /* cek limit */
-    if ($limit > 1) {
-        $terms = $terms->paginate($limit);
-    } else if ($limit == 1) {
-        $terms = $terms->first();
-    } else {
-        $terms = $terms->get();
-    }
-
-    /* simpan ke cache */
-    Cache::put($cache_name, $terms, $cache_time);
-
-    return $terms;
+function _getCategory()
+{
+    return _getCategories(1);
 }
 
 function _getCategories($limit = null, $order = 'desc')
@@ -138,50 +135,29 @@ function _getCategories($limit = null, $order = 'desc')
     return _getTerms('categories', $limit, $order);
 }
 
+function _getTag()
+{
+    return _getTags(1);
+}
+
 function _getTags($limit = null, $order = 'desc')
 {
     return _getTerms('tags', $limit, $order);
 }
 
-function _getPages($limit = null, $order = 'desc')
+function getPage($slug = '')
 {
-    /* set page limit */
-    $page = \Request::input('page') ? \Request::input('page') : 1;
-    $limit = $limit ?? app('site')->perpage;
+    return _getPages(1, 'desc', $slug);
+}
 
-    /* set cache time */
-    $cache_name = '_getPages' . $limit . $order . $page;
-    $cache_time = 60 * (env('APP_ENV') != 'production' ? 1 : env('CACHE_TIME', 10));
+function _getPages($limit = null, $order = 'desc', $slug = '')
+{
+    return _doGetData(\ZetthCore\Models\Post::class, $slug, 'page', [], $limit, $order);
+}
 
-    /* cek cache */
-    $cache = Cache::get($cache_name);
-    if ($cache) {
-        return $cache;
-    }
-
-    /* inisiasi query */
-    $pages = \ZetthCore\Models\Post::pages()->active();
-
-    /* check order */
-    if (in_array($order, ['rand', 'random'])) {
-        $pages->random();
-    } else {
-        $pages->orderBy('created_at', $order);
-    }
-
-    /* cek limit */
-    if ($limit > 1) {
-        $pages = $pages->paginate($limit);
-    } else if ($limit == 1) {
-        $pages = $pages->first();
-    } else {
-        $pages = $pages->get();
-    }
-
-    /* simpan ke cache */
-    Cache::put($cache_name, $pages, $cache_time);
-
-    return $pages;
+function _getAlbum()
+{
+    return _getAlbums(1);
 }
 
 function _getAlbums($limit = null, $order = 'desc')
@@ -266,6 +242,11 @@ function _getPhotos($limit = null, $order = 'desc')
     Cache::put($cache_name, $photos, $cache_time);
 
     return $photos;
+}
+
+function _getVideo()
+{
+    return _getVideo(1);
 }
 
 function _getVideos($limit = null, $order = 'desc')
