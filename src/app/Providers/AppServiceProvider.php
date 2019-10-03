@@ -130,6 +130,11 @@ class AppServiceProvider extends ServiceProvider
         /* set default timezone */
         // date_default_timezone_set(app('site')->timezone);
         // config(['app.timezone' => app('site')->timezone]);
+
+        /* set config template */
+        $theme = app('site')->template->slug ?? 'WebSC';
+        $config_template = require resource_path('views/' . $theme . '/config.php');
+        app('config')->set('site', $config_template);
     }
 
     /**
