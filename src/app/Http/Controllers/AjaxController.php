@@ -74,13 +74,21 @@ class AjaxController extends AdminController
                 return response()->json($res);
                 break;
         }
-
-        $visits = VisitorLog::select('ip', DB::raw('date_format(created_at, \'' . $df . '\') as created'), DB::raw('sum(count) as count'))
+        /* config([
+        'database.connections.mysql.strict' => false,
+        ]); */
+        // dd(config('database.connections.mysql'));
+        // \Illuminate\Support\Facades\Config::set('database.connections.mysql.strict', false);
+        // config('database.connections.mysql.strict', false);
+        config()->set('database.connections.mysql.strict', false);
+        \DB::reconnect();
+        $visits = VisitorLog::select('created_at', 'ip', DB::raw('date_format(created_at, \'' . $df . '\') as created'), DB::raw('sum(count) as count'))
             ->where('is_robot', 0)
             ->whereBetween('created_at', [$start . ' 00:00:00', $end . ' 23:59:59'])
             ->orderBy('created_at', 'ASC')
             ->groupBy(DB::raw('date_format(created_at, \'' . $df . '\')'), 'ip')
             ->get();
+        dd($visits);
 
         if ($visits) {
             switch ($range) {
