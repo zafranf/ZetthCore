@@ -94,16 +94,16 @@ class AjaxController extends AdminController
         if ($visits) {
             switch ($range) {
                 case 'hourly':
-                    $arr_diff = $this->pageview_hourly($visits);
+                    $arr_diff = $this->pageview_hourly($visits, $df);
                     break;
                 case 'monthly':
-                    $arr_diff = $this->pageview_monthly($visits, $start);
+                    $arr_diff = $this->pageview_monthly($visits, $start, $df);
                     break;
                 case 'yearly':
-                    $arr_diff = $this->pageview_yearly($visits, $start);
+                    $arr_diff = $this->pageview_yearly($visits, $start, $df);
                     break;
                 case 'daily':
-                    $arr_diff = $this->pageview_daily($visits, $start);
+                    $arr_diff = $this->pageview_daily($visits, $start, $df);
                     break;
                 default:
                     return response()->json($res);
@@ -119,15 +119,16 @@ class AjaxController extends AdminController
 
             $time2 = '';
             foreach ($visits as $k => $v) {
-                if ($time2 != $v->created) {
-                    $data_visit[$v->created]['visit'] = $v->count;
-                    $data_visit[$v->created]['ip'] = 1;
+                $created = carbon($v->created_at)->format(str_replace("%", "", $df));
+                if ($time2 != $created) {
+                    $data_visit[$created]['visit'] = $v->count;
+                    $data_visit[$created]['ip'] = 1;
                 } else {
-                    $data_visit[$v->created]['visit'] = $v->count + $data_visit[$v->created]['visit'];
-                    $data_visit[$v->created]['ip'] = $data_visit[$v->created]['ip'] + 1;
+                    $data_visit[$created]['visit'] = $v->count + $data_visit[$created]['visit'];
+                    $data_visit[$created]['ip'] = $data_visit[$created]['ip'] + 1;
                 }
 
-                $time2 = $v->created;
+                $time2 = $created;
                 $ip = $v->ip;
             }
 
@@ -142,7 +143,7 @@ class AjaxController extends AdminController
         return response()->json($res);
     }
 
-    public function pageview_hourly($visits = [])
+    public function pageview_hourly($visits = [], $format = 'Y-m-d H')
     {
         $time = '';
         $timee = '';
@@ -155,12 +156,13 @@ class AjaxController extends AdminController
         }
 
         foreach ($visits as $k => $v) {
-            if ($time != $v->created) {
-                $time_exist[] = $v->created;
+            $created = carbon($v->created_at)->format(str_replace("%", "", $format));
+            if ($time != $created) {
+                $time_exist[] = $created;
             }
 
-            $time = $v->created;
-            $timee = $v->created_at;
+            $time = $created;
+            $timee = carbon($v->created_at);
         }
 
         $max = substr($timee, -8, 2);
@@ -174,7 +176,7 @@ class AjaxController extends AdminController
         return $arr_diff;
     }
 
-    public function pageview_daily($visits = [], $start)
+    public function pageview_daily($visits = [], $start, $format = 'Y-m-d H')
     {
         $time = '';
         $timee = '';
@@ -187,12 +189,13 @@ class AjaxController extends AdminController
         }
 
         foreach ($visits as $k => $v) {
-            if ($time != $v->created) {
-                $time_exist[] = $v->created;
+            $created = carbon($v->created_at)->format(str_replace("%", "", $format));
+            if ($time != $created) {
+                $time_exist[] = $created;
             }
 
-            $time = $v->created;
-            $timee = $v->created_at;
+            $time = $created;
+            $timee = carbon($v->created_at);
         }
 
         $st = date("d", strtotime($start));
@@ -207,7 +210,7 @@ class AjaxController extends AdminController
         return $arr_diff;
     }
 
-    public function pageview_monthly($visits = [], $start)
+    public function pageview_monthly($visits = [], $start, $format = 'Y-m-d H')
     {
         $time = '';
         $timee = '';
@@ -220,12 +223,13 @@ class AjaxController extends AdminController
         }
 
         foreach ($visits as $k => $v) {
-            if ($time != $v->created) {
-                $time_exist[] = $v->created;
+            $created = carbon($v->created_at)->format(str_replace("%", "", $format));
+            if ($time != $created) {
+                $time_exist[] = $created;
             }
 
-            $time = $v->created;
-            $timee = $v->created_at;
+            $time = $created;
+            $timee = carbon($v->created_at);
         }
 
         $st = date("m", strtotime($start));
@@ -240,7 +244,7 @@ class AjaxController extends AdminController
         return $arr_diff;
     }
 
-    public function pageview_yearly($visits = [], $start)
+    public function pageview_yearly($visits = [], $start, $format = 'Y-m-d H')
     {
         $time = '';
         $timee = '';
@@ -253,12 +257,13 @@ class AjaxController extends AdminController
         }
 
         foreach ($visits as $k => $v) {
-            if ($time != $v->created) {
-                $time_exist[] = $v->created;
+            $created = carbon($v->created_at)->format(str_replace("%", "", $format));
+            if ($time != $created) {
+                $time_exist[] = $created;
             }
 
-            $time = $v->created;
-            $timee = $v->created_at;
+            $time = $created;
+            $timee = carbon($v->created_at);
         }
 
         $st = date("Y", strtotime($start));
