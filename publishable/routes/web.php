@@ -38,15 +38,11 @@ Route::name('web.')->middleware(['site', 'visitor_log'])->group(function () {
     Route::get('/thankyou', 'Site\MiscController@thankyou')->name('thankyou');
 
     /* Term Routes */
-    Route::get('/{term_type}/{slug}', 'Site\TermController@index')->name('term')->where('term_type', 'category|tag');
+    Route::get('/{term_type}/{slug}', 'Site\MainController@term')->name('term')->where('term_type', 'category|tag');
 
     /* Post Routes */
     Route::get('/{type}', 'Site\PostController@index')->name('posts')->where('type', 'posts|articles|news');
     Route::get('/{type}/{slug}', 'Site\PostController@detail')->name('post')->where('type', 'post|article|news');
-
-    /* Event Routes */
-    Route::get('/events', 'Site\EventController@index')->name('events');
-    Route::get('/event/{slug}', 'Site\EventController@detail')->name('event');
 
     /* Page Route */
     Route::get('/{slug?}', 'Site\MainController@page')->name('page');
