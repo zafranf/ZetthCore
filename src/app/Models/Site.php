@@ -12,4 +12,9 @@ class Site extends Model
     {
         return $this->hasMany('ZetthCore\Models\SocmedData', 'data_id')->where('type', 'site');
     }
+
+    public function template()
+    {
+        return $this->belongsTo('ZetthCore\Models\Template');
+    }
 }

@@ -52,6 +52,11 @@ class AppServiceProvider extends ServiceProvider
                 return $site;
             });
 
+            /* set config template */
+            $theme = app('site')->template->slug ?? 'WebSC';
+            $config_template = require resource_path('views/' . $theme . '/config.php');
+            app('config')->set('site', $config_template);
+
             /* set device type to global */
             $agent = new \Jenssegers\Agent\Agent();
             $this->app->singleton('is_mobile', function () use ($agent) {
@@ -82,6 +87,34 @@ class AppServiceProvider extends ServiceProvider
         });
 
         /* set middleware */
+        $this->loadMiddleware();
+        $this->loadRoutesFrom(__DIR__ . '/../../routes/routes.php');
+        $this->loadViewsFrom(__DIR__ . '/../../resources/views', 'zetthcore');
+        $this->loadMigrationsFrom(__DIR__ . '/../../database/migrations');
+        // $this->loadSeedsFrom(__DIR__ . '/../../database/seeds');
+
+        $this->publishAll();
+
+        /* set default varchar */
+        // Schema::defaultStringLength(255);
+
+        /* set default timezone */
+        // date_default_timezone_set(app('site')->timezone);
+        // config(['app.timezone' => app('site')->timezone]);
+    }
+
+    /**
+     * Register any application services.
+     *
+     * @return void
+     */
+    public function register()
+    {
+        //
+    }
+
+    public function loadMiddleware()
+    {
         $router = $this->app['router'];
         $router->aliasMiddleware('access', \ZetthCore\Http\Middleware\AccessMiddleware::class);
         $router->aliasMiddleware('site', \ZetthCore\Http\Middleware\SiteMiddleware::class);
@@ -93,17 +126,16 @@ class AppServiceProvider extends ServiceProvider
         // $router->pushMiddlewareToGroup('web', \RenatoMarinho\LaravelPageSpeed\Middleware\TrimUrls::class);
         $router->pushMiddlewareToGroup('web', \RenatoMarinho\LaravelPageSpeed\Middleware\RemoveQuotes::class);
         $router->pushMiddlewareToGroup('web', \RenatoMarinho\LaravelPageSpeed\Middleware\CollapseWhitespace::class);
+    }
 
-        $this->loadRoutesFrom(__DIR__ . '/../../routes/routes.php');
-        $this->loadViewsFrom(__DIR__ . '/../../resources/views', 'zetthcore');
-        $this->loadMigrationsFrom(__DIR__ . '/../../database/migrations');
-        // $this->loadSeedsFrom(__DIR__ . '/../../database/seeds');
-
+    public function publishAll()
+    {
         /* $this->publishes([
         __DIR__ . '/../../database' => database_path(),
         ], 'zetthmigrate'); */
         $publishable_path = '/../../../publishable';
         $this->publishes([
+            __DIR__ . $publishable_path . '/config/app.php' => config_path('app.php'),
             __DIR__ . $publishable_path . '/config/auth.php' => config_path('auth.php'),
             __DIR__ . $publishable_path . '/config/database.php' => config_path('database.php'),
             __DIR__ . $publishable_path . '/config/image.php' => config_path('image.php'),
@@ -123,22 +155,5 @@ class AppServiceProvider extends ServiceProvider
         $this->publishes([
             __DIR__ . $publishable_path . '/routes/web.php' => base_path('routes/web.php'),
         ], 'zetthroutes');
-
-        /* set default varchar */
-        // Schema::defaultStringLength(255);
-
-        /* set default timezone */
-        // date_default_timezone_set(app('site')->timezone);
-        // config(['app.timezone' => app('site')->timezone]);
-    }
-
-    /**
-     * Register any application services.
-     *
-     * @return void
-     */
-    public function register()
-    {
-        //
     }
 }
