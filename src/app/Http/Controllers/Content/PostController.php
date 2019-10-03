@@ -117,9 +117,9 @@ class PostController extends AdminController
         $tags = explode(",", $r->input('tags'));
         // $digit = 3;
         // $uniq = str_random($digit);
-        $cover = str_replace(url('/'), '', $r->input('cover'));
+        // $cover = str_replace(url('/'), '', $r->input('cover'));
         $date = ($r->input('date') == '') ? date("Y-m-d") : $r->input('date');
-        $time = ($r->input('time') == '') ? date("H:i:s") : $r->input('time');
+        $time = ($r->input('time') == '') ? date("H:i:s") : $r->input('time') . ':00';
 
         /* save data */
         $post = new Post;
@@ -128,7 +128,7 @@ class PostController extends AdminController
         $post->content = $r->input('content');
         $post->excerpt = $r->input('excerpt') ?? substr(strip_tags($post->content), 0, 255);
         $post->type = 'article';
-        $post->cover = $cover;
+        $post->cover = $r->input('cover');
         $post->status = $r->input('status');
         $post->share = ($r->input('share')) ? 1 : 0;
         $post->like = ($r->input('like')) ? 1 : 0;
@@ -225,9 +225,9 @@ class PostController extends AdminController
         $tags = explode(",", $r->input('tags'));
         // $digit = 3;
         // $uniq = str_random($digit);
-        $cover = str_replace(url('/'), '', $r->input('cover'));
+        // $cover = str_replace(url('/'), '', $r->input('cover'));
         $date = ($r->input('date') == '') ? date("Y-m-d") : $r->input('date');
-        $time = ($r->input('time') == '') ? date("H:i") : $r->input('time');
+        $time = ($r->input('time') == '') ? date("H:i:s") : $r->input('time') . ':00';
 
         /* save data */
         $post->title = $r->input('title');
@@ -236,7 +236,7 @@ class PostController extends AdminController
         $post->excerpt = $r->input('excerpt') ?? substr(strip_tags($post->content), 0, 255);
         $post->type = 'article';
         if ($r->input('cover')) {
-            $post->cover = $cover;
+            $post->cover = $r->input('cover');
         }
         if ($r->input('cover_remove')) {
             $post->cover = '';

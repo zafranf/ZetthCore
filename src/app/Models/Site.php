@@ -10,6 +10,6 @@ class Site extends Model
 
     public function socmed_data()
     {
-        return $this->hasMany('ZetthCore\Models\SocmedData', 'data_id')->where('type', 'config');
+        return $this->hasMany('ZetthCore\Models\SocmedData', 'data_id')->where('type', 'site');
     }
 }

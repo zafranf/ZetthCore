@@ -90,7 +90,7 @@ class AppServiceProvider extends ServiceProvider
         $router->pushMiddlewareToGroup('web', \RenatoMarinho\LaravelPageSpeed\Middleware\ElideAttributes::class);
         $router->pushMiddlewareToGroup('web', \RenatoMarinho\LaravelPageSpeed\Middleware\InsertDNSPrefetch::class);
         $router->pushMiddlewareToGroup('web', \RenatoMarinho\LaravelPageSpeed\Middleware\RemoveComments::class);
-        $router->pushMiddlewareToGroup('web', \RenatoMarinho\LaravelPageSpeed\Middleware\TrimUrls::class);
+        // $router->pushMiddlewareToGroup('web', \RenatoMarinho\LaravelPageSpeed\Middleware\TrimUrls::class);
         $router->pushMiddlewareToGroup('web', \RenatoMarinho\LaravelPageSpeed\Middleware\RemoveQuotes::class);
         $router->pushMiddlewareToGroup('web', \RenatoMarinho\LaravelPageSpeed\Middleware\CollapseWhitespace::class);
 
