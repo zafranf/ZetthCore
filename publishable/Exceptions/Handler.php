@@ -53,9 +53,8 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $e)
     {
-
         if ($this->isHttpException($e)) {
-            $theme = 'md30';
+            $theme = 'WebSC';
             if (app('is_admin_panel')) {
                 $theme = 'zetthcore::AdminSC';
             }
