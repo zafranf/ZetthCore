@@ -284,26 +284,22 @@ class AjaxController extends AdminController
             'status' => false,
         ];
 
+        /* set start and end date */
         $start = $r->input('start');
         $end = $r->input('end');
 
-        $pops = Post::select('id', 'title', 'slug', 'visited')
-            ->where('status', 1)
-            ->where('type', 'article')
-            ->whereBetween('updated_at', [$start . ' 00:00:00', $end . ' 23:59:59'])
-            ->orderBy('visited', 'DESC')
-            ->with('categories')
-            ->take(5)
-            ->get();
+        /* get posts */
+        $posts = _getPopularPosts($start, $end, 5);
 
-        if ($pops) {
-            foreach ($pops as $k => $v) {
+        if ($posts) {
+            foreach ($posts as $k => $v) {
+                $post = $v->post;
                 $cat = [];
-                $res['rows'][$k]['title'] = app('is_desktop') ? str_limit($v->title, 80) : str_limit($v->title, 30);
-                $res['rows'][$k]['slug'] = $v->slug;
-                $res['rows'][$k]['views'] = $v->visited;
-                if (count($v->categories) > 0) {
-                    foreach ($v->categories as $key => $val) {
+                $res['rows'][$k]['title'] = app('is_desktop') ? str_limit($post->title, 80) : str_limit($post->title, 30);
+                $res['rows'][$k]['slug'] = $post->slug;
+                $res['rows'][$k]['views'] = (int) $v->count;
+                if (count($post->categories) > 0) {
+                    foreach ($post->categories as $key => $val) {
                         $cat[] = '<a style="text-decoration:none;">' . $val->name . '</a>';
                     }
                 }
