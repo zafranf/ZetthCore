@@ -234,7 +234,7 @@ if (!function_exists('generateArrayLevel')) {
         foreach ($data as $menu) {
             $menu->name = ($sep ? '<span class="text-muted" style="padding-left: ' . $pad . 'px">' . $sep . '</span> ' : '') . $menu->name;
             $array[] = $menu;
-            if (count($menu->{$sub}) > 0) {
+            if (isset($menu->{$sub}) && count($menu->{$sub}) > 0) {
                 $array = array_merge($array, generateArrayLevel($menu->{$sub}, $sub, $separator, $level + 1));
             }
         }
