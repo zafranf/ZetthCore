@@ -55,4 +55,9 @@ class VisitorLog extends Model
 
         return $this->getAttribute($keyName);
     }
+
+    public function post()
+    {
+        return $this->hasOne('ZetthCore\Models\Post', 'slug', 'slug')->where('type', 'article');
+    }
 }
