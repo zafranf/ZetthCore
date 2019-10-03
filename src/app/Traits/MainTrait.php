@@ -27,11 +27,12 @@ trait MainTrait
         $referral = str_replace(url('/'), "", $referrer);
         $is_robot = $agent->isRobot() ? 1 : 0;
         $robot_name = $agent->robot() ? $agent->robot : null;
+        $date = carbon_store()->format('Y-m-d');
 
         /* save log */
         \ZetthCore\Models\VisitorLog::updateOrCreate(
             [
-                'id' => md5($ip . $page . $referral . $browser_agent . $browser . $browser_version . $device . $device_name . $os . $os_version . $is_robot . $robot_name),
+                'id' => md5($ip . $page . $referral . $browser_agent . $browser . $browser_version . $device . $device_name . $os . $os_version . $is_robot . $robot_name . $date),
             ],
             [
                 'ip' => $ip,
@@ -97,9 +98,10 @@ trait MainTrait
 
         if ($e->getMessage()) {
             if (\Illuminate\Support\Facades\Schema::hasTable('error_log')) {
+                $date = carbon_store()->format('Y-m-d');
                 $err = \ZetthCore\Models\ErrorLog::updateOrCreate(
                     [
-                        'id' => md5($log['code'] . $log['file'] . $log['line'] . $log['path'] . $log['message']),
+                        'id' => md5($log['code'] . $log['file'] . $log['line'] . $log['path'] . $log['message'] . $date),
                     ],
                     [
                         'code' => $log['code'],

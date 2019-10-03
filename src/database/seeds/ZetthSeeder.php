@@ -19,5 +19,6 @@ class ZetthSeeder extends Seeder
         $this->call(SocmedSeeder::class);
         $this->call(MenuGroupSeeder::class);
         $this->call(RoleMenuSeeder::class);
+        $this->call(TemplateSeeder::class);
     }
 }
