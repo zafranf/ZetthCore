@@ -188,7 +188,7 @@
 @section('scripts')
   {!! _admin_js('themes/admin/AdminSC/plugins/select2/4.0.0/js/select2.min.js') !!}
   <script>
-    var menugroup = {{ isset($data) ? '['. implode(",", $dataMenuGroup) .']' : '[]' }}  
+    var menugroup = {{ isset($data) ? '['. implode(",", $dataMenuGroup) .']' : '[]' }};  
     $('document').ready(function() {
       $('.select2').select2({
         placeholder: '--Pilih--'
@@ -203,20 +203,20 @@
       let hide = true;
       let cMenugroup = menugroup.length;
       let cVal = val ? val.length : 0;
-      console.log('menugroup', menugroup)
-      console.log('val', val)
-      console.log('length menugroup', cMenugroup)
-      console.log('length val', cVal)
+      console.log('menugroup', menugroup);
+      console.log('val', val);
+      console.log('length menugroup', cMenugroup);
+      console.log('length val', cVal);
       if (cVal > 0) {
         hide = checkToggle(val, menugroup);
       }
 
       if (hide) {
         $('#access-panel').hide();
-        $('input[name=is_access]').prop('checked', false)
+        $('input[name=is_access]').prop('checked', false);
       } else {
         $('#access-panel').show();
-        $('input[name=is_access]').prop('checked', true)
+        $('input[name=is_access]').prop('checked', true);
       }
     }
 
@@ -227,12 +227,12 @@
       $.each(arr1, function (k, v) {
         let idx = arr2.indexOf(parseInt(v));
         if (idx >= 0) {
-          show += 1
+          show += 1;
         } else {
-          hide += 1
+          hide += 1;
         }
         console.log('indexof v=' + parseInt(v) + ' k=' + k, arr2.indexOf(parseInt(v)));
-        console.log('show='+ show +' hide='+ hide)
+        console.log('show='+ show +' hide='+ hide);
       });
 
       if (hide > 0) {
