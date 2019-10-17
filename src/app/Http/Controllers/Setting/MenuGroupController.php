@@ -97,7 +97,7 @@ class MenuGroupController extends AdminController
         /* save data */
         $menugroup = new MenuGroup;
         $menugroup->name = $r->input('name');
-        $menugroup->sodium_crypto_secretstream_xchacha20poly1305_keygen = str_slug($menugroup->name);
+        $menugroup->slug = str_slug($menugroup->name);
         $menugroup->description = $r->input('description');
         $menugroup->status = bool($r->input('status')) ? 1 : 0;
         $menugroup->save();
