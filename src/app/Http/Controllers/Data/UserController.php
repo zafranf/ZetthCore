@@ -134,7 +134,7 @@ class UserController extends AdminController
         $user->email = $r->input('email');
         $user->password = bcrypt($r->input('password'));
         $user->biography = $r->input('biography');
-        $user->is_admin = bool($r->input('is_admin')) ? 1 : 0;
+        // $user->is_admin = bool($r->input('is_admin')) ? 1 : 0;
         $user->status = bool($r->input('status')) ? 1 : 0;
 
         /* upload image */
@@ -159,6 +159,8 @@ class UserController extends AdminController
 
         /* attach role */
         $this->assignRole($user, $r->input('role'));
+        $user->is_admin = $user->hasRole(['super', 'admin', 'author', 'editor']) ? 1 : 0;
+        $user->save();
 
         /* save socmed */
         $this->saveSocmed($user, $r);
@@ -270,7 +272,7 @@ class UserController extends AdminController
             $user->password = bcrypt($r->input('password'));
         }
         $user->biography = $r->input('biography');
-        $user->is_admin = bool($r->input('is_admin')) ? 1 : 0;
+        // $user->is_admin = bool($r->input('is_admin')) ? 1 : 0;
         $user->status = bool($r->input('status')) ? 1 : 0;
 
         /* upload image */
@@ -295,6 +297,8 @@ class UserController extends AdminController
 
         /* attach role */
         $this->assignRole($user, $r->input('role'));
+        $user->is_admin = $user->hasRole(['super', 'admin', 'author', 'editor']) ? 1 : 0;
+        $user->save();
 
         /* save socmed */
         $this->saveSocmed($user, $r);
