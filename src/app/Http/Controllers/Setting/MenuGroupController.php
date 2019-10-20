@@ -136,7 +136,7 @@ class MenuGroupController extends AdminController
 
         /* prevent access */
         if (!\Auth::user()->hasRole('super')) {
-            if (in_array($menugroup->id, [1, 2])) {
+            if (in_array($menugroup->id, [1])) {
                 abort(404);
             }
         }
@@ -213,17 +213,17 @@ class MenuGroupController extends AdminController
     public function datatable(Request $r)
     {
         /* where roles */
-        $whrRole = [];
+        $whr = [];
         if (!\Auth::user()->hasRole('super')) {
-            $whrRole = [
+            $whr = [
                 // ['status', 1],
                 ['id', '!=', 1],
-                ['id', '!=', 2],
+                // ['id', '!=', 2],
             ];
         }
 
         /* get data */
-        $data = MenuGroup::select('id', 'name', 'description', 'status')->where($whrRole);
+        $data = MenuGroup::select('id', 'name', 'description', 'status')->where($whr);
 
         /* generate datatable */
         if ($r->ajax()) {
