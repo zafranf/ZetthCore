@@ -1,5 +1,6 @@
 @php
-  function sortMenu($data, $level = 0, $adminPath = '') {
+  function sortMenu($data, $level = 0) {
+    $adminPath = app('admin_path');
     echo ($level == 0) ? 'Geser untuk atur posisi' : '';
     echo ($level == 0) ? '<ol class="default vertical">' : '<ol>';
     echo count($data) == 0 ? '<span style="color:grey">Belum ada menu yang terdaftar..</span>' : '';
@@ -14,7 +15,7 @@
       echo '<a href="' . url($adminPath . '/setting/menus/' . $menu->id . '/edit?group=' . $menu->group_id) . '" class="btn btn-default btn-xs pull-right" data-toggle="tooltip" title="Edit"><i class="fa fa-edit"></i></a>';
       echo '</span>';
       if (count($menu->submenu) > 0) {
-        sortMenu($menu->submenu, $level + 1, $adminPath);
+        sortMenu($menu->submenu, $level + 1);
       }
       echo '<ol></ol>';
       echo '</li>';
@@ -35,13 +36,13 @@
           <div class="form-group">
             <label for="name" class="col-sm-4 control-label">Nama Grup Menu</label>
             <div class="col-sm-8">
-              <input type="text" class="form-control autofocus" id="name" name="name" value="{{ isset($data) ? $data->name : '' }}" maxlength="100" placeholder="Nama grup menu..">
+              <input type="text" class="form-control autofocus" id="name" name="name" value="{{ isset($data) ? $data->name : old('name') }}" maxlength="100" placeholder="Nama grup menu..">
             </div>
           </div>
           <div class="form-group">
             <label for="description" class="col-sm-4 control-label">Deskripsi</label>
             <div class="col-sm-8">
-              <textarea id="description" name="description" class="form-control" placeholder="Penjelasan singkat grup menu.." rows="4">{{ isset($data) ? $data->description : '' }}</textarea>
+              <textarea id="description" name="description" class="form-control" placeholder="Penjelasan singkat grup menu.." rows="4">{{ isset($data) ? $data->description : old('description') }}</textarea>
             </div>
           </div>
           <div class="form-group">
@@ -58,7 +59,7 @@
           @if (isset($data))
             <h4>Daftar Menu <a href="{{ url(app('admin_path').'/setting/menus/create?group='.$data->id) }}" class="btn btn-default btn-xs pull-right" data-toggle="tooltip" title="Tambah"><i class="fa fa-plus"></i></a></h4>
             <hr>
-            {!! sortMenu($data->allMenu, 0, app('admin_path')) !!}
+            {!! sortMenu($data->allMenu, 0) !!}
           @endif
         </div>
       </div>

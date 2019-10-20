@@ -24,13 +24,13 @@
     <div class="row" style="margin-top:-15px;">
       <form id="form-post" action="{{ url($current_url) }}{{ isset($data) ? '/' . $data->id : '' }}" method="post" enctype="multipart/form-data">
         <div class="col-sm-8 col-md-9 left-side no-padding">
-          <input type="text" id="title" class="form-control {{ isset($data)   ? '' :   'autofocus' }} no-border-top-right no-border-left no-radius input-lg" name="title" placeholder="Judul.." maxlength="100" value="{{ isset($data) ? $data->title : '' }}">
+          <input type="text" id="title" class="form-control {{ isset($data)   ? '' :   'autofocus' }} no-border-top-right no-border-left no-radius input-lg" name="title" placeholder="Judul.." maxlength="100" value="{{ isset($data) ? $data->title : old('title') }}">
           <div class="input-group">
             <span class="input-group-addon no-border-top-right no-border-left no-radius input-sm" id="url_span">{{ url('/article/') }}/</span>
-            <input type="text" id="slug" class="form-control no-border-top-right no-radius input-sm" name="slug" placeholder="Sesuaikan tautan.. (klik 2x untuk edit)" readonly value="{{ isset($data) ? $data->slug : '' }}">
+            <input type="text" id="slug" class="form-control no-border-top-right no-radius input-sm" name="slug" placeholder="Sesuaikan tautan.. (klik 2x untuk edit)" readonly value="{{ isset($data) ? $data->slug : old('slug') }}">
           </div>
-          <textarea id="excerpt" name="excerpt" class="form-control no-border-top-right no-border-left no-radius input-xlarge" placeholder="Kutipan.." rows="3">{{ isset($data) ? $data->excerpt : '' }}</textarea>
-          <textarea id="content" name="content" class="form-control no-border-top-right no-border-bottom no-radius input-xlarge" placeholder="Ketikkan tulisan anda di sini...">{{ isset($data) ? $data->content : '' }}</textarea>
+          <textarea id="excerpt" name="excerpt" class="form-control no-border-top-right no-border-left no-radius input-xlarge" placeholder="Kutipan.." rows="3">{{ isset($data) ? $data->excerpt : old('excerpt') }}</textarea>
+          <textarea id="content" name="content" class="form-control no-border-top-right no-border-bottom no-radius input-xlarge" placeholder="Ketikkan tulisan anda di sini...">{{ isset($data) ? $data->content : old('content') }}</textarea>
         </div>
         <div class="col-sm-4 col-md-3 right-side">
           <div class="form-group" style="padding-top:10px;">
@@ -134,10 +134,10 @@
           <div class="form-group">
             <label for="time">Waktu</label><br>
             <div class="col-sm-6 col-xs-6 no-padding">
-              <input type="text" class="form-control" id="date" name="date" value="{{ isset($data) ? date("Y-m-d", strtotime($data->published_at)) : '' }}" placeholder="{{ isset($data) ? date("Y-m-d", strtotime($data->published_at)) : date("Y-m-d") }}">
+              <input type="text" class="form-control" id="date" name="date" value="{{ isset($data) ? carbon($data->published_at)->format("Y-m-d") : old('date') }}" placeholder="{{ carbon()->format("Y-m-d") }}">
             </div>
             <div class="col-sm-6 col-xs-6 no-padding">
-              <input type="text" class="form-control" id="time" name="time" value="{{ isset($data) ? date("H:i", strtotime($data->published_at)) : '' }}" placeholder="{{ isset($data) ? date("H:i", strtotime($data->published_at)) : date("H:i") }}">
+              <input type="text" class="form-control" id="time" name="time" value="{{ isset($data) ? carbon($data->published_at)->format("H:i") : old('time') }}" placeholder="{{ carbon()->format("H:i") }}">
             </div>
           </div>
           <div class="form-group btn-post">
@@ -357,12 +357,14 @@
           alert('from iframe btn');
         }*/
       });
+
       $('#btn-remove').on('click', function(){
         $('#cover').val('');
         $('.zetth-upload-new').show();
         $('.zetth-upload-exists').hide();
         $('#btn-remove').parent().hide();
       });
+
       tinymce.init({
         relative_urls: false,
         selector: '#content',
@@ -479,7 +481,7 @@
 
         $('#title').on('keyup blur', function(){
           ttl_val = title.val();
-          if (ttl_val=="") {
+          if (ttl_val == "") {
             slug.val('');
           } else {
             url = _get_slug(ttl_val);
@@ -494,7 +496,7 @@
 
         $('#slug').on('blur', function(){
           ro = slug.attr('readonly');
-          if (!ro){
+          if (!ro) {
             sl_val = slug.val();
             slug.val(_get_slug(sl_val));
             slug.attr("readonly", true);
@@ -503,10 +505,10 @@
       @endif
 
       $('#title').on('keydown', function(e){
-        if (e.keyCode==9){
-          setTimeout(function(){
+        if (e.keyCode == 9){
+          setTimeout(function() {
             $('#excerpt').focus();
-          },0);
+          }, 0);
         }
       });
       /*$('#excerpt').on('keydown', function(e){
@@ -632,8 +634,8 @@
       $(el).closest('li').remove();
     }
 
-    function _remove_featured(el){
+    /* function _remove_featured(el){
       $('#box-featured-image'+el).remove();
-    }
+    } */
   </script>
 @endsection

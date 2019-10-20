@@ -10,13 +10,13 @@
 					<div class="form-group">
 						<label for="name" class="col-md-4 control-label">Nama Akses</label>
 						<div class="col-md-8">
-							<input type="text" class="form-control autofocus" id="name" name="name" value="{{ isset($data) ? $data->name : '' }}" maxlength="30" placeholder="Nama akses.." {{ isset($data) ? 'readonly' : '' }}>
+							<input type="text" class="form-control autofocus" id="name" name="name" value="{{ isset($data) ? $data->name : old('name') }}" maxlength="30" placeholder="Nama akses.." {{ isset($data) ? 'readonly' : '' }}>
 						</div>
 					</div>
 					<div class="form-group">
 						<label for="email" class="col-md-4 control-label">Surel</label>
 						<div class="col-md-8">
-							<input type="text" class="form-control" id="email" name="email" value="{{ isset($data) ? $data->email : '' }}" maxlength="100" placeholder="Alamat surel..">
+							<input type="text" class="form-control" id="email" name="email" value="{{ isset($data) ? $data->email : old('email') }}" maxlength="100" placeholder="Alamat surel..">
 						</div>
 					</div>
 					<div class="form-group">
@@ -34,13 +34,13 @@
 					<div class="form-group">
 						<label for="fullname" class="col-md-4 control-label">Nama Lengkap</label>
 						<div class="col-md-8">
-							<input type="text" class="form-control" id="fullname" name="fullname" value="{{ isset($data) ? $data->fullname : '' }}" maxlength="50" placeholder="Nama lengkap.." }}>
+							<input type="text" class="form-control" id="fullname" name="fullname" value="{{ isset($data) ? $data->fullname : old('fullname') }}" maxlength="50" placeholder="Nama lengkap.." }}>
 						</div>
 					</div>
 					<div class="form-group">
 						<label for="biography" class="col-md-4 control-label">Biografi</label>
 						<div class="col-md-8">
-							<textarea id="biography" name="biography" class="form-control" placeholder="Biografi.." rows="4">{{ isset($data) ? $data->biography : '' }}</textarea>
+							<textarea id="biography" name="biography" class="form-control" placeholder="Biografi.." rows="4">{{ isset($data) ? $data->biography : old('biography') }}</textarea>
 						</div>
 					</div>
 					<div class="form-group">
@@ -67,7 +67,7 @@
 						<div class="col-md-8">
 							<select name="role" id="role" class="form-control custom-select2">
 							@if (isset($roles))
-								@foreach($roles as $role)
+								@foreach ($roles as $role)
 									<option value="{{ $role->id }}" {{ (isset($data) && $data->role_ids[0]->role_id == $role->id) ? 'selected' : '' }} >{{ $role->display_name }}</option>
 								@endforeach
 							@endif
@@ -91,47 +91,47 @@
 						<label for="label" class="col-md-4 control-label">Akun</label>
 						<div class="col-md-8">
 							@if (isset($socmed_data) && count($socmed_data) > 0)
-								@foreach($socmed_data as $key => $val)
-                  @php
-                    $rand = rand(111111111, 999999999);
-                  @endphp
-                  <div id="div-socmed-{{ $rand }}">
-                    <div class="col-md-3 col-xs-6 no-padding">
-                      <select name="socmed_id[]" class="form-control custom-select2">
-                        <option value="">--Pilih--</option>
-                        @if (isset($socmeds))
-                          @foreach($socmeds as $socmed)
-                            @php
-                              $sl = ($socmed->id == $val->socmed->id) ? 'selected' : '';
-                            @endphp
-                            <option value="{{ $socmed->id }}" {{ $sl }}>{{ $socmed->name }}</option>
-                          @endforeach
-                        @endif
-                      </select>
-                    </div>
-                    <div class="col-md-9 col-xs-6 no-padding">
-                      @if ($key > 0)
-                        <div class="input-group">
-                          <input type="text" class="form-control" name="socmed_uname[]" placeholder="Nama/ID akun.." value="{{ $val->username }}">
-                          <span class="input-group-btn">
-                            <button type="button" class="btn" style="background:white;border:1px solid #ccc;" onclick="_remove('#div-socmed-{{ $rand }}')"><i class="fa fa-minus"></i></button
-                          </span>
-                        </div>
-                      @else
-                        <input type="text" class="form-control" name="socmed_uname[]" placeholder="Nama/ID akun.." value="{{ $val->username }}">
-                      @endif
-                    </div>
-                  </div>
+								@foreach ($socmed_data as $key => $val)
+									@php
+										$rand = rand(111111111, 999999999);
+									@endphp
+									<div id="div-socmed-{{ $rand }}">
+										<div class="col-md-3 col-xs-6 no-padding">
+										<select name="socmed_id[]" class="form-control custom-select2">
+											<option value="">--Pilih--</option>
+											@if (isset($socmeds))
+											@foreach ($socmeds as $socmed)
+												@php
+												$sl = ($socmed->id == $val->socmed->id) ? 'selected' : '';
+												@endphp
+												<option value="{{ $socmed->id }}" {{ $sl }}>{{ $socmed->name }}</option>
+											@endforeach
+											@endif
+										</select>
+										</div>
+										<div class="col-md-9 col-xs-6 no-padding">
+										@if ($key > 0)
+											<div class="input-group">
+											<input type="text" class="form-control" name="socmed_uname[]" placeholder="Nama/ID akun.." value="{{ $val->username }}">
+											<span class="input-group-btn">
+												<button type="button" class="btn" style="background:white;border:1px solid #ccc;" onclick="_remove('#div-socmed-{{ $rand }}')"><i class="fa fa-minus"></i></button
+											</span>
+											</div>
+										@else
+											<input type="text" class="form-control" name="socmed_uname[]" placeholder="Nama/ID akun.." value="{{ $val->username }}">
+										@endif
+										</div>
+									</div>
 								@endforeach
 							@else
 								<div class="col-md-3 col-xs-6 no-padding">
 									<select name="socmed_id[]" class="form-control custom-select2">
-                    <option value="">--Pilih--</option>
-                    @if (isset($socmeds))
-                      @foreach($socmeds as $socmed)
-                        <option value="{{ $socmed->id }}">{{ $socmed->name }}</option>
-                      @endforeach
-                    @endif
+										<option value="">--Pilih--</option>
+										@if (isset($socmeds))
+											@foreach ($socmeds as $socmed)
+												<option value="{{ $socmed->id }}">{{ $socmed->name }}</option>
+											@endforeach
+										@endif
 									</select>
 								</div>
 								<div class="col-md-9 col-xs-6 no-padding">
@@ -145,8 +145,8 @@
 			</div>
 			<div class="form-group">
 				<div class="col-md-offset-2 col-md-4">
-          {{ isset($data) ? method_field('PUT') : '' }}
-          {{ csrf_field() }}
+					{{ isset($data) ? method_field('PUT') : '' }}
+					{{ csrf_field() }}
 					{{ _get_button_post($current_url, true, $data->id ?? '') }}
 				</div>
 			</div>
@@ -176,7 +176,7 @@
                 '<select name="socmed_id[]" class="form-control custom-select2">'+
                   '<option value="">--Pilih--</option>'+
                   @if (isset($socmeds))
-                    @foreach($socmeds as $socmed)
+                    @foreach ($socmeds as $socmed)
                       '<option value="{{ $socmed->id }}">{{ $socmed->name }}</option>'+
                     @endforeach
                   @endif
