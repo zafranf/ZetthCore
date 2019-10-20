@@ -27,7 +27,7 @@ trait MainTrait
         $referral = str_replace(url('/'), "", $referrer);
         $is_robot = $agent->isRobot() ? 1 : 0;
         $robot_name = $agent->robot() ? $agent->robot : null;
-        $date = carbon_query()->format('Y-m-d');
+        $date = carbon_query()->format('Y-m-d H');
 
         /* save log */
         \ZetthCore\Models\VisitorLog::updateOrCreate(

@@ -199,6 +199,7 @@
       'Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember',
     ]
     });
+    var today = moment();
     var start = moment();
     var end = moment();
     var min = moment('{{ app('site')->created_at }}');
