@@ -124,7 +124,7 @@ class PostController extends AdminController
         /* save data */
         $post = new Post;
         $post->title = $r->input('title');
-        $post->slug = str_slug($post->title);
+        $post->slug = $r->input('slug') ?? str_slug($post->title);
         $post->content = $r->input('content');
         $post->excerpt = $r->input('excerpt') ?? substr(strip_tags($post->content), 0, 255);
         $post->type = 'article';
