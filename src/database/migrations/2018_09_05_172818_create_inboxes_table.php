@@ -21,7 +21,7 @@ class CreateInboxesTable extends Migration
             $table->increments('id')->unsigned();
             $table->string('name');
             $table->string('email');
-            $table->string('phone');
+            $table->string('phone')->nullable();
             $table->text('message');
             $table->boolean('read')->comment('0=unread, 1=read')->unsigned();
             $table->boolean('status')->comment('0=inactive, 1=active')->unsigned();
