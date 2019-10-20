@@ -8,20 +8,20 @@
 				<div class="col-sm-10">
 					<div class="input-group">
 						<span class="input-group-addon" id="slug_span">{{ url("https://youtube.com/watch?v=") }}</span>
-						<input type="text" id="cover" class="form-control autofocus" name="cover" placeholder="Kode video youtube.." value="{{ isset($data) ? $data->cover : '' }}">
+						<input type="text" id="cover" class="form-control autofocus" name="cover" placeholder="Kode video youtube.." value="{{ isset($data) ? $data->cover : old('cover') }}">
 					</div>
 				</div>
 			</div>
 			<div class="form-group">
 				<label for="title" class="col-sm-2 control-label">Judul</label>
 				<div class="col-sm-10">
-					<input type="text" class="form-control" id="title" name="title" value="{{ isset($data) ? $data->title : '' }}" maxlength="100" placeholder="Judul video..">
+					<input type="text" class="form-control" id="title" name="title" value="{{ isset($data) ? $data->title : old('title') }}" maxlength="100" placeholder="Judul video..">
 				</div>
 			</div>
 			<div class="form-group">
 				<label for="content" class="col-sm-2 control-label">Deskripsi</label>
 				<div class="col-sm-10">
-					<textarea id="content" name="content" class="form-control" placeholder="Deskripsi tentang video..">{{ isset($data) ? $data->content : '' }}</textarea>
+					<textarea id="content" name="content" class="form-control" placeholder="Deskripsi tentang video..">{{ isset($data) ? $data->content : old('content') }}</textarea>
 				</div>
 			</div>
 			<div class="form-group">
@@ -35,9 +35,9 @@
 			</div>
 			<div class="form-group">
 				<div class="col-sm-offset-2 col-sm-10">
-                    {{ isset($data) ? method_field('PUT') : '' }}
-                    {{ csrf_field() }}
-                    {{ _get_button_post($current_url, true, $data->id ?? '') }}
+          {{ isset($data) ? method_field('PUT') : '' }}
+          {{ csrf_field() }}
+          {{ _get_button_post($current_url, true, $data->id ?? '') }}
 				</div>
 			</div>
 		</form>

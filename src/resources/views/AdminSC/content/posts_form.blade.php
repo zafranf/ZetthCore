@@ -134,10 +134,10 @@
           <div class="form-group">
             <label for="time">Waktu</label><br>
             <div class="col-sm-6 col-xs-6 no-padding">
-              <input type="text" class="form-control" id="date" name="date" value="{{ isset($data) ? carbon($data->published_at)->format("Y-m-d") : '' }}" placeholder="{{ carbon()->format("Y-m-d") }}">
+              <input type="text" class="form-control" id="date" name="date" value="{{ isset($data) ? carbon($data->published_at)->format("Y-m-d") : old('date') }}" placeholder="{{ carbon()->format("Y-m-d") }}">
             </div>
             <div class="col-sm-6 col-xs-6 no-padding">
-              <input type="text" class="form-control" id="time" name="time" value="{{ isset($data) ? carbon($data->published_at)->format("H:i") : '' }}" placeholder="{{ carbon()->format("H:i") }}">
+              <input type="text" class="form-control" id="time" name="time" value="{{ isset($data) ? carbon($data->published_at)->format("H:i") : old('time') }}" placeholder="{{ carbon()->format("H:i") }}">
             </div>
           </div>
           <div class="form-group btn-post">

@@ -14,13 +14,13 @@
       <div class="form-group">
         <label for="name" class="col-sm-2 control-label">Nama Peran</label>
         <div class="col-sm-4">
-          <input type="text" class="form-control autofocus" id="name" name="name" value="{{ isset($data) ? $data->display_name : '' }}" maxlength="50" placeholder="Nama peran..">
+          <input type="text" class="form-control autofocus" id="name" name="name" value="{{ isset($data) ? $data->display_name : old('name') }}" maxlength="50" placeholder="Nama peran..">
         </div>
       </div>
       <div class="form-group">
         <label for="description" class="col-sm-2 control-label">Deskripsi</label>
         <div class="col-sm-4">
-          <textarea id="description" name="description" class="form-control" placeholder="Penjelasan singkat peran.." rows="4">{{ isset($data) ? $data->description : '' }}</textarea>
+          <textarea id="description" name="description" class="form-control" placeholder="Penjelasan singkat peran.." rows="4">{{ isset($data) ? $data->description : old('description') }}</textarea>
         </div>
       </div>
       <div class="form-group">

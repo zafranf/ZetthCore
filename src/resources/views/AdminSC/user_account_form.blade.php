@@ -5,10 +5,10 @@
         <form class="form-horizontal" action="{{ url($current_url) }}" method="post" enctype="multipart/form-data">
             <div class="row">
                 <div class="col-md-6">
-                    <h4>Main Info</h4>
+                    <h4>Informasi Utama</h4>
                     <hr>
                     <div class="form-group">
-                        <label for="image" class="col-md-4 control-label">Photo</label>
+                        <label for="image" class="col-md-4 control-label">Foto</label>
                         <div class="col-md-8">
                             <div class="fileinput fileinput-new" data-provides="fileinput">
                                 <div class="fileinput-new thumbnail">
