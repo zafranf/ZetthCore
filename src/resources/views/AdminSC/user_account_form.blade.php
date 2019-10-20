@@ -62,10 +62,10 @@
                                             <option value="">--Pilih--</option>
                                             @if (isset($socmeds))
                                                 @foreach ($socmeds as $socmed)
-                                                @php
-                                                    $sl = ($socmed->id == $val->socmed->id) ? 'selected' : '';
-                                                @endphp
-                                                <option value="{{ $socmed->id }}" {{ $sl }}>{{ $socmed->name }}</option>
+                                                    @php
+                                                        $sl = ($socmed->id == $val->socmed->id) ? 'selected' : '';
+                                                    @endphp
+                                                    <option value="{{ $socmed->id }}" {{ $sl }}>{{ $socmed->name }}</option>
                                                 @endforeach
                                             @endif
                                         </select>
@@ -159,9 +159,9 @@
             '<select name="socmed_id[]" class="form-control custom-select2">'+
                 '<option value="">--Pilih--</option>'+
                 @if (isset($socmeds))
-                @foreach ($socmeds as $socmed)
-                    '<option value="{{ $socmed->id }}">{{ $socmed->name }}</option>'+
-                @endforeach
+                    @foreach ($socmeds as $socmed)
+                        '<option value="{{ $socmed->id }}">{{ $socmed->name }}</option>'+
+                    @endforeach
                 @endif
             '</select>'+
             '</div>'+
