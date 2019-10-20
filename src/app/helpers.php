@@ -122,11 +122,10 @@ if (!function_exists('_get_image')) {
 }
 
 if (!function_exists('getMenu')) {
-    function getMenu($group = 'user_role', $cache = false)
+    function getMenu($group = 'admin', $cache = false)
     {
-        $user = \Auth::user() ? \Auth::user()->id : '';
         $roleName = '';
-        if ($group == 'user_role') {
+        if (\Auth::user()) {
             foreach (\Auth::user()->roles as $role) {
                 $roleName .= ucfirst($role->name);
             }
@@ -136,20 +135,37 @@ if (!function_exists('getMenu')) {
         if ($cacheMenu && $cache) {
             $menus = $cacheMenu;
         } else {
-            if ($group == 'user_role') {
-                $menus = collect([]);
-                foreach (\Auth::user()->roles as $role) {
-                    foreach ($role->menu_groups as $group) {
-                        $menus = $menus->merge($group->menu);
-                    }
-                }
-            } else {
-                $groupmenu = \ZetthCore\Models\MenuGroup::where('slug', $group)->with('menu', 'menu.submenu')->first();
-                $menus = $groupmenu->menu;
-            }
+            $groupmenu = \ZetthCore\Models\MenuGroup::where('slug', $group)->with('menu.submenu')->first();
+            $menus = $group == 'admin' ? menuFilterPermission($groupmenu->menu) : $groupmenu->menu;
 
             \Cache::put($cacheMenuName, $menus, 60 * (env('APP_ENV') != 'production' ? 1 : env('CACHE_TIME', 10)));
         }
+
+        return $menus;
+    }
+}
+
+if (!function_exists('menuFilterPermission')) {
+    function menuFilterPermission($menus)
+    {
+        $user = \Auth::user();
+        if (is_null($user)) {
+            return $menus;
+        }
+
+        /* filter by permission */
+        $menus = $menus->filter(function ($menu) use ($user) {
+            return $user->can($menu->route_name);
+        });
+
+        /* filter submenu by permission */
+        $menus = $menus->transform(function ($menu) use ($user) {
+            if ($menu->submenu->count() > 0) {
+                $menu->setRelation('submenu', menuFilterPermission($menu->submenu));
+            }
+
+            return $menu;
+        });
 
         return $menus;
     }
@@ -161,7 +177,7 @@ if (!function_exists('generateMenu')) {
      *
      * @return void
      */
-    function generateMenu($group = 'user_role')
+    function generateMenu($group = 'admin')
     {
         /* get all menus */
         $menus = getMenu($group, true);

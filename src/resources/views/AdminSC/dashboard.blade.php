@@ -4,6 +4,7 @@
   <div class="container-fluid">
     <div class="row">
       <div id="btn-quick-box" class="col-sm-12">
+        @if (Auth::user()->can('admin.content.posts.create'))
         <div class="btn btn-default btn-quick">
           <a href="{{ url(app('admin_path') . '/content/posts/create') }}">
             <div class="row">
@@ -16,6 +17,8 @@
             </div>
           </a>
         </div>
+        @endif
+        @if (Auth::user()->can('admin.content.pages.create'))
         <div class="btn btn-default btn-quick">
           <a href="{{ url(app('admin_path') . '/content/pages/create') }}">
             <div class="row">
@@ -28,6 +31,8 @@
             </div>
           </a>
         </div>
+        @endif
+        @if (Auth::user()->can('admin.report.comments.index'))
         <div class="btn btn-default btn-quick">
           <a href="{{ url(app('admin_path') . '/report/comments') }}">
             <div class="row">
@@ -41,6 +46,8 @@
             </div>
           </a>
         </div>
+        @endif
+        @if (Auth::user()->can('admin.report.inbox.index'))
         <div class="btn btn-default btn-quick">
           <a href="{{ url(app('admin_path') . '/report/inbox') }}">
             <div class="row">
@@ -54,6 +61,7 @@
             </div>
           </a>
         </div>
+        @endif
       </div>
     </div>
     <hr>
@@ -69,7 +77,9 @@
           <div class="panel panel-default">
             <div class="panel-heading">
               Artikel Populer
+              @if (Auth::user()->can('admin.content.pages.index'))
               <a href="{{ url(app('admin_path') . '/content/posts') }}" class="btn btn-default btn-sm pull-right"><i class="fa fa-eye"></i> Semua</a>
+              @endif
             </div>
             <div class="panel-body no-padding">
               <div class="loading">Memuat<img src="{{ url('themes/admin/AdminSC/images/loading-flat.gif') }}"></div>
@@ -90,7 +100,9 @@
         <div class="panel panel-default">
           <div class="panel-heading">
             Komentar Terbaru
+            @if (Auth::user()->can('admin.report.comments.index'))
             <a href="{{ url(app('admin_path') . '/report/comments') }}" class="btn btn-default btn-sm pull-right"><i class="fa fa-eye"></i> Semua</a>
+            @endif
           </div>
           <div class="panel-body no-padding">
             <div class="loading">Memuat<img src="{{ url('themes/admin/AdminSC/images/loading-flat.gif') }}"></div>

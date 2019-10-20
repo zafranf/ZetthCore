@@ -15,9 +15,9 @@ class MenuTableSeeder extends Seeder
     public function run()
     {
         $this->super();
-        $this->admin();
-        $this->author();
-        $this->editor();
+        // $this->admin();
+        // $this->author();
+        // $this->editor();
         $this->web();
     }
 
@@ -878,7 +878,7 @@ class MenuTableSeeder extends Seeder
         $dash->status = 1;
         $dash->is_crud = 0;
         $dash->index = 1;
-        $dash->group_id = 5;
+        $dash->group_id = 2;
         $dash->save();
     }
 }
