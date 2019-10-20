@@ -53,9 +53,15 @@ class AjaxController extends AdminController
             'status' => false,
         ];
 
-        $start = $r->input('start');
-        $end = $r->input('end');
+        /* set variable */
+        $start_date = $r->input('start');
+        $end_date = $r->input('end');
         $range = $r->input('range');
+
+        /* set start and end as carbon */
+        $start = carbon_query($start_date . ' 00:00:00');
+        $end = carbon_query($end_date . ' 23:59:59');
+        // dd($start, $end, $start_date, $end_date);
 
         switch ($range) {
             case 'hourly':
@@ -82,7 +88,7 @@ class AjaxController extends AdminController
         /* query */
         $visits = VisitorLog::select('created_at', 'ip', DB::raw('date_format(created_at, \'' . $df . '\') as created'), DB::raw('sum(count) as count'))
             ->where('is_robot', 0)
-            ->whereBetween('created_at', [$start . ' 00:00:00', $end . ' 23:59:59'])
+            ->whereBetween('created_at', [$start, $end])
             ->orderBy('created_at', 'ASC')
             ->groupBy(DB::raw('date_format(created_at, \'' . $df . '\')'), 'ip')
             ->get();
