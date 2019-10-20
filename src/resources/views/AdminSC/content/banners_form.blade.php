@@ -38,13 +38,13 @@ if (isset($data->id) && ($key = array_search($data->id, $orders)) !== false) {;
 			<div class="form-group">
 				<label for="title" class="col-sm-2 control-label">Judul</label>
 				<div class="col-sm-4">
-					<input type="text" class="form-control autofocus" id="title" name="title" value="{{ isset($data->id) ? $data->title : '' }}" maxlength="100" placeholder="Judul spanduk..">
+					<input type="text" class="form-control autofocus" id="title" name="title" value="{{ isset($data->id) ? $data->title : old('title') }}" maxlength="100" placeholder="Judul spanduk..">
 				</div>
 			</div>
 			<div class="form-group">
 				<label for="description" class="col-sm-2 control-label">Sub Judul</label>
 				<div class="col-sm-4">
-					<textarea id="description" name="description" class="form-control" placeholder="Sub judul spanduk..">{{ isset($data->id) ? $data->description : '' }}</textarea>
+					<textarea id="description" name="description" class="form-control" placeholder="Sub judul spanduk..">{{ isset($data->id) ? $data->description : old('description') }}</textarea>
 				</div>
 			</div>
 			<div class="form-group">
@@ -60,7 +60,7 @@ if (isset($data->id) && ($key = array_search($data->id, $orders)) !== false) {;
 						<option value="videos" {{ (isset($data->id) && $data->url == "videos" ) ? 'selected' : '' }}>Galeri Video</option>
 						<option value="contact" {{ (isset($data->id) && $data->url == "contact" ) ? 'selected' : '' }}>Kontak</option>
 						@php $type = ''; @endphp
-						@foreach($post_opts as $n => $post)
+						@foreach ($post_opts as $n => $post)
 							@if ($type != $post->type)
 								{!! ($n > 0) ? '</optgroup>' : '' !!}
 								@php $type = $post->type @endphp
@@ -105,7 +105,7 @@ if (isset($data->id) && ($key = array_search($data->id, $orders)) !== false) {;
 						<label>
 							<input type="checkbox" name="status" {{ (isset($data->id) && $data->status == 0) ? '' : 'checked' }}> Aktif
 						</label>
-						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						{!! spaces() !!}
 						<label>
 							<input type="checkbox" name="only_image" {{ (isset($data->id) && $data->only_image==1) ? 'checked' : '' }}> Hanya Gambar
 						</label>

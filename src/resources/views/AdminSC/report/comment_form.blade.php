@@ -1,12 +1,12 @@
 @extends('admin.layout')
 
 @section('styles')
-<style>
-    #mceu_14 {
-        position: absolute;
-        right: 10px;
-    }
-</style>
+    <style>
+        #mceu_14 {
+            position: absolute;
+            right: 10px;
+        }
+    </style>
 @endsection
 
 @section('content')

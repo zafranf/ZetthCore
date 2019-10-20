@@ -101,8 +101,8 @@ class PostController extends AdminController
     {
         /* validation */
         $this->validate($r, [
-            'title' => 'required|max:100|unique:posts,title,NULL,created_at,type,article',
-            'slug' => 'required|max:100|unique:posts,slug,NULL,created_at,type,article',
+            'title' => 'required|max:100|unique:posts,title,NULL,created_at,type,article,deleted_at,NULL',
+            'slug' => 'required|max:100|unique:posts,slug,NULL,created_at,type,article,deleted_at,NULL',
             'content' => 'required',
             'categories' => 'required',
             'tags' => 'required',
@@ -118,8 +118,8 @@ class PostController extends AdminController
         // $digit = 3;
         // $uniq = str_random($digit);
         // $cover = str_replace(url('/'), '', $r->input('cover'));
-        $date = ($r->input('date') == '') ? date("Y-m-d") : $r->input('date');
-        $time = ($r->input('time') == '') ? date("H:i:s") : $r->input('time') . ':00';
+        $date = $r->input('date') ?? carbon()->format("Y-m-d");
+        $time = $r->input('time') ?? carbon()->format("H:i:s");
 
         /* save data */
         $post = new Post;
@@ -133,7 +133,7 @@ class PostController extends AdminController
         $post->share = ($r->input('share')) ? 1 : 0;
         $post->like = ($r->input('like')) ? 1 : 0;
         $post->comment = ($r->input('comment')) ? 1 : 0;
-        $post->published_at = $date . ' ' . $time;
+        $post->published_at = carbon_query($date . ' ' . $time);
         // $post->short_url = $uniq;
         $post->created_by = \Auth::user()->id;
         $post->save();
@@ -209,7 +209,7 @@ class PostController extends AdminController
     {
         /* validation */
         $this->validate($r, [
-            'title' => 'required|max:100|unique:posts,title,' . $post->id . ',id,type,article',
+            'title' => 'required|max:100|unique:posts,title,' . $post->id . ',id,type,article,deleted_at,NULL',
             // 'slug' => 'unique:posts,slug,' . $post->id . ',id,type,article',
             'content' => 'required',
             'categories' => 'required',
@@ -226,8 +226,8 @@ class PostController extends AdminController
         // $digit = 3;
         // $uniq = str_random($digit);
         // $cover = str_replace(url('/'), '', $r->input('cover'));
-        $date = ($r->input('date') == '') ? date("Y-m-d") : $r->input('date');
-        $time = ($r->input('time') == '') ? date("H:i:s") : $r->input('time') . ':00';
+        $date = $r->input('date') ?? carbon()->format("Y-m-d");
+        $time = $r->input('time') ?? carbon()->format("H:i:s");
 
         /* save data */
         $post->title = $r->input('title');
@@ -245,7 +245,7 @@ class PostController extends AdminController
         $post->share = ($r->input('share')) ? 1 : 0;
         $post->like = ($r->input('like')) ? 1 : 0;
         $post->comment = ($r->input('comment')) ? 1 : 0;
-        $post->published_at = $date . ' ' . $time;
+        $post->published_at = carbon_query($date . ' ' . $time);
         // $post->short_url = $uniq;
         $post->updated_by = \Auth::user()->id;
         $post->save();

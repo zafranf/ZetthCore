@@ -338,7 +338,7 @@
 								'<select class="form-control custom-select2" id="socmed-id-'+socmed_no+'" name="socmed_id[]">'+
 									'<option value="">--Choose--</option>'+
 									@if (isset($socmeds))
-										@foreach($socmeds as $socmed)
+										@foreach ($socmeds as $socmed)
 											'<option value="{{ $socmed->id }}">{{ $socmed->name }}</option>'+
 										@endforeach
 									@endif

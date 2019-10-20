@@ -36,7 +36,7 @@
                         <center><img src="{{ url('assets/images/n_'.Session::get('app')->config->config_logo) }}"></center>
                         <form class="form-horizontal" role="form" method="POST" action="{{ url('/password/email') }}">
                             {!! csrf_field() !!} 
-                            @if(session('status'))
+                            @if (session('status'))
                                 <div class="alert alert-success">
                                     {{ session('status') }}
                                 </div>
