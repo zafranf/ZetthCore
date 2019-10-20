@@ -69,10 +69,10 @@
         @endif
         <i class="fa fa-bookmark"></i> 
         @php $cat=[] @endphp
-        @foreach($post->terms as $term)
-                @if($term->term_type == "category")
-                    @php $cat[] = $term->term_name; @endphp
-                @endif
+        @foreach ($post->terms as $term)
+            @if ($term->term_type == "category")
+                @php $cat[] = $term->term_name; @endphp
+            @endif
         @endforeach
         {{ implode($cat, ", ") }}
         <br>
@@ -98,7 +98,7 @@
         {!! $post->post_content !!}
 
         @php $tag=[] @endphp
-        @foreach($post->terms as $term) 
+        @foreach ($post->terms as $term) 
             @if ($term->term_type=="tag") 
                 @php $tag[] = '#'.$term->term_name; @endphp
             @endif 

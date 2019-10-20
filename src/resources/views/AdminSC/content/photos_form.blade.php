@@ -62,7 +62,7 @@
                             </div>
                             @php $no_img = 0 @endphp
                             @if (isset($data->photos))
-                                @foreach($data->photos as $photo)
+                                @foreach ($data->photos as $photo)
                                     <div id="img{{ ++$no_img }}" class="col-sm-6 col-md-2" style="padding:10px;padding-top:0;padding-bottom:20px;">
                                         <div class="thumbnail" style="height:150px;display:{{ app('is_desktop') ? 'table-cell;' : 'block;' }}padding:0;width:inherit;margin-bottom:1px;background:#f8f8f8;">
                                             <img src="{{ str_replace('/files/', '/thumbs/', $photo->file) }}" style="height:100px;">

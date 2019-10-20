@@ -60,7 +60,7 @@ if (isset($data->id) && ($key = array_search($data->id, $orders)) !== false) {;
 						<option value="videos" {{ (isset($data->id) && $data->url == "videos" ) ? 'selected' : '' }}>Galeri Video</option>
 						<option value="contact" {{ (isset($data->id) && $data->url == "contact" ) ? 'selected' : '' }}>Kontak</option>
 						@php $type = ''; @endphp
-						@foreach($post_opts as $n => $post)
+						@foreach ($post_opts as $n => $post)
 							@if ($type != $post->type)
 								{!! ($n > 0) ? '</optgroup>' : '' !!}
 								@php $type = $post->type @endphp

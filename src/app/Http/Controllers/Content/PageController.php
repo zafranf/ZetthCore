@@ -91,8 +91,8 @@ class PageController extends AdminController
     {
         /* validation */
         $this->validate($r, [
-            'title' => 'required|max:100|unique:posts,title,NULL,created_at,type,page',
-            'slug' => 'required|max:100|unique:posts,slug,NULL,created_at,type,page',
+            'title' => 'required|max:100|unique:posts,title,NULL,created_at,type,page,deleted_at,NULL',
+            'slug' => 'required|max:100|unique:posts,slug,NULL,created_at,type,page,deleted_at,NULL',
             'content' => 'required',
         ]);
 
@@ -163,7 +163,7 @@ class PageController extends AdminController
     {
         /* validation */
         $this->validate($r, [
-            'title' => 'required|max:100|unique:posts,title,' . $page->id . ',id,type,page',
+            'title' => 'required|max:100|unique:posts,title,' . $page->id . ',id,type,page,deleted_at,NULL',
             // 'slug' => 'required|max:100|unique:posts,slug,' . $page->id . ',id,type,page',
             'content' => 'required',
         ]);

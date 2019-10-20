@@ -34,7 +34,7 @@
             <option value="videos" {{ (isset($data) && $data->url == "videos" ) ? 'selected' : '' }}>Galeri Video</option>
             <option value="contact" {{ (isset($data) && $data->url == "contact" ) ? 'selected' : '' }}>Kontak</option>
             @php $type = ''; @endphp
-						@foreach($post_opts as $n => $post)
+						@foreach ($post_opts as $n => $post)
 							@if ($type != $post->type)
 								{!! ($n > 0) ? '</optgroup>' : '' !!}
 								@php $type = $post->type @endphp

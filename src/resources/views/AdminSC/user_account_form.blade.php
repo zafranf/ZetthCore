@@ -52,7 +52,7 @@
                         <label for="label" class="col-md-4 control-label">Akun</label>
                         <div class="col-md-8">
                             @if (isset($socmed_data) && count($socmed_data) > 0)
-                                @foreach($socmed_data as $key => $val)
+                                @foreach ($socmed_data as $key => $val)
                                 @php
                                     $rand = rand(111111111, 999999999);
                                 @endphp
@@ -61,7 +61,7 @@
                                         <select name="socmed_id[]" class="form-control zetth-select">
                                             <option value="">--Pilih--</option>
                                             @if (isset($socmeds))
-                                                @foreach($socmeds as $socmed)
+                                                @foreach ($socmeds as $socmed)
                                                 @php
                                                     $sl = ($socmed->id == $val->socmed->id) ? 'selected' : '';
                                                 @endphp
@@ -89,7 +89,7 @@
 									<select name="socmed_id[]" class="form-control custom-select2">
                                         <option value="">--Pilih--</option>
                                         @if (isset($socmeds))
-                                            @foreach($socmeds as $socmed)
+                                            @foreach ($socmeds as $socmed)
                                                 <option value="{{ $socmed->id }}">{{ $socmed->name }}</option>
                                             @endforeach
                                         @endif
@@ -159,7 +159,7 @@
             '<select name="socmed_id[]" class="form-control custom-select2">'+
                 '<option value="">--Pilih--</option>'+
                 @if (isset($socmeds))
-                @foreach($socmeds as $socmed)
+                @foreach ($socmeds as $socmed)
                     '<option value="{{ $socmed->id }}">{{ $socmed->name }}</option>'+
                 @endforeach
                 @endif
