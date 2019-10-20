@@ -136,6 +136,9 @@ if (!function_exists('getMenu')) {
             $menus = $cacheMenu;
         } else {
             $groupmenu = \ZetthCore\Models\MenuGroup::where('slug', $group)->with('menu.submenu')->first();
+            if (!$groupmenu) {
+                return null;
+            }
             $menus = $group == 'admin' ? menuFilterPermission($groupmenu->menu) : $groupmenu->menu;
 
             \Cache::put($cacheMenuName, $menus, 60 * (env('APP_ENV') != 'production' ? 1 : env('CACHE_TIME', 10)));
@@ -410,8 +413,8 @@ if (!function_exists('carbon')) {
     }
 }
 
-if (!function_exists('carbon_store')) {
-    function carbon_store($carbon = null)
+if (!function_exists('carbon_query')) {
+    function carbon_query($carbon = null)
     {
         return carbon($carbon, null, 'store');
     }

@@ -245,20 +245,20 @@ function _getVideos($limit = null, $order = 'desc', $slug = '')
 function _getPopularPosts($start_date = null, $end_date = null, $limit = null)
 {
     /* cache name */
-    $cache_name = '_getPopularNews';
+    $cache_name = '_getPopularPosts' . $start_date . $end_date;
 
     /* default start and end date */
     $start_date = $start_date ?? date("Y-m-d");
     $end_date = $end_date ?? date("Y-m-d");
 
     /* set start and end as carbon */
-    $start = carbon_store($start_date . ' 00:00:00');
-    $end = carbon_store($end_date . ' 23:59:59');
+    $start = carbon_query($start_date . ' 00:00:00');
+    $end = carbon_query($end_date . ' 23:59:59');
 
     /* inisiasi query */
     $posts = \ZetthCore\Models\VisitorLog::select(DB::raw('sum(count) as count'), \DB::raw('SUBSTRING_INDEX(page, "/", -1) as slug'))
         ->where('page', 'regexp', '^/(post|article|news)/')
-        ->where('count', '>', 100)
+        ->where('count', '>=', 100)
         ->whereBetween('created_at', [$start, $end])
         ->orderBy('count', 'desc')
         ->with('post.categories')
