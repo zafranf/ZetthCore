@@ -15,22 +15,12 @@ class RoleMenuSeeder extends Seeder
     {
         $roles = \ZetthCore\Models\Role::all();
         foreach ($roles as $role) {
-            if ($role->name == 'super') {
+            if ($role->name == 'user') {
                 \ZetthCore\Models\RoleMenu::create([
                     'role_id' => $role->id,
-                    'menu_group_id' => 1,
+                    'menu_group_id' => 2,
                 ]);
-            } else if ($role->name == 'admin') {
-                \ZetthCore\Models\RoleMenu::create([
-                    'role_id' => $role->id,
-                    'menu_group_id' => 1,
-                ]);
-            } else if ($role->name == 'author') {
-                \ZetthCore\Models\RoleMenu::create([
-                    'role_id' => $role->id,
-                    'menu_group_id' => 1,
-                ]);
-            } else if ($role->name == 'editor') {
+            } else {
                 \ZetthCore\Models\RoleMenu::create([
                     'role_id' => $role->id,
                     'menu_group_id' => 1,
