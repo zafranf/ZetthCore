@@ -254,6 +254,7 @@ function _getPopularPosts($start_date = null, $end_date = null, $limit = null)
     /* set start and end as carbon */
     $start = carbon_query($start_date . ' 00:00:00');
     $end = carbon_query($end_date . ' 23:59:59');
+    // dd($start, $end, $start_date, $end_date);
 
     /* inisiasi query */
     $posts = \ZetthCore\Models\VisitorLog::select(DB::raw('sum(count) as count'), \DB::raw('SUBSTRING_INDEX(page, "/", -1) as slug'))
