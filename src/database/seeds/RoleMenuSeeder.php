@@ -1,5 +1,7 @@
 <?php
 
+namespace ZetthCore\Seeder;
+
 use Illuminate\Database\Seeder;
 
 class RoleMenuSeeder extends Seeder

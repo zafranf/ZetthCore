@@ -1,5 +1,7 @@
 <?php
 
+namespace ZetthCore\Seeder;
+
 use Illuminate\Database\Seeder;
 use ZetthCore\Models\Menu;
 
@@ -14,6 +16,8 @@ class MenuTableSeeder extends Seeder
     {
         $this->super();
         $this->admin();
+        $this->author();
+        $this->editor();
         $this->web();
     }
 
@@ -191,7 +195,7 @@ class MenuTableSeeder extends Seeder
         $contentPage->parent_id = $content->id;
         $contentPage->index = 1;
         $contentPage->create = 1;
-        $contentPage->read = 1;
+        $contentPage->read = 0;
         $contentPage->update = 1;
         $contentPage->delete = 1;
         $contentPage->save();
@@ -207,7 +211,7 @@ class MenuTableSeeder extends Seeder
         $contentPost->parent_id = $content->id;
         $contentPost->index = 1;
         $contentPost->create = 1;
-        $contentPost->read = 1;
+        $contentPost->read = 0;
         $contentPost->update = 1;
         $contentPost->delete = 1;
         $contentPost->save();
@@ -579,7 +583,7 @@ class MenuTableSeeder extends Seeder
         $contentPage->parent_id = $content->id;
         $contentPage->index = 1;
         $contentPage->create = 1;
-        $contentPage->read = 1;
+        $contentPage->read = 0;
         $contentPage->update = 1;
         $contentPage->delete = 1;
         $contentPage->group_id = 2;
@@ -596,7 +600,7 @@ class MenuTableSeeder extends Seeder
         $contentPost->parent_id = $content->id;
         $contentPost->index = 1;
         $contentPost->create = 1;
-        $contentPost->read = 1;
+        $contentPost->read = 0;
         $contentPost->update = 1;
         $contentPost->delete = 1;
         $contentPost->group_id = 2;
@@ -730,70 +734,134 @@ class MenuTableSeeder extends Seeder
         $repSubscriber->delete = 1;
         $repSubscriber->group_id = 2;
         $repSubscriber->save();
+    }
 
-        $logOrder = 1;
-        /* menu catatan (grup) */
-        /* $log = new Menu;
-        $log->name = 'Catatan';
-        $log->description = 'Grup menu catatan';
-        $log->route_name = 'admin.log.index';
-        // $log->icon = 'pg-note';
-        $log->order = $mainOrder++;
-        $log->status = 1;
-        $log->index = 1;
-        $log->group_id = 2;
-        $log->save(); */
+    public function author()
+    {
+        $mainOrder = 1;
+        /* menu dashboard */
+        $dash = new Menu;
+        $dash->name = 'Dasbor';
+        $dash->description = 'Halaman utama situs';
+        $dash->route_name = 'admin.dashboard.index';
+        // $dash->icon = 'fa fa-dashboard';
+        $dash->target = '_self';
+        $dash->order = $mainOrder++;
+        $dash->status = 1;
+        $dash->index = 1;
+        $dash->group_id = 3;
+        $dash->save();
 
-        /* menu catatan aktifitas */
-        /* $logActivity = new Menu;
-        $logActivity->name = 'Aktifitas';
-        $logActivity->description = 'Menu catatan aktifitas';
-        $logActivity->route_name = 'admin.log.activities.index';
-        // $logActivity->icon = 'fa fa-list';
-        $logActivity->order = $logOrder++;
-        $logActivity->status = 1;
-        $logActivity->parent_id = $log->id;
-        $logActivity->index = 1;
-        $logActivity->create = 0;
-        $logActivity->read = 1;
-        $logActivity->update = 0;
-        $logActivity->delete = 0;
-        $logActivity->group_id = 2;
-        $logActivity->save(); */
+        $contentOrder = 1;
+        /* menu konten (grup) */
+        $content = new Menu;
+        $content->name = 'Konten';
+        $content->description = 'Grup menu konten';
+        $content->route_name = 'admin.content.index';
+        // $content->icon = 'fa fa-edit';
+        $content->order = $mainOrder++;
+        $content->status = 1;
+        $content->index = 1;
+        $content->group_id = 3;
+        $content->save();
 
-        /* menu catatan galat */
-        /* $logError = new Menu;
-        $logError->name = 'Galat';
-        $logError->description = 'Menu catatan galat';
-        $logError->route_name = 'admin.log.errors.index';
-        // $logError->icon = 'fa fa-list-ul';
-        $logError->order = $logOrder++;
-        $logError->status = 1;
-        $logError->parent_id = $log->id;
-        $logError->index = 1;
-        $logError->create = 0;
-        $logError->read = 1;
-        $logError->update = 0;
-        $logError->delete = 0;
-        $logError->group_id = 2;
-        $logError->save(); */
+        /* menu halaman */
+        $contentPage = new Menu;
+        $contentPage->name = 'Halaman';
+        $contentPage->description = 'Menu pengaturan halaman';
+        $contentPage->route_name = 'admin.content.pages.index';
+        // $contentPage->icon = 'fa fa-file-text';
+        $contentPage->order = $contentOrder++;
+        $contentPage->status = 1;
+        $contentPage->parent_id = $content->id;
+        $contentPage->index = 1;
+        $contentPage->create = 1;
+        $contentPage->read = 0;
+        $contentPage->update = 1;
+        $contentPage->delete = 1;
+        $contentPage->group_id = 3;
+        $contentPage->save();
 
-        /* menu catatan kunjungan */
-        /* $logVisitor = new Menu;
-    $logVisitor->name = 'Kunjungan';
-    $logVisitor->description = 'Menu catatan kunjungan';
-    $logVisitor->route_name = 'admin.log.visitors.index';
-    // $logVisitor->icon = 'fa fa-list-ul';
-    $logVisitor->order = $logOrder++;
-    $logVisitor->status = 1;
-    $logVisitor->parent_id = $log->id;
-    $logVisitor->index = 1;
-    $logVisitor->create = 0;
-    $logVisitor->read = 1;
-    $logVisitor->update = 0;
-    $logVisitor->delete = 0;
-    $logVisitor->group_id = 2;
-    $logVisitor->save(); */
+        /* menu artikel */
+        $contentPost = new Menu;
+        $contentPost->name = 'Artikel';
+        $contentPost->description = 'Menu pengaturan artikel';
+        $contentPost->route_name = 'admin.content.posts.index';
+        // $contentPost->icon = 'fa fa-newspaper-o';
+        $contentPost->order = $contentOrder++;
+        $contentPost->status = 1;
+        $contentPost->parent_id = $content->id;
+        $contentPost->index = 1;
+        $contentPost->create = 1;
+        $contentPost->read = 0;
+        $contentPost->update = 1;
+        $contentPost->delete = 1;
+        $contentPost->group_id = 3;
+        $contentPost->save();
+    }
+
+    public function editor()
+    {
+        $mainOrder = 1;
+        /* menu dashboard */
+        $dash = new Menu;
+        $dash->name = 'Dasbor';
+        $dash->description = 'Halaman utama situs';
+        $dash->route_name = 'admin.dashboard.index';
+        // $dash->icon = 'fa fa-dashboard';
+        $dash->target = '_self';
+        $dash->order = $mainOrder++;
+        $dash->status = 1;
+        $dash->index = 1;
+        $dash->group_id = 4;
+        $dash->save();
+
+        $contentOrder = 1;
+        /* menu konten (grup) */
+        $content = new Menu;
+        $content->name = 'Konten';
+        $content->description = 'Grup menu konten';
+        $content->route_name = 'admin.content.index';
+        // $content->icon = 'fa fa-edit';
+        $content->order = $mainOrder++;
+        $content->status = 1;
+        $content->index = 1;
+        $content->group_id = 4;
+        $content->save();
+
+        /* menu halaman */
+        $contentPage = new Menu;
+        $contentPage->name = 'Halaman';
+        $contentPage->description = 'Menu pengaturan halaman';
+        $contentPage->route_name = 'admin.content.pages.index';
+        // $contentPage->icon = 'fa fa-file-text';
+        $contentPage->order = $contentOrder++;
+        $contentPage->status = 1;
+        $contentPage->parent_id = $content->id;
+        $contentPage->index = 1;
+        $contentPage->create = 0;
+        $contentPage->read = 0;
+        $contentPage->update = 1;
+        $contentPage->delete = 0;
+        $contentPage->group_id = 4;
+        $contentPage->save();
+
+        /* menu artikel */
+        $contentPost = new Menu;
+        $contentPost->name = 'Artikel';
+        $contentPost->description = 'Menu pengaturan artikel';
+        $contentPost->route_name = 'admin.content.posts.index';
+        // $contentPost->icon = 'fa fa-newspaper-o';
+        $contentPost->order = $contentOrder++;
+        $contentPost->status = 1;
+        $contentPost->parent_id = $content->id;
+        $contentPost->index = 1;
+        $contentPost->create = 0;
+        $contentPost->read = 0;
+        $contentPost->update = 1;
+        $contentPost->delete = 0;
+        $contentPost->group_id = 4;
+        $contentPost->save();
     }
 
     public function web()
@@ -810,7 +878,7 @@ class MenuTableSeeder extends Seeder
         $dash->status = 1;
         $dash->is_crud = 0;
         $dash->index = 1;
-        $dash->group_id = 3;
+        $dash->group_id = 5;
         $dash->save();
     }
 }

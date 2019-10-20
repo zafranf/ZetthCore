@@ -1,5 +1,7 @@
 <?php
 
+namespace ZetthCore\Seeder;
+
 use Illuminate\Database\Seeder;
 
 class ZetthSeeder extends Seeder
@@ -12,7 +14,7 @@ class ZetthSeeder extends Seeder
     public function run()
     {
         $this->call(LaratrustSeeder::class);
-        $this->call(AppTableSeeder::class);
+        $this->call(SiteTableSeeder::class);
         $this->call(IntermdataSeeder::class);
         $this->call(UsersTableSeeder::class);
         $this->call(MenuTableSeeder::class);
