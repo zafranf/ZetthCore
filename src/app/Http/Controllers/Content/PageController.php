@@ -99,7 +99,7 @@ class PageController extends AdminController
         /* save data */
         $page = new Post;
         $page->title = $r->input('title');
-        $page->slug = str_slug($page->title);
+        $page->slug = $r->input('slug') ?? str_slug($page->title);
         $page->content = $r->input('content');
         $page->excerpt = substr(strip_tags($page->content), 0, 255);
         $page->type = 'page';
