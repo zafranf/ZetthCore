@@ -96,7 +96,7 @@ class Install extends Command
     public function seedingTable()
     {
         $this->info('Seeding default seeder');
-        $process = new Process('php artisan db:seed --class=ZetthSeeder');
+        $process = new Process('php artisan db:seed --class="\ZetthCore\Seeder\ZetthSeeder"');
         $process->setTimeout($this->timeout);
         $process->run(function ($type, $buffer) {
             echo $buffer;

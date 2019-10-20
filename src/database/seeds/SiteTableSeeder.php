@@ -1,8 +1,10 @@
 <?php
 
+namespace ZetthCore\Seeder;
+
 use Illuminate\Database\Seeder;
 
-class AppTableSeeder extends Seeder
+class SiteTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.

@@ -1,5 +1,7 @@
 <?php
 
+namespace ZetthCore\Seeder;
+
 use Illuminate\Database\Seeder;
 
 class RoleMenuSeeder extends Seeder
@@ -13,22 +15,16 @@ class RoleMenuSeeder extends Seeder
     {
         $roles = \ZetthCore\Models\Role::all();
         foreach ($roles as $role) {
-            if ($role->name == 'super') {
-                // $menus = \ZetthCore\Models\MenuGroup::all();
-                // foreach ($menus as $menu) {
-                \ZetthCore\Models\RoleMenu::create([
-                    'role_id' => $role->id,
-                    'menu_group_id' => 1,
-                ]);
-                // }
-            } else if ($role->name == 'admin') {
-                // $menu = \ZetthCore\Models\MenuGroup::first();
-                // foreach ($menus as $menu) {
+            if ($role->name == 'user') {
                 \ZetthCore\Models\RoleMenu::create([
                     'role_id' => $role->id,
                     'menu_group_id' => 2,
                 ]);
-                // }
+            } else {
+                \ZetthCore\Models\RoleMenu::create([
+                    'role_id' => $role->id,
+                    'menu_group_id' => 1,
+                ]);
             }
         }
     }
