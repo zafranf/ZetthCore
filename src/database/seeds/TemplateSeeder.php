@@ -1,5 +1,7 @@
 <?php
 
+namespace ZetthCore\Seeder;
+
 use Illuminate\Database\Seeder;
 
 class TemplateSeeder extends Seeder
@@ -11,7 +13,7 @@ class TemplateSeeder extends Seeder
      */
     public function run()
     {
-        \DB::table('templates')->insert([
+        \ZetthCore\Models\Template::create([
             'name' => 'WebSC',
             'slug' => 'WebSC',
             'description' => null,

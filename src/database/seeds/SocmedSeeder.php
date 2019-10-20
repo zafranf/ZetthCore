@@ -1,5 +1,7 @@
 <?php
 
+namespace ZetthCore\Seeder;
+
 use Illuminate\Database\Seeder;
 
 class SocmedSeeder extends Seeder
@@ -12,7 +14,7 @@ class SocmedSeeder extends Seeder
     public function run()
     {
 
-        DB::table('socmeds')->insert([
+        \ZetthCore\Models\Socmed::create([
             'name' => "Facebook",
             'url' => "https://facebook.com",
             'icon' => "fa fa-facebook",
@@ -20,7 +22,7 @@ class SocmedSeeder extends Seeder
             'status' => 1,
             'created_at' => date("Y-m-d H:i:s"),
         ]);
-        DB::table('socmeds')->insert([
+        \ZetthCore\Models\Socmed::create([
             'name' => "Twitter",
             'url' => "https://twitter.com",
             'icon' => "fa fa-twitter",
@@ -28,7 +30,7 @@ class SocmedSeeder extends Seeder
             'status' => 1,
             'created_at' => date("Y-m-d H:i:s"),
         ]);
-        DB::table('socmeds')->insert([
+        \ZetthCore\Models\Socmed::create([
             'name' => "Instagram",
             'url' => "https://instagram.com",
             'icon' => "fa fa-instagram",
@@ -36,7 +38,7 @@ class SocmedSeeder extends Seeder
             'status' => 1,
             'created_at' => date("Y-m-d H:i:s"),
         ]);
-        DB::table('socmeds')->insert([
+        \ZetthCore\Models\Socmed::create([
             'name' => "Youtube",
             'url' => "https://youtube.com",
             'icon' => "fa fa-youtube",
