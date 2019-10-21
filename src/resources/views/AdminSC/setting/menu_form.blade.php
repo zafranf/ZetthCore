@@ -79,7 +79,7 @@
           </select>
         </div>
       </div>
-      <div class="form-group">
+      <div class="form-group {{ Auth::user()->hasRole('super') ? '' : 'hide' }}">
         <label for="is_crud" class="col-sm-2 control-label">Berikan Akses</label>
         <div class="col-sm-4">
           <div class="checkbox">
@@ -89,7 +89,7 @@
           </div>
         </div>
       </div>
-      <div class="form-group" id="access-fields" {!! (isset($data) && $data->is_crud == 1) ? '' : 'style="display:none;"' !!}>
+      <div class="form-group {{ Auth::user()->hasRole('super') ? '' : 'hide' }}" id="access-fields" {!! (isset($data) && $data->is_crud == 1) ? '' : 'style="display:none;"' !!}>
         <label for="status" class="col-sm-2 control-label">Akses</label>
         <div class="col-sm-4">
           <div class="checkbox">
