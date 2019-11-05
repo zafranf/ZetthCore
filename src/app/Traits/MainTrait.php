@@ -3,6 +3,11 @@ namespace ZetthCore\Traits;
 
 trait MainTrait
 {
+    public function getTemplate()
+    {
+        return app('site')->template->slug ?? 'WebSC';
+    }
+    
     public function visitorLog()
     {
         /* set variable */
