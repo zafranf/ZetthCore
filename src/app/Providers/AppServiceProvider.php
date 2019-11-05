@@ -53,7 +53,7 @@ class AppServiceProvider extends ServiceProvider
             });
 
             /* set config template */
-            $theme = app('site')->template->slug ?? 'WebSC';
+            $theme = $this->getTemplate();
             $config_template = require resource_path('views/' . $theme . '/config.php');
             app('config')->set('site', $config_template);
 
