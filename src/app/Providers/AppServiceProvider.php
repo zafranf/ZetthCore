@@ -7,6 +7,7 @@ use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
 {
+    use \ZetthCore\Traits\MainTrait;
     /**
      * Bootstrap any application services.
      *
@@ -54,7 +55,8 @@ class AppServiceProvider extends ServiceProvider
 
             /* set config template */
             $theme = $this->getTemplate();
-            $config_template = require resource_path('views/' . $theme . '/config.php');
+            $themeConfig = resource_path('views/' . $theme . '/config.php');
+            $config_template = file_exists($themeConfig) ? include $themeConfig : [];
             app('config')->set('site', $config_template);
 
             /* set device type to global */
