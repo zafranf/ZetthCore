@@ -142,9 +142,9 @@ class AppServiceProvider extends ServiceProvider
             __DIR__ . $publishable_path . '/config/laratrust.php' => config_path('laratrust.php'),
             __DIR__ . $publishable_path . '/config/laratrust_seeder.php' => config_path('laratrust_seeder.php'),
         ], 'zetthconfig');
-        // $this->publishes([
-        //     __DIR__ . $publishable_path.'/config/auth.php' => config_path('auth.php'),
-        // ], 'zetthauth');
+        /* $this->publishes([
+        __DIR__ . $publishable_path.'/config/auth.php' => config_path('auth.php'),
+        ], 'zetthauth'); */
         $this->publishes([
             __DIR__ . $publishable_path . '/Exceptions/Handler.php' => app_path('Exceptions/Handler.php'),
         ], 'zetthhandler');
@@ -152,8 +152,8 @@ class AppServiceProvider extends ServiceProvider
             __DIR__ . $publishable_path . '/Middleware/Authenticate.php' => app_path('Http/Middleware/Authenticate.php'),
             __DIR__ . $publishable_path . '/Middleware/RedirectIfAuthenticated.php' => app_path('Http/Middleware/RedirectIfAuthenticated.php'),
         ], 'zetthmiddleware');
-        $this->publishes([
-            __DIR__ . $publishable_path . '/routes/web.php' => base_path('routes/web.php'),
-        ], 'zetthroutes');
+        /* $this->publishes([
+    __DIR__ . $publishable_path . '/routes/web.php' => base_path('routes/web.php'),
+    ], 'zetthroutes'); */
     }
 }
