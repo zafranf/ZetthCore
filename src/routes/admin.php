@@ -170,4 +170,7 @@ Route::middleware('auth')->group(function () use ($prefix) {
 });
 
 /* include additional menu admin */
-include base_path('routes') . '/admin.php';
+$siteAdmin = base_path('routes') . '/admin.php';
+if (file_exists($siteAdmin)) {
+    include $siteAdmin;
+}

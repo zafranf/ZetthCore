@@ -7,6 +7,7 @@ use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
 {
+    use \ZetthCore\Traits\MainTrait;
     /**
      * Bootstrap any application services.
      *
@@ -53,8 +54,9 @@ class AppServiceProvider extends ServiceProvider
             });
 
             /* set config template */
-            $theme = app('site')->template->slug ?? 'WebSC';
-            $config_template = require resource_path('views/' . $theme . '/config.php');
+            $theme = $this->getTemplate();
+            $themeConfig = resource_path('views/' . $theme . '/config.php');
+            $config_template = file_exists($themeConfig) ? include $themeConfig : [];
             app('config')->set('site', $config_template);
 
             /* set device type to global */
@@ -142,9 +144,9 @@ class AppServiceProvider extends ServiceProvider
             __DIR__ . $publishable_path . '/config/laratrust.php' => config_path('laratrust.php'),
             __DIR__ . $publishable_path . '/config/laratrust_seeder.php' => config_path('laratrust_seeder.php'),
         ], 'zetthconfig');
-        // $this->publishes([
-        //     __DIR__ . $publishable_path.'/config/auth.php' => config_path('auth.php'),
-        // ], 'zetthauth');
+        /* $this->publishes([
+        __DIR__ . $publishable_path.'/config/auth.php' => config_path('auth.php'),
+        ], 'zetthauth'); */
         $this->publishes([
             __DIR__ . $publishable_path . '/Exceptions/Handler.php' => app_path('Exceptions/Handler.php'),
         ], 'zetthhandler');
@@ -152,8 +154,8 @@ class AppServiceProvider extends ServiceProvider
             __DIR__ . $publishable_path . '/Middleware/Authenticate.php' => app_path('Http/Middleware/Authenticate.php'),
             __DIR__ . $publishable_path . '/Middleware/RedirectIfAuthenticated.php' => app_path('Http/Middleware/RedirectIfAuthenticated.php'),
         ], 'zetthmiddleware');
-        $this->publishes([
-            __DIR__ . $publishable_path . '/routes/web.php' => base_path('routes/web.php'),
-        ], 'zetthroutes');
+        /* $this->publishes([
+    __DIR__ . $publishable_path . '/routes/web.php' => base_path('routes/web.php'),
+    ], 'zetthroutes'); */
     }
 }
