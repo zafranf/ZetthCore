@@ -7,7 +7,7 @@ trait MainTrait
     {
         return app('site')->template->slug ?? 'WebSC';
     }
-    
+
     public function visitorLog()
     {
         /* set variable */
@@ -469,11 +469,14 @@ trait MainTrait
      * @param [type] $collection
      * @return void
      */
-    protected function generateDataTable($builder)
+    protected function generateDataTable($builder, array $raw_columns = [])
     {
-        $make = \DataTables::eloquent($builder);
-        $make = $make->make();
+        $dt = \DataTables::eloquent($builder);
+        if (!empty($raw_columns)) {
+            $dt = $dt->rawColumns($raw_columns);
+        }
+        $dt = $dt->make();
 
-        return $make;
+        return $dt;
     }
 }
