@@ -37,6 +37,11 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasMany('ZetthCore\Models\RoleUser');
     }
 
+    public function getIsAdminAttribute()
+    {
+        return $this->can('admin.dashboard.index');
+    }
+
     /* public function roles()
 {
 return $this->belongsToMany('ZetthCore\Models\Role', 'role_user', 'role_id', 'user_id');

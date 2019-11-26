@@ -132,7 +132,7 @@ class ActivityController extends AdminController
 
         /* generate datatable */
         if ($r->ajax()) {
-            return $this->generateDataTable($data);
+            return $this->generateDataTable($data, ['description']);
         }
 
         abort(403);

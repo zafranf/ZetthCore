@@ -32,10 +32,11 @@ class ZetthCreateUsersTable extends Migration
             // $table->integer('role_id')->unsigned();
             // $table->dateTime('login_last')->nullable();
             // $table->boolean('login_failed')->unsigned()->default(0);
-            $table->boolean('is_admin')->comment('0=no, 1=yes')->unsigned()->default(1);
+            // $table->boolean('is_admin')->comment('0=no, 1=yes')->unsigned()->default(1);
             $table->boolean('status')->comment('0=inactive, 1=active, 2=banned')->unsigned();
             $table->rememberToken();
-            $table->timestamp('email_verified_at')->nullable();
+            $table->string('verify_code')->nullable();
+            $table->timestamp('verified_at')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

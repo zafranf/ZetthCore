@@ -159,8 +159,8 @@ class UserController extends AdminController
 
         /* attach role */
         $this->assignRole($user, $r->input('role'));
-        $user->is_admin = $user->hasRole(['super', 'admin', 'author', 'editor']) ? 1 : 0;
-        $user->save();
+        // $user->is_admin = $user->hasRole(['super', 'admin', 'author', 'editor']) ? 1 : 0;
+        // $user->save();
 
         /* save socmed */
         $this->saveSocmed($user, $r);
@@ -297,8 +297,8 @@ class UserController extends AdminController
 
         /* attach role */
         $this->assignRole($user, $r->input('role'));
-        $user->is_admin = $user->hasRole(['super', 'admin', 'author', 'editor']) ? 1 : 0;
-        $user->save();
+        // $user->is_admin = $user->hasRole(['super', 'admin', 'author', 'editor']) ? 1 : 0;
+        // $user->save();
 
         /* save socmed */
         $this->saveSocmed($user, $r);
