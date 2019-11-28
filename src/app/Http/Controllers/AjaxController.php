@@ -295,7 +295,7 @@ class AjaxController extends AdminController
         $end = $r->input('end');
 
         /* get posts */
-        $posts = _getPopularPosts($start, $end, 5);
+        $posts = _getPopularPosts(5, $start, $end);
 
         if ($posts) {
             foreach ($posts as $k => $v) {
