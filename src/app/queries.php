@@ -248,7 +248,7 @@ function _getPopularPosts($start_date = null, $end_date = null, $limit = null)
     $cache_name = '_getPopularPosts' . $start_date . $end_date;
 
     /* default start and end date */
-    $start_date = $start_date ?? date("Y-m-d");
+    $start_date = $start_date ?? date("Y-m-d", strtotime('-7 days'));
     $end_date = $end_date ?? date("Y-m-d");
 
     /* set start and end as carbon */
