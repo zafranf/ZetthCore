@@ -128,7 +128,7 @@ function _getCategory()
 
 function _getCategories($limit = null, $order = 'desc')
 {
-    return _getTerms('categories', $limit, $order);
+    return _getTerms('category', $limit, $order);
 }
 
 function _getTag()
@@ -242,13 +242,13 @@ function _getVideos($limit = null, $order = 'desc', $slug = '')
     return _doGetData($cache_name, $videos, $limit);
 }
 
-function _getPopularPosts($start_date = null, $end_date = null, $limit = null)
+function _getPopularPosts($limit = null, $start_date = null, $end_date = null)
 {
     /* cache name */
     $cache_name = '_getPopularPosts' . $start_date . $end_date;
 
     /* default start and end date */
-    $start_date = $start_date ?? date("Y-m-d");
+    $start_date = $start_date ?? date("Y-m-d", strtotime('-7 days'));
     $end_date = $end_date ?? date("Y-m-d");
 
     /* set start and end as carbon */
