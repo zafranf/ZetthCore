@@ -2,7 +2,7 @@
 if (!function_exists('adminPath')) {
     function adminPath()
     {
-        $adminPath = '/admin';
+        $adminPath = '/' . env('ADMIN_PATH', 'admin');
         $host = parse_url(url('/'))['host'];
         if (strpos($host, 'admin') !== false) {
             $adminPath = '';
