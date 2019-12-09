@@ -2,7 +2,7 @@
 if (!function_exists('adminPath')) {
     function adminPath()
     {
-        $adminPath = '/admin';
+        $adminPath = '/' . env('ADMIN_PATH', 'admin');
         $host = parse_url(url('/'))['host'];
         if (strpos($host, 'admin') !== false) {
             $adminPath = '';
@@ -250,11 +250,11 @@ if (!function_exists('generateArrayLevel')) {
         $array = [];
         $sep = $separator ? str_repeat($separator, $level) : '';
         $pad = $level * 20;
-        foreach ($data as $menu) {
-            $menu->name = ($sep ? '<span class="text-muted" style="padding-left: ' . $pad . 'px">' . $sep . '</span> ' : '') . $menu->name;
-            $array[] = $menu;
-            if (isset($menu->{$sub}) && count($menu->{$sub}) > 0) {
-                $array = array_merge($array, generateArrayLevel($menu->{$sub}, $sub, $separator, $level + 1));
+        foreach ($data as $arr) {
+            $arr->name = ($sep ? '<span class="text-muted" style="padding-left: ' . $pad . 'px">' . $sep . '</span> ' : '') . $arr->name;
+            $array[] = $arr;
+            if (isset($arr->{$sub}) && count($arr->{$sub}) > 0) {
+                $array = array_merge($array, generateArrayLevel($arr->{$sub}, $sub, $separator, $level + 1));
             }
         }
 
