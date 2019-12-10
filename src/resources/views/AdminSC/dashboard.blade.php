@@ -209,7 +209,7 @@
     var dt = moment();
     var intHour = 1;
     var intDay = 24;
-    var label = (typeof label != "undefined") ? label : 'Today';
+    var label = (typeof label != "undefined") ? label : 'Hari ini';
 
     /* generate date range box */
     var html = '<div id="z-date-range" class="pull-right" style="background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #ccc; margin-top: -40px; margin-right: 45px;">'+
@@ -322,14 +322,12 @@
       var html = '';
       if (data.length > 0) {
         $.each(data, function(k,v){
-          @if (app('is_desktop'))
-          var time = 'on '+v.time;
-          @else
           var time = ''; 
+          @if (app('is_desktop'))
+            time = 'on '+v.time;
           @endif
           html += '<tr>';
-          html += '<td>'+v.text+'<br>';
-          html += '<small>in '+v.post+' '+time+'</small></td>';
+          html += '<td>'+v.text+'<br><small>in '+v.post+' '+time+'</small></td>';
           html += '<td>'+v.name+'</td>';
           html += '</tr>';
         });
