@@ -12,13 +12,14 @@
         "yajra/laravel-datatables-oracle": "~9.0",
         "zafranf/helpers": "dev-master"
     },
-
     "require-dev": {},
     "license": "MIT",
-    "authors": [{
-        "name": "Zafran Fadilah",
-        "email": "surel@zafran.id"
-    }],
+    "authors": [
+        {
+            "name": "Zafran Fadilah",
+            "email": "surel@zafran.id"
+        }
+    ],
     "config": {
         "preferred-install": "dist",
         "sort-packages": true,

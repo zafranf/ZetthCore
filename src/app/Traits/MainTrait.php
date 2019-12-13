@@ -102,7 +102,7 @@ trait MainTrait
         }
 
         if ($e->getMessage()) {
-            if (\Illuminate\Support\Facades\Schema::hasTable('error_log')) {
+            try {
                 $date = carbon_query()->format('Y-m-d');
                 $err = \ZetthCore\Models\ErrorLog::updateOrCreate(
                     [
@@ -126,6 +126,7 @@ trait MainTrait
                 $histories[] = date("Y-m-d H:i:s");
                 $err->time_history = json_encode($histories);
                 $err->save();
+            } catch (\Exception $e) {
             }
         }
 
