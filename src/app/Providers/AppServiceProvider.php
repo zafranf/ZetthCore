@@ -21,9 +21,7 @@ class AppServiceProvider extends ServiceProvider
 
         /* check config */
         if (!$this->app->runningInConsole()) {
-            try {
-                \DB::getPdo();
-            } catch (\Exception $e) {
+            if (!$this->checkDBConnection()) {
                 /* sementara, nanti redirect ke halaman install */
                 throw new \Exception("You have to install this app first", 1);
                 // redirect(url('/install'))->send();

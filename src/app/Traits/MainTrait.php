@@ -101,33 +101,30 @@ trait MainTrait
             $log['data'] = $e->data;
         }
 
-        if ($e->getMessage()) {
-            try {
-                $date = carbon_query()->format('Y-m-d');
-                $err = \ZetthCore\Models\ErrorLog::updateOrCreate(
-                    [
-                        'id' => md5($log['code'] . $log['file'] . $log['line'] . $log['path'] . $log['message'] . $date),
-                    ],
-                    [
-                        'code' => $log['code'],
-                        'file' => $log['file'],
-                        'line' => $log['line'],
-                        'path' => $log['path'],
-                        'message' => $log['message'],
-                        'params' => $log['params'],
-                        'trace' => $log['trace'],
-                        'data' => $log['data'] ?? null,
-                        'count' => \DB::raw('count+1'),
-                    ]
-                );
+        if ($e->getMessage() && $this->checkDBConnection()) {
+            $date = carbon_query()->format('Y-m-d');
+            $err = \ZetthCore\Models\ErrorLog::updateOrCreate(
+                [
+                    'id' => md5($log['code'] . $log['file'] . $log['line'] . $log['path'] . $log['message'] . $date),
+                ],
+                [
+                    'code' => $log['code'],
+                    'file' => $log['file'],
+                    'line' => $log['line'],
+                    'path' => $log['path'],
+                    'message' => $log['message'],
+                    'params' => $log['params'],
+                    'trace' => $log['trace'],
+                    'data' => $log['data'] ?? null,
+                    'count' => \DB::raw('count+1'),
+                ]
+            );
 
-                /* save time histories */
-                $histories = !empty($err->time_history) ? json_decode($err->time_history) : [];
-                $histories[] = date("Y-m-d H:i:s");
-                $err->time_history = json_encode($histories);
-                $err->save();
-            } catch (\Exception $e) {
-            }
+            /* save time histories */
+            $histories = !empty($err->time_history) ? json_decode($err->time_history) : [];
+            $histories[] = date("Y-m-d H:i:s");
+            $err->time_history = json_encode($histories);
+            $err->save();
         }
 
         /* return error */
@@ -479,5 +476,16 @@ trait MainTrait
         $dt = $dt->make();
 
         return $dt;
+    }
+
+    public function checkDBConnection($driver = 'mysql')
+    {
+        try {
+            \DB::connection($driver)->getPdo();
+        } catch (\Exception $e) {
+            return false;
+        }
+
+        return true;
     }
 }
