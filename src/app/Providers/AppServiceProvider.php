@@ -21,16 +21,12 @@ class AppServiceProvider extends ServiceProvider
 
         /* check config */
         if (!$this->app->runningInConsole()) {
-            // if (!Schema::hasTable('sites')) {
-            //     /* sementara, nanti redirect ke halaman install */
-            //     throw new \Exception("You have to install this app first", 1);
-            //     // redirect(url('/install'))->send();
-            // }
             try {
                 \DB::getPdo();
             } catch (\Exception $e) {
-                // die("Could not connect to the database.  Please check your configuration. error:" . $e );
+                /* sementara, nanti redirect ke halaman install */
                 throw new \Exception("You have to install this app first", 1);
+                // redirect(url('/install'))->send();
             }
 
             /* check admin on uri */
