@@ -37,7 +37,7 @@ trait MainTrait
         /* save log */
         \ZetthCore\Models\VisitorLog::updateOrCreate(
             [
-                'id' => md5($ip . $page . $referral . $browser_agent . $browser . $browser_version . $device . $device_name . $os . $os_version . $is_robot . $robot_name . $date),
+                'id' => session()->getId(),
             ],
             [
                 'ip' => $ip,
