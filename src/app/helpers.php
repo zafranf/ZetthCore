@@ -1,17 +1,15 @@
 <?php
-if (!function_exists('adminPath')) {
-    function adminPath()
-    {
-        $adminPath = '/' . env('ADMIN_PATH', 'manager');
-
-        return isAdminSubdomain() ? '' : $adminPath;
-    }
-}
-
 if (!function_exists('isAdminPath')) {
     function isAdminPath()
     {
-        return !empty(adminPath()) && request()->segment(1) == adminPath();
+        return request()->segment(1) == trim(adminPath(), '/');
+    }
+}
+
+if (!function_exists('adminPath')) {
+    function adminPath()
+    {
+        return '/' . env('ADMIN_PATH', 'manager');
     }
 }
 
@@ -19,9 +17,15 @@ if (!function_exists('isAdminSubdomain')) {
     function isAdminSubdomain()
     {
         $host = parse_url(url('/'))['host'];
-        $admin_subdomain = env('ADMIN_SUBDOMAIN', 'manager');
 
-        return in_array($admin_subdomain, explode(".", $host));
+        return in_array(adminSubdomain(), explode(".", $host));
+    }
+}
+
+if (!function_exists('adminSubdomain')) {
+    function adminSubdomain()
+    {
+        return env('ADMIN_SUBDOMAIN', 'manager');
     }
 }
 

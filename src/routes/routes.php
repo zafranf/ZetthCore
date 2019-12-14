@@ -9,11 +9,11 @@ Route::get('/themes/{path}', '\App\Http\Controllers\SiteController@themes')->whe
 Route::middleware('web')->name('admin.')->group(function () {
     $admin_route = env('ADMIN_ROUTE', 'path');
     if ($admin_route == 'path') {
-        Route::prefix(env('ADMIN_PATH', 'admin'))->group(function () {
+        Route::prefix(adminPath())->group(function () {
             include __DIR__ . "/admin.php";
         });
     } else if ($admin_route == 'subdomain') {
-        Route::domain(env('ADMIN_SUBDOMAIN', 'admin') . '.' . env('APP_DOMAIN'))->group(function () {
+        Route::domain(adminSubdomain() . '.' . env('APP_DOMAIN'))->group(function () {
             include __DIR__ . "/admin.php";
         });
     }
