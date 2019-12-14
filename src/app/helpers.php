@@ -2,13 +2,33 @@
 if (!function_exists('adminPath')) {
     function adminPath()
     {
-        $adminPath = '/' . env('ADMIN_PATH', 'admin');
-        $host = parse_url(url('/'))['host'];
-        if (strpos($host, 'admin') !== false) {
-            $adminPath = '';
-        }
+        $adminPath = '/' . env('ADMIN_PATH', 'manager');
 
-        return $adminPath;
+        return isAdminSubdomain() ? '' : $adminPath;
+    }
+}
+
+if (!function_exists('isAdminPath')) {
+    function isAdminPath()
+    {
+        return !empty(adminPath()) && \Request::segment(1) == adminPath();
+    }
+}
+
+if (!function_exists('isAdminSubdomain')) {
+    function isAdminSubdomain()
+    {
+        $host = parse_url(url('/'))['host'];
+        $admin_subdomain = env('ADMIN_SUBDOMAIN', 'manager');
+
+        return in_array($admin_subdomain, explode(".", $host));
+    }
+}
+
+if (!function_exists('isAdminPanel')) {
+    function isAdminPanel()
+    {
+        return isAdminSubdomain() || isAdminPath();
     }
 }
 

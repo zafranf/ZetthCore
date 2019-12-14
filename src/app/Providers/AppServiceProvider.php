@@ -14,31 +14,12 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        /* check admin page */
-        $adminPath = '/' . env('ADMIN_PATH', 'admin');
-        $isAdminSubdomain = false;
-        $isAdminPanel = false;
-
         /* check config */
         if (!$this->app->runningInConsole()) {
             if (!$this->checkDBConnection()) {
                 /* sementara, nanti redirect ke halaman install */
                 throw new \Exception("You have to install this app first", 1);
                 // redirect(url('/install'))->send();
-            }
-
-            /* check admin on uri */
-            $uri = _server('REQUEST_URI');
-            if (strpos($uri, env('ADMIN_PATH', 'admin')) !== false) {
-                $isAdminPanel = true;
-            }
-
-            /* check admin on host */
-            $host = parse_url(url('/'))['host'];
-            if (strpos($host, env('ADMIN_SUBDOMAIN', 'admin')) !== false) {
-                $adminPath = '';
-                $isAdminSubdomain = true;
-                $isAdminPanel = true;
             }
 
             /* get application setting */
@@ -77,14 +58,14 @@ class AppServiceProvider extends ServiceProvider
         }
 
         /* share admin panel to global */
-        $this->app->singleton('admin_path', function () use ($adminPath) {
-            return $adminPath;
+        $this->app->singleton('admin_path', function () {
+            return adminPath();
         });
-        $this->app->singleton('is_admin_subdomain', function () use ($isAdminSubdomain) {
-            return $isAdminSubdomain;
+        $this->app->singleton('is_admin_subdomain', function () {
+            return isAdminSubdomain();
         });
-        $this->app->singleton('is_admin_panel', function () use ($isAdminPanel) {
-            return $isAdminPanel;
+        $this->app->singleton('is_admin_panel', function () {
+            return isAdminPanel();
         });
 
         /* set middleware */
