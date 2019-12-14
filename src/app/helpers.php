@@ -44,19 +44,48 @@ if (!function_exists('_get_status_text')) {
      * @param array $par
      * @return void
      */
-    function _get_status_text($sts = 0, $par = [])
+    function _get_status_text($status = 0, $par = [])
     {
+        /* default params */
+        $params = [
+            0 => [
+                'tag' => 'span',
+                'attributes' => [
+                    'class' => 'bg-danger text-center',
+                    'style' => 'padding:2px 3px;',
+                ],
+                'text' => 'Nonaktif',
+            ],
+            1 => [
+                'tag' => 'span',
+                'attributes' => [
+                    'class' => 'bg-success text-center',
+                    'style' => 'padding:2px 3px;',
+                ],
+                'text' => 'Aktif',
+            ],
+        ];
+
         /* check custom parameter */
-        if (empty($par)) {
-            $par = ['Nonaktif', 'Aktif'];
+        if (!empty($par)) {
+            $params = $par;
         }
 
-        /* generate text */
-        if ($sts == 0) {
-            echo '<span class="bg-danger text-center" style="padding:2px 3px;">' . $par[0] . '</span>';
-        } else {
-            echo '<span class="bg-success text-center" style="padding:2px 3px;">' . $par[1] . '</span>';
+        /* set variables */
+        $tag = $params[$status]['tag'];
+        $text = $params[$status]['text'];
+        $attributes = $params[$status]['attributes'];
+        $attr = '';
+
+        /* set attributes */
+        if (!empty($attributes)) {
+            foreach ($attributes as $key => $value) {
+                $attr .= ' ' . $key . '="' . $value . '"';
+            }
         }
+
+        /* generate element */
+        return '<' . $tag . $attr . '>' . $text . '</' . $tag . '>';
     }
 }
 
