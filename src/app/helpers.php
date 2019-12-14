@@ -11,7 +11,7 @@ if (!function_exists('adminPath')) {
 if (!function_exists('isAdminPath')) {
     function isAdminPath()
     {
-        return !empty(adminPath()) && \Request::segment(1) == adminPath();
+        return !empty(adminPath()) && request()->segment(1) == adminPath();
     }
 }
 
