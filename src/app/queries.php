@@ -52,7 +52,7 @@ function _getPosts($type = 'simple', $limit = null, $order = "desc", $slug = '')
     $cache_name = '_getPosts' . $type . $order . $slug;
 
     /* inisiasi query */
-    $posts = \ZetthCore\Models\Post::posts()->active();
+    $posts = \ZetthCore\Models\Post::active()->posts();
     if (!empty($slug)) {
         if (in_array($type, ['category', 'tag'])) {
             if ($type == 'category') {
@@ -152,7 +152,7 @@ function _getPages($limit = null, $order = 'desc', $slug = '')
     $cache_name = '_getPages' . $order . $slug;
 
     /* inisiasi query */
-    $pages = \ZetthCore\Models\Post::pages()->active();
+    $pages = \ZetthCore\Models\Post::active()->pages();
     if (!empty($slug)) {
         $pages->where('slug', $slug)->orWhere('title', 'like', '%' . $slug . '%');
     }
@@ -178,7 +178,7 @@ function _getAlbums($limit = null, $order = 'desc', $slug = '')
     $cache_name = '_getAlbums' . $order . $slug;
 
     /* inisiasi query */
-    $albums = \ZetthCore\Models\Album::where('status', 1);
+    $albums = \ZetthCore\Models\Album::active();
     if (!empty($slug)) {
         $albums->where('slug', $slug)->orWhere('name', 'like', '%' . $slug . '%');
     }
@@ -230,7 +230,7 @@ function _getVideos($limit = null, $order = 'desc', $slug = '')
     $cache_name = '_getVideos' . $order . $slug;
 
     /* inisiasi query */
-    $videos = \ZetthCore\Models\Post::videos()->active();
+    $videos = \ZetthCore\Models\Post::active()->videos();
 
     /* check order */
     if (in_array($order, ['rand', 'random'])) {
@@ -254,7 +254,6 @@ function _getPopularPosts($limit = null, $start_date = null, $end_date = null)
     /* set start and end as carbon */
     $start = carbon_query($start_date . ' 00:00:00');
     $end = carbon_query($end_date . ' 23:59:59');
-    // dd($start, $end, $start_date, $end_date);
 
     /* inisiasi query */
     $posts = \ZetthCore\Models\VisitorLog::select(DB::raw('sum(count) as count'), \DB::raw('SUBSTRING_INDEX(page, "/", -1) as slug'))
@@ -266,4 +265,22 @@ function _getPopularPosts($limit = null, $start_date = null, $end_date = null)
         ->groupBy(\DB::raw('SUBSTRING_INDEX(page, "/", -1)'));
 
     return _doGetData($cache_name, $posts, $limit);
+}
+
+function _getComments($limit = null, $order = 'desc')
+{
+    /* cache name */
+    $cache_name = '_getComments' . $order;
+
+    /* inisiasi query */
+    $comments = \ZetthCore\Models\PostComment::active()->with('post');
+
+    /* check order */
+    if (in_array($order, ['rand', 'random'])) {
+        $comments->inRandomOrder();
+    } else {
+        $comments->orderBy('created_at', $order);
+    }
+
+    return _doGetData($cache_name, $comments, $limit);
 }
