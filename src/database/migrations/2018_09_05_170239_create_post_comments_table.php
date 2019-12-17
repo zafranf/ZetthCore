@@ -22,6 +22,7 @@ class CreatePostCommentsTable extends Migration
             $table->string('name');
             $table->string('email');
             $table->string('site')->nullable();
+            $table->string('phone')->nullable();
             $table->longText('comment');
             $table->boolean('read')->comment('0=unread, 1=read')->unsigned();
             $table->boolean('status')->comment('0=pending, 1=active')->unsigned();
