@@ -23,4 +23,9 @@ class PostComment extends Model
     {
         return $this->hasMany('ZetthCore\Models\PostComment', 'parent_id', 'id')->where('status', 1)->with('subcomments');
     }
+
+    public function scopeActive($query)
+    {
+        return $query->where('status', 1);
+    }
 }
