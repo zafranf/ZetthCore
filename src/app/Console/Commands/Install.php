@@ -81,34 +81,22 @@ class Install extends Command
     {
         if ($this->option('fresh')) {
             $this->info('Freshing migration tables');
-            $process = new Process('php artisan migrate:fresh');
+            $this->process('php artisan migrate:fresh');
         } else {
             $this->info('Migrating tables');
-            $process = new Process('php artisan migrate');
+            $this->process('php artisan migrate');
         }
-        $process->setTimeout($this->timeout);
-        $process->run(function ($type, $buffer) {
-            echo $buffer;
-        });
         $this->info('Migration finished!');
     }
 
     public function seedingTable()
     {
         $this->info('Seeding default seeder');
-        $process = new Process('php artisan db:seed --class="\ZetthCore\Seeder\ZetthSeeder"');
-        $process->setTimeout($this->timeout);
-        $process->run(function ($type, $buffer) {
-            echo $buffer;
-        });
+        $this->process('php artisan db:seed --class="\ZetthCore\Seeder\ZetthSeeder"');
         $this->info('Seeding default seeder finished!');
 
         $this->info('Seeding additional seeder');
-        $process = new Process('php artisan db:seed');
-        $process->setTimeout($this->timeout);
-        $process->run(function ($type, $buffer) {
-            echo $buffer;
-        });
+        $this->process('php artisan db:seed');
         $this->info('Seeding additional seeder finished!');
     }
 
@@ -120,94 +108,54 @@ class Install extends Command
         if ($this->option('fresh')) {
             if (is_link(public_path('storage'))) {
                 $this->info('Removing "public/storage" folder');
-                $process = new Process('cd ' . public_path() . ' && rm -rf storage && cd ' . base_path());
-                $process->setTimeout($this->timeout);
-                $process->run(function ($type, $buffer) {
-                    echo $buffer;
-                });
+                $this->process('cd ' . public_path() . ' && rm -rf storage && cd ' . base_path());
             }
         }
         $storage_path = storage_path('app/public');
-        $process = new Process('cd ' . public_path() . ' && ln -s ' . $storage_path . ' storage && cd ' . base_path());
-        $process->setTimeout($this->timeout);
-        $process->run(function ($type, $buffer) {
-            echo $buffer;
-        });
+        $this->process('cd ' . public_path() . ' && ln -s ' . $storage_path . ' storage && cd ' . base_path());
 
         $this->info('Linking filemanager folder');
         if ($this->option('fresh')) {
             if (is_link(public_path('larafile'))) {
                 $this->info('Removing "public/larafile" folder');
-                $process = new Process('cd ' . public_path() . ' && rm -rf larafile && cd ' . base_path());
-                $process->setTimeout($this->timeout);
-                $process->run(function ($type, $buffer) {
-                    echo $buffer;
-                });
+                $this->process('cd ' . public_path() . ' && rm -rf larafile && cd ' . base_path());
             }
         }
         $plugins_path = base_path('vendor/zafranf/zetthcore/src/resources/themes/AdminSC/plugins/filemanager');
-        $process = new Process('cd ' . public_path() . ' && ln -s ' . $plugins_path . ' larafile && cd ' . base_path());
-        $process->setTimeout($this->timeout);
-        $process->run(function ($type, $buffer) {
-            echo $buffer;
-        });
+        $this->process('cd ' . public_path() . ' && ln -s ' . $plugins_path . ' larafile && cd ' . base_path());
         $this->info('The [public/larafile] directory has been linked.');
 
         $this->info('Linking filemanager-standalone folder');
         if ($this->option('fresh')) {
             if (is_link(public_path('larafile-standalone'))) {
                 $this->info('Removing "public/larafile-standalone" folder');
-                $process = new Process('cd ' . public_path() . ' && rm -rf larafile-standalone && cd ' . base_path());
-                $process->setTimeout($this->timeout);
-                $process->run(function ($type, $buffer) {
-                    echo $buffer;
-                });
+                $this->process('cd ' . public_path() . ' && rm -rf larafile-standalone && cd ' . base_path());
             }
         }
         $plugins_path = base_path('vendor/zafranf/zetthcore/src/resources/themes/AdminSC/plugins/filemanager-alone');
-        $process = new Process('cd ' . public_path() . ' && ln -s ' . $plugins_path . ' larafile-standalone && cd ' . base_path());
-        $process->setTimeout($this->timeout);
-        $process->run(function ($type, $buffer) {
-            echo $buffer;
-        });
+        $this->process('cd ' . public_path() . ' && ln -s ' . $plugins_path . ' larafile-standalone && cd ' . base_path());
         $this->info('The [public/larafile-standalone] directory has been linked.');
 
         $this->info('Linking assets filemanager folder');
         if ($this->option('fresh')) {
             if (is_link(public_path('files'))) {
                 $this->info('Removing "public/files" folder');
-                $process = new Process('cd ' . public_path() . ' && rm -rf files && cd ' . base_path());
-                $process->setTimeout($this->timeout);
-                $process->run(function ($type, $buffer) {
-                    echo $buffer;
-                });
+                $this->process('cd ' . public_path() . ' && rm -rf files && cd ' . base_path());
             }
         }
         $filemanager_path = base_path('vendor/zafranf/zetthcore/src/resources/themes/AdminSC/plugins/larafile/source/files');
-        $process = new Process('cd ' . public_path() . ' && ln -s ' . $filemanager_path . ' && cd ' . base_path());
-        $process->setTimeout($this->timeout);
-        $process->run(function ($type, $buffer) {
-            echo $buffer;
-        });
+        $this->process('cd ' . public_path() . ' && ln -s ' . $filemanager_path . ' && cd ' . base_path());
         $this->info('The [public/files] directory has been linked.');
 
         $this->info('Linking assets thumbs filemanager folder');
         if ($this->option('fresh')) {
             if (is_link(public_path('thumbs'))) {
                 $this->info('Removing "public/thumbs" folder');
-                $process = new Process('cd ' . public_path() . ' && rm -rf thumbs && cd ' . base_path());
-                $process->setTimeout($this->timeout);
-                $process->run(function ($type, $buffer) {
-                    echo $buffer;
-                });
+                $this->process('cd ' . public_path() . ' && rm -rf thumbs && cd ' . base_path());
             }
         }
         $filemanager_path = base_path('vendor/zafranf/zetthcore/src/resources/themes/AdminSC/plugins/larafile/source/thumbs');
-        $process = new Process('cd ' . public_path() . ' && ln -s ' . $filemanager_path . ' && cd ' . base_path());
-        $process->setTimeout($this->timeout);
-        $process->run(function ($type, $buffer) {
-            echo $buffer;
-        });
+        $this->process('cd ' . public_path() . ' && ln -s ' . $filemanager_path . ' && cd ' . base_path());
         $this->info('The [public/thumbs] directory has been linked.');
         $this->info('Link folders finished!');
     }
