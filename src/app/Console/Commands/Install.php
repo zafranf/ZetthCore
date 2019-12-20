@@ -113,6 +113,7 @@ class Install extends Command
         }
         $storage_path = storage_path('app/public');
         $this->process('cd ' . public_path() . ' && ln -s ' . $storage_path . ' storage && cd ' . base_path());
+        $this->info('The [public/storage] directory has been linked.');
 
         $this->info('Linking filemanager folder');
         if ($this->option('fresh')) {
