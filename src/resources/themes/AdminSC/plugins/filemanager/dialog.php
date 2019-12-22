@@ -364,8 +364,10 @@ $get_params = http_build_query($get_params);
 		if (image_editor) {
 		var featherEditor = new Aviary.Feather({
 		<?php
+			if (isset($aviary_defaults_config) && !empty($aviary_defaults_config)) {
 			foreach ($aviary_defaults_config as $aopt_key => $aopt_val) {
 				echo $aopt_key.": ".json_encode($aopt_val).",";
+			}
 			} ?>
 			onReady: function() {
 				hide_animation();
