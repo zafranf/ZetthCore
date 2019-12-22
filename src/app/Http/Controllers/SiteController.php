@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\File;
 use OpenGraph;
 use SEOMeta;
-use TwitterCard;
+use Twitter;
 
 class SiteController extends Controller
 {
@@ -125,7 +125,7 @@ class SiteController extends Controller
                 'tag' => $tags ?? '',
             ]);
 
-            $socmed = \App\Models\SocmedData::where('type', 'site')->with('socmed')->get();
+            $socmed = \ZetthCore\Models\SocmedData::where('type', 'site')->with('socmed')->get();
             $account = '';
             foreach ($socmed as $key => $val) {
                 if ($val->socmed->name == "Twitter") {
@@ -135,13 +135,13 @@ class SiteController extends Controller
 
             if (!empty($account)) {
                 /* Set Twitter SEO */
-                TwitterCard::addValue('card', 'summary');
-                TwitterCard::setImage($image);
-                TwitterCard::setType($type);
-                TwitterCard::setTitle($title);
-                TwitterCard::setSite($account);
-                TwitterCard::setDescription($description);
-                TwitterCard::setUrl($url);
+                Twitter::addValue('card', 'summary');
+                Twitter::setImage($image);
+                Twitter::setType($type);
+                Twitter::setTitle($title);
+                Twitter::setSite($account);
+                Twitter::setDescription($description);
+                Twitter::setUrl($url);
             }
         } else {
             OpenGraph::addImage($logo);
