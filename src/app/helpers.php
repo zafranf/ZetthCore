@@ -298,35 +298,40 @@ if (!function_exists('generateMenu')) {
 
             /* check additional class for parent */
             if (count($menu->submenu)) {
+                $index_sub = 'sub';
+                if ($level > 0) {
+                    $index_sub = 'sub_level';
+                }
+
                 /* parent list */
-                if (isset($params['sub']['parent']['list']['class'])) {
-                    $list_cls = $params['sub']['parent']['list']['class'];
+                if (isset($params[$index_sub]['parent']['list']['class'])) {
+                    $list_cls = $params[$index_sub]['parent']['list']['class'];
                     if (strpos($list_class, $list_cls) === false) {
                         $list_class .= ' ' . $list_cls;
                     }
                 }
-                if (isset($params['sub']['parent']['list']['attributes'])) {
-                    $list_attr = $params['sub']['parent']['list']['attributes'];
+                if (isset($params[$index_sub]['parent']['list']['attributes'])) {
+                    $list_attr = $params[$index_sub]['parent']['list']['attributes'];
                     foreach ($list_attr as $key => $value) {
                         $list_attributes .= ' ' . $key . '="' . $value . '"';
                     }
                 }
 
                 /* parent link */
-                if (isset($params['sub']['parent']['link']['class'])) {
-                    $link_cls = $params['sub']['parent']['link']['class'];
+                if (isset($params[$index_sub]['parent']['link']['class'])) {
+                    $link_cls = $params[$index_sub]['parent']['link']['class'];
                     if (strpos($link_class, $link_cls) === false) {
                         $link_class .= ' ' . $link_cls;
                     }
                 }
-                if (isset($params['sub']['parent']['link']['attributes'])) {
-                    $link_attr = $params['sub']['parent']['link']['attributes'];
+                if (isset($params[$index_sub]['parent']['link']['attributes'])) {
+                    $link_attr = $params[$index_sub]['parent']['link']['attributes'];
                     foreach ($link_attr as $key => $value) {
                         $link_attributes .= ' ' . $key . '="' . $value . '"';
                     }
                 }
-                if (isset($params['sub']['parent']['link']['additional'])) {
-                    $link_additional = $params['sub']['parent']['link']['additional'];
+                if (isset($params[$index_sub]['parent']['link']['additional'])) {
+                    $link_additional = $params[$index_sub]['parent']['link']['additional'];
                 }
             }
 

@@ -61,6 +61,20 @@
           'link' => [
             'active' => true
           ]
+        ],
+        'sub_level' => [
+          'parent' => [
+            'list' => [
+              'class' => 'dropdown-submenu'
+            ],
+            'link' => [
+              'class' => 'submenu',
+              'additional' => [
+                'position' => 'after',
+                'html' => '<span class="pull-right"><span class="fa fa-caret-right"></span></span>'
+              ]
+            ]
+          ],
         ]
       ]) !!}
       {{-- Right Side Of Navbar --}}
