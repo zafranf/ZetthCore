@@ -228,69 +228,220 @@ if (!function_exists('menuFilterPermission')) {
 }
 
 if (!function_exists('generateMenu')) {
-    /**
-     * Generate Top Menu
-     *
-     * @return void
-     */
-    function generateMenu($group = 'admin')
+    function generateMenu($group, $params = [], $menus = null, $level = 0)
     {
-        /* get all menus */
-        $menus = getMenu($group, true);
+        /* get menus */
+        $menus = $menus ?? getMenu($group, true);
 
-        echo '<ul class="nav navbar-nav">';
+        /* set index for params */
+        $index = 'main';
+        if ($level > 0) {
+            $index = 'sub';
+        }
+
+        /* wrapper */
+        $wrap_tag = $params[$index]['wrapper']['tag'] ?? 'ul';
+        $wrap_id = $params[$index]['wrapper']['id'] ?? null;
+        $wrap_class = $params[$index]['wrapper']['class'] ?? null;
+        $wrap_attr = $params[$index]['wrapper']['attributes'] ?? null;
+        $wrap_attributes = '';
+        if (!is_null($wrap_attr)) {
+            foreach ($wrap_attr as $key => $value) {
+                $wrap_attributes .= ' ' . $key . '="' . $value . '"';
+            }
+        }
+
+        /* list */
+        $list_tag = $params[$index]['list']['tag'] ?? 'li';
+        $list_id = $params[$index]['list']['id'] ?? null;
+        $list_class = $params[$index]['list']['class'] ?? null;
+        $list_active = $params[$index]['list']['active'] ?? null;
+        $list_attr = $params[$index]['list']['attributes'] ?? null;
+        $list_attributes = '';
+        if (!is_null($list_attr)) {
+            foreach ($list_attr as $key => $value) {
+                $list_attributes .= ' ' . $key . '="' . $value . '"';
+            }
+        }
+
+        /* link */
+        $link_tag = $params[$index]['link']['tag'] ?? 'a';
+        $link_id = $params[$index]['link']['id'] ?? null;
+        $link_class = $params[$index]['link']['class'] ?? null;
+        $link_active = $params[$index]['link']['active'] ?? null;
+        $link_attr = $params[$index]['link']['attributes'] ?? null;
+        $link_attributes = '';
+        if (!is_null($link_attr)) {
+            foreach ($link_attr as $key => $value) {
+                $link_attributes .= ' ' . $key . '="' . $value . '"';
+            }
+        }
+        $link_additional = $params[$index]['link']['additional'] ?? null;
+
+        /* initiate print */
+        $print = '';
+
+        /* print main wrapper element */
+        if (!is_null($wrap_tag)) {
+            $print .= '<' . $wrap_tag .
+                (!is_null($wrap_id) ? ' id="' . $wrap_id . '"' : '') .
+                (!is_null($wrap_class) ? ' class="' . $wrap_class . '"' : '') .
+                (!is_null($wrap_attr) ? $wrap_attributes : '') . '>';
+        }
+
         foreach ($menus as $menu) {
-            $active = (!empty($menu->route_name) && route($menu->route_name) == url()->current()) ? 'active' : '';
-            $href = !empty($menu->route_name) ? 'href="' . route($menu->route_name) . '"' : null;
-            $href = $href ?? ($menu->url ? 'href="' . url($menu->url) . '"' : '');
-            $sub = count($menu->submenu) ? ' dropdown' : '';
-            $sublink = count($menu->submenu) ? ' dropdown-toggle' : '';
-            $subtoggle = count($menu->submenu) ? ' data-toggle="dropdown" role="button"' : '';
-            $icon = ($menu->icon != "") ? '<i class="' . $menu->icon . '"></i>' : '';
-            $caret = (count($menu->submenu) > 0) ? '<span class="pull-right"><span class="caret"></span></span>' : '';
-            echo '<li class="' . ($sub ?? '') . ' ' . $active . '">';
-            echo '<a ' . ($href ?? '') . ' class="' . ($sublink ?? '') . '"' . ($subtoggle ?? '') . ' target="' . $menu->target . '">' . $icon . ' ' . $menu->name . $caret . '</a>';
-            if (count($menu->submenu) > 0) {
-                generateSubmenu($menu->submenu);
+            /* set href */
+            $href = (!is_null($menu->route_name) ? route($menu->route_name) : url($menu->url));
+
+            /* set active */
+            $active = ($href == url()->current()) ? 'active' : '';
+
+            /* check additional class for parent */
+            if (count($menu->submenu)) {
+                $index_sub = 'sub';
+                if ($level > 0) {
+                    $index_sub = 'sub_level';
+                }
+
+                /* parent list */
+                if (isset($params[$index_sub]['parent']['list']['class'])) {
+                    $list_cls = $params[$index_sub]['parent']['list']['class'];
+                    if (strpos($list_class, $list_cls) === false) {
+                        $list_class .= ' ' . $list_cls;
+                    }
+                }
+                if (isset($params[$index_sub]['parent']['list']['attributes'])) {
+                    $list_attr = $params[$index_sub]['parent']['list']['attributes'];
+                    foreach ($list_attr as $key => $value) {
+                        $list_attributes .= ' ' . $key . '="' . $value . '"';
+                    }
+                }
+
+                /* parent link */
+                if (isset($params[$index_sub]['parent']['link']['class'])) {
+                    $link_cls = $params[$index_sub]['parent']['link']['class'];
+                    if (strpos($link_class, $link_cls) === false) {
+                        $link_class .= ' ' . $link_cls;
+                    }
+                }
+                if (isset($params[$index_sub]['parent']['link']['attributes'])) {
+                    $link_attr = $params[$index_sub]['parent']['link']['attributes'];
+                    foreach ($link_attr as $key => $value) {
+                        $link_attributes .= ' ' . $key . '="' . $value . '"';
+                    }
+                }
+                if (isset($params[$index_sub]['parent']['link']['additional'])) {
+                    $link_additional = $params[$index_sub]['parent']['link']['additional'];
+                }
             }
-            echo '</li>';
+
+            /* print list element */
+            if (!is_null($list_tag)) {
+                $print .= '<' . $list_tag .
+                    (!is_null($list_id) ? ' id="' . $list_id . '"' : '') .
+                    (!is_null($list_class) || $list_active ? ' class="' . $list_class . ' ' . (bool($list_active) ? $active : '') . '"' : '') .
+                    (!is_null($list_attr) ? $list_attributes : '') . '>';
+            }
+
+            /* print link element */
+            if (!is_null($link_tag)) {
+                $print .= '<' . $link_tag .
+                    (!is_null($link_id) ? ' id="' . $link_id . '"' : '') .
+                    (!is_null($link_class) || $link_active ? ' class="' . $link_class . ' ' . (bool($link_active) ? $active : '') . '"' : '') .
+                    (!is_null($href) ? ' href="' . $href . '"' : '') .
+                    (!is_null($link_attr) ? $link_attributes : '') . '>';
+                if (isset($link_additional['position']) && $link_additional['position'] == 'before') {
+                    $print .= $link_additional['html'];
+                }
+                $print .= $menu->name;
+                if (isset($link_additional['position']) && $link_additional['position'] == 'after') {
+                    $print .= $link_additional['html'];
+                }
+                $print .= '</' . $link_tag . '>';
+            }
+
+            /* print submenu */
+            if (count($menu->submenu)) {
+                $print .= generateMenu($group, $params, $menu->submenu, $level + 1);
+            }
+
+            /* close list element */
+            if (!is_null($list_tag)) {
+                $print .= '</' . $list_tag . '>';
+            }
         }
-        echo '</ul>';
+
+        /* close main wrapper element */
+        $print .= '</' . $wrap_tag . '>';
+
+        return $print;
     }
 }
 
-if (!function_exists('generateSubmenu')) {
-    /**
-     * Generate Top Submenu
-     *
-     * @return void
-     */
-    function generateSubmenu($data, $level = 0)
-    {
-        $sublevel = ($level > 0) ? 'sub-menu' : '';
-        echo '<ul class="dropdown-menu ' . $sublevel . '" role="menu">';
-        foreach ($data as $submenu) {
-            $active = (!empty($submenu->route_name) && route($submenu->route_name) == url()->current()) ? 'active' : '';
-            $href = !empty($submenu->route_name) ? 'href="' . route($submenu->route_name) . '"' : null;
-            $href = $href ?? ($submenu->url ? 'href="' . url($submenu->url) . '"' : '');
-            $dropdown = count($submenu->submenu) ? 'dropdown-submenu' : 'dropdown';
-            $sublink = count($submenu->submenu) ? ' dropdown-toggle submenu' : '';
-            $subtoggle = count($submenu->submenu) ? ' data-toggle="dropdown" role="button"' : '';
-            $icon = ($submenu->icon != '') ? '<i class="' . $submenu->icon . '"></i>' : '';
-            $caret_class = !app('is_mobile') ? ' style="position: absolute;right: 10px;top: 3px;"' : ' class="pull-right"';
-            $direction = app('is_mobile') ? 'down' : 'right';
-            $caret = !app('is_mobile') ? 'fa fa-caret-' . $direction : 'caret';
-            $caret = (count($submenu->submenu) > 0) ? '<span ' . $caret_class . '><span class="' . $caret . '"></span></span>' : '';
-            echo '<li class="' . $dropdown . '">';
-            echo '<a ' . ($href ?? '') . ' class="dropdown-item' . ($sublink ?? '') . ' ' . $active . '" ' . ($subtoggle ?? '') . ' target="' . $submenu->target . '">' . $icon . ' ' . $submenu->name . $caret . '</a>';
-            if (count($submenu->submenu)) {
-                generateSubmenu($submenu->submenu, $level + 1);
-            }
-            echo '</li>';
-        }
-        echo '</ul>';
-    }
-}
+// if (!function_exists('generateMenu')) {
+//     /**
+//      * Generate Top Menu
+//      *
+//      * @return void
+//      */
+//     function generateMenu($group = 'admin')
+//     {
+//         /* get all menus */
+//         $menus = getMenu($group, true);
+
+//         echo '<ul class="nav navbar-nav">';
+//         foreach ($menus as $menu) {
+//             $active = (!empty($menu->route_name) && route($menu->route_name) == url()->current()) ? 'active' : '';
+//             $href = !empty($menu->route_name) ? 'href="' . route($menu->route_name) . '"' : null;
+//             $href = $href ?? ($menu->url ? 'href="' . url($menu->url) . '"' : '');
+//             $sub = count($menu->submenu) ? ' dropdown' : '';
+//             $sublink = count($menu->submenu) ? ' dropdown-toggle' : '';
+//             $subtoggle = count($menu->submenu) ? ' data-toggle="dropdown" role="button"' : '';
+//             $icon = ($menu->icon != "") ? '<i class="' . $menu->icon . '"></i>' : '';
+//             $caret = (count($menu->submenu) > 0) ? '<span class="pull-right"><span class="caret"></span></span>' : '';
+//             echo '<li class="' . ($sub ?? '') . ' ' . $active . '">';
+//             echo '<a ' . ($href ?? '') . ' class="' . ($sublink ?? '') . '"' . ($subtoggle ?? '') . ' target="' . $menu->target . '">' . $icon . ' ' . $menu->name . $caret . '</a>';
+//             if (count($menu->submenu) > 0) {
+//                 generateSubmenu($menu->submenu);
+//             }
+//             echo '</li>';
+//         }
+//         echo '</ul>';
+//     }
+// }
+
+// if (!function_exists('generateSubmenu')) {
+//     /**
+//      * Generate Top Submenu
+//      *
+//      * @return void
+//      */
+//     function generateSubmenu($data, $level = 0)
+//     {
+//         $sublevel = ($level > 0) ? 'sub-menu' : '';
+//         echo '<ul class="dropdown-menu ' . $sublevel . '" role="menu">';
+//         foreach ($data as $submenu) {
+//             $active = (!empty($submenu->route_name) && route($submenu->route_name) == url()->current()) ? 'active' : '';
+//             $href = !empty($submenu->route_name) ? 'href="' . route($submenu->route_name) . '"' : null;
+//             $href = $href ?? ($submenu->url ? 'href="' . url($submenu->url) . '"' : '');
+//             $dropdown = count($submenu->submenu) ? 'dropdown-submenu' : 'dropdown';
+//             $sublink = count($submenu->submenu) ? ' dropdown-toggle submenu' : '';
+//             $subtoggle = count($submenu->submenu) ? ' data-toggle="dropdown" role="button"' : '';
+//             $icon = ($submenu->icon != '') ? '<i class="' . $submenu->icon . '"></i>' : '';
+//             $caret_class = !app('is_mobile') ? ' style="position: absolute;right: 10px;top: 3px;"' : ' class="pull-right"';
+//             $direction = app('is_mobile') ? 'down' : 'right';
+//             $caret = !app('is_mobile') ? 'fa fa-caret-' . $direction : 'caret';
+//             $caret = (count($submenu->submenu) > 0) ? '<span ' . $caret_class . '><span class="' . $caret . '"></span></span>' : '';
+//             echo '<li class="' . $dropdown . '">';
+//             echo '<a ' . ($href ?? '') . ' class="dropdown-item' . ($sublink ?? '') . ' ' . $active . '" ' . ($subtoggle ?? '') . ' target="' . $submenu->target . '">' . $icon . ' ' . $submenu->name . $caret . '</a>';
+//             if (count($submenu->submenu)) {
+//                 generateSubmenu($submenu->submenu, $level + 1);
+//             }
+//             echo '</li>';
+//         }
+//         echo '</ul>';
+//     }
+// }
 
 if (!function_exists('generateArrayLevel')) {
     /**
@@ -363,27 +514,6 @@ if (!function_exists('generateDate')) {
     }
 }
 
-/* if (!function_exists('is_mobile')) {
-function app('is_mobile')
-{
-return (new \Jenssegers\Agent\Agent())->isMobile();
-}
-}
-
-if (!function_exists('app('is_tablet')')) {
-function app('is_tablet')()
-{
-return (new \Jenssegers\Agent\Agent())->isTablet();
-}
-}
-
-if (!function_exists('app('is_desktop')')) {
-function app('is_desktop')()
-{
-return (new \Jenssegers\Agent\Agent())->isDesktop();
-}
-} */
-
 if (!function_exists('_admin_css')) {
     /**
      * Generate link stylesheet tag
@@ -394,20 +524,7 @@ if (!function_exists('_admin_css')) {
      */
     function _admin_css($file = "", $attributes = [])
     {
-        $path = str_replace("themes/admin", "themes", $file);
-        $path = dirname(__DIR__) . '/resources/' . ltrim($path, '/');
-        if (file_exists($path)) {
-            $mtime = filemtime($path);
-            $attr = ' rel="stylesheet" type="text/css"';
-            if (!empty($attributes)) {
-                $attr = '';
-                foreach ($attributes as $key => $value) {
-                    $attr .= ' ' . $key . '="' . $value . '"';
-                }
-            }
-
-            return '<link href="' . url($file) . '?' . $mtime . '"' . $attr . '>';
-        }
+        return _admin_script($file, $attributes, 'css');
     }
 }
 
@@ -421,9 +538,78 @@ if (!function_exists('_admin_js')) {
      */
     function _admin_js($file = "", $attributes = [])
     {
-        $path = str_replace("themes/admin", "themes", $file);
-        $path = dirname(__DIR__) . '/resources/' . ltrim($path, '/');
-        if (file_exists($path)) {
+        return _admin_script($file, $attributes, 'js');
+    }
+}
+
+if (!function_exists('_admin_script')) {
+    /**
+     * Generate link/script tag
+     *
+     * @param string $file
+     * @param array $attributes
+     * @return string
+     */
+    function _admin_script($file = "", $attributes = [], $type = 'css')
+    {
+        $admin_resource = dirname(__DIR__) . '/resources/themes';
+        $path = str_replace("themes/admin", "", $file);
+        $fullpath = $admin_resource . $path;
+
+        if ($type == 'css') {
+            $generate = _site_css($fullpath, $attributes, true);
+        } else if ($type == 'js') {
+            $generate = _site_js($fullpath, $attributes, true);
+        }
+
+        if ($generate) {
+            return str_replace($admin_resource, '/themes/admin', $generate);
+        }
+
+        return null;
+    }
+}
+
+if (!function_exists('_site_css')) {
+    /**
+     * Generate link stylesheet tag
+     *
+     * @param string $file
+     * @param array $attributes
+     * @return string
+     */
+    function _site_css($file = "", $attributes = [], $is_admin = false)
+    {
+        $path = !$is_admin ? resource_path($file) : $file;
+        if (File::exists($path)) {
+            $mtime = filemtime($path);
+            $attr = ' rel="stylesheet" type="text/css"';
+            if (!empty($attributes)) {
+                $attr = '';
+                foreach ($attributes as $key => $value) {
+                    $attr .= ' ' . $key . '="' . $value . '"';
+                }
+            }
+
+            return '<link href="' . url($file) . '?' . $mtime . '"' . $attr . '>';
+        }
+
+        return null;
+    }
+}
+
+if (!function_exists('_site_js')) {
+    /**
+     * Generate script tag
+     *
+     * @param string $file
+     * @param array $attributes
+     * @return string
+     */
+    function _site_js($file = "", $attributes = [], $is_admin = false)
+    {
+        $path = !$is_admin ? resource_path($file) : $file;
+        if (File::exists($path)) {
             $mtime = filemtime($path);
             $attr = ' type="text/javascript"';
             if (!empty($attributes)) {
@@ -435,6 +621,8 @@ if (!function_exists('_admin_js')) {
 
             return '<script src="' . url($file) . '?' . $mtime . '"' . $attr . '></script>';
         }
+
+        return null;
     }
 }
 

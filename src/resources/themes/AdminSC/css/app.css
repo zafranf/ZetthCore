@@ -1,5 +1,5 @@
 body {
-    font-family: 'Lato', 'Times New Roman';
+    font-family: "Lato", "Times New Roman";
     font-weight: 300;
     margin-top: 85px;
     margin-bottom: 10px;
@@ -22,7 +22,7 @@ option {
 }
 
 input[readonly] {
-    background: #F5F5F5!important;
+    background: #f5f5f5 !important;
 }
 
 input,
@@ -33,7 +33,7 @@ textarea:focus {
     -webkit-box-shadow: none !important;
     -moz-box-shadow: none !important;
     box-shadow: none !important;
-    border-color: #ccc!important;
+    border-color: #ccc !important;
 }
 
 .input-group {
@@ -51,7 +51,7 @@ textarea:focus {
 .btn-post button,
 .btn-post a {
     font-size: 20px;
-    outline: 0px!important;
+    outline: 0px !important;
 }
 
 .label-warning,
@@ -72,7 +72,7 @@ textarea:focus {
 .btn-warning:active,
 .btn-warning:active:hover,
 .btn-warning:active:focus {
-    background: #FF8A5F;
+    background: #ff8a5f;
 }
 
 .btn-login {
@@ -98,7 +98,7 @@ textarea:focus {
 }
 
 .btn-default:hover {
-    background: #F5F5F5;
+    background: #f5f5f5;
 }
 
 .btn-file {
@@ -120,7 +120,7 @@ textarea:focus {
 }
 
 .no-radius {
-    border-radius: 0!important;
+    border-radius: 0 !important;
 }
 
 .no-padding {
@@ -236,33 +236,32 @@ textarea:focus {
 }
 
 .panel-heading {
-    background: #fff!important;
+    background: #fff !important;
     font-weight: 500;
     font-size: 24px;
     border-bottom: 3px double #ddd;
     /*color: coral!important;*/
 }
 
-
 /* .panel-heading>i {
     color: coral;
 } */
 
-.navbar-brand>img {
+.navbar-brand > img {
     width: 40px;
     max-height: 40px;
     position: relative;
     top: -10px;
 }
 
-.navbar-nav>li>a.active {
+.navbar-nav > li > a.active {
     color: coral;
     font-weight: 400;
 }
 
-.navbar-nav>li>a:hover,
-.navbar-nav>.open>a {
-    color: coral!important;
+.navbar-nav > li > a:hover,
+.navbar-nav > .open > a {
+    color: coral !important;
 }
 
 .page-header {
@@ -275,22 +274,24 @@ textarea:focus {
     font-size: 28px;
 }
 
-.navbar-nav>li:hover,
+.navbar-nav > li:hover,
 .navbar-nav li.dropdown:active,
 .navbar-nav li.dropdown:focus {
-    background: #F5F5F5!important;
+    background: #f5f5f5 !important;
 }
 
-.dropdown-menu>li>a {
+.dropdown-menu > li > a {
     font-weight: 300;
 }
 
-.dropdown-menu>li>a:hover {
+.dropdown-menu > li > a:hover {
     font-weight: 300;
     color: coral;
 }
 
-.dropdown-menu>li>a.active {
+.dropdown-menu > li > a.active,
+.dropdown-menu > li.active > a,
+.dropdown-menu > li.active:hover > a {
     background-color: #f5f5f5;
     /* font-weight: 400; */
     color: coral;
@@ -324,38 +325,38 @@ textarea:focus {
     margin-right: 10px;
 }
 
-.form-group>label {
+.form-group > label {
     font-weight: 400;
 }
 
 .control-label,
 .form-group div label {
-    font-weight: 300!important;
+    font-weight: 300 !important;
 }
 
-.pagination>li>a,
-.pagination>li>a:hover {
+.pagination > li > a,
+.pagination > li > a:hover {
     color: coral;
     border-color: coral;
 }
 
-.pagination>.active>a,
-.pagination>.active>a:focus,
-.pagination>.active>a:hover,
-.pagination>.active>span,
-.pagination>.active>span:focus,
-.pagination>.active>span:hover {
+.pagination > .active > a,
+.pagination > .active > a:focus,
+.pagination > .active > a:hover,
+.pagination > .active > span,
+.pagination > .active > span:focus,
+.pagination > .active > span:hover {
     background: coral;
     border-color: coral;
     color: #fff;
 }
 
-.pagination>.disabled>a,
-.pagination>.disabled>a:focus,
-.pagination>.disabled>a:hover,
-.pagination>.disabled>span,
-.pagination>.disabled>span:focus,
-.pagination>.disabled>span:hover {
+.pagination > .disabled > a,
+.pagination > .disabled > a:focus,
+.pagination > .disabled > a:hover,
+.pagination > .disabled > span,
+.pagination > .disabled > span:focus,
+.pagination > .disabled > span:hover {
     color: coral;
     border-color: coral;
 }
@@ -368,7 +369,7 @@ textarea:focus {
     font-size: 12px;
 }
 
-.breadcrumb>li+li:before {
+.breadcrumb > li + li:before {
     content: ">";
 }
 
@@ -415,7 +416,7 @@ table.dataTable.no-footer {
 .dataTables_wrapper .dataTables_paginate .paginate_button.disabled:hover,
 .dataTables_wrapper .dataTables_paginate .paginate_button.disabled:active {
     border-color: coral;
-    color: coral!important;
+    color: coral !important;
     background: transparent;
     padding: 0px 2px;
 }
@@ -428,12 +429,12 @@ table.dataTable.no-footer {
 .dataTables_wrapper .dataTables_paginate .paginate_button.current,
 .dataTables_wrapper .dataTables_paginate .paginate_button.current:hover,
 .dataTables_wrapper .dataTables_paginate .paginate_button:hover {
-    background: #F5F5F5;
+    background: #f5f5f5;
 }
 
 .bootstrap-tagsinput,
 .bootstrap-tagsinput input {
-    width: 100%!important;
+    width: 100% !important;
 }
 
 .fileinput,
@@ -498,12 +499,11 @@ table.dataTable.no-footer {
     background-color: coral;
 }
 
-label[for=post_time],
-label[for=visitor],
-label[for=publish] {
+label[for="post_time"],
+label[for="visitor"],
+label[for="publish"] {
     margin-top: 10px;
 }
-
 
 /* .dropdown-menu .sub-menu {
   left: 100%;
@@ -560,10 +560,9 @@ label[for=publish] {
     line-height: 34px !important;
 }
 
-.dropdown-submenu:hover>.dropdown-menu {
+.dropdown-submenu:hover > .dropdown-menu {
     display: block;
 }
-
 
 /* .dropdown-submenu>a:after {
     display:block;
@@ -594,8 +593,8 @@ label[for=publish] {
 
 .help-inline {
     display: inline;
-    margin-top: 5px;
-    margin-bottom: 10px;
+    /* margin-top: 5px;
+    margin-bottom: 10px; */
     color: #737373;
 }
 
@@ -615,12 +614,12 @@ label[for=publish] {
         padding-left: 10px;
     }
     .swal2-confirm {
-        font-size: 14px!important;
+        font-size: 14px !important;
     }
     .swal2-cancel {
-        font-size: 12px!important;
+        font-size: 12px !important;
     }
     .swal2-spacer {
-        display: none!important;
+        display: none !important;
     }
 }
