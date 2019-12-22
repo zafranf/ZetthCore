@@ -109,7 +109,7 @@ function _getTerms($type = 'category', $limit = null, $order = 'desc')
     $cache_name = '_getTerms' . $type . $order;
 
     /* inisiasi query */
-    $terms = \ZetthCore\Models\Term::active()->where('type', $type);
+    $terms = \ZetthCore\Models\Term::active()->where('type', $type)->groupBy('slug');
 
     /* check order */
     if (in_array($order, ['rand', 'random'])) {
