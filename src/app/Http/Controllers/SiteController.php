@@ -47,11 +47,11 @@ class SiteController extends Controller
         abort(404);
     }
 
-    public function setSEO($par = [])
+    public function setSEO($title = '', $par = [])
     {
         $url = url()->current();
         $sitename = app('site')->name;
-        $title = $sitename;
+        $title = !empty($title) ? $title . ' - ' . $sitename : $sitename;
         $tagline = app('site')->tagline;
         $keywords = app('site')->keyword;
         $description = app('site')->description;
