@@ -124,6 +124,7 @@ class AppServiceProvider extends ServiceProvider
             __DIR__ . $publishable_path . '/config/image.php' => config_path('image.php'),
             __DIR__ . $publishable_path . '/config/laratrust.php' => config_path('laratrust.php'),
             __DIR__ . $publishable_path . '/config/laratrust_seeder.php' => config_path('laratrust_seeder.php'),
+            __DIR__ . $publishable_path . '/config/seotools.php' => config_path('seotools.php'),
         ], 'zetthconfig');
         /* $this->publishes([
         __DIR__ . $publishable_path.'/config/auth.php' => config_path('auth.php'),
