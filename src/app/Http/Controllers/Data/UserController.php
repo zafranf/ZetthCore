@@ -168,6 +168,9 @@ class UserController extends AdminController
         /* log aktifitas */
         $this->activityLog('<b>' . \Auth::user()->fullname . '</b> menambahkan pengguna "' . $user->name . '"');
 
+        /* clear cache */
+        \Cache::flush();
+
         return redirect($this->current_url)->with('success', 'Pengguna "' . $user->name . '" berhasil ditambah!');
     }
 
@@ -306,6 +309,9 @@ class UserController extends AdminController
         /* log aktifitas */
         $this->activityLog('<b>' . \Auth::user()->fullname . '</b> memperbarui pengguna "' . $user->name . '"');
 
+        /* clear cache */
+        \Cache::flush();
+
         return redirect($this->current_url)->with('success', 'Pengguna "' . $user->name . '" berhasil disimpan!');
     }
 
@@ -322,6 +328,9 @@ class UserController extends AdminController
 
         /* soft delete */
         $user->delete();
+
+        /* clear cache */
+        \Cache::flush();
 
         return redirect($this->current_url)->with('success', 'Pengguna "' . $user->name . '" berhasil dihapus!');
     }

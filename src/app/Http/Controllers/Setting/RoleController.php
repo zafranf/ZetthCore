@@ -119,6 +119,9 @@ class RoleController extends AdminController
         /* log aktifitas */
         $this->activityLog('<b>' . \Auth::user()->fullname . '</b> menambahkan Peran "' . $role->name . '"');
 
+        /* clear cache */
+        \Cache::flush();
+
         return redirect($this->current_url . '/' . $role->id . '/edit')->with('success', 'Peran "' . $role->display_name . '" berhasil ditambah, segera atur akses menu!');
     }
 
@@ -213,6 +216,9 @@ class RoleController extends AdminController
         /* Clear cache */
         // \Cache::forget('cacheMenuGroupUser_role');
 
+        /* clear cache */
+        \Cache::flush();
+
         return redirect($this->current_url . '/' . $role->id . '/edit')->with('success', 'Peran "' . $role->display_name . '" berhasil disimpan, segera atur akses menu!');
     }
 
@@ -229,6 +235,9 @@ class RoleController extends AdminController
 
         /* soft delete */
         $role->delete();
+
+        /* clear cache */
+        \Cache::flush();
 
         return redirect($this->current_url)->with('success', 'Peran "' . $role->display_name . '" berhasil dihapus!');
     }

@@ -112,6 +112,9 @@ class VideoController extends AdminController
         /* log aktifitas */
         $this->activityLog('<b>' . \Auth::user()->fullname . '</b> menambahkan video "' . $video->title . '"');
 
+        /* clear cache */
+        \Cache::flush();
+
         return redirect($this->current_url)->with('success', 'Video "' . $video->title . '" berhasil ditambah!');
     }
 
@@ -182,6 +185,9 @@ class VideoController extends AdminController
         /* log aktifitas */
         $this->activityLog('<b>' . \Auth::user()->fullname . '</b> memperbarui video "' . $video->title . '"');
 
+        /* clear cache */
+        \Cache::flush();
+
         return redirect($this->current_url)->with('success', 'Video "' . $video->title . '" berhasil disimpan!');
     }
 
@@ -198,6 +204,9 @@ class VideoController extends AdminController
 
         /* soft delete */
         $video->delete();
+
+        /* clear cache */
+        \Cache::flush();
 
         return redirect($this->current_url)->with('success', 'Video "' . $video->title . '" berhasil dihapus!');
     }

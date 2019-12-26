@@ -105,6 +105,9 @@ class MenuGroupController extends AdminController
         /* activity log */
         $this->activityLog('<b>' . \Auth::user()->fullname . '</b> menambahkan Grup Menu "' . $menugroup->name . '"');
 
+        /* clear cache */
+        \Cache::flush();
+
         return redirect($this->current_url . '/' . $menugroup->id . '/edit')->with('success', 'Grup menu "' . $menugroup->name . '" berhasil ditambah, segera atur daftar menu!');
     }
 
@@ -182,7 +185,7 @@ class MenuGroupController extends AdminController
         $this->activityLog('<b>' . \Auth::user()->fullname . '</b> memperbarui Grup Menu "' . $menugroup->name . '"');
 
         /* clear cache */
-        \Cache::forget('cacheMenuGroup' . ucfirst($menugroup->name));
+        \Cache::flush();
 
         return redirect($this->current_url . '/' . $menugroup->id . '/edit')->with('success', 'Grup menu "' . $menugroup->name . '" berhasil disimpan, segera atur daftar menu!');
     }
@@ -202,7 +205,7 @@ class MenuGroupController extends AdminController
         $menugroup->delete();
 
         /* clear cache */
-        \Cache::forget('cacheMenuGroup' . ucfirst($menugroup->name));
+        \Cache::flush();
 
         return redirect($this->current_url)->with('success', 'Grup menu "' . $menugroup->name . '" berhasil dihapus!');
     }

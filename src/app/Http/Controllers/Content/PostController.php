@@ -150,6 +150,9 @@ class PostController extends AdminController
         /* log aktifitas */
         $this->activityLog('<b>' . \Auth::user()->fullname . '</b> menambahkan artikel "' . $post->title . '"');
 
+        /* clear cache */
+        \Cache::flush();
+
         return redirect($this->current_url)->with('success', 'Artikel "' . $post->title . '" berhasil ditambah!');
     }
 
@@ -178,6 +181,7 @@ class PostController extends AdminController
             'url' => '',
         ];
 
+        /* get active categories */
         $categories = Term::where('type', 'category')
             ->where('parent_id', 0)
             ->where('status', 1)
@@ -262,6 +266,9 @@ class PostController extends AdminController
         /* log aktifitas */
         $this->activityLog('<b>' . \Auth::user()->fullname . '</b> memperbarui artikel "' . $post->title . '"');
 
+        /* clear cache */
+        \Cache::flush();
+
         return redirect($this->current_url)->with('success', 'Artikel "' . $post->title . '" berhasil disimpan!');
     }
 
@@ -278,6 +285,9 @@ class PostController extends AdminController
 
         /* soft delete */
         $post->delete();
+
+        /* clear cache */
+        \Cache::flush();
 
         return redirect($this->current_url)->with('success', 'Artikel "' . $post->title . '" berhasil dihapus!');
     }

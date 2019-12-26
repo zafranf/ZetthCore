@@ -111,6 +111,9 @@ class PageController extends AdminController
         /* log aktifitas */
         $this->activityLog('<b>' . \Auth::user()->fullname . '</b> menambahkan halaman "' . $page->title . '"');
 
+        /* clear cache */
+        \Cache::flush();
+
         return redirect($this->current_url)->with('success', 'Halaman "' . $page->title . '" berhasil ditambah!');
     }
 
@@ -181,6 +184,9 @@ class PageController extends AdminController
         /* log aktifitas */
         $this->activityLog('<b>' . \Auth::user()->fullname . '</b> memperbarui halaman "' . $page->title . '"');
 
+        /* clear cache */
+        \Cache::flush();
+
         return redirect($this->current_url)->with('success', 'Halaman "' . $page->title . '" berhasil disimpan!');
     }
 
@@ -197,6 +203,9 @@ class PageController extends AdminController
 
         /* soft delete */
         $page->delete();
+
+        /* clear cache */
+        \Cache::flush();
 
         return redirect($this->current_url)->with('success', 'Halaman "' . $page->title . '" berhasil dihapus!');
     }
