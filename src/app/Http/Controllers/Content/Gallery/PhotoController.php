@@ -119,6 +119,9 @@ class PhotoController extends AdminController
         /* log aktifitas */
         $this->activityLog('<b>' . \Auth::user()->fullname . '</b> menambahkan album "' . $album->name . '"');
 
+        /* clear cache */
+        \Cache::flush();
+
         return redirect($this->current_url)->with('success', 'Album "' . $album->name . '" berhasil ditambah!');
     }
 
@@ -192,6 +195,9 @@ class PhotoController extends AdminController
         /* log aktifitas */
         $this->activityLog('<b>' . \Auth::user()->fullname . '</b> memperbarui album "' . $album->name . '"');
 
+        /* clear cache */
+        \Cache::flush();
+
         return redirect($this->current_url)->with('success', 'Album "' . $album->name . '" berhasil disimpan!');
     }
 
@@ -208,6 +214,9 @@ class PhotoController extends AdminController
 
         /* soft delete */
         $album->delete();
+
+        /* clear cache */
+        \Cache::flush();
 
         return redirect($this->current_url)->with('success', 'Album "' . $album->name . '" berhasil dihapus!');
     }

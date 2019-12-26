@@ -134,7 +134,7 @@ class MenuController extends AdminController
         $this->activityLog('<b>' . \Auth::user()->fullname . '</b> menambahkan Menu "' . $menu->name . '"');
 
         /* clear cache */
-        // \Cache::flush();
+        \Cache::flush();
 
         return redirect(app('admin_path') . '/setting/menu-groups/' . $menu->group_id . '/edit')->with('success', 'Menu "' . $menu->name . '" berhasil ditambah!');
     }
@@ -233,7 +233,7 @@ class MenuController extends AdminController
         $this->activityLog('<b>' . \Auth::user()->fullname . '</b> memperbarui Menu "' . $menu->name . '"');
 
         /* clear cache */
-        // \Cache::flush();
+        \Cache::flush();
 
         return redirect(app('admin_path') . '/setting/menu-groups/' . $menu->group_id . '/edit')->with('success', 'Menu "' . $menu->name . '" berhasil disimpan!');
     }
@@ -258,7 +258,7 @@ class MenuController extends AdminController
         $menu->delete();
 
         /* clear cache */
-        // \Cache::flush();
+        \Cache::flush();
 
         return redirect(app('admin_path') . '/setting/menu-groups/' . $menu->group_id . '/edit')->with('success', 'Menu "' . $menu->name . '" berhasil dihapus!');
     }

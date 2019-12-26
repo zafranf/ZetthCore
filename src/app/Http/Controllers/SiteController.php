@@ -49,16 +49,14 @@ class SiteController extends Controller
 
     public function setSEO($title = '', $par = [])
     {
+        $separator = config('seotools.meta.defaults.separator');
         $url = url()->current();
         $sitename = app('site')->name;
-        $title = !empty($title) ? $title . ' - ' . $sitename : $sitename;
+        $title = !empty($title) ? $title . $separator . $sitename : $sitename;
         $tagline = app('site')->tagline;
         $keywords = app('site')->keyword;
         $description = app('site')->description;
-        /* if (!$description) {
-        $description = 'Official Site of ' . $sitename;
-        } */
-        $logo = _get_image("assets/images/" . app('site')->icon, url("themes/admin/AdminSC/images/" . (app('site')->icon ?? 'logo.v2.png')));
+        $logo = _get_image("assets/images/" . app('site')->icon);
 
         /* Set General SEO */
         SEOMeta::setTitle($title);
@@ -94,9 +92,9 @@ class SiteController extends Controller
                 }
             }
 
-            $title = $par->title . ' - ' . $sitename;
+            $title = $par->title . $separator . $sitename;
             $image = _get_image($par->cover);
-            $keywords = $keywords . ',' . implode(',', $tags);
+            $keywords = implode(',', $tags);
             $description = str_limit(strip_tags($par->content), 300);
             if (strlen($par->excerpt) > 0) {
                 $description = strip_tags($par->excerpt);

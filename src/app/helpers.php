@@ -156,7 +156,7 @@ if (!function_exists('_get_image')) {
      * @param  string $image [description]
      * @return [type]        [description]
      */
-    function _get_image($image = "", $default = '/assets/images/default.jpg')
+    function _get_image($image, $default = null)
     {
         $img = storage_path('app/public/' . $image);
         $fm = base_path('vendor/zafranf/zetthcore/src/resources/themes/AdminSC/plugins/filemanager/source' . $image);
@@ -167,7 +167,7 @@ if (!function_exists('_get_image')) {
             $mtime = filemtime($fm);
             $img = url($image) . '?v=' . $mtime;
         } else {
-            $img = url($default);
+            $img = !is_null($default) ? url($default) : null;
         }
 
         return $img;

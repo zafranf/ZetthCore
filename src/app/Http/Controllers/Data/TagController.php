@@ -107,6 +107,9 @@ class TagController extends AdminController
         /* log aktifitas */
         $this->activityLog('<b>' . \Auth::user()->fullname . '</b> menambahkan label "' . $tag->name . '"');
 
+        /* clear cache */
+        \Cache::flush();
+
         return redirect($this->current_url)->with('success', 'Label ' . $tag->name . ' berhasil ditambah!');
     }
 
@@ -174,6 +177,9 @@ class TagController extends AdminController
         /* log aktifitas */
         $this->activityLog('<b>' . \Auth::user()->fullname . '</b> memperbarui label "' . $tag->name . '"');
 
+        /* clear cache */
+        \Cache::flush();
+
         return redirect($this->current_url)->with('success', 'Label ' . $tag->name . ' berhasil disimpan!');
     }
 
@@ -190,6 +196,9 @@ class TagController extends AdminController
 
         /* soft delete */
         $tag->delete();
+
+        /* clear cache */
+        \Cache::flush();
 
         return redirect($this->current_url)->with('success', 'Label ' . $tag->name . ' berhasil dihapus!');
     }

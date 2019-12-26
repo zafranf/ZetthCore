@@ -108,6 +108,9 @@ class CategoryController extends AdminController
         /* log aktifitas */
         $this->activityLog('<b>' . \Auth::user()->fullname . '</b> menambahkan kategori "' . $category->name . '"');
 
+        /* clear cache */
+        \Cache::flush();
+
         return redirect($this->current_url)->with('success', 'Kategori ' . $category->name . ' berhasil ditambah!');
     }
 
@@ -176,6 +179,9 @@ class CategoryController extends AdminController
         /* log aktifitas */
         $this->activityLog('<b>' . \Auth::user()->fullname . '</b> memperbarui kategori "' . $category->name . '"');
 
+        /* clear cache */
+        \Cache::flush();
+
         return redirect($this->current_url)->with('success', 'Kategori ' . $category->name . ' berhasil disimpan!');
     }
 
@@ -192,6 +198,9 @@ class CategoryController extends AdminController
 
         /* soft delete */
         $category->delete();
+
+        /* clear cache */
+        \Cache::flush();
 
         return redirect($this->current_url)->with('success', 'Kategori ' . $category->name . ' berhasil dihapus!');
     }

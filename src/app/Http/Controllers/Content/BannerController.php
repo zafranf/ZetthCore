@@ -135,6 +135,9 @@ class BannerController extends AdminController
         /* log aktifitas */
         $this->activityLog('<b>' . \Auth::user()->fullname . '</b> menambahkan spanduk "' . $banner->title . '"');
 
+        /* clear cache */
+        \Cache::flush();
+
         return redirect($this->current_url)->with('success', 'Spanduk berhasil ditambah!');
     }
 
@@ -231,6 +234,9 @@ class BannerController extends AdminController
         /* log aktifitas */
         $this->activityLog('<b>' . \Auth::user()->fullname . '</b> memperbarui spanduk "' . $banner->title . '"');
 
+        /* clear cache */
+        \Cache::flush();
+
         return redirect($this->current_url)->with('success', 'Spanduk berhasil disimpan!');
     }
 
@@ -247,6 +253,9 @@ class BannerController extends AdminController
 
         /* soft delete */
         $banner->delete();
+
+        /* clear cache */
+        \Cache::flush();
 
         return redirect($this->current_url)->with('success', 'Spanduk berhasil dihapus!');
     }
@@ -308,6 +317,9 @@ class BannerController extends AdminController
 
         /* save position */
         $save = $this->sortQuery($r);
+
+        /* clear cache */
+        \Cache::flush();
 
         return redirect($this->current_url)->with('success', 'Spanduk berhasil diurutkan!');
     }

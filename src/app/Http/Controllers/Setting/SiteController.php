@@ -208,6 +208,9 @@ class SiteController extends AdminController
         /* log aktifitas */
         $this->activityLog('<b>' . \Auth::user()->fullname . '</b> memperbarui Pengaturan - Situs');
 
+        /* clear cache */
+        \Cache::flush();
+
         return redirect()->back()->with('success', 'Pengaturan Situs berhasil disimpan!');
     }
 
