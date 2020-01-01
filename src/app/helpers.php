@@ -660,3 +660,12 @@ if (!function_exists('carbon_query')) {
         return carbon($carbon, null, 'store');
     }
 }
+
+if (!function_exists('getCacheTime')) {
+    function getCacheTime()
+    {
+        $minutes = env('APP_ENV') != 'production' ? 1 : env('CACHE_TIME', 10);
+
+        return now()->addMinutes($minutes);
+    }
+}

@@ -7,7 +7,6 @@ function _doGetData($cache_name, $data, $limit = null)
 
     /* set cache */
     $cache_name .= $limit . $page;
-    $cache_time = 60 * (env('APP_ENV') != 'production' ? 1 : env('CACHE_TIME', 10));
 
     /* cek cache */
     $cache = Cache::get($cache_name);
@@ -25,7 +24,7 @@ function _doGetData($cache_name, $data, $limit = null)
     }
 
     /* simpan ke cache */
-    Cache::put($cache_name, $data, $cache_time);
+    Cache::put($cache_name, $data, getCacheTime());
 
     return $data;
 }

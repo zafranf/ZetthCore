@@ -125,9 +125,17 @@ class SiteController extends Controller
             ]);
 
             /* twitter card */
-            $socmed = \ZetthCore\Models\SocmedData::where('type', 'site')->whereHas('socmed', function (\Illuminate\Database\Eloquent\Builder $query) {
-                $query->where('name', 'Twitter');
-            })->first();
+            $cacheSocmedName = 'cacheSocmedSEO';
+            $cacheSocmed = \Cache::get($cacheSocmedName);
+            if ($cacheSocmed) {
+                $socmed = $cacheSocmed;
+            } else {
+                $socmed = \ZetthCore\Models\SocmedData::where('type', 'site')->whereHas('socmed', function (\Illuminate\Database\Eloquent\Builder $query) {
+                    $query->where('name', 'Twitter');
+                })->first();
+
+                \Cache::put($cacheSocmedName, $socmed, getCacheTime());
+            }
             if ($socmed) {
                 /* Set Twitter SEO */
                 Twitter::addValue('card', 'summary');
