@@ -59,6 +59,13 @@ class Install extends Command
         $this->seedingTable();
         $this->line('');
         $this->linkFolders();
+
+        if ($this->option('fresh')) {
+            $this->line('');
+            $this->info('Clearing application cache');
+            $this->process('php artisan cache:clear');
+            $this->line('');
+        }
     }
 
     public function publishConfig()

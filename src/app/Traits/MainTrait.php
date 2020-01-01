@@ -101,7 +101,7 @@ trait MainTrait
             $log['data'] = $e->data;
         }
 
-        if ($e->getMessage() && $this->checkDBConnection()) {
+        if ($e->getMessage() && $this->checkDBConnection() && class_exists('site')) {
             $date = carbon_query()->format('Y-m-d');
             $err = \ZetthCore\Models\ErrorLog::updateOrCreate(
                 [
