@@ -60,13 +60,13 @@ function _getPosts($type = 'simple', $limit = null, $order = "desc", $slug = '')
                 $posts->withTag($slug);
             }
         } else {
-            $posts->where('slug', $slug)->orWhere('title', 'like', '%' . $slug . '%');
+            $posts->where('slug', $slug); //->orWhere('title', 'like', '%' . $slug . '%');
         }
     }
 
     /* check complete params */
     if ($complete) {
-        $posts->with('comments', 'categories', 'tags', 'author', 'editor');
+        $posts->with('comments', 'terms', 'author', 'editor');
     } else {
         $posts->with('categories', 'author');
         $posts->withCount('comments');
