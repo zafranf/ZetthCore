@@ -179,10 +179,20 @@ if (!function_exists('getMenu')) {
     {
         $roleName = '';
         if (\Auth::user()) {
-            foreach (\Auth::user()->roles as $role) {
-                $roleName .= ucfirst($role->name);
+            $cacheRoleMenuName = 'cacheRoleMenuGroup' . studly_case($group);
+            $cacheRoleMenu = \Cache::get($cacheRoleMenuName);
+            if ($cacheRoleMenu && $cache) {
+                $roleName = $cacheRoleMenu;
+            } else {
+                $roles = \Auth::user()->roles;
+                foreach ($roles as $role) {
+                    $roleName .= ucfirst($role->name);
+                }
+
+                \Cache::put($cacheRoleMenuName, $roleName, getCacheTime());
             }
         }
+
         $cacheMenuName = 'cacheMenuGroup' . studly_case($group) . $roleName;
         $cacheMenu = \Cache::get($cacheMenuName);
         if ($cacheMenu && $cache) {
@@ -194,7 +204,7 @@ if (!function_exists('getMenu')) {
             }
             $menus = $group == 'admin' ? menuFilterPermission($groupmenu->menu) : $groupmenu->menu;
 
-            \Cache::put($cacheMenuName, $menus, 60 * (env('APP_ENV') != 'production' ? 1 : env('CACHE_TIME', 10)));
+            \Cache::put($cacheMenuName, $menus ?? false, getCacheTime());
         }
 
         return $menus;
