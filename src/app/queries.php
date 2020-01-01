@@ -140,7 +140,7 @@ function _getTags($limit = null, $order = 'desc')
     return _getTerms('tag', $limit, $order);
 }
 
-function getPage($slug)
+function _getPage($slug)
 {
     return _getPages(1, 'desc', $slug);
 }
