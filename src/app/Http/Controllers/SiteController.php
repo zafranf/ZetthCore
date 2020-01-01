@@ -84,7 +84,16 @@ class SiteController extends Controller
             $time = $par->published_at != "0000-00-00 00:00:00" ? $par->published_at : $par->created_at;
 
             /* set tags and categories */
-            foreach ($par->terms as $k => $v) {
+            $cacheTermsName = 'cacheTermsSEO';
+            $cacheTerms = \Cache::get($cacheTermsName);
+            if ($cacheTerms) {
+                $terms = $cacheTerms;
+            } else {
+                $terms = $par->terms;
+
+                \Cache::put($cacheTermsName, $terms, getCacheTime());
+            }
+            foreach ($terms as $k => $v) {
                 if ($v->type == "tag") {
                     $tags[] = $v->name;
                 }
