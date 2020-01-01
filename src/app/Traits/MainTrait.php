@@ -11,8 +11,8 @@ trait MainTrait
     public function visitorLog()
     {
         /* set variable */
-        $device = '';
         $agent = new \Jenssegers\Agent\Agent();
+        $device = '';
         if ($agent->isPhone()) {
             $device = 'phone';
         } else if ($agent->isTablet()) {
@@ -20,19 +20,9 @@ trait MainTrait
         } else if ($agent->isDesktop()) {
             $device = 'desktop';
         }
-        $device_name = $agent->device();
-        $ip = _server('REMOTE_ADDR') ?? '127.0.0.1';
-        $browser_agent = $agent->getUserAgent();
         $browser = $agent->browser();
-        $browser_version = $agent->version($browser);
         $os = $agent->platform();
-        $os_version = $agent->version($os);
-        $page = _server('REQUEST_URI') ?? '/';
         $referrer = _server('HTTP_REFERER') ?? null;
-        $referral = str_replace(url('/'), "", $referrer);
-        $is_robot = $agent->isRobot() ? 1 : 0;
-        $robot_name = $agent->robot() ?? null;
-        $date = carbon_query()->format('Y-m-d H');
 
         /* save log */
         \ZetthCore\Models\VisitorLog::updateOrCreate(
@@ -40,18 +30,18 @@ trait MainTrait
                 'id' => session()->getId(),
             ],
             [
-                'ip' => $ip,
-                'page' => $page,
-                'referral' => $referral,
-                'agent' => $browser_agent,
+                'ip' => _server('REMOTE_ADDR') ?? '127.0.0.1',
+                'page' => _server('REQUEST_URI') ?? '/',
+                'referral' => str_replace(url('/'), "", $referrer),
+                'agent' => $agent->getUserAgent(),
                 'browser' => $browser,
-                'browser_version' => $browser_version,
+                'browser_version' => $agent->version($browser),
                 'device' => $device,
-                'device_name' => $device_name,
-                'os' => $os,
-                'os_version' => $os_version,
-                'is_robot' => $is_robot,
-                'robot_name' => $robot_name,
+                'device_name' => $agent->device(),
+                'os' => $agent->platform(),
+                'os_version' => $agent->version($os),
+                'is_robot' => $agent->isRobot() ? 1 : 0,
+                'robot_name' => $agent->robot() ?? null,
                 'count' => \DB::raw('count+1'),
             ]
         );
