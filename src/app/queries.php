@@ -7,7 +7,6 @@ function _doGetData($cache_name, $data, $limit = null)
 
     /* set cache */
     $cache_name .= $limit . $page;
-    $cache_time = 60 * (env('APP_ENV') != 'production' ? 1 : env('CACHE_TIME', 10));
 
     /* cek cache */
     $cache = Cache::get($cache_name);
@@ -25,7 +24,7 @@ function _doGetData($cache_name, $data, $limit = null)
     }
 
     /* simpan ke cache */
-    Cache::put($cache_name, $data, $cache_time);
+    Cache::put($cache_name, $data, getCacheTime());
 
     return $data;
 }
@@ -61,13 +60,13 @@ function _getPosts($type = 'simple', $limit = null, $order = "desc", $slug = '')
                 $posts->withTag($slug);
             }
         } else {
-            $posts->where('slug', $slug)->orWhere('title', 'like', '%' . $slug . '%');
+            $posts->where('slug', $slug); //->orWhere('title', 'like', '%' . $slug . '%');
         }
     }
 
     /* check complete params */
     if ($complete) {
-        $posts->with('comments', 'categories', 'tags', 'author', 'editor');
+        $posts->with('comments', 'terms', 'author', 'editor');
     } else {
         $posts->with('categories', 'author');
         $posts->withCount('comments');
@@ -141,7 +140,7 @@ function _getTags($limit = null, $order = 'desc')
     return _getTerms('tag', $limit, $order);
 }
 
-function getPage($slug)
+function _getPage($slug)
 {
     return _getPages(1, 'desc', $slug);
 }

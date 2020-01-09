@@ -77,13 +77,23 @@ class SiteController extends Controller
         OpenGraph::setSiteName($sitename);
         OpenGraph::addProperty('locale', 'id_ID');
 
-        if (!empty($par)) {
+        if (!empty($par) && $par->type == "article") {
             $type = 'article';
             $cats = [];
             $tags = [];
             $time = $par->published_at != "0000-00-00 00:00:00" ? $par->published_at : $par->created_at;
 
-            foreach ($par->terms as $k => $v) {
+            /* set tags and categories */
+            $cacheTermsName = 'cacheTermsSEO';
+            $cacheTerms = \Cache::get($cacheTermsName);
+            if ($cacheTerms) {
+                $terms = $cacheTerms;
+            } else {
+                $terms = $par->terms;
+
+                \Cache::put($cacheTermsName, $terms, getCacheTime());
+            }
+            foreach ($terms as $k => $v) {
                 if ($v->type == "tag") {
                     $tags[] = $v->name;
                 }
@@ -117,27 +127,31 @@ class SiteController extends Controller
             OpenGraph::setType($type);
             OpenGraph::addImage($image);
             OpenGraph::setArticle([
+                'tag' => $tags ?? '',
                 'published_time' => date('c', strtotime($time)),
                 'author' => $par->author->fullname,
                 'section' => $cats[0] ?? '',
-                'tag' => $tags ?? '',
             ]);
 
-            $socmed = \ZetthCore\Models\SocmedData::where('type', 'site')->with('socmed')->get();
-            $account = '';
-            foreach ($socmed as $key => $val) {
-                if ($val->socmed->name == "Twitter") {
-                    $account = $val->username;
-                }
-            }
+            /* twitter card */
+            $cacheSocmedName = 'cacheSocmedSEO';
+            $cacheSocmed = \Cache::get($cacheSocmedName);
+            if ($cacheSocmed) {
+                $socmed = $cacheSocmed;
+            } else {
+                $socmed = \ZetthCore\Models\SocmedData::where('type', 'site')->whereHas('socmed', function (\Illuminate\Database\Eloquent\Builder $query) {
+                    $query->where('name', 'Twitter');
+                })->first();
 
-            if (!empty($account)) {
+                \Cache::put($cacheSocmedName, $socmed, getCacheTime());
+            }
+            if ($socmed) {
                 /* Set Twitter SEO */
                 Twitter::addValue('card', 'summary');
                 Twitter::setImage($image);
                 Twitter::setType($type);
                 Twitter::setTitle($title);
-                Twitter::setSite($account);
+                Twitter::setSite($socmed->username);
                 Twitter::setDescription($description);
                 Twitter::setUrl($url);
             }

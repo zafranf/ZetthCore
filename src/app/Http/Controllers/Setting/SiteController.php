@@ -148,7 +148,7 @@ class SiteController extends AdminController
         $app->email = $r->input('email');
         $app->address = $r->input('address');
         $app->phone = $r->input('phone');
-        $app->coordinate = str_replace(" ", "", $r->input('coordinate'));
+        $app->coordinate = $r->input('coordinate'); //str_replace(" ", "", $r->input('coordinate'));
         $app->perpage = $r->input('perpage');
         $app->enable_subscribe = bool($r->input('enable_subscribe')) ? 1 : 0;
         $app->enable_like = bool($r->input('enable_like')) ? 1 : 0;
