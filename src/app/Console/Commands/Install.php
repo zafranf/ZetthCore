@@ -12,7 +12,7 @@ class Install extends Command
      *
      * @var string
      */
-    protected $signature = 'zetth:install {--fresh}';
+    protected $signature = 'zetth:install {--fresh} {--force}';
 
     /**
      * The console command description.
@@ -88,10 +88,10 @@ class Install extends Command
     {
         if ($this->option('fresh')) {
             $this->info('Freshing migration tables');
-            $this->process('php artisan migrate:fresh');
+            $this->process('php artisan migrate:fresh' . $this->option('force') ? ' --force' : '');
         } else {
             $this->info('Migrating tables');
-            $this->process('php artisan migrate');
+            $this->process('php artisan migrate' . $this->option('force') ? ' --force' : '');
         }
         $this->info('Migration finished!');
     }
@@ -99,11 +99,11 @@ class Install extends Command
     public function seedingTable()
     {
         $this->info('Seeding default seeder');
-        $this->process('php artisan db:seed --class="\ZetthCore\Seeder\ZetthSeeder"');
+        $this->process('php artisan db:seed --class="\ZetthCore\Seeder\ZetthSeeder"' . $this->option('force') ? ' --force' : '');
         $this->info('Seeding default seeder finished!');
 
         $this->info('Seeding additional seeder');
-        $this->process('php artisan db:seed');
+        $this->process('php artisan db:seed' . $this->option('force') ? ' --force' : '');
         $this->info('Seeding additional seeder finished!');
     }
 

@@ -12,7 +12,7 @@ class Reinstall extends Command
      *
      * @var string
      */
-    protected $signature = 'zetth:reinstall';
+    protected $signature = 'zetth:reinstall {--force}';
 
     /**
      * The console command description.
@@ -49,7 +49,7 @@ class Reinstall extends Command
         $this->info('Reinstalling application');
 
         /* execute reinstall */
-        $process = new Process('php artisan zetth:install --fresh');
+        $process = new Process('php artisan zetth:install --fresh' . $this->option('force') ? ' --force' : '');
         $process->setTimeout($this->timeout);
         $process->run(function ($type, $buffer) {
             echo $buffer;
