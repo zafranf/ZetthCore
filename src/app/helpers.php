@@ -286,7 +286,6 @@ if (!function_exists('generateMenu')) {
                 $link_attributes .= ' ' . $key . '="' . $value . '"';
             }
         }
-        $link_additional = $params[$index]['link']['additional'] ?? null;
 
         /* initiate print */
         $print = '';
@@ -300,6 +299,8 @@ if (!function_exists('generateMenu')) {
         }
 
         foreach ($menus as $menu) {
+            $link_additional = $params[$index]['link']['additional'] ?? null;
+
             /* set href */
             $href = (!is_null($menu->route_name) ? route($menu->route_name) : url($menu->url));
 
