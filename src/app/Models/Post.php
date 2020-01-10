@@ -10,6 +10,7 @@ class Post extends Model
     use SoftDeletes;
 
     protected $dates = ['published_at', 'deleted_at'];
+    public $appends = ['published_string'];
 
     public function rels()
     {
@@ -107,5 +108,10 @@ class Post extends Model
         return $query->whereHas('terms', function ($q) use ($name) {
             $q->where('type', 'category')->whereIn('slug', $name);
         });
+    }
+
+    public function getPublishedStringAttribute()
+    {
+        return generateDate($this->published_at, app('site')->language, 'Do MMMM YYYY H:m');
     }
 }

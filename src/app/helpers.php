@@ -451,12 +451,9 @@ if (!function_exists('generateDate')) {
      * @param  [type] $lang [description]
      * @return [type]             [description]
      */
-    function generateDate($date = null, string $lang = 'id')
+    function generateDate($date = null, string $lang = 'id', string $format = 'dddd, Do MMMM YYYY')
     {
-        $date = $date ?? date("Y-m-d");
-        $format = ($lang == 'id') ? 'dddd, Do MMMM YYYY' : 'dddd, MMMM Do YYYY';
-
-        return \Carbon\Carbon::parse($date)->locale($lang)->isoFormat($format);
+        return carbon(($date ?? date("Y-m-d")))->isoFormat($format);
     }
 }
 

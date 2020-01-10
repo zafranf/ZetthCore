@@ -7,7 +7,7 @@
       <tr>
         <td>No.</td>
         @if (app('is_desktop'))
-        <td>Cover</td>
+        <td>Sampul</td>
         <td>Judul</td>
         <td>Status</td>
         @else
@@ -79,16 +79,19 @@
 @endsection
 
 @section('scripts')
+{!! _admin_js('themes/admin/AdminSC/plugins/moment/2.13.0/js/moment.min.js') !!}
 {!! _admin_js('themes/admin/AdminSC/plugins/DataTables/1.10.12/js/jquery.dataTables.min.js') !!}
 <script>
   function copy() {
     $('#zetth-short-url').select();
     try {
-      document.execCommand('copy');
-      alert('Tautan berhasil disalin!')
-    } catch(e) {
-
-    }
+      setTimeout(function() {
+        document.execCommand('copy');
+        setTimeout(function() {
+          alert('Tautan berhasil disalin!');
+        }, 10);
+      }, 10);
+    } catch(e) {}
   }
 
   $(document).ready(function(){
@@ -129,10 +132,14 @@
             let postlink = SITE_URL + '/post/' + row.slug;
             let fblink = 'https://www.facebook.com/sharer/sharer.php?u='+postlink+'&amp;src=sdkpreparse';
             let twlink = 'https://twitter.com/intent/tweet?text=' + data + ' ' + postlink;
-            return data + '<br>oleh <b>' + row.author.fullname + '</b><br>' + 
-            '<a class="zetth-share-button" onclick="_open_window(\''+fblink+'\')"><i class="fa fa-facebook-square"></i> Share</a>&nbsp;' + 
-            '<a class="zetth-share-button" onclick="_open_window(\''+twlink+'\')"><i class="fa fa-twitter"></i> Tweet</a>&nbsp;' +
-            '<a id="btn-short-url-'+row.id+'" class="zetth-share-button btn-short-url" data-toggle="modal" data-target="#zetth-modal"><i class="fa fa-link"></i> '+postlink+'</a>';
+            let render = data + '<br>';
+            render += 'oleh <b>' + row.author.fullname + '</b><br>';
+            // render += 'pada <b>' + row.published_string + '</b><br>';
+            render += '<a class="zetth-share-button" onclick="_open_window(\''+fblink+'\')"><i class="fa fa-facebook-square"></i> Share</a>&nbsp;'; 
+            render += '<a class="zetth-share-button" onclick="_open_window(\''+twlink+'\')"><i class="fa fa-twitter"></i> Tweet</a>&nbsp;';
+            render += '<a id="btn-short-url-'+row.id+'" class="zetth-share-button btn-short-url" data-toggle="modal" data-target="#zetth-modal"><i class="fa fa-link"></i> '+postlink+'</a>';
+
+            return render;
           }
         }, {
           "targets": 3,
@@ -163,13 +170,37 @@
             $('.modal-body').html(html);
             $('.modal-footer').hide();
           });
+        },
+        "language": {
+            "decimal":        "",
+            "emptyTable":     "Data tidak tersedia",
+            "info":           "Menampilkan _START_ sampai _END_ dari _TOTAL_ data",
+            "infoEmpty":      "Menampilkan 0 sampai 0 dari 0 data",
+            "infoFiltered":   "(tersaring dari _MAX_)",
+            "infoPostFix":    "",
+            "thousands":      ",",
+            "lengthMenu":     "Tampilkan _MENU_ data",
+            "loadingRecords": "Memuat...",
+            "processing":     "Memproses...",
+            "search":         "Cari:",
+            "zeroRecords":    "Data tidak ditemukan",
+            "paginate": {
+                "first":      "Awal",
+                "last":       "Akhir",
+                "next":       "Lanjut",
+                "previous":   "Kembali"
+            },
+            "aria": {
+                "sortAscending":  ": urutkan a-z",
+                "sortDescending": ": urutkan z-a"
+            }
         }
       };
 
       @if (!app('is_desktop'))
         options.columns = [
           { "width": "30px" },
-          { },
+          { "data": "title"},
           { "width": "40px" },
         ];
         options.columnDefs = [
@@ -182,9 +213,16 @@
           }, {
             "targets": 1,
             "sortable": false,
+            "data": "title",
             "render": function (data, type, row, meta) {
-              let render = row.title+'<br>';
-              /* render += '<small>'+row.description+'</small><br>'; */
+              let postlink = SITE_URL + '/post/' + row.slug;
+              let fblink = 'https://www.facebook.com/sharer/sharer.php?u='+postlink+'&amp;src=sdkpreparse';
+              let twlink = 'https://twitter.com/intent/tweet?text=' + data + ' ' + postlink;
+              let render = data + '<br>';
+              // render += 'oleh <b>' + row.author.fullname + '</b><br>';
+              render += '<a class="zetth-share-button" onclick="_open_window(\''+fblink+'\')"><i class="fa fa-facebook-square"></i></a>&nbsp;'; 
+              render += '<a class="zetth-share-button" onclick="_open_window(\''+twlink+'\')"><i class="fa fa-twitter"></i></a>&nbsp;';
+              render += '<a id="btn-short-url-'+row.id+'" class="zetth-share-button btn-short-url" data-toggle="modal" data-target="#zetth-modal"><i class="fa fa-link"></i></a><br>';
               render += _get_status_text(row.status);
 
               return render;
