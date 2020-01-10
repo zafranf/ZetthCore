@@ -134,7 +134,7 @@
             let twlink = 'https://twitter.com/intent/tweet?text=' + data + ' ' + postlink;
             let render = data + '<br>';
             render += 'oleh <b>' + row.author.fullname + '</b><br>';
-            // render += 'pada <b>' + row.published_string + '</b><br>';
+            /* render += 'pada <b>' + row.published_string + '</b><br>'; */
             render += '<a class="zetth-share-button" onclick="_open_window(\''+fblink+'\')"><i class="fa fa-facebook-square"></i> Share</a>&nbsp;'; 
             render += '<a class="zetth-share-button" onclick="_open_window(\''+twlink+'\')"><i class="fa fa-twitter"></i> Tweet</a>&nbsp;';
             render += '<a id="btn-short-url-'+row.id+'" class="zetth-share-button btn-short-url" data-toggle="modal" data-target="#zetth-modal"><i class="fa fa-link"></i> '+postlink+'</a>';
@@ -182,7 +182,7 @@
             "lengthMenu":     "Tampilkan _MENU_ data",
             "loadingRecords": "Memuat...",
             "processing":     "Memproses...",
-            "search":         "Cari:",
+            "search":         "Cari",
             "zeroRecords":    "Data tidak ditemukan",
             "paginate": {
                 "first":      "Awal",
@@ -219,7 +219,7 @@
               let fblink = 'https://www.facebook.com/sharer/sharer.php?u='+postlink+'&amp;src=sdkpreparse';
               let twlink = 'https://twitter.com/intent/tweet?text=' + data + ' ' + postlink;
               let render = data + '<br>';
-              // render += 'oleh <b>' + row.author.fullname + '</b><br>';
+              /* render += 'oleh <b>' + row.author.fullname + '</b><br>'; */
               render += '<a class="zetth-share-button" onclick="_open_window(\''+fblink+'\')"><i class="fa fa-facebook-square"></i></a>&nbsp;'; 
               render += '<a class="zetth-share-button" onclick="_open_window(\''+twlink+'\')"><i class="fa fa-twitter"></i></a>&nbsp;';
               render += '<a id="btn-short-url-'+row.id+'" class="zetth-share-button btn-short-url" data-toggle="modal" data-target="#zetth-modal"><i class="fa fa-link"></i></a><br>';
