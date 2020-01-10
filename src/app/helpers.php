@@ -451,8 +451,12 @@ if (!function_exists('generateDate')) {
      * @param  [type] $lang [description]
      * @return [type]             [description]
      */
-    function generateDate($date = null, string $lang = 'id', string $format = 'dddd, Do MMMM YYYY')
+    function generateDate($date = null, string $lang = 'id', string $format = null)
     {
+        if (is_null($format)) {
+            $format = ($lang == 'id') ? 'dddd, Do MMMM YYYY' : 'dddd, MMMM Do YYYY';
+        }
+
         return carbon(($date ?? date("Y-m-d")))->isoFormat($format);
     }
 }
