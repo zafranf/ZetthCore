@@ -625,3 +625,20 @@ if (!function_exists('validateCaptcha')) {
         return $res->isSuccess();
     }
 }
+
+if (!function_exists('getEmailFile')) {
+    function getEmailFile($file)
+    {
+        $path = str_replace('.', '/', $file);
+        $file_path = resource_path('views/' . $path . '.blade.php');
+        if (file_exists($file_path) && !is_dir($file_path)) {
+            return $file;
+        }
+
+        /* get default view */
+        $arr = explode("/", $path);
+        $file = end($arr);
+
+        return 'emails/' . $file;
+    }
+}
