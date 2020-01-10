@@ -13,8 +13,7 @@
 
       {{-- Branding Image --}}
       <a class="navbar-brand" href="{{ url(app('admin_path') . '/dashboard') }}">
-        <img
-          src="{{ _get_image("assets/images/" . app('site')->logo, url("themes/admin/AdminSC/images/" . (app('site')->logo ?? 'logo.v2.png'))) }}">
+        <img src="{{ _get_image("assets/images/" . app('site')->logo, url("themes/admin/AdminSC/images/logo.v2.png")) }}">
       </a>
     </div>
 
@@ -79,39 +78,51 @@
       ]) !!}
       {{-- Right Side Of Navbar --}}
       <ul class="nav navbar-nav navbar-right">
-        <li data-toggle="tooltip" title="Kunjungi website" data-placement="bottom"><a href="{{ url('/') }}"
-            target="_blank">{!! app('is_mobile') ? 'Kunjungi website&nbsp;<span class="pull-right"><i
-                class="fa fa-external-link"></span>' : '<i class="fa fa-globe">' !!}</i></a></li>
+        {{-- <li data-toggle="tooltip" title="Email" data-placement="bottom">
+          <a href="https://webmail1.hostinger.co.id" target="_blank">
+            {!! app('is_mobile') ? 'Email&nbsp;<span class="pull-right"><i class="fa fa-envelope"></i></span>' : '<i class="fa fa-envelope"></i>' !!}
+          </a>
+        </li> --}}
+        <li data-toggle="tooltip" title="Kunjungi website" data-placement="bottom">
+          <a href="{{ route('web.root') }}" target="_blank">
+            {!! app('is_mobile') ? 'Kunjungi website&nbsp;<span class="pull-right"><i class="fa fa-external-link"></i></span>' : '<i class="fa fa-globe"></i>' !!}
+          </a>
+        </li>
         {{-- <li><a href="{{ url('admin/help') }}" title="Help"><i class="fa fa-question-circle-o"></i></a></li> --}}
         {{-- <li><a href="#" title="Notifications"><i class="fa fa-bell-o"></i></a></li> --}}
         {{-- Authentication Links --}}
         @if (Auth::guest())
-        <button type="button" class="btn btn-default navbar-btn btn-login" onclick="location='/login'">Login</button>
+          <button type="button" class="btn btn-default navbar-btn btn-login" onclick="location='/login'">Login</button>
         @else
-        <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-            {{ Auth::user()->fullname }}
-            <span class="pull-right">
-              <span class="caret"></span>
-            </span>
-          </a>
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+              {{ Auth::user()->fullname }}
+              <span class="pull-right">
+                <span class="caret"></span>
+              </span>
+            </a>
 
-          <ul class="dropdown-menu" role="menu">
-            <li>
-              <a href="{{ route('admin.user.account') }}">
-                <i class="fa fa-btn fa-user"></i> Akun
-              </a>
-            </li>
-            <li>
-              <a onclick="$('#form-logout').submit();" style="cursor:pointer;">
-                <i class="fa fa-btn fa-sign-out"></i> Keluar
-              </a>
-              <form id="form-logout" method="POST" action="{{ route('admin.logout.post') }}" style="display:none;">
-                @csrf
-              </form>
-            </li>
-          </ul>
-        </li>
+            <ul class="dropdown-menu" role="menu">
+              <li>
+                <a href="{{ route('admin.user.account') }}">
+                  <i class="fa fa-btn fa-user"></i> Akun
+                </a>
+              </li>
+              <li>
+                <a href="https://webmail1.hostinger.co.id" target="_blank">
+                  <i class="fa fa-btn fa-envelope"></i> Email
+                </a>
+              </li>
+              <li>
+                <a onclick="$('#form-logout').submit();" style="cursor:pointer;">
+                  <i class="fa fa-btn fa-sign-out"></i> Keluar
+                </a>
+                <form id="form-logout" method="POST" action="{{ route('admin.logout.post') }}" style="display:none;">
+                  @csrf
+                </form>
+              </li>
+            </ul>
+          </li>
         @endif
       </ul>
     </div>
@@ -126,18 +137,18 @@
 
 <div id="content-div" class="container-fluid">
   @if (session('success'))
-  <div class="alert alert-success">
-    {{ session('success') }}
-  </div>
+    <div class="alert alert-success">
+      {{ session('success') }}
+    </div>
   @endif
   @if ($errors->any() > 0)
-  <div class="alert alert-danger">
-    <ul>
-      @foreach ($errors->all() as $error)
-      <li>{{ $error }}</li>
-      @endforeach
-    </ul>
-  </div>
+    <div class="alert alert-danger">
+      <ul>
+        @foreach ($errors->all() as $error)
+        <li>{{ $error }}</li>
+        @endforeach
+      </ul>
+    </div>
   @endif
   <div class="row">
     <div class="col-md-12">
