@@ -615,3 +615,13 @@ if (!function_exists('getCacheTime')) {
         return now()->addMinutes($minutes);
     }
 }
+
+if (!function_exists('validateCaptcha')) {
+    function validateCaptcha($response)
+    {
+        $recaptcha = new \ReCaptcha\ReCaptcha(env('GOOGLE_RECAPTCHA_KEY'));
+        $res = $recaptcha->verify($response, _server('REMOTE_ADDR'));
+
+        return $res->isSuccess();
+    }
+}
