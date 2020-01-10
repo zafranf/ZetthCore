@@ -18,7 +18,7 @@
             <div class="fileinput fileinput-new" data-provides="fileinput">
               <div class="fileinput-new thumbnail">
                 <img
-                  src="{{ _get_image("assets/images/" . app('site')->logo, url("themes/admin/AdminSC/images/" . (app('site')->logo ?? 'logo.v2.png'))) }}">
+                  src="{{ _get_image("assets/images/" . app('site')->logo, url("themes/admin/AdminSC/images/logo.v2.png")) }}">
               </div>
               <div class="fileinput-preview fileinput-exists thumbnail"></div>
               <div>
@@ -51,7 +51,7 @@
                 <div class="fileinput-new thumbnail"
                   style="width:20px!important;padding:0;margin-bottom:8px;position:absolute;left:5px;">
                   <img
-                    src="{{ _get_image("assets/images/" . app('site')->icon, url("themes/admin/AdminSC/images/" . (app('site')->logo ?? 'logo.v2.png'))) }}"
+                    src="{{ _get_image("assets/images/" . app('site')->icon, url("themes/admin/AdminSC/images/logo.v2.png")) }}"
                     width="20">
                 </div>
                 <div class="fileinput-preview fileinput-exists thumbnail"
