@@ -158,7 +158,7 @@
         "initComplete": function(settins, json) {
           $('.btn-short-url').on('click', function() {
             let url = $(this).text();
-            let html = 'Tekan ikon untuk menyalin: <div class="input-group"><input id="zetth-short-url" type="text" class="form-control" readonly value="'+url+'"><span class="input-group-addon" onclick="copy()" style="cursor:pointer;"><i class="fa fa-copy"></i></span></div>';
+            let html = 'Tekan ikon untuk menyalin tautan: <div class="input-group"><input id="zetth-short-url" type="text" class="form-control" readonly value="'+url+'"><span class="input-group-addon" onclick="copy()" style="cursor:pointer;"><i class="fa fa-copy"></i></span></div>';
             $('.modal-title').text('Bagikan Tautan');
             $('.modal-body').html(html);
             $('.modal-footer').hide();
