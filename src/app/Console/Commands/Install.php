@@ -28,6 +28,8 @@ class Install extends Command
      */
     protected $timeout = 0;
 
+    protected $force = '';
+
     /**
      * Create a new command instance.
      *
@@ -46,6 +48,8 @@ class Install extends Command
      */
     public function handle()
     {
+        $this->force = $this->option('force') ? ' --force' : '';
+
         if (!file_exists(base_path('.env'))) {
             throw new \Exception("Salin berkas .env.example sebagai .env kemudian atur semua nilainya", 1);
         } else if (env('APP_DOMAIN') === null) {
@@ -88,10 +92,10 @@ class Install extends Command
     {
         if ($this->option('fresh')) {
             $this->info('Freshing migration tables');
-            $this->process('php artisan migrate:fresh' . $this->option('force') ? ' --force' : '');
+            $this->process('php artisan migrate:fresh' . $this->force);
         } else {
             $this->info('Migrating tables');
-            $this->process('php artisan migrate' . $this->option('force') ? ' --force' : '');
+            $this->process('php artisan migrate' . $this->force);
         }
         $this->info('Migration finished!');
     }
@@ -99,11 +103,11 @@ class Install extends Command
     public function seedingTable()
     {
         $this->info('Seeding default seeder');
-        $this->process('php artisan db:seed --class="\ZetthCore\Seeder\ZetthSeeder"' . $this->option('force') ? ' --force' : '');
+        $this->process('php artisan db:seed --class="\ZetthCore\Seeder\ZetthSeeder"' . $this->force);
         $this->info('Seeding default seeder finished!');
 
         $this->info('Seeding additional seeder');
-        $this->process('php artisan db:seed' . $this->option('force') ? ' --force' : '');
+        $this->process('php artisan db:seed' . $this->force);
         $this->info('Seeding additional seeder finished!');
     }
 
