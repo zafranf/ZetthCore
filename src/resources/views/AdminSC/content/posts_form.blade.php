@@ -4,15 +4,15 @@ $descriptions_ = [];
 $parents_ = [];
 $tags_ = [];
 if (isset($data) ) {
-  foreach($data->terms as $k => $term) {
-    if ($term->type == "category"){
-      $categories_[] = $term->name;
-      $descriptions_[] = $term->description;
-      $parents_[] = $term->parent;
-    }
-    if ($term->type=="tag")
-      $tags_[] = $term->name;
-  }
+foreach($data->terms as $k => $term) {
+if ($term->type == "category"){
+$categories_[] = $term->name;
+$descriptions_[] = $term->description;
+$parents_[] = $term->parent;
+}
+if ($term->type=="tag")
+$tags_[] = $term->name;
+}
 }
 
 $urlFilemanager = url('/larafile/dialog.php?type=1&field_id=cover&lang=id&fldr=/images');
@@ -26,13 +26,13 @@ $urlFilemanager = url('/larafile/dialog.php?type=1&field_id=cover&lang=id&fldr=/
       enctype="multipart/form-data">
       <div class="col-sm-8 col-md-9 left-side no-padding">
         <input type="text" id="title"
-          class="form-control {{ isset($data)   ? '' :   'autofocus' }} no-border-top-right no-border-left no-radius input-lg"
+          class="form-control {{ isset($data) ? '' : 'autofocus' }} no-border-top-right no-border-left no-radius input-lg"
           name="title" placeholder="Judul.." maxlength="100" value="{{ isset($data) ? $data->title : old('title') }}">
         <div class="input-group">
           <span class="input-group-addon no-border-top-right no-border-left no-radius input-sm"
-            id="url_span">{{ url('/article/') }}/</span>
+            id="url_span">{{ url('/post/') }}/</span>
           <input type="text" id="slug" class="form-control no-border-top-right no-radius input-sm" name="slug"
-            placeholder="Sesuaikan tautan.. (klik 2x untuk edit)" readonly
+            placeholder="Tautan otomatis.. (klik 2x untuk edit)" readonly
             value="{{ isset($data) ? $data->slug : old('slug') }}">
         </div>
         <textarea id="excerpt" name="excerpt"

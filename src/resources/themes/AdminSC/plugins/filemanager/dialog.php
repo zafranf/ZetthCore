@@ -316,7 +316,7 @@ $get_params = http_build_query($get_params);
 	<script src="js/jPlayer/jquery.jplayer/jquery.jplayer.js"></script>
 	<script src="js/modernizr.custom.js"></script>
 	<?php
-	if ($aviary_active){
+	if (isset($aviary_active) && $aviary_active){
 	if (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off' || $_SERVER['SERVER_PORT'] == 443) { ?>
 		<script src="https://dme0ih8comzn4.cloudfront.net/imaging/v2/editor.js"></script>
 	<?php }else{ ?>
@@ -331,7 +331,7 @@ $get_params = http_build_query($get_params);
 	<script>
 		var ext_img=new Array('<?php echo implode("','", $ext_img)?>');
 		var allowed_ext=new Array('<?php echo implode("','", $ext)?>');
-		var image_editor=<?php echo $aviary_active?"true":"false";?>;
+		var image_editor=<?php echo isset($aviary_active) && $aviary_active?"true":"false";?>;
 		//dropzone config
 		Dropzone.options.rfmDropzone = {
 			dictInvalidFileType: "<?php echo trans('Error_extension');?>",
@@ -425,7 +425,7 @@ $get_params = http_build_query($get_params);
 	<input type="hidden" id="fldr_value" value="<?php echo $subdir;?>"/>
 	<input type="hidden" id="sub_folder" value="<?php echo $rfm_subfolder;?>"/>
 	<input type="hidden" id="return_relative_url" value="<?php echo $return_relative_url == true ? 1 : 0;?>"/>
-	<input type="hidden" id="lazy_loading_file_number_threshold" value="<?php echo $lazy_loading_file_number_threshold?>"/>
+	<input type="hidden" id="lazy_loading_file_number_threshold" value="<?php echo $lazy_loading_file_number_threshold ?? ''?>"/>
 	<input type="hidden" id="file_number_limit_js" value="<?php echo $file_number_limit_js;?>" />
 	<input type="hidden" id="sort_by" value="<?php echo $sort_by;?>" />
 	<input type="hidden" id="descending" value="<?php echo $descending?1:0;?>" />
@@ -562,6 +562,7 @@ foreach($files as $k=>$file){
 }
 
 // Should lazy loading be enabled
+$lazy_loading_file_number_threshold = $lazy_loading_file_number_threshold ?? null;
 $lazy_loading_enabled= ($lazy_loading_file_number_threshold == 0 || $lazy_loading_file_number_threshold != -1 && $n_files > $lazy_loading_file_number_threshold) ? true : false;
 
 function filenameSort($x, $y) {

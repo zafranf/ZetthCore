@@ -286,7 +286,6 @@ if (!function_exists('generateMenu')) {
                 $link_attributes .= ' ' . $key . '="' . $value . '"';
             }
         }
-        $link_additional = $params[$index]['link']['additional'] ?? null;
 
         /* initiate print */
         $print = '';
@@ -300,6 +299,8 @@ if (!function_exists('generateMenu')) {
         }
 
         foreach ($menus as $menu) {
+            $link_additional = $params[$index]['link']['additional'] ?? null;
+
             /* set href */
             $href = (!is_null($menu->route_name) ? route($menu->route_name) : url($menu->url));
 
@@ -450,12 +451,13 @@ if (!function_exists('generateDate')) {
      * @param  [type] $lang [description]
      * @return [type]             [description]
      */
-    function generateDate($date = null, string $lang = 'id')
+    function generateDate($date = null, string $lang = 'id', string $format = null)
     {
-        $date = $date ?? date("Y-m-d");
-        $format = ($lang == 'id') ? 'dddd, Do MMMM YYYY' : 'dddd, MMMM Do YYYY';
+        if (is_null($format)) {
+            $format = ($lang == 'id') ? 'dddd, Do MMMM YYYY' : 'dddd, MMMM Do YYYY';
+        }
 
-        return \Carbon\Carbon::parse($date)->locale($lang)->isoFormat($format);
+        return carbon(($date ?? date("Y-m-d")))->isoFormat($format);
     }
 }
 
@@ -612,5 +614,32 @@ if (!function_exists('getCacheTime')) {
         $minutes = env('APP_ENV') != 'production' ? 1 : env('CACHE_TIME', 10);
 
         return now()->addMinutes($minutes);
+    }
+}
+
+if (!function_exists('validateCaptcha')) {
+    function validateCaptcha($response)
+    {
+        $recaptcha = new \ReCaptcha\ReCaptcha(env('GOOGLE_RECAPTCHA_SECRET_KEY'));
+        $res = $recaptcha->verify($response, _server('REMOTE_ADDR'));
+
+        return $res->isSuccess();
+    }
+}
+
+if (!function_exists('getEmailFile')) {
+    function getEmailFile($file)
+    {
+        $path = str_replace('.', '/', $file);
+        $file_path = resource_path('views/' . $path . '.blade.php');
+        if (file_exists($file_path) && !is_dir($file_path)) {
+            return $file;
+        }
+
+        /* get default view */
+        $arr = explode("/", $path);
+        $file = end($arr);
+
+        return 'emails/' . $file;
     }
 }

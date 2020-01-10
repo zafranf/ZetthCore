@@ -134,7 +134,7 @@ trait MainTrait
     {
         $status = false;
 
-        $mail = \Mail::send($par['view'], $par['data'], function ($mail) use ($par) {
+        $mail = \Mail::send(getEmailFile($par['view']), $par['data'], function ($mail) use ($par) {
             /* Set Sender */
             if (isset($par['from'])) {
                 if (is_array($par['from'])) {
