@@ -1,109 +1,97 @@
 @extends('zetthcore::AdminSC.layouts.main')
 
 @section('content')
-	<div class="panel-body no-padding-right-left">
-		<table id="table-data" class="row-border hover">
-			<thead>
-				<tr>
-					<td>No.</td>
-					@if (app('is_desktop'))
-						<td>Judul</td>
-						<td>Status</td>
-					@else
-						<td>Artikel</td>
-					@endif
-					<td>Akses</td>
-				</tr>
-			</thead>
-		</table>
-	</div>
+<div class="panel-body no-padding-right-left">
+  <table id="table-data" class="row-border hover">
+    <thead>
+      <tr>
+        <td>No.</td>
+        @if (app('is_desktop'))
+        <td>Cover</td>
+        <td>Judul</td>
+        <td>Status</td>
+        @else
+        <td>Artikel</td>
+        @endif
+        <td>Akses</td>
+      </tr>
+    </thead>
+  </table>
+</div>
 @endsection
 
 @section('styles')
-  {!! _admin_css('themes/admin/AdminSC/plugins/DataTables/1.10.12/css/jquery.dataTables.min.css') !!}
-  <style>
-    .twitter-share-button {
-      position: relative;
-      height: 20px;
-      padding: 1px 8px 1px 6px;
-      color: #fff;
-      cursor: pointer;
-      background-color: #1b95e0;
-      border-radius: 3px;
-      box-sizing: border-box;
-      font-size: 12px;
-    }
-    .twitter-share-button:hover, .twitter-share-button:active, .twitter-share-button:focus {
-      text-decoration: none;
-      color: white;
-    }
-    .fb-share-button {
-      position: relative;
-      height: 20px;
-      padding: 1px 8px 1px 6px;
-      color: #fff;
-      cursor: pointer;
-      background-color: #4267b2;
-      border-radius: 3px;
-      box-sizing: border-box;
-      font-size: 12px;
-    }
-    .fb-share-button:hover, .fb-share-button:active, .fb-share-button:focus {
-      text-decoration: none;
-      color: white;
-    }
-    .zetth-share-button {
-      position: relative;
-      height: 18px;
-      margin-top: -2px;
-      padding: 1px 8px 1px 6px;
-      /*color: #fff;*/
-      cursor: pointer;
-      /*background-color: #1b95e0;*/
-      border: 1px solid coral;
-      border-radius: 3px;
-      box-sizing: border-box;
-      font-size: 12px;
-      line-height: 1.2;
-    }
-    .zetth-share-button:hover, .zetth-share-button:active, .zetth-share-button:focus {
-      text-decoration: none;
-    }
+{!! _admin_css('themes/admin/AdminSC/plugins/DataTables/1.10.12/css/jquery.dataTables.min.css') !!}
+<style>
+  .zetth-share-button {
+    position: relative;
+    height: 18px;
+    margin-top: -2px;
+    padding: 1px 8px 1px 6px;
+    /*color: #fff;*/
+    cursor: pointer;
+    /*background-color: #1b95e0;*/
+    border: 1px solid coral;
+    border-radius: 3px;
+    box-sizing: border-box;
+    font-size: 12px;
+    line-height: 1.2;
+  }
+
+  .zetth-share-button:hover,
+  .zetth-share-button:active,
+  .zetth-share-button:focus {
+    text-decoration: none;
+    background: #e4e4e4;
+  }
+
+  .zetth-stats {
+    border: 1px solid coral;
+    border-radius: 3px;
+    width: 100%;
+    display: block;
+    padding: 0 5px;
+    margin: 1px 0;
+    overflow: hidden;
+    text-align: center;
+    font-size: 12px;
+  }
+
+  .zetth-stats .text {
+    float: right;
+    background: coral;
+    color: white;
+    padding: 0 3px;
+    position: relative;
+    right: -5px;
+    overflow: hidden;
+    width: 70%;
+    text-align: right;
+  }
+
+  @media (max-width: 767px) {
     .zetth-stats {
-      border: 1px solid coral;
-      border-radius: 3px;
-      width: 100%;
-      display: block;
-      padding: 0 5px;
-      margin: 1px 0;
-      overflow: hidden;
-      text-align: center;
-      font-size: 12px;
+      width: 40%;
+      display: inline;
     }
-    .zetth-stats .text {
-      float: right;
-      background: coral;
-      color: white;
-      padding: 0 3px;
-      position: relative;
-      right: -5px;
-      overflow: hidden;
-      width: 70%;
-      text-align: right;
-    }
-    @media (max-width: 767px) {
-      .zetth-stats {
-        width: 40%;
-        display: inline;
-      }
-    }
-  </style>
+  }
+</style>
 @endsection
 
 @section('scripts')
-  {!! _admin_js('themes/admin/AdminSC/plugins/DataTables/1.10.12/js/jquery.dataTables.min.js') !!}
-  <script>
-    $(document).ready(function(){
+{!! _admin_js('themes/admin/AdminSC/plugins/DataTables/1.10.12/js/jquery.dataTables.min.js') !!}
+<script>
+  function copy() {
+    $('#zetth-short-url').select();
+    try {
+      document.execCommand('copy');
+      alert('Tautan berhasil disalin!')
+    } catch(e) {
+
+    }
+  }
+
+  $(document).ready(function(){
       let options = {
         "processing": true,
         "serverSide": true,
@@ -115,6 +103,7 @@
         ],
         "columns": [
           { "width": "30px" },
+          { "data": "cover", "width": "80px" },
           { "data": "title" },
           { "data": "status", "width": "50px" },
           { "width": "40px" },
@@ -127,14 +116,33 @@
             return meta.row + meta.settings._iDisplayStart + 1;
           }
         }, {
+          "targets": 1,
+          "data": 'cover',
+          "sortable": false,
+          "render": function (data, type, row, meta) {
+            return '<img src="'+data+'" width="80px">';
+          }
+        }, {
           "targets": 2,
+          "data": 'title',
+          "render": function (data, type, row, meta) {
+            let postlink = SITE_URL + '/post/' + row.slug;
+            let fblink = 'https://www.facebook.com/sharer/sharer.php?u='+postlink+'&amp;src=sdkpreparse';
+            let twlink = 'https://twitter.com/intent/tweet?text=' + data + ' ' + postlink;
+            return data + '<br>oleh <b>' + row.author.fullname + '</b><br>' + 
+            '<a class="zetth-share-button" onclick="_open_window(\''+fblink+'\')"><i class="fa fa-facebook-square"></i> Share</a>&nbsp;' + 
+            '<a class="zetth-share-button" onclick="_open_window(\''+twlink+'\')"><i class="fa fa-twitter"></i> Tweet</a>&nbsp;' +
+            '<a id="btn-short-url-'+row.id+'" class="zetth-share-button btn-short-url" data-toggle="modal" data-target="#zetth-modal"><i class="fa fa-link"></i> '+postlink+'</a>';
+          }
+        }, {
+          "targets": 3,
           "data": 'status',
           "sortable": false,
           "render": function (data, type, row, meta) {
             return _get_status_text(data);
           }
         }, {
-          "targets": 3,
+          "targets": 4,
           "data": 'id',
           "sortable": false,
           "render": function (data, type, row, meta) {
@@ -147,6 +155,15 @@
             return actions;
           }
         }],
+        "initComplete": function(settins, json) {
+          $('.btn-short-url').on('click', function() {
+            let url = $(this).text();
+            let html = 'Tekan ikon untuk menyalin: <div class="input-group"><input id="zetth-short-url" type="text" class="form-control" readonly value="'+url+'"><span class="input-group-addon" onclick="copy()" style="cursor:pointer;"><i class="fa fa-copy"></i></span></div>';
+            $('.modal-title').text('Bagikan Tautan');
+            $('.modal-body').html(html);
+            $('.modal-footer').hide();
+          });
+        }
       };
 
       @if (!app('is_desktop'))
@@ -190,18 +207,6 @@
       @endif
 
       let table = $('#table-data').DataTable(options);
-
-      $('.btn-short-url').on('click', function(){
-        url = $(this).text();
-        html = 'Press <code>CTRL+C</code> to copy: <input id="zetth-short-url" type="text" class="form-control" readonly value="'+url+'" style="margin-top:10px;">';
-        $('.modal-title').text('Share URL');
-        $('.modal-body').html(html);
-        $('.modal-footer').hide();
-      });
-      
-      $('#zetth-modal').on('shown.bs.modal', function () {
-        $('#zetth-short-url').select();
-      })
     });
-  </script>
+</script>
 @endsection
