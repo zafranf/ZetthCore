@@ -38,6 +38,15 @@ class BannerController extends AdminController
      */
     public function index()
     {
+        if (config('site.banner.single')) {
+            $banner = Banner::first();
+            if ($banner) {
+                return $this->edit($banner);
+            }
+
+            return $this->create();
+        }
+
         /* set breadcrumbs */
         $this->breadcrumbs[] = [
             'page' => 'Daftar',
