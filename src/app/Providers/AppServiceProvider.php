@@ -7,6 +7,9 @@ use Illuminate\Support\ServiceProvider;
 class AppServiceProvider extends ServiceProvider
 {
     use \ZetthCore\Traits\MainTrait;
+
+    private $vendor_path;
+
     /**
      * Bootstrap any application services.
      *
@@ -14,6 +17,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        $this->vendor_path = base_path('vendor/zafranf/zetthcore');
+
         /* check config */
         if (!$this->app->runningInConsole()) {
             if (!$this->checkDBConnection()) {
@@ -70,11 +75,13 @@ class AppServiceProvider extends ServiceProvider
         });
 
         /* set middleware */
-        $this->loadMiddleware();
-        $this->loadRoutesFrom(__DIR__ . '/../../routes/routes.php');
-        $this->loadViewsFrom(__DIR__ . '/../../resources/views', 'zetthcore');
-        $this->loadMigrationsFrom(__DIR__ . '/../../database/migrations');
-        // $this->loadSeedsFrom(__DIR__ . '/../../database/seeds');
+        // $this->loadMiddleware();
+
+        /* load zetthcore */
+        $this->loadRoutesFrom($this->vendor_path . '/src/routes/routes.php');
+        $this->loadViewsFrom($this->vendor_path . '/src/resources/views', 'zetthcore');
+        $this->loadMigrationsFrom($this->vendor_path . '/src/database/migrations');
+        // $this->loadSeedsFrom($this->vendor_path . '/src/database/seeds');
 
         $this->publishAll();
 
@@ -102,42 +109,50 @@ class AppServiceProvider extends ServiceProvider
         $router->aliasMiddleware('access', \ZetthCore\Http\Middleware\AccessMiddleware::class);
         $router->aliasMiddleware('site', \ZetthCore\Http\Middleware\SiteMiddleware::class);
         $router->aliasMiddleware('visitor_log', \ZetthCore\Http\Middleware\VisitorLogMiddleware::class);
+
         $router->pushMiddlewareToGroup('web', \RenatoMarinho\LaravelPageSpeed\Middleware\InlineCss::class);
         $router->pushMiddlewareToGroup('web', \RenatoMarinho\LaravelPageSpeed\Middleware\ElideAttributes::class);
         $router->pushMiddlewareToGroup('web', \RenatoMarinho\LaravelPageSpeed\Middleware\InsertDNSPrefetch::class);
         $router->pushMiddlewareToGroup('web', \RenatoMarinho\LaravelPageSpeed\Middleware\RemoveComments::class);
-        // $router->pushMiddlewareToGroup('web', \RenatoMarinho\LaravelPageSpeed\Middleware\TrimUrls::class);
+        $router->pushMiddlewareToGroup('web', \RenatoMarinho\LaravelPageSpeed\Middleware\TrimUrls::class);
         $router->pushMiddlewareToGroup('web', \RenatoMarinho\LaravelPageSpeed\Middleware\RemoveQuotes::class);
         $router->pushMiddlewareToGroup('web', \RenatoMarinho\LaravelPageSpeed\Middleware\CollapseWhitespace::class);
     }
 
     public function publishAll()
     {
+        $publishable_path = $this->vendor_path . '/publishable';
+
+        $this->publishes([
+            $publishable_path . '/Kernel.php' => app_path('Http/Kernel.php'),
+        ], 'zetthkernel');
+
         /* $this->publishes([
         __DIR__ . '/../../database' => database_path(),
         ], 'zetthmigrate'); */
-        $publishable_path = '/../../../publishable';
+
         $this->publishes([
-            __DIR__ . $publishable_path . '/config/app.php' => config_path('app.php'),
-            __DIR__ . $publishable_path . '/config/auth.php' => config_path('auth.php'),
-            __DIR__ . $publishable_path . '/config/database.php' => config_path('database.php'),
-            __DIR__ . $publishable_path . '/config/image.php' => config_path('image.php'),
-            __DIR__ . $publishable_path . '/config/laratrust.php' => config_path('laratrust.php'),
-            __DIR__ . $publishable_path . '/config/laratrust_seeder.php' => config_path('laratrust_seeder.php'),
-            __DIR__ . $publishable_path . '/config/seotools.php' => config_path('seotools.php'),
+            $publishable_path . '/config/app.php' => config_path('app.php'),
+            $publishable_path . '/config/auth.php' => config_path('auth.php'),
+            $publishable_path . '/config/database.php' => config_path('database.php'),
+            $publishable_path . '/config/image.php' => config_path('image.php'),
+            $publishable_path . '/config/laratrust_seeder.php' => config_path('laratrust_seeder.php'),
+            $publishable_path . '/config/laratrust.php' => config_path('laratrust.php'),
+            $publishable_path . '/config/laravel-page-speed.php' => config_path('laravel-page-speed.php'),
+            $publishable_path . '/config/seotools.php' => config_path('seotools.php'),
         ], 'zetthconfig');
-        /* $this->publishes([
-        __DIR__ . $publishable_path.'/config/auth.php' => config_path('auth.php'),
-        ], 'zetthauth'); */
+
         $this->publishes([
-            __DIR__ . $publishable_path . '/Exceptions/Handler.php' => app_path('Exceptions/Handler.php'),
+            $publishable_path . '/Exceptions/Handler.php' => app_path('Exceptions/Handler.php'),
         ], 'zetthhandler');
+
         $this->publishes([
-            __DIR__ . $publishable_path . '/Middleware/Authenticate.php' => app_path('Http/Middleware/Authenticate.php'),
-            __DIR__ . $publishable_path . '/Middleware/RedirectIfAuthenticated.php' => app_path('Http/Middleware/RedirectIfAuthenticated.php'),
+            $publishable_path . '/Middleware/Authenticate.php' => app_path('Http/Middleware/Authenticate.php'),
+            $publishable_path . '/Middleware/RedirectIfAuthenticated.php' => app_path('Http/Middleware/RedirectIfAuthenticated.php'),
         ], 'zetthmiddleware');
+
         /* $this->publishes([
-    __DIR__ . $publishable_path . '/routes/web.php' => base_path('routes/web.php'),
+    $publishable_path . '/routes/web.php' => base_path('routes/web.php'),
     ], 'zetthroutes'); */
     }
 }

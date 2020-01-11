@@ -76,9 +76,10 @@ class Install extends Command
     {
         $this->info('Publishing package files');
         // $this->process('php artisan vendor:publish --provider="Intervention\Image\ImageServiceProviderLaravel5" --force');
-        $this->process('php artisan vendor:publish --provider="RenatoMarinho\LaravelPageSpeed\ServiceProvider" --force');
+        // $this->process('php artisan vendor:publish --provider="RenatoMarinho\LaravelPageSpeed\ServiceProvider" --force');
         $this->process('php artisan vendor:publish --tag=datatables --force');
         // $this->process('php artisan vendor:publish --tag="laratrust" --force');
+        $this->process('php artisan vendor:publish --tag=zetthkernel --force');
         $this->process('php artisan vendor:publish --tag=zetthconfig --force');
         // $this->process('php artisan vendor:publish --tag=zetthauth --force');
         $this->process('php artisan vendor:publish --tag=zetthhandler --force');
