@@ -102,20 +102,20 @@ $urlFilemanager = url('/larafile/dialog.php?type=1&field_id=cover&lang=id&fldr=/
           <div class="col-sm-4 col-xs-4 no-padding">
             <label>
               <input name="comment" type="checkbox"
-                {{ (isset($data) && ($data->comment)) ? 'checked' : (app('site')->enable_comment) ? 'checked' : '' }}>
+                {{ (isset($data) && ($data->comment)) ? 'checked' : ((app('site')->enable_comment) ? 'checked' : '') }}>
               Komentar
             </label>
           </div>
           <div class="col-sm-4 col-xs-4 no-padding">
             <label>
               <input name="like" type="checkbox"
-                {{ (isset($data) && ($data->like)) ? 'checked' : (app('site')->enable_like) ? 'checked' : '' }}> Suka
+                {{ (isset($data) && ($data->like)) ? 'checked' : ((app('site')->enable_like) ? 'checked' : '') }}> Suka
             </label>
           </div>
           <div class="col-sm-4 col-xs-4 no-padding">
             <label>
               <input name="share" type="checkbox"
-                {{ (isset($data) && ($data->share)) ? 'checked' : (app('site')->enable_share) ? 'checked' : '' }}> Sebar
+                {{ (isset($data) && ($data->share)) ? 'checked' : ((app('site')->enable_share) ? 'checked' : '') }}> Sebar
             </label>
           </div>
         </div>
