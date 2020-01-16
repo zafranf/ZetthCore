@@ -63,7 +63,7 @@ if (isset($data->id) && ($key = array_search($data->id, $orders)) !== false) {;
           <option value="external" {{ (isset($data->id) && ($data->url_external) ) ? 'selected' : '' }}>[Tautan Luar]
           </option>
           <option value="/" {{ (isset($data->id) && $data->url == "/" ) ? 'selected' : '' }}>Beranda</option>
-          <option value="articles" {{ (isset($data->id) && $data->url == "articles" ) ? 'selected' : '' }}>Artikel
+          <option value="posts" {{ (isset($data->id) && $data->url == "posts" ) ? 'selected' : '' }}>Artikel
           </option>
           {{-- <option value="pages" {{ (isset($data->id) && $data->url == "pages" ) ? 'selected' : '' }}>Halaman
           </option> --}}
