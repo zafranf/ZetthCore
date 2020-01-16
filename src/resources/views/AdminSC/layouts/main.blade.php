@@ -109,7 +109,7 @@
                 </a>
               </li>
               <li>
-                <a href="https://webmail1.hostinger.co.id" target="_blank">
+                <a href="{{ url(env('APP_WEBMAIL_URL', adminPath() . '/webmail')) }}" target="_blank">
                   <i class="fa fa-btn fa-envelope"></i> Email
                 </a>
               </li>
