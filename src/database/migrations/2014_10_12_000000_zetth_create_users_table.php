@@ -13,18 +13,13 @@ class ZetthCreateUsersTable extends Migration
      */
     public function up()
     {
-        Schema::dropIfExists('users');
         Schema::create('users', function (Blueprint $table) {
-            $table->engine = 'InnoDB';
-            $table->charset = 'utf8mb4';
-            $table->collation = 'utf8mb4_unicode_ci';
-
             $table->increments('id')->unsigned();
             $table->string('email')->unique();
             $table->string('name')->unique();
             $table->string('fullname');
             $table->string('password');
-            $table->text('biography')->nullable();
+            $table->text('about')->nullable();
             $table->string('image')->nullable();
             $table->json('settings')->default('[]');
             // $table->string('timezone')->default('Asia/Jakarta');
