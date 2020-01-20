@@ -15,7 +15,7 @@ class SiteTableSeeder extends Seeder
     {
         \ZetthCore\Models\Site::create([
             'domain' => env('APP_DOMAIN', 'localhost'),
-            'name' => 'ZetthCMS Core',
+            'name' => env('APP_NAME', 'localhost'),
             // 'tagline' => '',
             // 'logo' => '',
             // 'icon' => '',
