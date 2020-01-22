@@ -13,12 +13,7 @@ class ZetthCreatePasswordResetsTable extends Migration
      */
     public function up()
     {
-        Schema::dropIfExists('password_resets');
         Schema::create('password_resets', function (Blueprint $table) {
-            $table->engine = 'InnoDB';
-            $table->charset = 'utf8mb4';
-            $table->collation = 'utf8mb4_unicode_ci';
-
             $table->string('email')->index();
             $table->string('token');
             $table->timestamp('created_at')->nullable();

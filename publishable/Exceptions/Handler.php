@@ -55,7 +55,7 @@ class Handler extends ExceptionHandler
     {
         if ($this->isHttpException($e)) {
             $theme = $this->getTemplate();
-            if (app('is_admin_panel')) {
+            if (isAdminPanel()) {
                 $theme = 'zetthcore::AdminSC';
             }
             if (view()->exists($theme . '.errors.' . $e->getStatusCode())) {
