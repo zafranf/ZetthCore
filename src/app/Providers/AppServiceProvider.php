@@ -21,7 +21,7 @@ class AppServiceProvider extends ServiceProvider
 
         /* check config */
         if (!$this->app->runningInConsole()) {
-            if (!$this->checkDBConnection()) {
+            if (!$this->checkDBConnection() || ($this->checkDBConnection() && !\Schema::hasTable('sites'))) {
                 /* sementara, nanti redirect ke halaman install */
                 throw new \Exception("You have to install this app first", 1);
                 // redirect(url('/install'))->send();
