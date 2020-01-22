@@ -14,10 +14,10 @@ class CreatePostsTable extends Migration
     public function up()
     {
         Schema::create('posts', function (Blueprint $table) {
-            $table->increments('id')->unsigned();
+            $table->increments('id');
             $table->string('title')->index();
             $table->string('slug')->index();
-            $table->longText('content');
+            $table->text('content');
             $table->string('excerpt')->nullable();
             $table->string('cover')->nullable();
             $table->enum('type', ['article', 'page', 'video'])->default('article');
@@ -27,12 +27,12 @@ class CreatePostsTable extends Migration
             $table->integer('visited')->unsigned()->default(0);
             $table->integer('shared')->unsigned()->default(0);
             $table->integer('liked')->unsigned()->default(0);
-            $table->timestamp('published_at')->nullable();
             $table->string('short_url')->nullable();
             $table->boolean('status')->comment('0=pending, 1=active, 2=draft')->unsigned();
             $table->integer('created_by')->unsigned()->index();
             $table->integer('updated_by')->unsigned()->nullable();
             $table->integer('deleted_by')->unsigned()->nullable();
+            $table->timestamp('published_at')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

@@ -14,12 +14,12 @@ class CreatePostCommentsTable extends Migration
     public function up()
     {
         Schema::create('post_comments', function (Blueprint $table) {
-            $table->increments('id')->unsigned();
+            $table->increments('id');
             $table->string('name');
             $table->string('email');
             $table->string('site')->nullable();
             $table->string('phone')->nullable();
-            $table->longText('comment');
+            $table->text('comment');
             $table->boolean('read')->comment('0=unread, 1=read')->unsigned();
             $table->boolean('status')->comment('0=pending, 1=active')->unsigned();
             $table->integer('parent_id')->unsigned()->default(0);
