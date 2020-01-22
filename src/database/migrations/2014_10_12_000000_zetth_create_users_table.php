@@ -27,8 +27,8 @@ class ZetthCreateUsersTable extends Migration
             $table->string('phone')->nullable();
             $table->string('company')->nullable();
             $table->string('website')->nullable();
-            $table->string('token')->nullable();
-            $table->datetime('token_expire')->nullable();
+            // $table->string('token')->nullable();
+            // $table->datetime('token_expire')->nullable();
             // $table->integer('role_id')->unsigned();
             // $table->dateTime('login_last')->nullable();
             // $table->boolean('login_failed')->unsigned()->default(0);
