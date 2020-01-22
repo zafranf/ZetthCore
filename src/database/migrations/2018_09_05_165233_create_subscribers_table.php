@@ -14,7 +14,7 @@ class CreateSubscribersTable extends Migration
     public function up()
     {
         Schema::create('subscribers', function (Blueprint $table) {
-            $table->increments('id')->unsigned();
+            $table->increments('id');
             $table->string('email')->index();
             $table->string('token');
             $table->boolean('status')->comment('0=inactive, 1=active')->unsigned();

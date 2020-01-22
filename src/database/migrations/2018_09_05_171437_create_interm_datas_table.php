@@ -14,7 +14,7 @@ class CreateIntermDatasTable extends Migration
     public function up()
     {
         Schema::create('interm_datas', function (Blueprint $table) {
-            $table->increments('id')->unsigned();
+            $table->increments('id');
             $table->string('host')->index();
             $table->string('text');
             $table->integer('count')->unsigned();

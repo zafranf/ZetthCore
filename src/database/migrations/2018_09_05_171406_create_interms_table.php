@@ -14,7 +14,7 @@ class CreateIntermsTable extends Migration
     public function up()
     {
         Schema::create('interms', function (Blueprint $table) {
-            $table->increments('id')->unsigned();
+            $table->increments('id');
             $table->string('host')->index();
             $table->string('param');
             $table->boolean('status')->comment('0=inactive, 1=active')->unsigned();

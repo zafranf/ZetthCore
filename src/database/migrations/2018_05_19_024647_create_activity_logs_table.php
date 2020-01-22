@@ -18,9 +18,9 @@ class CreateActivityLogsTable extends Migration
             $table->string('method');
             $table->string('path');
             $table->ipAddress('ip');
-            $table->longText('get');
-            $table->longText('post');
-            $table->longText('files');
+            $table->json('get');
+            $table->json('post');
+            $table->json('files');
             $table->integer('user_id')->unsigned()->nullable();
             // $table->integer('count')->unsigned()->default(1);
             $table->timestamps();

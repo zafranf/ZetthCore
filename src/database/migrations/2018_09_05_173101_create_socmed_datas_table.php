@@ -14,7 +14,7 @@ class CreateSocmedDatasTable extends Migration
     public function up()
     {
         Schema::create('socmed_data', function (Blueprint $table) {
-            $table->increments('id')->unsigned();
+            $table->increments('id');
             $table->string('username');
             $table->enum('type', ['site', 'user'])->default('user');
             $table->integer('socmed_id')->unsigned();

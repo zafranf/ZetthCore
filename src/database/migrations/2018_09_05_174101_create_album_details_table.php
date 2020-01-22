@@ -14,7 +14,7 @@ class CreateAlbumDetailsTable extends Migration
     public function up()
     {
         Schema::create('album_details', function (Blueprint $table) {
-            $table->increments('id')->unsigned();
+            $table->increments('id');
             $table->string('file');
             $table->string('description')->nullable();
             // $table->boolean('status')->comment('0=inactive, 1=active')->unsigned();
