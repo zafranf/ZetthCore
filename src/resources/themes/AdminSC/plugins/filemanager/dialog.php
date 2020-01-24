@@ -1,17 +1,6 @@
 <?php
 $config = include 'config/config.php';
 
-function debug()
-{
-    array_map(function ($data) {
-        echo "<pre>";
-        print_r($data);
-        echo "</pre>";
-    }, func_get_args());
-
-    die();
-}
-
 //TODO switch to array
 extract($config, EXTR_OVERWRITE);
 
@@ -93,10 +82,10 @@ if (!empty($_SESSION['RF']["subfolder"]) && strpos($_SESSION['RF']["subfolder"],
 
 if ($rfm_subfolder != "" && $rfm_subfolder[strlen($rfm_subfolder)-1] != "/") { $rfm_subfolder .= "/"; }
 
-if (!file_exists($current_path.$rfm_subfolder.$subdir))
+if (!file_exists(__DIR__.'/'.$current_path.$rfm_subfolder.$subdir))
 {
 	$subdir = '';
-	if (!file_exists($current_path.$rfm_subfolder.$subdir))
+	if (!file_exists(__DIR__.'/'.$current_path.$rfm_subfolder.$subdir))
 	{
 		$rfm_subfolder = "";
 	}
@@ -112,7 +101,7 @@ if (trim($rfm_subfolder) == "")
 else
 {
 	$cur_dir			= $upload_dir.$rfm_subfolder.$subdir;
-	$cur_path			= $current_path.$rfm_subfolder.$subdir;
+	$cur_path			= __DIR__.'/'.$current_path.$rfm_subfolder.$subdir;
 	$thumbs_path	= $thumbs_base_path.$rfm_subfolder;
 	$parent				= $rfm_subfolder.$subdir;
 }
@@ -274,6 +263,7 @@ $get_params = http_build_query($get_params);
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 		<meta name="robots" content="noindex,nofollow">
+        <meta name="csrf-token" content="<?=csrf_token()?>">
 		<title>Responsive FileManager</title>
 		<link rel="shortcut icon" href="img/ico/favicon.ico">
 		<link href="css/style.css" rel="stylesheet" type="text/css" />
@@ -329,6 +319,12 @@ $get_params = http_build_query($get_params);
 	<![endif]-->
 
 	<script>
+		$.ajaxSetup({
+			headers: {
+				'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+			}
+		});
+
 		var ext_img=new Array('<?php echo implode("','", $ext_img)?>');
 		var allowed_ext=new Array('<?php echo implode("','", $ext)?>');
 		var image_editor=<?php echo isset($aviary_active) && $aviary_active?"true":"false";?>;
@@ -341,6 +337,9 @@ $get_params = http_build_query($get_params);
 			paramName: "file", // The name that will be used to transfer the file
 			maxFilesize: <?php echo $MaxSizeUpload;?>, // MB
 			url: "upload.php",
+			headers: {
+				'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+			},
 			<?php if($apply!="apply_none"){ ?>
 			init: function() {
 				this.on("success", function(file,res) {
@@ -518,7 +517,7 @@ $get_params = http_build_query($get_params);
 $class_ext = '';
 $src = '';
 
-$files	= scandir($current_path.$rfm_subfolder.$subdir);
+$files	= scandir(__DIR__.'/'.$current_path.$rfm_subfolder.$subdir);
 $n_files= count($files);
 
 //php sorting
@@ -530,11 +529,11 @@ $current_folders_number = 0;
 foreach($files as $k=>$file){
 	if($file==".") $current_folder=array('file'=>$file);
 	elseif($file=="..") $prev_folder=array('file'=>$file);
-	elseif(is_dir($current_path.$rfm_subfolder.$subdir.$file)){
-		$date=filemtime($current_path.$rfm_subfolder.$subdir. $file);
+	elseif(is_dir(__DIR__.'/'.$current_path.$rfm_subfolder.$subdir.$file)){
+		$date=filemtime(__DIR__.'/'.$current_path.$rfm_subfolder.$subdir. $file);
 		$current_folders_number++;
 		if($show_folder_size){
-			list($size,$nfiles,$nfolders) = folder_info($current_path.$rfm_subfolder.$subdir.$file,false);
+			list($size,$nfiles,$nfolders) = folder_info(__DIR__.'/'.$current_path.$rfm_subfolder.$subdir.$file,false);
 			
 		} else {
 			$size=0;
@@ -553,7 +552,7 @@ foreach($files as $k=>$file){
 		}
 	}else{
 		$current_files_number++;
-		$file_path=$current_path.$rfm_subfolder.$subdir.$file;
+		$file_path=__DIR__.'/'.$current_path.$rfm_subfolder.$subdir.$file;
 		$date=filemtime($file_path);
 		$size=filesize($file_path);
 		$file_ext = substr(strrchr($file,'.'),1);
@@ -725,7 +724,7 @@ $files = $pagination->getResults();
 <!-- header div end -->
 	<div class="row-fluid ff-container">
 	<div class="span12">
-		<?php if(@opendir($current_path.$rfm_subfolder.$subdir)===FALSE){ ?>
+		<?php if(@opendir(__DIR__.'/'.$current_path.$rfm_subfolder.$subdir)===FALSE){ ?>
 		<br/>
 		<div class="alert alert-error">There is an error! The upload folder there isn't. Check your config.php file. </div>
 		<?php }else{ ?>
@@ -837,25 +836,25 @@ $files = $pagination->getResults();
 			foreach ($files as $nu=>$file_array) {
 			$file=$file_array['file'];
 
-				if($file == '.' || $file == '..' || is_dir($current_path.$rfm_subfolder.$subdir.$file) || in_array($file, $hidden_files) || !in_array(fix_strtolower($file_array['extension']), $ext) || ($filter!='' && $n_files>$file_number_limit_js && stripos($file,$filter)===false))
+				if($file == '.' || $file == '..' || is_dir(__DIR__.'/'.$current_path.$rfm_subfolder.$subdir.$file) || in_array($file, $hidden_files) || !in_array(fix_strtolower($file_array['extension']), $ext) || ($filter!='' && $n_files>$file_number_limit_js && stripos($file,$filter)===false))
 					continue;
 
-				$file_path=$current_path.$rfm_subfolder.$subdir.$file;
+				$file_path=__DIR__.'/'.$current_path.$rfm_subfolder.$subdir.$file;
 				//check if file have illegal caracter
 
 				$filename=substr($file, 0, '-' . (strlen($file_array['extension']) + 1));
 
 				if($file!=fix_filename($file,$transliteration)){
 				$file1=fix_filename($file,$transliteration);
-				$file_path1=($current_path.$rfm_subfolder.$subdir.$file1);
+				$file_path1=(__DIR__.'/'.$current_path.$rfm_subfolder.$subdir.$file1);
 				if(file_exists($file_path1)){
 					$i = 1;
 					$info=pathinfo($file1);
-					while(file_exists($current_path.$rfm_subfolder.$subdir.$info['filename'].".[".$i."].".$info['extension'])) {
+					while(file_exists(__DIR__.'/'.$current_path.$rfm_subfolder.$subdir.$info['filename'].".[".$i."].".$info['extension'])) {
 						$i++;
 					}
 					$file1=$info['filename'].".[".$i."].".$info['extension'];
-					$file_path1=($current_path.$rfm_subfolder.$subdir.$file1);
+					$file_path1=(__DIR__.'/'.$current_path.$rfm_subfolder.$subdir.$file1);
 				}
 
 				$filename=substr($file1, 0, '-' . (strlen($file_array['extension']) + 1));
@@ -882,7 +881,7 @@ $files = $pagination->getResults();
 					if(!create_img($file_path, $src_thumb, 122, 91)){
 							$src_thumb=$mini_src="";
 						}else{
-							new_thumbnails_creation($current_path.$rfm_subfolder.$subdir,$file_path,$file,$current_path,'','','','','','','',$fixed_image_creation,$fixed_path_from_filemanager,$fixed_image_creation_name_to_prepend,$fixed_image_creation_to_append,$fixed_image_creation_width,$fixed_image_creation_height,$fixed_image_creation_option);
+							new_thumbnails_creation(__DIR__.'/'.$current_path.$rfm_subfolder.$subdir,$file_path,$file,$current_path,'','','','','','','',$fixed_image_creation,$fixed_path_from_filemanager,$fixed_image_creation_name_to_prepend,$fixed_image_creation_to_append,$fixed_image_creation_width,$fixed_image_creation_height,$fixed_image_creation_option);
 						}
 				} catch (Exception $e) {
 						$src_thumb=$mini_src="";
@@ -892,12 +891,12 @@ $files = $pagination->getResults();
 				//check if is smaller than thumb
 				list($img_width, $img_height, $img_type, $attr)=@getimagesize($file_path);
 				if($img_width<122 && $img_height<91){
-					$src_thumb=$current_path.$rfm_subfolder.$subdir.$file;
+					$src_thumb=__DIR__.'/'.$current_path.$rfm_subfolder.$subdir.$file;
 					$show_original=true;
 				}
 
 				if($img_width<45 && $img_height<38){
-					$mini_src=$current_path.$rfm_subfolder.$subdir.$file;
+					$mini_src=__DIR__.'/'.$current_path.$rfm_subfolder.$subdir.$file;
 					$show_original_mini=true;
 				}
 				}

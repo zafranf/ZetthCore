@@ -93,7 +93,7 @@
         image_advtab: true,
         image_caption: true,
         menubar : false,
-        external_filemanager_path:"{{ asset('larafile/') }}/",
+        external_filemanager_path:"{{ asset(adminPath().'/larafile/') }}/",
         filemanager_title:"Filemanager",
         filemanager_folder: '/',
         filemanager_language: 'id',

@@ -16,6 +16,51 @@ Route::middleware('auth')->group(function () use ($prefix) {
         Route::get('/logout', $prefix . '\Auth\LoginController@logout')->name('logout.get');
     }
 
+    /* file manager */
+    Route::any('/larafile/{path}', function ($path) {
+        $path = base_path('vendor/zafranf/zetthcore/src/resources/themes/AdminSC/plugins/filemanager/' . $path);
+        if (ends_with($path, '.php')) {
+            require $path;
+        } else {
+            $mime = '';
+            if (ends_with($path, '.js')) {
+                $mime = 'text/javascript';
+            } elseif (ends_with($path, '.css')) {
+                $mime = 'text/css';
+            } else {
+                $mime = File::mimeType($path);
+            }
+            $response = response(File::get($path), 200, ['Content-Type' => $mime]);
+            $response->setSharedMaxAge(31536000);
+            $response->setMaxAge(31536000);
+            $response->setExpires(new \DateTime('+1 year'));
+
+            return $response;
+        }
+    })->where('path', '.*')->name('larafile');
+    Route::any('/larafile-standalone/{path}', function ($path) {
+        $path = base_path('vendor/zafranf/zetthcore/src/resources/themes/AdminSC/plugins/filemanager-standalone/' . $path);
+        if (ends_with($path, '.php')) {
+            require $path;
+        } else {
+            $mime = '';
+            if (ends_with($path, '.js')) {
+                $mime = 'text/javascript';
+            } elseif (ends_with($path, '.css')) {
+                $mime = 'text/css';
+            } else {
+                $mime = File::mimeType($path);
+            }
+            $response = response(File::get($path), 200, ['Content-Type' => $mime]);
+            $response->setSharedMaxAge(31536000);
+            $response->setMaxAge(31536000);
+            $response->setExpires(new \DateTime('+1 year'));
+
+            return $response;
+        }
+    })->where('path', '.*')->name('larafile-standalone');
+
+    /* account */
     Route::get('/account', $prefix . '\AccountController@index')->name('user.account');
     Route::put('/account', $prefix . '\AccountController@update')->name('user.account.update');
 

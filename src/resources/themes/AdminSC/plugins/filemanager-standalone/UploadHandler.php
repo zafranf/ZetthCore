@@ -196,6 +196,7 @@ class UploadHandler
         if ($initialize) {
             $this->initialize();
         }
+        
     }
 
     protected function initialize() {
