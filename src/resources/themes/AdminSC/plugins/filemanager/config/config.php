@@ -10,7 +10,7 @@ mb_http_input('UTF-8');
 mb_language('uni');
 mb_regex_encoding('UTF-8');
 ob_start('mb_output_handler');
-date_default_timezone_set('Europe/Rome');
+date_default_timezone_set('Asia/Jakarta');
 setlocale(LC_CTYPE, 'en_US'); //correct transliteration
 
 /*
@@ -76,7 +76,7 @@ $config = array(
     | with start and final /
     |
      */
-    'upload_dir' => '/files/',
+    'upload_dir' => '/storage/assets/files/',
     /*
     |--------------------------------------------------------------------------
     | relative path from filemanager folder to upload folder
@@ -85,7 +85,7 @@ $config = array(
     | with final /
     |
      */
-    'current_path' => '../larafile/source/files/',
+    'current_path' => 'files/',
 
     /*
     |--------------------------------------------------------------------------
@@ -96,7 +96,7 @@ $config = array(
     | DO NOT put inside upload folder
     |
      */
-    'thumbs_base_path' => '../larafile/source/thumbs/',
+    'thumbs_base_path' => 'thumbs/',
 
     /*
     |--------------------------------------------------------------------------
@@ -107,7 +107,7 @@ $config = array(
     | DO NOT put inside upload folder
     |
      */
-    'thumbs_upload_dir' => '/thumbs/',
+    'thumbs_upload_dir' => '/storage/assets/files/thumbs/',
 
     /*
     |--------------------------------------------------------------------------

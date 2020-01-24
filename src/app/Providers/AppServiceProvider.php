@@ -8,7 +8,7 @@ class AppServiceProvider extends ServiceProvider
 {
     use \ZetthCore\Traits\MainTrait;
 
-    private $vendor_path;
+    private $package_path;
 
     /**
      * Bootstrap any application services.
@@ -17,7 +17,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $this->vendor_path = base_path('vendor/zafranf/zetthcore');
+        $this->package_path = base_path('vendor/zafranf/zetthcore');
 
         /* check config */
         if (!$this->app->runningInConsole()) {
@@ -78,10 +78,10 @@ class AppServiceProvider extends ServiceProvider
         // $this->loadMiddleware();
 
         /* load zetthcore */
-        $this->loadRoutesFrom($this->vendor_path . '/src/routes/routes.php');
-        $this->loadViewsFrom($this->vendor_path . '/src/resources/views', 'zetthcore');
-        $this->loadMigrationsFrom($this->vendor_path . '/src/database/migrations');
-        // $this->loadSeedsFrom($this->vendor_path . '/src/database/seeds');
+        $this->loadRoutesFrom($this->package_path . '/src/routes/routes.php');
+        $this->loadViewsFrom($this->package_path . '/src/resources/views', 'zetthcore');
+        $this->loadMigrationsFrom($this->package_path . '/src/database/migrations');
+        // $this->loadSeedsFrom($this->package_path . '/src/database/seeds');
 
         $this->publishAll();
 
@@ -121,7 +121,7 @@ class AppServiceProvider extends ServiceProvider
 
     public function publishAll()
     {
-        $publishable_path = $this->vendor_path . '/publishable';
+        $publishable_path = $this->package_path . '/publishable';
 
         $this->publishes([
             $publishable_path . '/Kernel.php' => app_path('Http/Kernel.php'),
