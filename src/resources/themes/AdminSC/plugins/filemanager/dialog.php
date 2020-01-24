@@ -839,22 +839,22 @@ $files = $pagination->getResults();
 				if($file == '.' || $file == '..' || is_dir(__DIR__.'/'.$current_path.$rfm_subfolder.$subdir.$file) || in_array($file, $hidden_files) || !in_array(fix_strtolower($file_array['extension']), $ext) || ($filter!='' && $n_files>$file_number_limit_js && stripos($file,$filter)===false))
 					continue;
 
-				$file_path=__DIR__.'/'.$current_path.$rfm_subfolder.$subdir.$file;
+				$file_path=$current_path.$rfm_subfolder.$subdir.$file;
 				//check if file have illegal caracter
 
 				$filename=substr($file, 0, '-' . (strlen($file_array['extension']) + 1));
 
 				if($file!=fix_filename($file,$transliteration)){
 				$file1=fix_filename($file,$transliteration);
-				$file_path1=(__DIR__.'/'.$current_path.$rfm_subfolder.$subdir.$file1);
+				$file_path1=($current_path.$rfm_subfolder.$subdir.$file1);
 				if(file_exists($file_path1)){
 					$i = 1;
 					$info=pathinfo($file1);
-					while(file_exists(__DIR__.'/'.$current_path.$rfm_subfolder.$subdir.$info['filename'].".[".$i."].".$info['extension'])) {
+					while(file_exists($current_path.$rfm_subfolder.$subdir.$info['filename'].".[".$i."].".$info['extension'])) {
 						$i++;
 					}
 					$file1=$info['filename'].".[".$i."].".$info['extension'];
-					$file_path1=(__DIR__.'/'.$current_path.$rfm_subfolder.$subdir.$file1);
+					$file_path1=($current_path.$rfm_subfolder.$subdir.$file1);
 				}
 
 				$filename=substr($file1, 0, '-' . (strlen($file_array['extension']) + 1));
@@ -891,7 +891,7 @@ $files = $pagination->getResults();
 				//check if is smaller than thumb
 				list($img_width, $img_height, $img_type, $attr)=@getimagesize($file_path);
 				if($img_width<122 && $img_height<91){
-					$src_thumb=__DIR__.'/'.$current_path.$rfm_subfolder.$subdir.$file;
+					$src_thumb=$current_path.$rfm_subfolder.$subdir.$file;
 					$show_original=true;
 				}
 
