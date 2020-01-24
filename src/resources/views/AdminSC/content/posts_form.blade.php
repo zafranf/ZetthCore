@@ -16,7 +16,7 @@
     }
   }
 
-  $urlFilemanager = url('/larafile/dialog.php?type=1&field_id=cover&lang=id&fldr=/images');
+  $urlFilemanager = url(adminPath() . '/larafile/dialog.php?type=1&field_id=cover&lang=id&fldr=/images');
 @endphp
 
 @extends('zetthcore::AdminSC.layouts.main')
@@ -375,9 +375,9 @@
           image_advtab: true,
           image_caption: true,
           menubar: false,
-          external_filemanager_path:"{{ asset('larafile/') }}/",
+          external_filemanager_path:"{{ asset(adminPath() . '/larafile/') }}/",
           filemanager_title:"Filemanager",
-          filemanager_folder: '/images',
+          filemanager_folder: '/',
           filemanager_language: 'id',
           external_plugins: { "filemanager" : "{{ asset('/themes/admin/AdminSC/plugins/filemanager/plugin.min.js') }}" },
           setup : function(ed) {
@@ -475,7 +475,7 @@
           datumTokenizer: Bloodhound.tokenizers.obj.whitespace('name'),
           queryTokenizer: Bloodhound.tokenizers.whitespace,
           prefetch: {
-            url: "{{ url(app('admin_path') . '/ajax/term/categories') }}",
+            url: "{{ url(adminPath() . '/ajax/term/categories') }}",
             cache: false,
             filter: function(list) {
               return $.map(list, function(category) {
@@ -514,7 +514,7 @@
           datumTokenizer: Bloodhound.tokenizers.obj.whitespace('name'),
           queryTokenizer: Bloodhound.tokenizers.whitespace,
           prefetch: {
-            url: "{{ url(app('admin_path') . '/ajax/term/tags') }}",
+            url: "{{ url(adminPath() . '/ajax/term/tags') }}",
             cache: false,
             filter: function(list) {
             return $.map(list, function(tag) {

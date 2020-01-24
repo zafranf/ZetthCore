@@ -87,7 +87,7 @@ class AccountController extends AdminController
         if ($r->input('password') !== null) {
             $user->password = bcrypt($r->input('password'));
         }
-        $user->biography = $r->input('biography');
+        $user->about = $r->input('about');
 
         /* upload image */
         if ($r->hasFile('image')) {

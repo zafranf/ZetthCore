@@ -58,7 +58,7 @@ try {
         $path = fix_dirname($path) . '/';
     }
 
-    require('UploadHandler.php');
+    require 'UploadHandler.php';
     $messages = null;
     if (trans("Upload_error_messages") !== "Upload_error_messages") {
         $messages = trans("Upload_error_messages");
@@ -70,7 +70,7 @@ try {
         $urlPattern = '/^(https?:\/\/)?([\da-z\.-]+\.[a-z\.]{2,6}|[\d\.]+)([\/?=&#]{1}[\da-z\.-]+)*[\/\?]?$/i';
 
         if (preg_match($urlPattern, $url)) {
-            $temp = tempnam('/tmp','RF');
+            $temp = tempnam('/tmp', 'RF');
 
             $ch = curl_init($url);
             $fp = fopen($temp, 'wb');
@@ -88,13 +88,12 @@ try {
                 'name' => array(basename($_POST['url'])),
                 'tmp_name' => array($temp),
                 'size' => array(filesize($temp)),
-                'type' => null
+                'type' => null,
             );
         } else {
             throw new Exception('Is not a valid URL.');
         }
     }
-
 
     if ($config['mime_extension_rename']) {
         $info = pathinfo($_FILES['files']['name'][0]);
@@ -118,7 +117,7 @@ try {
     }
     $_FILES['files']['name'][0] = fix_filename($filename, $config);
 
-    if(!$_FILES['files']['type'][0]){
+    if (!$_FILES['files']['type'][0]) {
         $_FILES['files']['type'][0] = $mime_type;
 
     }
@@ -127,7 +126,7 @@ try {
         $_FILES['files']['name'][0] = fix_strtolower($_FILES['files']['name'][0]);
     }
     if (!checkresultingsize($_FILES['files']['size'][0])) {
-    	if ( !isset($upload_handler->response['files'][0]) ) {
+        if (!isset($upload_handler->response['files'][0])) {
             // Avoid " Warning: Creating default object from empty value ... "
             $upload_handler->response['files'][0] = new stdClass();
         }
@@ -141,12 +140,12 @@ try {
         'storeFolder' => $storeFolder,
         'storeFolderThumb' => $storeFolderThumb,
         'ftp' => $ftp,
-        'upload_dir' => dirname($_SERVER['SCRIPT_FILENAME']) . '/' . $storeFolder,
+        'upload_dir' => __DIR__ . '/' . $storeFolder,
         'upload_url' => $config['base_url'] . $config['upload_dir'] . $_POST['fldr'],
         'mkdir_mode' => $config['folderPermission'],
         'max_file_size' => $config['MaxSizeUpload'] * 1024 * 1024,
         'correct_image_extensions' => true,
-        'print_response' => false
+        'print_response' => false,
     );
 
     if (!$config['ext_blacklist']) {
@@ -186,7 +185,7 @@ try {
                 'name' => $name,
                 'error' => $e->getMessage(),
                 'size' => $_FILES['files']['size'][$i],
-                'type' => $_FILES['files']['type'][$i]
+                'type' => $_FILES['files']['type'][$i],
             );
         }
 

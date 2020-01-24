@@ -38,9 +38,9 @@
 						</div>
 					</div>
 					<div class="form-group">
-						<label for="biography" class="col-md-4 control-label">Biografi</label>
+						<label for="about" class="col-md-4 control-label">Tentang</label>
 						<div class="col-md-8">
-							<textarea id="biography" name="biography" class="form-control" placeholder="Biografi.." rows="4">{{ isset($data) ? $data->biography : old('biography') }}</textarea>
+							<textarea id="about" name="about" class="form-control" placeholder="Tentang.." rows="4">{{ isset($data) ? $data->about : old('about') }}</textarea>
 						</div>
 					</div>
 					<div class="form-group">

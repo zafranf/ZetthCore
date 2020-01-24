@@ -3,17 +3,6 @@ $time = time();
 
 $config = include 'config/config.php';
 
-function debug()
-{
-    array_map(function ($data) {
-        echo "<pre>";
-        print_r($data);
-        echo "</pre>";
-    }, func_get_args());
-
-    die();
-}
-
 if (USE_ACCESS_KEYS == true){
 	if (!isset($_GET['akey'], $config['access_keys']) || empty($config['access_keys'])){
 		die('Access Denied!');
@@ -112,7 +101,7 @@ if ($rfm_subfolder != "" && $rfm_subfolder[strlen($rfm_subfolder) - 1] != "/") {
 
 $ftp = ftp_con($config);
 
-if (($ftp && !$ftp->isDir($config['ftp_base_folder'] . $config['upload_dir'] . $rfm_subfolder . $subdir)) || (!$ftp && !file_exists($config['current_path'] . $rfm_subfolder . $subdir))) {
+if (($ftp && !$ftp->isDir($config['ftp_base_folder'] . $config['upload_dir'] . $rfm_subfolder . $subdir)) || (!$ftp && !file_exists(__DIR__ . '/' . $config['current_path'] . $rfm_subfolder . $subdir))) {
     $subdir = '';
     $rfm_subfolder = "";
 }
@@ -323,6 +312,7 @@ $get_params = http_build_query($get_params);
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
         <meta name="robots" content="noindex,nofollow">
+        <meta name="csrf-token" content="<?=csrf_token()?>">
         <title>Responsive FileManager</title>
         <link rel="shortcut icon" href="img/ico/favicon.ico">
         <!-- CSS to style the file input field as button and adjust the Bootstrap progress bars -->
@@ -397,6 +387,12 @@ $get_params = http_build_query($get_params);
         <script type="text/javascript">
             var ext_img=new Array('<?php echo implode("','", $config['ext_img'])?>');
             var image_editor= <?php echo $config['tui_active']?"true":"false";?>;
+
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
         </script>
 
         
@@ -652,7 +648,7 @@ if ($ftp) {
         die();
     }
 } else {
-    $files = scandir($config['current_path'] . $rfm_subfolder . $subdir);
+    $files = scandir(__DIR__ . '/' . $config['current_path'] . $rfm_subfolder . $subdir);
 }
 
 $n_files = count($files);
@@ -690,11 +686,11 @@ foreach ($files as $k => $file) {
 
 
         if ($file != "." && $file != "..") {
-            if (is_dir($config['current_path'] . $rfm_subfolder . $subdir . $file)) {
-                $date = filemtime($config['current_path'] . $rfm_subfolder . $subdir . $file);
+            if (is_dir(__DIR__ . '/' . $config['current_path'] . $rfm_subfolder . $subdir . $file)) {
+                $date = filemtime(__DIR__ . '/' . $config['current_path'] . $rfm_subfolder . $subdir . $file);
                 $current_folders_number++;
                 if ($config['show_folder_size']) {
-                    list($size, $nfiles, $nfolders) = folder_info($config['current_path'] . $rfm_subfolder . $subdir . $file, false);
+                    list($size, $nfiles, $nfolders) = folder_info(__DIR__ . '/' . $config['current_path'] . $rfm_subfolder . $subdir . $file, false);
                 } else {
                     $size = 0;
                 }
@@ -715,7 +711,7 @@ foreach ($files as $k => $file) {
                 }
             } else {
                 $current_files_number++;
-                $file_path = $config['current_path'] . $rfm_subfolder . $subdir . $file;
+                $file_path = __DIR__ . '/' . $config['current_path'] . $rfm_subfolder . $subdir . $file;
                 $date = filemtime($file_path);
                 $size = filesize($file_path);
                 $file_ext = substr(strrchr($file, '.'), 1);
@@ -944,7 +940,7 @@ $files = $pagination->getResults();
 <!-- header div end -->
 	<div class="row-fluid ff-container">
 	<div class="span12">
-		<?php if( ($ftp && !$ftp->isDir($config['ftp_base_folder'].$config['upload_dir'].$rfm_subfolder.$subdir))  || (!$ftp && @opendir($config['current_path'].$rfm_subfolder.$subdir)===FALSE)){ ?>
+		<?php if( ($ftp && !$ftp->isDir($config['ftp_base_folder'].$config['upload_dir'].$rfm_subfolder.$subdir))  || (!$ftp && @opendir(__DIR__ . '/' . $config['current_path'].$rfm_subfolder.$subdir)===FALSE)){ ?>
 		<br/>
 		<div class="alert alert-error">There is an error! The upload folder there isn't. Check your config.php file. </div>
 		<?php }else{ ?>

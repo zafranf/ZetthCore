@@ -133,7 +133,7 @@ class UserController extends AdminController
         $user->fullname = $r->input('fullname');
         $user->email = $r->input('email');
         $user->password = bcrypt($r->input('password'));
-        $user->biography = $r->input('biography');
+        $user->about = $r->input('about');
         // $user->is_admin = bool($r->input('is_admin')) ? 1 : 0;
         $user->status = bool($r->input('status')) ? 1 : 0;
 
@@ -274,7 +274,7 @@ class UserController extends AdminController
         if ($r->input('password') !== null) {
             $user->password = bcrypt($r->input('password'));
         }
-        $user->biography = $r->input('biography');
+        $user->about = $r->input('about');
         // $user->is_admin = bool($r->input('is_admin')) ? 1 : 0;
         $user->status = bool($r->input('status')) ? 1 : 0;
 

@@ -124,7 +124,7 @@
             swal('Maksimal ' + max_img + ' foto');
         } else {
             $.fancybox({
-                href : '{!! url('/larafile-standalone/dialog.php?type=1&field_id=input_tmp&lang=id&fldr=/images') !!}',
+                href : '{!! url(adminPath() . "/larafile-standalone/dialog.php?type=1&field_id=input_tmp&lang=id&fldr=/images") !!}',
                 type : 'iframe',
                 autoScale : false,
                 autoSize : true,
