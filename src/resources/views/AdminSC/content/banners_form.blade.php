@@ -20,8 +20,7 @@ if (isset($data->id) && ($key = array_search($data->id, $orders)) !== false) {;
       <label for="image" class="col-sm-2 control-label">
         Gambar Spanduk
         <small class="help-block">Maksimal dimensi spanduk adalah
-          {{ config('site.banner.size.width') ?? '1024' }}x{{ config('site.banner.size.height') ?? '450' }} px dengan
-          ukuran maksimal {{ config('site.banner.weight') ?? '256' }} KB</small>
+          {{ config('site.banner.size.width') ?? '1024' }}x{{ config('site.banner.size.height') ?? '450' }} px dengan ukuran maksimal {{ config('site.banner.weight') ?? '256' }} KB</small>
       </label>
       <div class="col-sm-4">
         <div class="zetth-upload">
