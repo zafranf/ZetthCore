@@ -335,15 +335,15 @@ $config = array(
     //Permissions configuration
     //******************
     'delete_files' => true,
-    'create_folders' => true,
-    'delete_folders' => true,
+    'create_folders' => false,
+    'delete_folders' => false,
     'upload_files' => true,
     'rename_files' => false,
-    'rename_folders' => true,
+    'rename_folders' => false,
     'duplicate_files' => false,
-    'extract_files' => true,
-    'copy_cut_files' => true, // for copy/cut files
-    'copy_cut_dirs' => true, // for copy/cut directories
+    'extract_files' => false,
+    'copy_cut_files' => false, // for copy/cut files
+    'copy_cut_dirs' => false, // for copy/cut directories
     'chmod_files' => false, // change file permissions
     'chmod_dirs' => false, // change folder permissions
     'preview_text_files' => true, // eg.: txt, log etc.
