@@ -1426,9 +1426,11 @@ class UploadHandler
         $response = array($this->options['param_name'] => $files);
         $name = $file_name ? $file_name : $upload['name'][0];
         $res = $this->generate_response($response, $print_response);
-        if(is_file($this->get_upload_path($name))){
+        // dd($this->get_upload_path($name));
+        if(file_exists($this->get_upload_path($name)) && !is_dir($this->get_upload_path($name))){
             $uploaded_bytes = $this->fix_integer_overflow((int)$content_range[1]);
             $totalSize = $this->get_file_size($this->get_upload_path($name));
+            // dd($totalSize - $uploaded_bytes - $this->options['readfile_chunk_size']);
             if ($totalSize - $uploaded_bytes - $this->options['readfile_chunk_size'] < 0) {
                 $this->onUploadEnd($res);
             }else{
@@ -1442,7 +1444,7 @@ class UploadHandler
         return $res;
     }
 
-    public function onUploadEnd ($res){
+    public function onUploadEnd($res){
         $targetPath = $this->options['storeFolder'];
         $targetPathThumb = $this->options['storeFolderThumb'];
 
@@ -1486,7 +1488,7 @@ class UploadHandler
             if ( $thumbResult!==true)
             {
                 if($thumbResult === false){
-                    $res['files'][0]->error = trans("Not enough Memory");
+                    $res['files'][0]->error = transs("Not enough Memory");
                 }else{
                     $res['files'][0]->error = $thumbResult;
                 }
@@ -1495,7 +1497,7 @@ class UploadHandler
             {
                 if( !$this->options['ftp'] && ! new_thumbnails_creation($targetPath,$targetFile,$_FILES['files']['name'][0],$this->options['config']['current_path'],$this->options['config']))
                 {
-                    $res['files'][0]->error = trans("Not enough Memory");
+                    $res['files'][0]->error = transs("Not enough Memory");
                 }
                 else
                 {

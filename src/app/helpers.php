@@ -158,6 +158,7 @@ if (!function_exists('_get_image')) {
      */
     function _get_image($image, $default = null)
     {
+        $image = str_replace('/storage', '', $image);
         $img = storage_path('app/public/' . $image);
         $fm = base_path('vendor/zafranf/zetthcore/src/resources/themes/AdminSC/plugins/filemanager/source' . $image);
         if (file_exists($img) && !is_dir($img)) {

@@ -3,6 +3,8 @@
 return array(
 
     'Select' => 'Pilih',
+    'Deselect_All' => 'Batalkan Pilihan',
+    'Select_All' => 'Pilih Semua',
     'Erase' => 'Hapus',
     'Open' => 'Buka',
     'Confirm_del' => 'Apakah anda yakin menghapus berkas ini?',
@@ -39,9 +41,30 @@ return array(
     'Text_filter' => 'Saring teks',
     'Swipe_help' => 'Arahkan pada nama berkas/folder untuk melihat pilihan',
     'Upload_base' => 'Basis Unggah',
-    'Upload_java' => 'Unggahan dengan JAVA (Berkas Ukuran Besar)',
-    'Upload_java_help' => "Jika JAVA applet tidak muncul maka, 1. Pastikan JAVA sudah terinstal, jika tidak <a href='http://java.com/en/download/'>[download link]</a>   2. Pastikan firewall anda tidak memblok aksi tersebut",
-    'Upload_base_help' => "Seret & letakkan berkas atau klik area di atas (browser terbaru) dan pilih berkasnya. ketika proses unggah selesai, Klik tombol 'Kembali ke daftar'.",
+    'Upload_base_help' => "Drag & Drop files(modern browsers) or click in upper button to Add the file(s) and click on Start upload. When the upload is complete, click the 'Return to files list' button.",
+    'Upload_add_files' => 'Tambah Berkas',
+    'Upload_start' => 'Mulai Unggah',
+    'Upload_error_messages' => array(
+        1 => 'The uploaded file exceeds the upload_max_filesize directive in php.ini',
+        2 => 'The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form',
+        3 => 'The uploaded file was only partially uploaded',
+        4 => 'No file was uploaded',
+        6 => 'Missing a temporary folder',
+        7 => 'Failed to write file to disk',
+        8 => 'A PHP extension stopped the file upload',
+        'post_max_size' => 'The uploaded file exceeds the post_max_size directive in php.ini',
+        'max_file_size' => 'File is too big',
+        'min_file_size' => 'File is too small',
+        'accept_file_types' => 'Filetype not allowed',
+        'max_number_of_files' => 'Maximum number of files exceeded',
+        'max_width' => 'Image exceeds maximum width',
+        'min_width' => 'Image requires a minimum width',
+        'max_height' => 'Image exceeds maximum height',
+        'min_height' => 'Image requires a minimum height',
+        'abort' => 'File upload aborted',
+        'image_resize' => 'Failed to resize image',
+    ),
+    'Upload_url' => 'Tautan form',
     'Type_dir' => 'Direktori',
     'Type' => 'Tipe',
     'Dimension' => 'Dimensi',
@@ -72,7 +95,9 @@ return array(
     'Copy_Cut_Size_Limit' => 'The selected files/folders are too big to %s. Limit: %d MB/operation', // %s = cut or copy
     'Copy_Cut_Count_Limit' => 'You selected too many files/folders to %s. Limit: %d files/operation', // %s = cut or copy
     'Copy_Cut_Not_Allowed' => 'You are not allowed to %s files.', // %s(1) = cut or copy, %s(2) = files or folders
-    'Aviary_No_Save' => 'Tidak dapat menyimpan gambar',
+    'Image_Editor_No_Save' => 'Tidak dapat menyimpan gambar',
+    'Image_Editor_Exit' => "Keluar",
+    'Image_Editor_Save' => "Simpan",
     'Zip_No_Extract' => 'Could not extract. File might be corrupt.',
     'Zip_Invalid' => 'This extension is not supported. Valid: zip, gz, tar.',
     'Dir_No_Write' => 'The directory you selected is not writable.',
@@ -99,7 +124,7 @@ return array(
     'Upload_message' => "Drop file here to upload",
 
     'SERVER ERROR' => "SERVER ERROR",
-    'forbiden' => "Forbiden",
+    'forbidden' => "Forbiden",
     'wrong path' => "Wrong path",
     'wrong name' => "Wrong name",
     'wrong extension' => "Wrong extension",
@@ -111,8 +136,8 @@ return array(
     'no path' => "No path",
     'no file' => "No file",
     'view type number missing' => "View type number missing",
-    'Not enought Memory' => "Not enought Memory",
-    'max_size_reached' => "Your folder has reach its maximale size of %d MB.", //%d = max overall size
+    'Not enough Memory' => "Not enough Memory",
+    'max_size_reached' => "Your image folder has reach its maximale size of %d MB.", //%d = max overall size
     'B' => "B",
     'KB' => "KB",
     'MB' => "MB",
