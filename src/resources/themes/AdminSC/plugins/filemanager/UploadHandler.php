@@ -14,6 +14,7 @@ class UploadHandler
 {
 
     protected $options;
+    protected $final_name;
 
     // PHP File Upload error message codes:
     // http://php.net/manual/en/features.file-upload.errors.php
@@ -476,7 +477,7 @@ class UploadHandler
     protected function upcount_name_callback($matches) {
         $index = isset($matches[1]) ? ((int)$matches[1]) + 1 : 1;
         $ext = isset($matches[2]) ? $matches[2] : '';
-        return ' ('.$index.')'.$ext;
+        return fix_filename(' ('.$index.')', $this->options['config']).$ext;
     }
 
     protected function upcount_name($name) {
@@ -502,6 +503,7 @@ class UploadHandler
             }
             $name = $this->upcount_name($name);
         }
+        $this->final_name = $name;
         return $name;
     }
 
@@ -1425,8 +1427,9 @@ class UploadHandler
         }
         $response = array($this->options['param_name'] => $files);
         $name = $file_name ? $file_name : $upload['name'][0];
+        $name = $this->final_name;
+        // dd($name);
         $res = $this->generate_response($response, $print_response);
-        // dd($this->get_upload_path($name));
         if(file_exists($this->get_upload_path($name)) && !is_dir($this->get_upload_path($name))){
             $uploaded_bytes = $this->fix_integer_overflow((int)$content_range[1]);
             $totalSize = $this->get_file_size($this->get_upload_path($name));
@@ -1447,7 +1450,7 @@ class UploadHandler
     public function onUploadEnd($res){
         $targetPath = $this->options['storeFolder'];
         $targetPathThumb = $this->options['storeFolderThumb'];
-
+        
         if(!$this->options['ftp']){
             $targetFile =  $targetPath. $res['files'][0]->name;
             $targetFileThumb =  $targetPathThumb. $res['files'][0]->name;
@@ -1463,6 +1466,8 @@ class UploadHandler
             $targetFile = $this->options['config']['ftp_temp_folder'].$res['files'][0]->name;
             $targetFileThumb =  $this->options['config']['ftp_temp_folder']."thumbs/". $res['files'][0]->name;
         }
+        $targetFile = __DIR__.'/'.$targetFile;
+        $targetFileThumb = __DIR__.'/'.$targetFileThumb;
 
         //check if image (and supported)
         $is_img = FALSE;

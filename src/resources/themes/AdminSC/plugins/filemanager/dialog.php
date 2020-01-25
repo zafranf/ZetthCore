@@ -1110,6 +1110,7 @@ $files = $pagination->getResults();
                 $src_thumb="";
                 if(in_array($file_array['extension'], $config['ext_img'])){
                     $src = $file_path;
+                    $file_path = __DIR__.'/'.$file_path;
                     $is_img=true;
 
                     $img_width = $img_height = "";
@@ -1119,6 +1120,8 @@ $files = $pagination->getResults();
                     }else{
 
                         $creation_thumb_path = $mini_src = $src_thumb = $thumbs_path. $file;
+                        // dd($src_thumb);
+                        // $src_thumb = __DIR__.'/'.$src_thumb;
 
                         if (!file_exists($src_thumb)) {
                             if (!create_img($file_path, $creation_thumb_path, 122, 91, 'crop', $config)) {
@@ -1126,6 +1129,10 @@ $files = $pagination->getResults();
                             }
                         }
                         //check if is smaller than thumb
+                        /* if (strpos($file_path, "screen-shot-2019-12-16-at-16-08-04.png")) {
+                            list($img_width, $img_height, $img_type, $attr)=@getimagesize(__DIR__.'/'.$file_path);
+                            dd($file_path, $img_width, $img_height, $img_type, $attr);
+                        } */
                         list($img_width, $img_height, $img_type, $attr)=@getimagesize($file_path);
                         if($img_width<122 && $img_height<91){
                             $src_thumb=$file_path;
