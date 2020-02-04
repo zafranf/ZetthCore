@@ -17,27 +17,7 @@ Route::middleware('auth')->group(function () use ($prefix) {
     }
 
     /* file manager */
-    Route::any('/larafile/{path}', function ($path) {
-        $path = base_path('vendor/zafranf/zetthcore/src/resources/themes/AdminSC/plugins/filemanager/' . $path);
-        if (\Str::endsWith($path, '.php')) {
-            require $path;
-        } else {
-            $mime = '';
-            if (\Str::endsWith($path, '.js')) {
-                $mime = 'text/javascript';
-            } elseif (\Str::endsWith($path, '.css')) {
-                $mime = 'text/css';
-            } else {
-                $mime = File::mimeType($path);
-            }
-            $response = response(File::get($path), 200, ['Content-Type' => $mime]);
-            $response->setSharedMaxAge(31536000);
-            $response->setMaxAge(31536000);
-            $response->setExpires(new \DateTime('+1 year'));
-
-            return $response;
-        }
-    })->where('path', '.*')->name('larafile');
+    Route::any('/larafile/{path}', '\ZetthCore\Http\Controllers\AdminController@larafile')->where('path', '.*')->name('larafile');
     /* Route::any('/larafile-standalone/{path}', function ($path) {
     $path = base_path('vendor/zafranf/zetthcore/src/resources/themes/AdminSC/plugins/filemanager-standalone/' . $path);
     if (\Str::endsWith($path, '.php')) {

@@ -16,7 +16,7 @@
     }
   }
 
-  $urlFilemanager = url(adminPath() . '/larafile/dialog.php?type=1&field_id=cover&lang=id&fldr=/images');
+  $urlFilemanager = url(adminPath() . '/larafile/dialog.php?type=1&multiple=0&field_id=cover&lang=id&fldr=/images');
 @endphp
 
 @extends('zetthcore::AdminSC.layouts.main')

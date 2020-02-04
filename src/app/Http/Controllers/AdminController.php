@@ -4,7 +4,6 @@ namespace ZetthCore\Http\Controllers;
 
 use App\Http\Controllers\Controller as BaseController;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\File;
 
 class AdminController extends BaseController
 {
@@ -25,24 +24,15 @@ class AdminController extends BaseController
     {
         $path = \Str::start(str_replace(['../', './'], '', urldecode($path)), '/');
         $path = base_path('vendor/zafranf/zetthcore/src/resources/themes' . $path);
-        if (File::exists($path)) {
-            $mime = '';
-            if (\Str::endsWith($path, '.js')) {
-                $mime = 'text/javascript';
-            } elseif (\Str::endsWith($path, '.css')) {
-                $mime = 'text/css';
-            } else {
-                $mime = File::mimeType($path);
-            }
-            $response = response(File::get($path), 200, ['Content-Type' => $mime]);
-            $response->setSharedMaxAge(31536000);
-            $response->setMaxAge(31536000);
-            $response->setExpires(new \DateTime('+1 year'));
 
-            return $response;
-        }
+        return $this->getThemeFiles($path);
+    }
 
-        abort(404);
+    public function larafile($path)
+    {
+        $path = storage_path('app/public/filemanager/' . $path);
+
+        return $this->getThemeFiles($path);
     }
 
     public function getAdditionalDataOpts()
