@@ -23,13 +23,13 @@ class AdminController extends BaseController
 
     public function themes(\Illuminate\Http\Request $r, $path)
     {
-        $path = str_start(str_replace(['../', './'], '', urldecode($path)), '/');
+        $path = \Str::start(str_replace(['../', './'], '', urldecode($path)), '/');
         $path = base_path('vendor/zafranf/zetthcore/src/resources/themes' . $path);
         if (File::exists($path)) {
             $mime = '';
-            if (ends_with($path, '.js')) {
+            if (\Str::endsWith($path, '.js')) {
                 $mime = 'text/javascript';
-            } elseif (ends_with($path, '.css')) {
+            } elseif (\Str::endsWith($path, '.css')) {
                 $mime = 'text/css';
             } else {
                 $mime = File::mimeType($path);

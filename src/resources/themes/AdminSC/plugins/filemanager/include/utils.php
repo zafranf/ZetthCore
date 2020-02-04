@@ -908,8 +908,8 @@ function image_check_memory_usage($img, $max_breedte, $max_hoogte)
 *
 * @return  bool
 */
-if(!function_exists('ends_with')){
-	function ends_with($haystack, $needle)
+if(!function_exists('\Str::endsWith')){
+	function \Str::endsWith($haystack, $needle)
 	{
 		return $needle === "" || substr($haystack, -strlen($needle)) === $needle;
 	}
@@ -959,7 +959,7 @@ function new_thumbnails_creation($targetPath, $targetFile, $name, $current_path,
 			{
 				create_folder($targetPath . $path, false);
 			}
-			if ( ! ends_with($targetPath, $path))
+			if ( ! \Str::endsWith($targetPath, $path))
 			{
 				if ( ! create_img($targetFile, $targetPath . $path . $config['relative_image_creation_name_to_prepend'][ $k ] . $info['filename'] . $config['relative_image_creation_name_to_append'][ $k ] . "." . $info['extension'], $config['relative_image_creation_width'][ $k ], $config['relative_image_creation_height'][ $k ], $config['relative_image_creation_option'][ $k ]))
 				{

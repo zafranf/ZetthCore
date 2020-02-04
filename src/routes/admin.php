@@ -19,13 +19,13 @@ Route::middleware('auth')->group(function () use ($prefix) {
     /* file manager */
     Route::any('/larafile/{path}', function ($path) {
         $path = base_path('vendor/zafranf/zetthcore/src/resources/themes/AdminSC/plugins/filemanager/' . $path);
-        if (ends_with($path, '.php')) {
+        if (\Str::endsWith($path, '.php')) {
             require $path;
         } else {
             $mime = '';
-            if (ends_with($path, '.js')) {
+            if (\Str::endsWith($path, '.js')) {
                 $mime = 'text/javascript';
-            } elseif (ends_with($path, '.css')) {
+            } elseif (\Str::endsWith($path, '.css')) {
                 $mime = 'text/css';
             } else {
                 $mime = File::mimeType($path);
@@ -40,13 +40,13 @@ Route::middleware('auth')->group(function () use ($prefix) {
     })->where('path', '.*')->name('larafile');
     /* Route::any('/larafile-standalone/{path}', function ($path) {
     $path = base_path('vendor/zafranf/zetthcore/src/resources/themes/AdminSC/plugins/filemanager-standalone/' . $path);
-    if (ends_with($path, '.php')) {
+    if (\Str::endsWith($path, '.php')) {
     require $path;
     } else {
     $mime = '';
-    if (ends_with($path, '.js')) {
+    if (\Str::endsWith($path, '.js')) {
     $mime = 'text/javascript';
-    } elseif (ends_with($path, '.css')) {
+    } elseif (\Str::endsWith($path, '.css')) {
     $mime = 'text/css';
     } else {
     $mime = File::mimeType($path);

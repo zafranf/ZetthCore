@@ -180,7 +180,7 @@ if (!function_exists('getMenu')) {
     {
         $roleName = '';
         if (\Auth::user()) {
-            $cacheRoleMenuName = 'cacheRoleMenuGroup' . studly_case($group);
+            $cacheRoleMenuName = 'cacheRoleMenuGroup' . \Str::studly($group);
             $cacheRoleMenu = \Cache::get($cacheRoleMenuName);
             if ($cacheRoleMenu && $cache) {
                 $roleName = $cacheRoleMenu;
@@ -194,7 +194,7 @@ if (!function_exists('getMenu')) {
             }
         }
 
-        $cacheMenuName = 'cacheMenuGroup' . studly_case($group) . $roleName;
+        $cacheMenuName = 'cacheMenuGroup' . \Str::studly($group) . $roleName;
         $cacheMenu = \Cache::get($cacheMenuName);
         if ($cacheMenu && $cache) {
             $menus = $cacheMenu;
