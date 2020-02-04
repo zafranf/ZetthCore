@@ -138,8 +138,6 @@ class AppServiceProvider extends ServiceProvider
             $publishable_path . '/config/image.php' => config_path('image.php'),
             $publishable_path . '/config/laratrust_seeder.php' => config_path('laratrust_seeder.php'),
             $publishable_path . '/config/laratrust.php' => config_path('laratrust.php'),
-            $publishable_path . '/config/laravel-page-speed.php' => config_path('laravel-page-speed.php'),
-            $publishable_path . '/config/seotools.php' => config_path('seotools.php'),
         ], 'zetthconfig');
 
         $this->publishes([

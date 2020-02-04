@@ -478,4 +478,30 @@ trait MainTrait
 
         return true;
     }
+
+    public function getThemeFiles($path)
+    {
+        if (\File::exists($path)) {
+            if (\Str::endsWith($path, '.php')) {
+                require $path;
+            } else {
+                $mime = '';
+                if (\Str::endsWith($path, '.js')) {
+                    $mime = 'text/javascript';
+                } elseif (\Str::endsWith($path, '.css')) {
+                    $mime = 'text/css';
+                } else {
+                    $mime = \File::mimeType($path);
+                }
+                $response = response(\File::get($path), 200, ['Content-Type' => $mime]);
+                $response->setSharedMaxAge(31536000);
+                $response->setMaxAge(31536000);
+                $response->setExpires(new \DateTime('+1 year'));
+
+                return $response;
+            }
+        }
+
+        // abort(404);
+    }
 }

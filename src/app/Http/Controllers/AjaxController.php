@@ -140,7 +140,7 @@ class AjaxController extends AdminController
 
             $res['status'] = true;
 
-            foreach (array_sort_recursive($data_visit) as $k => $v) {
+            foreach (\Arr::sortRecursive($data_visit) as $k => $v) {
                 $res['rows'][0]['data'][] = (int) $v['visit'];
                 $res['rows'][1]['data'][] = (int) $v['ip'];
             }

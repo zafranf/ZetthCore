@@ -180,7 +180,7 @@ if (!function_exists('getMenu')) {
     {
         $roleName = '';
         if (\Auth::user()) {
-            $cacheRoleMenuName = 'cacheRoleMenuGroup' . studly_case($group);
+            $cacheRoleMenuName = 'cacheRoleMenuGroup' . \Str::studly($group);
             $cacheRoleMenu = \Cache::get($cacheRoleMenuName);
             if ($cacheRoleMenu && $cache) {
                 $roleName = $cacheRoleMenu;
@@ -194,7 +194,7 @@ if (!function_exists('getMenu')) {
             }
         }
 
-        $cacheMenuName = 'cacheMenuGroup' . studly_case($group) . $roleName;
+        $cacheMenuName = 'cacheMenuGroup' . \Str::studly($group) . $roleName;
         $cacheMenu = \Cache::get($cacheMenuName);
         if ($cacheMenu && $cache) {
             $menus = $cacheMenu;
@@ -615,16 +615,6 @@ if (!function_exists('getCacheTime')) {
         $minutes = env('APP_ENV') != 'production' ? 1 : env('CACHE_TIME', 10);
 
         return now()->addMinutes($minutes);
-    }
-}
-
-if (!function_exists('validateCaptcha')) {
-    function validateCaptcha($response)
-    {
-        $recaptcha = new \ReCaptcha\ReCaptcha(env('GOOGLE_RECAPTCHA_SECRET_KEY'));
-        $res = $recaptcha->verify($response, _server('REMOTE_ADDR'));
-
-        return $res->isSuccess();
     }
 }
 
