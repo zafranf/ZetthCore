@@ -578,7 +578,10 @@ if (!function_exists('carbon')) {
     function carbon($carbon = null, $lang = 'id', $type = 'display')
     {
         /* set default timezone */
-        $timezone = app('site')->timezone ?? env('APP_TIMEZONE', 'UTC');
+        $timezone = env('APP_TIMEZONE', 'UTC');
+        if (app()->bound('site') || class_exists('site')) {
+            $timezone = app('site')->timezone;
+        }
 
         /* check user timezone */
         $user_settings = \Auth::user() ? json_decode(\Auth::user()->settings) : '[]';
