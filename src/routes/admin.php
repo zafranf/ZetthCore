@@ -4,8 +4,10 @@ $prefix = '\ZetthCore\Http\Controllers';
 Route::get('/', function () {
     return redirect(adminPath() . '/login');
 })->name('index');
-Route::get('/login', $prefix . '\Auth\LoginController@showLoginForm')->name('login.form');
-Route::post('/login', $prefix . '\Auth\LoginController@login')->name('login.post');
+Route::middleware(['throttle:' . (env('APP_DEBUG') ? 60 : 10) . ',1'])->group(function () use ($prefix) {
+    Route::get('/login', $prefix . '\Auth\LoginController@showLoginForm')->name('login.form');
+    Route::post('/login', $prefix . '\Auth\LoginController@login')->name('login.post');
+});
 Route::get('/test/connection', function () {
     return response()->json(['status' => true]);
 })->name('test.connection');
