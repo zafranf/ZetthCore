@@ -593,7 +593,7 @@ if (!function_exists('carbon')) {
         if (is_null($carbon)) {
             $carbon = new \Carbon\Carbon;
         } else if (is_string($carbon)) {
-            $carbon = \Carbon\Carbon::parse($carbon, $timezone);
+            $carbon = \Carbon\Carbon::parse($carbon, $type == 'store' ? $timezone : 'UTC');
         }
 
         /* set timezone as UTC for storing to database */
