@@ -61,7 +61,7 @@ class LaratrustSeeder extends Seeder
             $this->command->info("Creating '{$key_info}' user");
 
             // Create default user for each role
-            $user = \ZetthCore\Models\User::create([
+            $user = \App\Models\User::create([
                 'name' => $key,
                 'fullname' => ucwords(str_replace('_', ' ', $key_fullname)),
                 'email' => $key . '@mail.co',
@@ -79,7 +79,7 @@ class LaratrustSeeder extends Seeder
                 foreach ($modules as $module => $value) {
                     // Create default user for each permission set
                     $this->command->info("Creating '{$key}' user (from user permission)");
-                    $user = \ZetthCore\Models\User::create([
+                    $user = \App\Models\User::create([
                         'name' => $key,
                         'fullname' => ucwords(str_replace('_', ' ', $key)),
                         'email' => $key . '@mail.co',
@@ -118,7 +118,7 @@ class LaratrustSeeder extends Seeder
         DB::table('role_permission')->truncate();
         DB::table('user_permission')->truncate();
         DB::table('role_user')->truncate();
-        \ZetthCore\Models\User::truncate();
+        \App\Models\User::truncate();
         \ZetthCore\Models\Role::truncate();
         \ZetthCore\Models\Permission::truncate();
         Schema::enableForeignKeyConstraints();

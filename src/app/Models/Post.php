@@ -34,12 +34,12 @@ class Post extends Model
 
     public function author()
     {
-        return $this->belongsTo('ZetthCore\Models\User', 'created_by');
+        return $this->belongsTo('App\Models\User', 'created_by');
     }
 
     public function editor()
     {
-        return $this->belongsTo('ZetthCore\Models\User', 'updated_by');
+        return $this->belongsTo('App\Models\User', 'updated_by');
     }
 
     public function comments()
