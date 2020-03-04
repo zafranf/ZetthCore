@@ -16,7 +16,7 @@ class PostComment extends Model
 
     public function approval()
     {
-        return $this->belongsTo('ZetthCore\Models\User', 'approved_by');
+        return $this->belongsTo('App\Models\User', 'approved_by');
     }
 
     public function subcomments()

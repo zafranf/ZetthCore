@@ -13,7 +13,7 @@ class UsersTableSeeder extends Seeder
      */
     public function run()
     {
-        /* \ZetthCore\Models\User::create([
+        /* \App\Models\User::create([
     'email' => 'super@user.co',
     'name' => 'su',
     'fullname' => 'Super User',

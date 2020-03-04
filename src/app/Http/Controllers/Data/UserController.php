@@ -2,12 +2,12 @@
 
 namespace ZetthCore\Http\Controllers\Data;
 
+use App\Models\User;
 use Illuminate\Http\Request;
 use ZetthCore\Http\Controllers\AdminController;
 use ZetthCore\Models\Role;
 use ZetthCore\Models\Socmed;
 use ZetthCore\Models\SocmedData;
-use ZetthCore\Models\User;
 
 class UserController extends AdminController
 {
@@ -177,7 +177,7 @@ class UserController extends AdminController
     /**
      * Display the specified resource.
      *
-     * @param  \ZetthCore\Models\User  $user
+     * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
     public function show(User $user)
@@ -188,7 +188,7 @@ class UserController extends AdminController
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \ZetthCore\Models\User  $user
+     * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
     public function edit(User $user)
@@ -249,7 +249,7 @@ class UserController extends AdminController
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $r
-     * @param  \ZetthCore\Models\User  $user
+     * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
     public function update(Request $r, User $user)
@@ -318,7 +318,7 @@ class UserController extends AdminController
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \ZetthCore\Models\User  $user
+     * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
     public function destroy(Request $r, User $user)

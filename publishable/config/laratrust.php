@@ -104,7 +104,7 @@ return [
     |
      */
     'user_models' => [
-        'users' => 'ZetthCore\Models\User',
+        'users' => 'App\Models\User',
     ],
 
     /*
