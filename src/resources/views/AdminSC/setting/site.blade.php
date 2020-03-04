@@ -18,7 +18,7 @@
             <div class="fileinput fileinput-new" data-provides="fileinput">
               <div class="fileinput-new thumbnail">
                 <img
-                  src="{{ _get_image("assets/images/" . app('site')->logo, url("themes/admin/AdminSC/images/logo.v2.png")) }}">
+                  src="{{ _get_image("assets/images/" . app('site')->logo, url(adminPath() . "/themes/admin/AdminSC/images/logo.v2.png")) }}">
               </div>
               <div class="fileinput-preview fileinput-exists thumbnail"></div>
               <div>
@@ -51,7 +51,7 @@
                 <div class="fileinput-new thumbnail"
                   style="width:20px!important;padding:0;margin-bottom:8px;position:absolute;left:5px;">
                   <img
-                    src="{{ _get_image("assets/images/" . app('site')->icon, url("themes/admin/AdminSC/images/logo.v2.png")) }}"
+                    src="{{ _get_image("assets/images/" . app('site')->icon, url(adminPath() . "/themes/admin/AdminSC/images/logo.v2.png")) }}"
                     width="20">
                 </div>
                 <div class="fileinput-preview fileinput-exists thumbnail"
@@ -168,8 +168,11 @@
         </div>
       </div>
       <div class="col-md-6">
-        <h4>Media Sosial <span class="btn btn-default btn-xs pull-right" id="btn-add-socmed"><i
-              class="fa fa-plus"></i></span>
+        <h4>
+          Media Sosial 
+          <span class="btn btn-default btn-xs pull-right" id="btn-add-socmed">
+            <i class="fa fa-plus"></i>
+          </span>
         </h4>
         <hr>
         <div class="form-group">
@@ -200,16 +203,13 @@
               <div class="col-md-9 col-xs-6 no-padding">
                 @if ($key > 0)
                 <div class="input-group">
-                  <input type="text" class="form-control" id="socmed-uname-{{ $rand }}" name="socmed_uname[]"
-                    placeholder="Nama/ID akun.." maxlength="50" value="{{ $val->username }}">
+                  <input type="text" class="form-control" id="socmed-uname-{{ $rand }}" name="socmed_uname[]" placeholder="Nama/ID akun.." maxlength="50" value="{{ $val->username }}">
                   <span class="input-group-btn">
-                    <button type="button" class="btn" style="background:white;border:1px solid #ccc;"
-                      onclick="_remove('#div-socmed-{{ $rand }}')"><i class="fa fa-minus"></i></button>
+                    <button type="button" class="btn" style="background:white;border:1px solid #ccc;" onclick="_remove('#div-socmed-{{ $rand }}')"><i class="fa fa-minus"></i></button>
                   </span>
                 </div>
                 @else
-                <input type="text" class="form-control" id="socmed-uname-{{ $rand }}" name="socmed_uname[]"
-                  placeholder="Nama/ID akun.." value="{{ $val->username }}">
+                <input type="text" class="form-control" id="socmed-uname-{{ $rand }}" name="socmed_uname[]" placeholder="Nama/ID akun.." value="{{ $val->username }}">
                 @endif
               </div>
             </div>
@@ -219,15 +219,14 @@
               <select class="form-control custom-select2" id="socmed-id" name="socmed_id[]">
                 <option value="">--Pilih--</option>
                 @if (isset($socmeds))
-                @foreach ($socmeds as $socmed)
-                <option value="{{ $socmed->id }}">{{ $socmed->name }}</option>
-                @endforeach
+                  @foreach ($socmeds as $socmed)
+                    <option value="{{ $socmed->id }}">{{ $socmed->name }}</option>
+                  @endforeach
                 @endif
               </select>
             </div>
             <div class="col-md-9 col-xs-6 no-padding">
-              <input type="text" class="form-control" id="socmed-uname" name="socmed_uname[]"
-                placeholder="Nama/ID akun.." maxlength="50">
+              <input type="text" class="form-control" id="socmed-uname" name="socmed_uname[]" placeholder="Nama/ID akun.." maxlength="50">
             </div>
             @endif
             <div id="div-socmed"></div>
@@ -241,15 +240,13 @@
             <small class="help-block">Tekan enter untuk menambahkan</small>
           </label>
           <div class="col-md-8">
-            <input type="text" class="form-control" id="keywords" name="keywords"
-              value="{{ app('site')->keywords ?? '' }}" placeholder="Kata kunci situs.." maxlength="50">
+            <input type="text" class="form-control" id="keywords" name="keywords" value="{{ app('site')->keywords ?? '' }}" placeholder="Kata kunci situs.." maxlength="50">
           </div>
         </div>
         <div class="form-group">
           <label for="description" class="col-md-4 control-label">Deskripsi</label>
           <div class="col-md-8">
-            <textarea class="form-control" id="description" name="description" rows="4"
-              placeholder="Penjelasan singkat mengenai situs..">{{ app('site')->description ?? '' }}</textarea>
+            <textarea class="form-control" id="description" name="description" rows="4" placeholder="Penjelasan singkat mengenai situs..">{{ app('site')->description ?? '' }}</textarea>
           </div>
         </div>
         <div class="form-group">
@@ -258,8 +255,7 @@
             <small class="help-block">Kode untuk analitik website dari Google</small>
           </label>
           <div class="col-md-8">
-            <input type="text" class="form-control" id="google-analytics" name="google_analytics"
-              value="{{ app('site')->google_analytics ?? '' }}" placeholder="Kode Google Analytics.." maxlength="20">
+            <input type="text" class="form-control" id="google-analytics" name="google_analytics" value="{{ app('site')->google_analytics ?? '' }}" placeholder="Kode Google Analytics.." maxlength="20">
           </div>
         </div>
         <h4>Lokasi</h4>
@@ -267,22 +263,19 @@
         <div class="form-group">
           <label for="address" class="col-md-4 control-label">Alamat</label>
           <div class="col-md-8">
-            <textarea class="form-control" id="address" name="address" rows="4" placeholder="Alamat lengkap.."
-              maxlength="280">{{ app('site')->address ?? '' }}</textarea>
+            <textarea class="form-control" id="address" name="address" rows="4" placeholder="Alamat lengkap.." maxlength="280">{{ app('site')->address ?? '' }}</textarea>
           </div>
         </div>
         <div class="form-group">
           <label for="coordinate" class="col-md-4 control-label">
             Nama Lokasi/Titik Koordinat
             <small class="help-block">
-              (contoh:
-              <b>Monas</b> atau
+              (contoh: <b>Monas</b> atau
               <b>-6.1762332,106.8206543</b>)
             </small>
           </label>
           <div class="col-md-8">
-            <input type="text" class="form-control" id="coordinate" name="coordinate"
-              value="{{ app('site')->coordinate ?? '' }}" placeholder="Titik koordinat.." maxlength="30">
+            <input type="text" class="form-control" id="coordinate" name="coordinate" value="{{ app('site')->coordinate ?? '' }}" placeholder="Titik koordinat.." maxlength="30">
           </div>
         </div>
       </div>
@@ -299,10 +292,10 @@
 @endsection
 
 @section('styles')
-{!! _admin_css('themes/admin/AdminSC/plugins/jasny-bootstrap/3.1.3/css/jasny-bootstrap.min.css') !!}
-{!! _admin_css('themes/admin/AdminSC/plugins/bootstrap/tagsinput/0.8.0/css/bootstrap-tagsinput.css') !!}
-{!! _admin_css('themes/admin/AdminSC/plugins/bootstrap/datetimepicker/4.17.37/css/bootstrap-datetimepicker.min.css') !!}
-{!! _admin_css('themes/admin/AdminSC/plugins/select2/4.0.0/css/select2.min.css') !!}
+{!! _admin_css(adminPath() . '/themes/admin/AdminSC/plugins/jasny-bootstrap/3.1.3/css/jasny-bootstrap.min.css') !!}
+{!! _admin_css(adminPath() . '/themes/admin/AdminSC/plugins/bootstrap/tagsinput/0.8.0/css/bootstrap-tagsinput.css') !!}
+{!! _admin_css(adminPath() . '/themes/admin/AdminSC/plugins/bootstrap/datetimepicker/4.17.37/css/bootstrap-datetimepicker.min.css') !!}
+{!! _admin_css(adminPath() . '/themes/admin/AdminSC/plugins/select2/4.0.0/css/select2.min.css') !!}
 
 <style>
   .group-socmed {
@@ -323,16 +316,16 @@
 @endsection
 
 @section('scripts')
-{!! _admin_js('themes/admin/AdminSC/plugins/jasny-bootstrap/3.1.3/js/jasny-bootstrap.min.js') !!}
-{!! _admin_js('themes/admin/AdminSC/plugins/bootstrap/tagsinput/0.8.0/js/bootstrap-tagsinput.js') !!}
-{!! _admin_js('themes/admin/AdminSC/plugins/moment/2.13.0/js/moment.min.js') !!}
-{!! _admin_js('themes/admin/AdminSC/plugins/bootstrap/datetimepicker/4.17.37/js/bootstrap-datetimepicker.min.js') !!}
-{!! _admin_js('themes/admin/AdminSC/plugins/select2/4.0.0/js/select2.min.js') !!}
+{!! _admin_js(adminPath() . '/themes/admin/AdminSC/plugins/jasny-bootstrap/3.1.3/js/jasny-bootstrap.min.js') !!}
+{!! _admin_js(adminPath() . '/themes/admin/AdminSC/plugins/bootstrap/tagsinput/0.8.0/js/bootstrap-tagsinput.js') !!}
+{!! _admin_js(adminPath() . '/themes/admin/AdminSC/plugins/moment/2.13.0/js/moment.min.js') !!}
+{!! _admin_js(adminPath() . '/themes/admin/AdminSC/plugins/bootstrap/datetimepicker/4.17.37/js/bootstrap-datetimepicker.min.js') !!}
+{!! _admin_js(adminPath() . '/themes/admin/AdminSC/plugins/select2/4.0.0/js/select2.min.js') !!}
 <script>
   $(function() {
 			$('#active-at').datetimepicker({
 				format: 'YYYY-MM-DD'
-      		});
+      });
       
 			$(".custom-select2").select2({
 				minimumResultsForSearch: Infinity
@@ -348,13 +341,13 @@
 					$('#d-active-at').hide();
 					$('#active-at').attr('readonly', true);
 				}
-      		});
+      });
       
 			$('#keywords').tagsinput({
 				tagClass: function(item){
 					return 'label label-warning'
 				}
-      		});
+      });
       
 			$('#btn-add-socmed').on('click', function(){
 				socmed_no = (Math.random() * 1000000000).toFixed(0);

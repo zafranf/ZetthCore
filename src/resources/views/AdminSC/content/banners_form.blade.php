@@ -25,8 +25,7 @@ if (isset($data->id) && ($key = array_search($data->id, $orders)) !== false) {;
       <div class="col-sm-4">
         <div class="zetth-upload">
           <div class="zetth-upload-new thumbnail">
-            <img
-              src="{!! _get_image(isset($data->id) ? $data->image : '', 'themes/admin/AdminSC/images/no-image.png') !!}">
+            <img src="{!! _get_image(isset($data->id) ? $data->image : '', adminPath() . '/themes/admin/AdminSC/images/no-image.png') !!}">
           </div>
           <div class="zetth-upload-exists thumbnail"></div>
           <div>
@@ -111,11 +110,11 @@ if (isset($data->id) && ($key = array_search($data->id, $orders)) !== false) {;
         <select id="order" name="order" class="form-control custom-select2">
           <option value="first">Pertama</option>
           @foreach ($banners as $banner)
-          @if (!isset($data->id) || (isset($data->id) && $banner->id != $data->id))
-          <option value="{{ $banner->id }}"
-            {{ (isset($data->id) && ($banner->order == ($data->order - 1))) ? 'selected' : '' }}>Setelah
-            {{ $banner->title != '' ? $banner->title : $banner->order }}</option>
-          @endif
+            @if (!isset($data->id) || (isset($data->id) && $banner->id != $data->id))
+            <option value="{{ $banner->id }}"
+              {{ (isset($data->id) && ($banner->order == ($data->order - 1))) ? 'selected' : '' }}>Setelah
+              {{ $banner->title != '' ? $banner->title : $banner->order }}</option>
+            @endif
           @endforeach
         </select>
       </div>
@@ -146,8 +145,8 @@ if (isset($data->id) && ($key = array_search($data->id, $orders)) !== false) {;
 @endsection
 
 @section('styles')
-{!! _admin_css('themes/admin/AdminSC/plugins/fancybox/2.1.5/css/jquery.fancybox.css') !!}
-{!! _admin_css('themes/admin/AdminSC/plugins/select2/4.0.0/css/select2.min.css') !!}
+{!! _admin_css(adminPath() . '/themes/admin/AdminSC/plugins/fancybox/2.1.5/css/jquery.fancybox.css') !!}
+{!! _admin_css(adminPath() . '/themes/admin/AdminSC/plugins/select2/4.0.0/css/select2.min.css') !!}
 <style>
   .zetth-upload a {
     text-decoration: none;
@@ -164,59 +163,59 @@ if (isset($data->id) && ($key = array_search($data->id, $orders)) !== false) {;
 @endsection
 
 @section('scripts')
-{!! _admin_js('themes/admin/AdminSC/plugins/fancybox/2.1.5/js/jquery.fancybox.js') !!}
-{!! _admin_js('themes/admin/AdminSC/plugins/select2/4.0.0/js/select2.min.js') !!}
+{!! _admin_js(adminPath() . '/themes/admin/AdminSC/plugins/fancybox/2.1.5/js/jquery.fancybox.js') !!}
+{!! _admin_js(adminPath() . '/themes/admin/AdminSC/plugins/select2/4.0.0/js/select2.min.js') !!}
 <script>
   $(function(){
-			$(".select2").select2({
-				placeholder: "[None]"
-      		});
-      
-			$(".custom-select2").select2({
-				minimumResultsForSearch: Infinity
-			});
-		});
+    $(".select2").select2({
+      placeholder: "[None]"
+    });
+    
+    $(".custom-select2").select2({
+      minimumResultsForSearch: Infinity
+    });
+  });
 
-		function responsive_filemanager_callback(field_id){
-			var val = $('#'+field_id).val();
-			var path = val.replace(SITE_URL, "");
-			var img = '<img src="'+path+'">';
-			$('.zetth-upload-new').hide();
-			$('.zetth-upload-exists').show();
-			$('.zetth-upload-exists.thumbnail').html(img);
-			$('#image_remove').attr("checked", false);
-			$('#'+field_id).val(path);
-		}
+  function responsive_filemanager_callback(field_id){
+    var val = $('#'+field_id).val();
+    var path = val.replace(SITE_URL, "");
+    var img = '<img src="'+path+'">';
+    $('.zetth-upload-new').hide();
+    $('.zetth-upload-exists').show();
+    $('.zetth-upload-exists.thumbnail').html(img);
+    $('#image_remove').attr("checked", false);
+    $('#'+field_id).val(path);
+  }
 
-		$(document).ready(function(){
-			$("body").tooltip({ 
-				selector: '[data-toggle=tooltip]' 
-			});
+  $(document).ready(function(){
+    $("body").tooltip({ 
+      selector: '[data-toggle=tooltip]' 
+    });
 
-			var wFB = window.innerWidth - 30,
-				hFB = window.innerHeight - 60;
+    var wFB = window.innerWidth - 30,
+      hFB = window.innerHeight - 60;
 
-			$('.select2').on('change',function(){
-				if ($('#url').val()=="external"){
-					$('#url_external').attr("disabled", false).show();
-				}else{
-					$('#url_external').attr("disabled", true).hide();
-				}
-			});
-			$('#btn-upload').fancybox({
-				type      : 'iframe',
-				autoScale : false,
-				autoSize : false,
-				beforeLoad : function() {
-					this.width  = wFB;
-					this.height = hFB;
-				}
-			});
-			$('#btn-remove').on('click', function(){
-				$('#post_cover').val('');
-				$('.zetth-upload-new').show();
-				$('.zetth-upload-exists').hide();
-			});
-		});
+    $('.select2').on('change',function(){
+      if ($('#url').val()=="external"){
+        $('#url_external').attr("disabled", false).show();
+      }else{
+        $('#url_external').attr("disabled", true).hide();
+      }
+    });
+    $('#btn-upload').fancybox({
+      type      : 'iframe',
+      autoScale : false,
+      autoSize : false,
+      beforeLoad : function() {
+        this.width  = wFB;
+        this.height = hFB;
+      }
+    });
+    $('#btn-remove').on('click', function(){
+      $('#post_cover').val('');
+      $('.zetth-upload-new').show();
+      $('.zetth-upload-exists').hide();
+    });
+  });
 </script>
 @endsection

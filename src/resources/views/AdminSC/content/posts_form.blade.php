@@ -41,7 +41,7 @@
             <div class="zetth-upload">
               <div class="zetth-upload-new thumbnail">
                 <img
-                  src="{!! _get_image($data->cover ?? null, 'themes/admin/AdminSC/images/no-image.png') !!}">
+                  src="{!! _get_image($data->cover ?? null, adminPath() . '/themes/admin/AdminSC/images/no-image.png') !!}">
               </div>
               <div class="zetth-upload-exists thumbnail"></div>
               <div>
@@ -117,8 +117,7 @@
                 @foreach ($categories_ as $key => $value)
                 <li>
                   {{ $value }}
-                  <span class="pull-right"><i class="fa fa-minus-square-o" style="cursor:pointer;"
-                      onclick="_remove_category(this)" title="Hapus {{ $value }}"></i></span>
+                  <span class="pull-right"><i class="fa fa-minus-square-o" style="cursor:pointer;" onclick="_remove_category(this)" title="Hapus {{ $value }}"></i></span>
                   <input type="hidden" name="categories[]" value="{{ $value }}">
                   <input type="hidden" name="descriptions[]" value="{{ $descriptions_[$key] }}">
                   <input type="hidden" name="parents[]" value="{{ $parents_[$key] }}">
@@ -150,11 +149,11 @@
 @endsection
 
 @section('styles')
-  {{-- {!! _admin_css('themes/admin/AdminSC/plugins/jasny-bootstrap/3.1.3/css/jasny-bootstrap.min.css') !!} --}}
-  {!! _admin_css('themes/admin/AdminSC/plugins/bootstrap/tagsinput/0.8.0/css/bootstrap-tagsinput.css') !!}
-  {!! _admin_css('themes/admin/AdminSC/plugins/bootstrap/datetimepicker/4.17.37/css/bootstrap-datetimepicker.min.css') !!}
-  {!! _admin_css('themes/admin/AdminSC/plugins/fancybox/2.1.5/css/jquery.fancybox.css') !!}
-  {!! _admin_css('themes/admin/AdminSC/plugins/select2/4.0.0/css/select2.min.css') !!}
+  {{-- {!! _admin_css(adminPath() . '/themes/admin/AdminSC/plugins/jasny-bootstrap/3.1.3/css/jasny-bootstrap.min.css') !!} --}}
+  {!! _admin_css(adminPath() . '/themes/admin/AdminSC/plugins/bootstrap/tagsinput/0.8.0/css/bootstrap-tagsinput.css') !!}
+  {!! _admin_css(adminPath() . '/themes/admin/AdminSC/plugins/bootstrap/datetimepicker/4.17.37/css/bootstrap-datetimepicker.min.css') !!}
+  {!! _admin_css(adminPath() . '/themes/admin/AdminSC/plugins/fancybox/2.1.5/css/jquery.fancybox.css') !!}
+  {!! _admin_css(adminPath() . '/themes/admin/AdminSC/plugins/select2/4.0.0/css/select2.min.css') !!}
   <style>
     #mceu_15 {
       position: absolute;
@@ -289,14 +288,14 @@
 @endsection
 
 @section('scripts')
-  {{-- {!! _admin_js('themes/admin/AdminSC/plugins/jasny-bootstrap/3.1.3/js/jasny-bootstrap.min.js') !!} --}}
-  {!! _admin_js('themes/admin/AdminSC/plugins/bootstrap/tagsinput/0.8.0/js/bootstrap-tagsinput.js') !!}
-  {!! _admin_js('themes/admin/AdminSC/plugins/moment/2.13.0/js/moment.min.js') !!}
-  {!! _admin_js('themes/admin/AdminSC/plugins/bootstrap/datetimepicker/4.17.37/js/bootstrap-datetimepicker.min.js') !!}
-  {!! _admin_js('themes/admin/AdminSC/plugins/fancybox/2.1.5/js/jquery.fancybox.js') !!}
-  {!! _admin_js('themes/admin/AdminSC/plugins/typeahead/0.11.1/js/typeahead.bundle.min.js') !!}
-  {!! _admin_js('themes/admin/AdminSC/plugins/tinymce/4.3.2/tinymce.min.js') !!}
-  {!! _admin_js('themes/admin/AdminSC/plugins/select2/4.0.0/js/select2.min.js') !!}
+  {{-- {!! _admin_js(adminPath() . '/themes/admin/AdminSC/plugins/jasny-bootstrap/3.1.3/js/jasny-bootstrap.min.js') !!} --}}
+  {!! _admin_js(adminPath() . '/themes/admin/AdminSC/plugins/bootstrap/tagsinput/0.8.0/js/bootstrap-tagsinput.js') !!}
+  {!! _admin_js(adminPath() . '/themes/admin/AdminSC/plugins/moment/2.13.0/js/moment.min.js') !!}
+  {!! _admin_js(adminPath() . '/themes/admin/AdminSC/plugins/bootstrap/datetimepicker/4.17.37/js/bootstrap-datetimepicker.min.js') !!}
+  {!! _admin_js(adminPath() . '/themes/admin/AdminSC/plugins/fancybox/2.1.5/js/jquery.fancybox.js') !!}
+  {!! _admin_js(adminPath() . '/themes/admin/AdminSC/plugins/typeahead/0.11.1/js/typeahead.bundle.min.js') !!}
+  {!! _admin_js(adminPath() . '/themes/admin/AdminSC/plugins/tinymce/4.3.2/tinymce.min.js') !!}
+  {!! _admin_js(adminPath() . '/themes/admin/AdminSC/plugins/select2/4.0.0/js/select2.min.js') !!}
   <script>
     var selected = ['{!! isset($data) ? implode("','", $categories_ ) : '' !!}'];
       var lsH,tmH = 0;
@@ -379,14 +378,14 @@
           filemanager_title:"Filemanager",
           filemanager_folder: '/',
           filemanager_language: 'id',
-          external_plugins: { "filemanager" : "{{ asset('/themes/admin/AdminSC/plugins/filemanager/plugin.min.js') }}" },
+          external_plugins: { "filemanager" : "{{ asset(adminPath() . '/themes/admin/AdminSC/plugins/filemanager/plugin.min.js') }}" },
           setup : function(ed) {
-              ed.on('init', function() 
-              {
-                  /* this.getDoc().body.style.fontSize = '12px'; */
-                  this.getDoc().body.style.fontFamily = 'arial, helvetica, sans-serif';
-                  /* this.getDoc().body.style.fontWeight = '300'; */
-              });
+            ed.on('init', function() 
+            {
+              /* this.getDoc().body.style.fontSize = '12px'; */
+              this.getDoc().body.style.fontFamily = 'arial, helvetica, sans-serif';
+              /* this.getDoc().body.style.fontWeight = '300'; */
+            });
           }
         });
 

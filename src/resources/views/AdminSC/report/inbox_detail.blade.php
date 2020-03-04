@@ -26,21 +26,21 @@
 @section('styles')
   <style>
     .zetth-share-button {
-        position: relative;
-        height: 18px;
-        margin-top: -2px;
-        padding: 1px 8px 1px 6px;
-        /*color: #fff;*/
-        cursor: pointer;
-        /*background-color: #1b95e0;*/
-        border: 1px solid coral;
-        border-radius: 3px;
-        box-sizing: border-box;
-        font-size: 12px;
-        line-height: 1.2;
+      position: relative;
+      height: 18px;
+      margin-top: -2px;
+      padding: 1px 8px 1px 6px;
+      /*color: #fff;*/
+      cursor: pointer;
+      /*background-color: #1b95e0;*/
+      border: 1px solid coral;
+      border-radius: 3px;
+      box-sizing: border-box;
+      font-size: 12px;
+      line-height: 1.2;
     }
     .zetth-share-button:hover, .zetth-share-button:active, .zetth-share-button:focus {
-          text-decoration: none;
-      }
+      text-decoration: none;
+    }
   </style>
 @endsection
