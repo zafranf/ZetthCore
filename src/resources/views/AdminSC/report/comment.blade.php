@@ -22,17 +22,17 @@
 @endsection
 
 @section('styles')
-  {!! _admin_css('themes/admin/AdminSC/plugins/DataTables/1.10.12/css/jquery.dataTables.min.css') !!}
+  {!! _admin_css(adminPath() . '/themes/admin/AdminSC/plugins/DataTables/1.10.12/css/jquery.dataTables.min.css') !!}
 @endsection
 
 @section('scripts')
-  {!! _admin_js('themes/admin/AdminSC/plugins/DataTables/1.10.12/js/jquery.dataTables.min.js') !!}
+  {!! _admin_js(adminPath() . '/themes/admin/AdminSC/plugins/DataTables/1.10.12/js/jquery.dataTables.min.js') !!}
   <script>
     $(document).ready(function() {
       let options = {
         "processing": true,
         "serverSide": true,
-        "ajax": SITE_URL + "{{ app('admin_path') }}/report/comments/data",
+        "ajax": SITE_URL + "{{ adminPath() }}/report/comments/data",
         "pageLength": 20,
         "lengthMenu": [
           [10, 20, 50, 100, -1], 
@@ -66,7 +66,7 @@
           "sortable": false,
           "render": function (data, type, row, meta) {
             let actions = '';
-            let url = SITE_URL + "{{ app('admin_path') }}/report/comments/" + data;
+            let url = SITE_URL + "{{ adminPath() }}/report/comments/" + data;
             let del = "_delete('" + url + "')";
             {!! _get_access_buttons() !!}
             $('[data-toggle="tooltip"]').tooltip();
@@ -105,7 +105,7 @@
             "sortable": false,
             "render": function (data, type, row, meta) {
               let actions = '';
-              let url = SITE_URL + "{{ app('admin_path') }}/report/comments/" + data;
+              let url = SITE_URL + "{{ adminPath() }}/report/comments/" + data;
               let del = "_delete('" + url + "')";
               {!! _get_access_buttons() !!}
               $('[data-toggle="tooltip"]').tooltip();

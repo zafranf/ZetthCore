@@ -12,6 +12,9 @@ Route::get('/test/connection', function () {
     return response()->json(['status' => true]);
 })->name('test.connection');
 
+/* template admin route */
+Route::get('/themes/admin/{path}', '\ZetthCore\Http\Controllers\AdminController@themes')->where('path', '.*')->name('themes.admin');
+
 Route::middleware('auth')->group(function () use ($prefix) {
     Route::post('/logout', $prefix . '\Auth\LoginController@logout')->name('logout.post');
     if (env('APP_DEBUG')) {

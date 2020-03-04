@@ -30,7 +30,7 @@ class AdminController extends BaseController
 
     public function larafile($path)
     {
-        $path = storage_path('app/public/filemanager/' . $path);
+        $path = base_path('vendor/zafranf/zetthcore/src/resources/assets/filemanager/' . $path);
 
         return $this->getThemeFiles($path);
     }

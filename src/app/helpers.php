@@ -500,8 +500,9 @@ if (!function_exists('_admin_script')) {
      */
     function _admin_script($file = "", $attributes = [], $type = 'css')
     {
+        $admin_theme_path = adminPath() . '/themes/admin';
         $admin_resource = dirname(__DIR__) . '/resources/themes';
-        $path = str_replace("themes/admin", "", $file);
+        $path = str_replace($admin_theme_path, "", $file);
         $fullpath = $admin_resource . $path;
 
         if ($type == 'css') {
@@ -511,7 +512,7 @@ if (!function_exists('_admin_script')) {
         }
 
         if ($generate) {
-            return str_replace($admin_resource, '/themes/admin', $generate);
+            return str_replace($admin_resource, $admin_theme_path, $generate);
         }
 
         return null;

@@ -50,13 +50,13 @@
 @endsection
 
 @section('styles')
-  {!! _admin_css('themes/admin/AdminSC/plugins/fancybox/2.1.5/css/jquery.fancybox.css') !!}
-  {!! _admin_css('themes/admin/AdminSC/plugins/select2/4.0.0/css/select2.min.css') !!}
+  {!! _admin_css(adminPath() . '/themes/admin/AdminSC/plugins/fancybox/2.1.5/css/jquery.fancybox.css') !!}
+  {!! _admin_css(adminPath() . '/themes/admin/AdminSC/plugins/select2/4.0.0/css/select2.min.css') !!}
 @endsection
 
 @section('scripts')
-  {!! _admin_js('themes/admin/AdminSC/plugins/fancybox/2.1.5/js/jquery.fancybox.js') !!}
-  {!! _admin_js('themes/admin/AdminSC/plugins/select2/4.0.0/js/select2.min.js') !!}
+  {!! _admin_js(adminPath() . '/themes/admin/AdminSC/plugins/fancybox/2.1.5/js/jquery.fancybox.js') !!}
+  {!! _admin_js(adminPath() . '/themes/admin/AdminSC/plugins/select2/4.0.0/js/select2.min.js') !!}
   <script>
     $(function(){
       $(".custom-select2").select2({

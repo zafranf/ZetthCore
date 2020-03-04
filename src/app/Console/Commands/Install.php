@@ -135,7 +135,8 @@ class Install extends Command
                 $this->process('cd ' . public_path() . ' && rm -rf larafile && cd ' . base_path());
             }
         }
-        $filemanager_path = storage_path('app/public/filemanager');
+        // $filemanager_path = storage_path('app/public/filemanager');
+        $filemanager_path = base_path('vendor/zafranf/zetthcore/src/resources/assets/filemanager');
         $this->process('cd ' . public_path() . ' && ln -s ' . $filemanager_path . ' larafile && cd ' . base_path());
         $this->info('The [public/larafile] directory has been linked.');
 

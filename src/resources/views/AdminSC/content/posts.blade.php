@@ -21,7 +21,7 @@
 @endsection
 
 @section('styles')
-{!! _admin_css('themes/admin/AdminSC/plugins/DataTables/1.10.12/css/jquery.dataTables.min.css') !!}
+{!! _admin_css(adminPath() . '/themes/admin/AdminSC/plugins/DataTables/1.10.12/css/jquery.dataTables.min.css') !!}
 <style>
   .zetth-share-button {
     position: relative;
@@ -79,8 +79,8 @@
 @endsection
 
 @section('scripts')
-{!! _admin_js('themes/admin/AdminSC/plugins/moment/2.13.0/js/moment.min.js') !!}
-{!! _admin_js('themes/admin/AdminSC/plugins/DataTables/1.10.12/js/jquery.dataTables.min.js') !!}
+{!! _admin_js(adminPath() . '/themes/admin/AdminSC/plugins/moment/2.13.0/js/moment.min.js') !!}
+{!! _admin_js(adminPath() . '/themes/admin/AdminSC/plugins/DataTables/1.10.12/js/jquery.dataTables.min.js') !!}
 <script>
   function copy() {
     $('#zetth-short-url').select();
@@ -98,7 +98,7 @@
       let options = {
         "processing": true,
         "serverSide": true,
-        "ajax": SITE_URL + "{{ app('admin_path') }}/content/posts/data",
+        "ajax": SITE_URL + "{{ adminPath() }}/content/posts/data",
         "pageLength": 20,
         "lengthMenu": [
           [10, 20, 50, 100, -1], 
@@ -154,7 +154,7 @@
           "sortable": false,
           "render": function (data, type, row, meta) {
             var actions = '';
-            var url = SITE_URL + "{{ app('admin_path') }}/content/posts/" + data;
+            var url = SITE_URL + "{{ adminPath() }}/content/posts/" + data;
             var del = "_delete('" + url + "')";
             {!! _get_access_buttons() !!}
             $('[data-toggle="tooltip"]').tooltip();
@@ -233,7 +233,7 @@
             "sortable": false,
             "render": function (data, type, row, meta) {
               let actions = '';
-              let url = SITE_URL + "{{ app('admin_path') }}/content/posts/" + data;
+              let url = SITE_URL + "{{ adminPath() }}/content/posts/" + data;
               let del = "_delete('" + url + "')";
               {!! _get_access_buttons() !!}
               $('[data-toggle="tooltip"]').tooltip();

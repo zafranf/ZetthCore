@@ -62,7 +62,7 @@
 @endsection
 
 @section('scripts')
-{!! _admin_js('themes/admin/AdminSC/plugins/tinymce/4.3.2/tinymce.min.js') !!}
+{!! _admin_js(adminPath() . '/themes/admin/AdminSC/plugins/tinymce/4.3.2/tinymce.min.js') !!}
 <script>
   $(document).ready(function(){
       @if (!isset($data))
@@ -93,18 +93,18 @@
         image_advtab: true,
         image_caption: true,
         menubar : false,
-        external_filemanager_path:"{{ asset(adminPath().'/larafile/') }}/",
+        external_filemanager_path:"{{ asset(adminPath() . '/larafile/') }}/",
         filemanager_title:"Filemanager",
         filemanager_folder: '/',
         filemanager_language: 'id',
-        external_plugins: { "filemanager" : "{{ asset('themes/admin/AdminSC/plugins/filemanager/plugin.min.js') }}" },
+        external_plugins: { "filemanager" : "{{ asset(adminPath() . '/themes/admin/AdminSC/plugins/filemanager/plugin.min.js') }}" },
         setup : function(ed) {
-            ed.on('init', function() 
-            {
-                /* this.getDoc().body.style.fontSize = '12px'; */
-                this.getDoc().body.style.fontFamily = 'arial, helvetica, sans-serif';
-                /* this.getDoc().body.style.fontWeight = '300'; */
-            });
+          ed.on('init', function() 
+          {
+            /* this.getDoc().body.style.fontSize = '12px'; */
+            this.getDoc().body.style.fontFamily = 'arial, helvetica, sans-serif';
+            /* this.getDoc().body.style.fontWeight = '300'; */
+          });
         }
       });
     });

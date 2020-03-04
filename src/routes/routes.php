@@ -1,7 +1,4 @@
 <?php
-/* template admin route */
-Route::get('/themes/admin/{path}', '\ZetthCore\Http\Controllers\AdminController@themes')->where('path', '.*')->name('themes.admin');
-
 /* template site route */
 Route::get('/themes/{path}', '\ZetthCore\Http\Controllers\SiteController@themes')->where('path', '.*')->name('themes.site');
 
