@@ -97,7 +97,7 @@
         filemanager_title:"Filemanager",
         filemanager_folder: '/',
         filemanager_language: 'id',
-        external_plugins: { "filemanager" : "{{ asset(adminPath() . '/themes/admin/AdminSC/plugins/filemanager/plugin.min.js') }}" },
+        external_plugins: { "filemanager" : "{{ asset(adminPath() . '/larafile/plugin.min.js') }}" },
         setup : function(ed) {
           ed.on('init', function() 
           {
