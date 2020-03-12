@@ -61,8 +61,10 @@ function _getPosts($type = 'simple', $limit = null, $order = "desc", $slug = '')
             }
         } else if ($type == 'author') {
             $posts->withAuthor($slug);
+        } else if ($type == 'search') {
+            $posts->where('title', 'like', '%' . $slug . '%');
         } else {
-            $posts->where('slug', $slug); //->orWhere('title', 'like', '%' . $slug . '%');
+            $posts->where('slug', $slug);
         }
     }
 
@@ -107,6 +109,11 @@ function _getTagPosts($slug, $limit = null, $order = 'desc')
 function _getAuthorPosts($slug, $limit = null, $order = 'desc')
 {
     return _getPosts('author', $limit, $order, $slug);
+}
+
+function _getSearchPosts($slug, $limit = null, $order = 'desc')
+{
+    return _getPosts('search', $limit, $order, $slug);
 }
 
 function _getTerms($type = 'category', $limit = null, $order = 'desc')
