@@ -88,10 +88,10 @@ class LoginController extends AdminController
         $this->clearLoginAttempts($r);
 
         /* log aktifitas */
-        $this->activityLog('<b>' . \Auth::user()->fullname . '</b> masuk aplikasi');
+        $this->activityLog('<b>' . app('user')->fullname . '</b> masuk aplikasi');
 
         /* set redirect for user admin */
-        if (\Auth::user()->is_admin) {
+        if (app('user')->is_admin) {
             $this->redirectTo = app('admin_path') . '/dashboard';
         }
 
@@ -109,12 +109,12 @@ class LoginController extends AdminController
     {
         /* set redirect */
         $redirect = '/';
-        if (\Auth::user()->is_admin) {
+        if (app('user')->is_admin) {
             $redirect = app('admin_path') . '/login';
         }
 
         /* log aktifitas */
-        $this->activityLog('<b>' . \Auth::user()->fullname . '</b> keluar dari aplikasi');
+        $this->activityLog('<b>' . app('user')->fullname . '</b> keluar dari aplikasi');
 
         $this->guard()->logout();
 

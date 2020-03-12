@@ -104,12 +104,12 @@ class PageController extends AdminController
         $page->excerpt = substr(strip_tags($page->content), 0, 255);
         $page->type = 'page';
         $page->status = bool($r->input('status')) ? 1 : 0;
-        $page->created_by = \Auth::user()->id;
+        $page->created_by = app('user')->id;
         $page->published_at = now();
         $page->save();
 
         /* log aktifitas */
-        $this->activityLog('<b>' . \Auth::user()->fullname . '</b> menambahkan halaman "' . $page->title . '"');
+        $this->activityLog('<b>' . app('user')->fullname . '</b> menambahkan halaman "' . $page->title . '"');
 
         /* clear cache */
         \Cache::flush();
@@ -178,11 +178,11 @@ class PageController extends AdminController
         $page->excerpt = substr(strip_tags($page->content), 0, 255);
         $page->type = 'page';
         $page->status = bool($r->input('status')) ? 1 : 0;
-        $page->updated_by = \Auth::user()->id;
+        $page->updated_by = app('user')->id;
         $page->save();
 
         /* log aktifitas */
-        $this->activityLog('<b>' . \Auth::user()->fullname . '</b> memperbarui halaman "' . $page->title . '"');
+        $this->activityLog('<b>' . app('user')->fullname . '</b> memperbarui halaman "' . $page->title . '"');
 
         /* clear cache */
         \Cache::flush();
@@ -199,7 +199,7 @@ class PageController extends AdminController
     public function destroy(Post $page)
     {
         /* log aktifitas */
-        $this->activityLog('<b>' . \Auth::user()->fullname . '</b> menghapus halaman "' . $page->title . '"');
+        $this->activityLog('<b>' . app('user')->fullname . '</b> menghapus halaman "' . $page->title . '"');
 
         /* soft delete */
         $page->delete();

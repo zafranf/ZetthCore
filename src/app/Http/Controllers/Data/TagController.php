@@ -105,7 +105,7 @@ class TagController extends AdminController
         $tag->save();
 
         /* log aktifitas */
-        $this->activityLog('<b>' . \Auth::user()->fullname . '</b> menambahkan label "' . $tag->name . '"');
+        $this->activityLog('<b>' . app('user')->fullname . '</b> menambahkan label "' . $tag->name . '"');
 
         /* clear cache */
         \Cache::flush();
@@ -175,7 +175,7 @@ class TagController extends AdminController
         $tag->save();
 
         /* log aktifitas */
-        $this->activityLog('<b>' . \Auth::user()->fullname . '</b> memperbarui label "' . $tag->name . '"');
+        $this->activityLog('<b>' . app('user')->fullname . '</b> memperbarui label "' . $tag->name . '"');
 
         /* clear cache */
         \Cache::flush();
@@ -192,7 +192,7 @@ class TagController extends AdminController
     public function destroy(Term $tag)
     {
         /* log aktifitas */
-        $this->activityLog('<b>' . \Auth::user()->fullname . '</b> menghapus label "' . $tag->name . '"');
+        $this->activityLog('<b>' . app('user')->fullname . '</b> menghapus label "' . $tag->name . '"');
 
         /* soft delete */
         $tag->delete();

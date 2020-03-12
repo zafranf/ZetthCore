@@ -123,7 +123,7 @@
           "data": 'cover',
           "sortable": false,
           "render": function (data, type, row, meta) {
-            return '<img src="'+data+'" width="80px">';
+            return '<img src="'+(data ? data : '{!! url(adminPath() . "/themes/admin/AdminSC/images/no-image.png") !!}')+'" width="80px">';
           }
         }, {
           "targets": 2,
@@ -137,7 +137,7 @@
             /* render += 'pada <b>' + row.published_string + '</b><br>'; */
             render += '<a class="zetth-share-button" onclick="_open_window(\''+fblink+'\')"><i class="fa fa-facebook-square"></i> Share</a>&nbsp;'; 
             render += '<a class="zetth-share-button" onclick="_open_window(\''+twlink+'\')"><i class="fa fa-twitter"></i> Tweet</a>&nbsp;';
-            render += '<a id="btn-short-url-'+row.id+'" class="zetth-share-button btn-short-url" data-toggle="modal" data-target="#zetth-modal"><i class="fa fa-link"></i> '+postlink+'</a>';
+            render += '<a id="btn-short-url-'+row.id+'" class="zetth-share-button btn-short-url" data-toggle="modal" data-url="'+postlink+'" data-target="#zetth-modal"><i class="fa fa-link"></i> Salin</a>';
 
             return render;
           }
@@ -164,7 +164,7 @@
         }],
         "initComplete": function(settins, json) {
           $('.btn-short-url').on('click', function() {
-            let url = $(this).text();
+            let url = $(this).data('url');
             let html = 'Tekan ikon untuk menyalin tautan: <div class="input-group"><input id="zetth-short-url" type="text" class="form-control" readonly value="'+url+'"><span class="input-group-addon" onclick="copy()" style="cursor:pointer;"><i class="fa fa-copy"></i></span></div>';
             $('.modal-title').text('Bagikan Tautan');
             $('.modal-body').html(html);
@@ -222,7 +222,7 @@
               /* render += 'oleh <b>' + row.author.fullname + '</b><br>'; */
               render += '<a class="zetth-share-button" onclick="_open_window(\''+fblink+'\')"><i class="fa fa-facebook-square"></i></a>&nbsp;'; 
               render += '<a class="zetth-share-button" onclick="_open_window(\''+twlink+'\')"><i class="fa fa-twitter"></i></a>&nbsp;';
-              render += '<a id="btn-short-url-'+row.id+'" class="zetth-share-button btn-short-url" data-toggle="modal" data-target="#zetth-modal"><i class="fa fa-link"></i></a><br>';
+              render += '<a id="btn-short-url-'+row.id+'" class="zetth-share-button btn-short-url" data-toggle="modal" data-url="'+postlink+'" data-target="#zetth-modal"><i class="fa fa-link"></i></a><br>';
               render += _get_status_text(row.status);
 
               return render;

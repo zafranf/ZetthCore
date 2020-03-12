@@ -42,14 +42,14 @@ class AccountController extends AdminController
             'breadcrumbs' => $this->breadcrumbs,
             'page_title' => $this->page_title,
             'page_subtitle' => 'Akun',
-            'data' => \Auth::user(),
+            'data' => app('user'),
         ];
 
         /* socmed */
         $data['socmeds'] = Socmed::where('status', 1)->get();
         $data['socmed_data'] = SocmedData::where([
             'type' => 'user',
-            'data_id' => \Auth::user()->id,
+            'data_id' => app('user')->id,
         ])->with('socmed')->get();
 
         return view('zetthcore::AdminSC.user_account_form', $data);
@@ -72,7 +72,7 @@ class AccountController extends AdminController
 
         /* check old password */
         if ($r->input('password_old') !== null) {
-            if (!password_verify($r->input('password_old'), \Auth::user()->password)) {
+            if (!password_verify($r->input('password_old'), app('user')->password)) {
                 return redirect($this->current_url)->withErrors([
                     'The password old not match',
                 ]);
@@ -80,7 +80,7 @@ class AccountController extends AdminController
         }
 
         /* save data */
-        $user = \Auth::user();
+        $user = app('user');
         // $user->name = $r->input('name');
         $user->fullname = $r->input('fullname');
         $user->email = $r->input('email');
@@ -95,7 +95,7 @@ class AccountController extends AdminController
             $par = [
                 'file' => $file,
                 'folder' => '/assets/images/users/',
-                'name' => str_slug(\Auth::user()->name),
+                'name' => str_slug(app('user')->name),
                 'type' => $file->getMimeType(),
                 'ext' => $file->getClientOriginalExtension(),
             ];
@@ -113,7 +113,7 @@ class AccountController extends AdminController
         $this->saveSocmed($user, $r);
 
         /* log aktifitas */
-        $this->activityLog('<b>' . \Auth::user()->fullname . '</b> memperbarui akun');
+        $this->activityLog('<b>' . app('user')->fullname . '</b> memperbarui akun');
 
         return redirect($this->current_url)->with('success', 'Data akun berhasil disimpan!');
     }

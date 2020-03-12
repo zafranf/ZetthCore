@@ -46,6 +46,7 @@ Route::name('web.')->middleware(['site'])->group(function () {
         Route::get('/{term_type}/{slug}', 'Site\PostController@term')->name('term')->where('term_type', 'category|tag');
 
         /* Post Routes */
+        Route::get('/author/{name?}', 'Site\PostController@index')->name('posts.author');
         Route::get('/{type}', 'Site\PostController@index')->name('posts')->where('type', 'posts|articles|news');
         Route::get('/{type}/{slug}', 'Site\PostController@detail')->name('post')->where('type', 'post|article|news');
 
