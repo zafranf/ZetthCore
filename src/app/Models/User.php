@@ -42,6 +42,11 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->can('admin.dashboard.index');
     }
 
+    public function scopeActive($query)
+    {
+        return $query->where('status', 1);
+    }
+
     /* public function roles()
 {
 return $this->belongsToMany('ZetthCore\Models\Role', 'role_user', 'role_id', 'user_id');
