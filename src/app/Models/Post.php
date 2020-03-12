@@ -113,7 +113,7 @@ class Post extends Model
     public function scopeWithAuthor($query, $name)
     {
         return $query->whereHas('author', function ($q) use ($name) {
-            $q->where('name', $slug);
+            $q->where('name', $name);
         });
     }
 
