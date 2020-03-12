@@ -135,7 +135,7 @@ class PostController extends AdminController
         $post->comment = ($r->input('comment')) ? 1 : 0;
         $post->published_at = carbon_query($date . ' ' . $time);
         // $post->short_url = $uniq;
-        $post->created_by = \Auth::user()->id;
+        $post->created_by = app('user')->id;
         $post->save();
 
         /* delete post relation */
@@ -148,7 +148,7 @@ class PostController extends AdminController
         $this->process_tags($tags, $post->id);
 
         /* log aktifitas */
-        $this->activityLog('<b>' . \Auth::user()->fullname . '</b> menambahkan artikel "' . $post->title . '"');
+        $this->activityLog('<b>' . app('user')->fullname . '</b> menambahkan artikel "' . $post->title . '"');
 
         /* clear cache */
         \Cache::flush();
@@ -251,7 +251,7 @@ class PostController extends AdminController
         $post->comment = ($r->input('comment')) ? 1 : 0;
         $post->published_at = carbon_query($date . ' ' . $time);
         // $post->short_url = $uniq;
-        $post->updated_by = \Auth::user()->id;
+        $post->updated_by = app('user')->id;
         $post->save();
 
         /* delete post relation */
@@ -264,7 +264,7 @@ class PostController extends AdminController
         $this->process_tags($tags, $post->id);
 
         /* log aktifitas */
-        $this->activityLog('<b>' . \Auth::user()->fullname . '</b> memperbarui artikel "' . $post->title . '"');
+        $this->activityLog('<b>' . app('user')->fullname . '</b> memperbarui artikel "' . $post->title . '"');
 
         /* clear cache */
         \Cache::flush();
@@ -281,7 +281,7 @@ class PostController extends AdminController
     public function destroy(Post $post)
     {
         /* log aktifitas */
-        $this->activityLog('<b>' . \Auth::user()->fullname . '</b> menghapus artikel "' . $post->title . '"');
+        $this->activityLog('<b>' . app('user')->fullname . '</b> menghapus artikel "' . $post->title . '"');
 
         /* soft delete */
         $post->delete();

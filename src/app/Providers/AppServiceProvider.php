@@ -39,6 +39,11 @@ class AppServiceProvider extends ServiceProvider
                 return $site;
             });
 
+            /* set user to global */
+            $this->app->singleton('user', function () {
+                return \Auth::user();
+            });
+
             /* set config template */
             $theme = $this->getTemplate();
             $themeConfig = resource_path('views/' . $theme . '/config.php');

@@ -72,7 +72,7 @@ trait MainTrait
         $act->get = json_encode($_GET);
         $act->post = json_encode($_POST);
         $act->files = json_encode($_FILES);
-        $act->user_id = \Auth::user()->id ?? null;
+        $act->user_id = app('user')->id ?? null;
         $act->save();
     }
 

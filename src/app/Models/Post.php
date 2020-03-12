@@ -110,8 +110,15 @@ class Post extends Model
         });
     }
 
+    public function scopeWithAuthor($query, $name)
+    {
+        return $query->whereHas('author', function ($q) use ($name) {
+            $q->where('name', $slug);
+        });
+    }
+
     public function getPublishedStringAttribute()
     {
-        return generateDate($this->published_at, app('site')->language, 'Do MMMM YYYY H:m');
+        return generateDate($this->published_at, app('site')->language, 'Do MMMM YYYY HH:mm');
     }
 }

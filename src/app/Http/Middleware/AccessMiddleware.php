@@ -25,7 +25,7 @@ class AccessMiddleware
     public function checkAccess()
     {
         /* get user login */
-        $user = \Auth::user();
+        $user = app('user');
         if (!$user) {
             throw new \Exception('There are no user in current session');
         }

@@ -74,11 +74,11 @@ class UserController extends AdminController
         ];
 
         /* where roles */
-        if (\Auth::user()->hasRole('super')) {
+        if (app('user')->hasRole('super')) {
             $whrRole = [
                 ['status', 1],
             ];
-        } else if (\Auth::user()->hasRole('admin')) {
+        } else if (app('user')->hasRole('admin')) {
             $whrRole = [
                 ['status', 1],
                 ['id', '!=', 1],
@@ -166,7 +166,7 @@ class UserController extends AdminController
         $this->saveSocmed($user, $r);
 
         /* log aktifitas */
-        $this->activityLog('<b>' . \Auth::user()->fullname . '</b> menambahkan pengguna "' . $user->name . '"');
+        $this->activityLog('<b>' . app('user')->fullname . '</b> menambahkan pengguna "' . $user->name . '"');
 
         /* clear cache */
         \Cache::flush();
@@ -201,18 +201,18 @@ class UserController extends AdminController
         ];
 
         /* prevent access */
-        if (!\Auth::user()->hasRole('super')) {
+        if (!app('user')->hasRole('super')) {
             if (in_array($user->id, [1])) {
                 abort(404);
             }
         }
 
         /* where roles */
-        if (\Auth::user()->hasRole('super')) {
+        if (app('user')->hasRole('super')) {
             $whrRole = [
                 ['status', 1],
             ];
-        } else if (\Auth::user()->hasRole('admin')) {
+        } else if (app('user')->hasRole('admin')) {
             $whrRole = [
                 ['status', 1],
                 ['id', '!=', 1],
@@ -307,7 +307,7 @@ class UserController extends AdminController
         $this->saveSocmed($user, $r);
 
         /* log aktifitas */
-        $this->activityLog('<b>' . \Auth::user()->fullname . '</b> memperbarui pengguna "' . $user->name . '"');
+        $this->activityLog('<b>' . app('user')->fullname . '</b> memperbarui pengguna "' . $user->name . '"');
 
         /* clear cache */
         \Cache::flush();
@@ -324,7 +324,7 @@ class UserController extends AdminController
     public function destroy(Request $r, User $user)
     {
         /* log aktifitas */
-        $this->activityLog('<b>' . \Auth::user()->fullname . '</b> menghapus pengguna "' . $user->name . '"');
+        $this->activityLog('<b>' . app('user')->fullname . '</b> menghapus pengguna "' . $user->name . '"');
 
         /* soft delete */
         $user->delete();
@@ -341,11 +341,11 @@ class UserController extends AdminController
     public function datatable(Request $r)
     {
         /* where roles */
-        if (\Auth::user()->hasRole('super')) {
+        if (app('user')->hasRole('super')) {
             $whrRole = [
                 // ['status', 1],
             ];
-        } else if (\Auth::user()->hasRole('admin')) {
+        } else if (app('user')->hasRole('admin')) {
             $whrRole = [
                 // ['status', 1],
                 ['id', '!=', 1],

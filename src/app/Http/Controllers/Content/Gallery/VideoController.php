@@ -105,12 +105,12 @@ class VideoController extends AdminController
         $video->type = 'video';
         $video->cover = $r->input('cover');
         $video->status = bool($r->input('status')) ? 1 : 0;
-        $video->created_by = \Auth::user()->id;
+        $video->created_by = app('user')->id;
         $video->published_at = now();
         $video->save();
 
         /* log aktifitas */
-        $this->activityLog('<b>' . \Auth::user()->fullname . '</b> menambahkan video "' . $video->title . '"');
+        $this->activityLog('<b>' . app('user')->fullname . '</b> menambahkan video "' . $video->title . '"');
 
         /* clear cache */
         \Cache::flush();
@@ -179,11 +179,11 @@ class VideoController extends AdminController
         $video->type = 'video';
         $video->cover = $r->input('cover');
         $video->status = bool($r->input('status')) ? 1 : 0;
-        $video->updated_by = \Auth::user()->id;
+        $video->updated_by = app('user')->id;
         $video->save();
 
         /* log aktifitas */
-        $this->activityLog('<b>' . \Auth::user()->fullname . '</b> memperbarui video "' . $video->title . '"');
+        $this->activityLog('<b>' . app('user')->fullname . '</b> memperbarui video "' . $video->title . '"');
 
         /* clear cache */
         \Cache::flush();
@@ -200,7 +200,7 @@ class VideoController extends AdminController
     public function destroy(Post $video)
     {
         /* log aktifitas */
-        $this->activityLog('<b>' . \Auth::user()->fullname . '</b> menghapus video "' . $video->title . '"');
+        $this->activityLog('<b>' . app('user')->fullname . '</b> menghapus video "' . $video->title . '"');
 
         /* soft delete */
         $video->delete();

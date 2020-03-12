@@ -102,7 +102,7 @@ if (!function_exists('_get_access_buttons')) {
         $add = app('is_desktop') ? 'TAMBAH' : '';
 
         /* ambil user login */
-        $user = \Auth::user();
+        $user = app('user');
         if (!$user) {
             throw new \Exception('There are no user in current session');
         }
@@ -158,12 +158,13 @@ if (!function_exists('_get_image')) {
      */
     function _get_image($image, $default = null)
     {
-        $image = str_replace('/storage', '', $image);
+        $image = ltrim($image, '/');
+        $image = str_replace('storage/', '', $image);
         $img = storage_path('app/public/' . $image);
         $fm = base_path('vendor/zafranf/zetthcore/src/resources/themes/AdminSC/plugins/filemanager/source' . $image);
         if (file_exists($img) && !is_dir($img)) {
             $mtime = filemtime($img);
-            $img = url('/storage/' . $image) . '?v=' . $mtime;
+            $img = url('storage/' . $image) . '?v=' . $mtime;
         } else if (file_exists($fm) && !is_dir($fm)) {
             $mtime = filemtime($fm);
             $img = url($image) . '?v=' . $mtime;
@@ -179,13 +180,13 @@ if (!function_exists('getMenu')) {
     function getMenu($group = 'admin', $cache = true)
     {
         $roleName = '';
-        if (\Auth::user()) {
+        if (app('user')) {
             $cacheRoleMenuName = 'cacheRoleMenuGroup' . \Str::studly($group);
             $cacheRoleMenu = \Cache::get($cacheRoleMenuName);
             if ($cacheRoleMenu && $cache) {
                 $roleName = $cacheRoleMenu;
             } else {
-                $roles = \Auth::user()->roles;
+                $roles = app('user')->roles;
                 foreach ($roles as $role) {
                     $roleName .= ucfirst($role->name);
                 }
@@ -215,7 +216,7 @@ if (!function_exists('getMenu')) {
 if (!function_exists('menuFilterPermission')) {
     function menuFilterPermission($menus)
     {
-        $user = \Auth::user();
+        $user = app('user');
         if (is_null($user)) {
             return $menus;
         }
@@ -585,7 +586,7 @@ if (!function_exists('carbon')) {
         }
 
         /* check user timezone */
-        $user_settings = \Auth::user() ? json_decode(\Auth::user()->settings) : '[]';
+        $user_settings = app('user') ? json_decode(app('user')->settings) : '[]';
         if (isset($user_settings->timezone)) {
             $timezone = $user_settings->timezone;
         }

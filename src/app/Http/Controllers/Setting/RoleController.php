@@ -117,7 +117,7 @@ class RoleController extends AdminController
         $this->saveMenuGroup($r, $role);
 
         /* log aktifitas */
-        $this->activityLog('<b>' . \Auth::user()->fullname . '</b> menambahkan Peran "' . $role->name . '"');
+        $this->activityLog('<b>' . app('user')->fullname . '</b> menambahkan Peran "' . $role->name . '"');
 
         /* clear cache */
         \Cache::flush();
@@ -152,7 +152,7 @@ class RoleController extends AdminController
         ];
 
         /* prevent access */
-        if (!\Auth::user()->hasRole('super')) {
+        if (!app('user')->hasRole('super')) {
             if (in_array($role->id, [1])) {
                 abort(404);
             }
@@ -211,7 +211,7 @@ class RoleController extends AdminController
         $this->saveMenuGroup($r, $role);
 
         /* log aktifitas */
-        $this->activityLog('<b>' . \Auth::user()->fullname . '</b> memperbarui Peran "' . $role->name . '"');
+        $this->activityLog('<b>' . app('user')->fullname . '</b> memperbarui Peran "' . $role->name . '"');
 
         /* Clear cache */
         // \Cache::forget('cacheMenuGroupUser_role');
@@ -231,7 +231,7 @@ class RoleController extends AdminController
     public function destroy(Role $role)
     {
         /* log aktifitas */
-        $this->activityLog('<b>' . \Auth::user()->fullname . '</b> menghapus Peran "' . $role->display_name . '"');
+        $this->activityLog('<b>' . app('user')->fullname . '</b> menghapus Peran "' . $role->display_name . '"');
 
         /* soft delete */
         $role->delete();
@@ -248,11 +248,11 @@ class RoleController extends AdminController
     public function datatable(Request $r)
     {
         /* where roles */
-        if (\Auth::user()->hasRole('super')) {
+        if (app('user')->hasRole('super')) {
             $whrRole = [
                 // ['status', 1],
             ];
-        } else if (\Auth::user()->hasRole('admin')) {
+        } else if (app('user')->hasRole('admin')) {
             $whrRole = [
                 // ['status', 1],
                 ['id', '!=', 1],
