@@ -15,15 +15,7 @@ class SiteController extends Controller
         $this->breadcrumbs[] = [
             'page' => 'Beranda',
             'icon' => '',
-            'url' => url('/'),
+            'url' => '/',
         ];
-    }
-
-    public function themes(\Illuminate\Http\Request $r, $path)
-    {
-        $path = \Str::start(str_replace(['../', './'], '', urldecode($path)), '/');
-        $path = resource_path('themes' . $path);
-
-        return $this->getThemeFiles($path);
     }
 }
