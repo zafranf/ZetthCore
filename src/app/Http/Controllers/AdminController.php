@@ -20,15 +20,20 @@ class AdminController extends BaseController
         ];
     }
 
-    public function themes(\Illuminate\Http\Request $r, $path)
+    public function themes(Request $r, $path)
     {
-        $path = \Str::start(str_replace(['../', './'], '', urldecode($path)), '/');
-        $path = base_path('vendor/zafranf/zetthcore/src/resources/themes' . $path);
+        if (strpos($path, 'admin') !== false) {
+            $path = \Str::start(str_replace(['../', './', 'admin'], '', urldecode($path)), '/');
+            $path = base_path('vendor/zafranf/zetthcore/src/resources/themes' . $path);
+        } else {
+            $path = \Str::start(str_replace(['../', './'], '', urldecode($path)), '/');
+            $path = resource_path('themes' . $path);
+        }
 
         return $this->getThemeFiles($path);
     }
 
-    public function larafile($path)
+    public function getLarafile($path)
     {
         $path = base_path('vendor/zafranf/zetthcore/src/resources/assets/filemanager/' . $path);
 

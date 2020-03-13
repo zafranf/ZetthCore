@@ -13,7 +13,7 @@ Route::get('/test/connection', function () {
 })->name('test.connection');
 
 /* template admin route */
-Route::get('/themes/admin/{path}', '\ZetthCore\Http\Controllers\AdminController@themes')->where('path', '.*')->name('themes.admin');
+// Route::get('/themes/admin/{path}', '\ZetthCore\Http\Controllers\AdminController@themes')->where('path', '.*')->name('themes.admin');
 
 Route::middleware('auth')->group(function () use ($prefix) {
     Route::post('/logout', $prefix . '\Auth\LoginController@logout')->name('logout.post');
@@ -22,28 +22,7 @@ Route::middleware('auth')->group(function () use ($prefix) {
     }
 
     /* file manager */
-    Route::any('/larafile/{path}', '\ZetthCore\Http\Controllers\AdminController@larafile')->where('path', '.*')->name('larafile');
-    /* Route::any('/larafile-standalone/{path}', function ($path) {
-    $path = base_path('vendor/zafranf/zetthcore/src/resources/themes/AdminSC/plugins/filemanager-standalone/' . $path);
-    if (\Str::endsWith($path, '.php')) {
-    require $path;
-    } else {
-    $mime = '';
-    if (\Str::endsWith($path, '.js')) {
-    $mime = 'text/javascript';
-    } elseif (\Str::endsWith($path, '.css')) {
-    $mime = 'text/css';
-    } else {
-    $mime = File::mimeType($path);
-    }
-    $response = response(File::get($path), 200, ['Content-Type' => $mime]);
-    $response->setSharedMaxAge(31536000);
-    $response->setMaxAge(31536000);
-    $response->setExpires(new \DateTime('+1 year'));
-
-    return $response;
-    }
-    })->where('path', '.*')->name('larafile-standalone'); */
+    Route::any('/larafile/{path}', $prefix . '\AdminController@getLarafile')->where('path', '.*')->name('larafile');
 
     /* account */
     Route::get('/account', $prefix . '\AccountController@index')->name('user.account');
