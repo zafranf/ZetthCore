@@ -1,7 +1,4 @@
 <?php
-/* template site route */
-Route::get('/themes/{path}', '\ZetthCore\Http\Controllers\SiteController@themes')->where('path', '.*')->name('themes.site');
-
 /* admin routes */
 Route::middleware('web')->name('admin.')->group(function () {
     $admin_route = env('ADMIN_ROUTE', 'path');
@@ -15,3 +12,6 @@ Route::middleware('web')->name('admin.')->group(function () {
         });
     }
 });
+
+/* template site route */
+Route::get('/themes/{path}', '\ZetthCore\Http\Controllers\SiteController@themes')->where('path', '.*')->name('themes.site');
