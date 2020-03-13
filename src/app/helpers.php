@@ -1,15 +1,26 @@
 <?php
+if (!function_exists('adminRoute')) {
+    function adminRoute()
+    {
+        return env('ADMIN_ROUTE', 'path');
+    }
+}
+
 if (!function_exists('isAdminPath')) {
     function isAdminPath()
     {
-        return request()->segment(1) == trim(adminPath(), '/');
+        return request()->segment(1) == trim(env('ADMIN_PATH', 'manager'), '/');
     }
 }
 
 if (!function_exists('adminPath')) {
     function adminPath()
     {
-        return '/' . env('ADMIN_PATH', 'manager');
+        if (isAdminPath()) {
+            return env('ADMIN_PATH', 'manager');
+        }
+
+        return null;
     }
 }
 
@@ -18,14 +29,18 @@ if (!function_exists('isAdminSubdomain')) {
     {
         $host = parse_url(url('/'))['host'];
 
-        return in_array(adminSubdomain(), explode(".", $host));
+        return in_array(env('ADMIN_SUBDOMAIN', 'manager'), explode(".", $host));
     }
 }
 
 if (!function_exists('adminSubdomain')) {
     function adminSubdomain()
     {
-        return env('ADMIN_SUBDOMAIN', 'manager');
+        if (isAdminSubdomain()) {
+            return env('ADMIN_SUBDOMAIN', 'manager');
+        }
+
+        return null;
     }
 }
 
@@ -420,14 +435,14 @@ if (!function_exists('generateBreadcrumb')) {
      * @param  [type] $breadcrumb [description]
      * @return [type]             [description]
      */
-    function generateBreadcrumb($breadcrumb, $with_date = true)
+    function generateBreadcrumb($breadcrumbs, $with_date = true)
     {
         echo '<ol class="breadcrumb">';
-        foreach ($breadcrumb as $bread) {
-            if (empty($bread['url'])) {
+        foreach ($breadcrumbs as $bread) {
+            if (!is_null($bread['url']) && empty($bread['url'])) {
                 echo '<li class="active">' . $bread['page'] . '</li>';
             } else {
-                echo '<li><a href="' . url($bread['url']) . '">';
+                echo '<li><a href="' . url($bread['url'] ?? '/') . '">';
                 if (isset($bread['icon'])) {
                     echo '<i class="' . $bread['icon'] . '"></i> ';
                 }
