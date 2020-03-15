@@ -51,6 +51,17 @@ if (!function_exists('isAdminPanel')) {
     }
 }
 
+if (!function_exists('isWWW')) {
+    function isWWW($host = null)
+    {
+        if (is_null($host)) {
+            $host = parse_url(url('/'))['host'];
+        }
+
+        return in_array('www', explode(".", $host));
+    }
+}
+
 if (!function_exists('_get_status_text')) {
     /**
      * Undocumented function

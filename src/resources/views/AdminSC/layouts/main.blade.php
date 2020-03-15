@@ -78,13 +78,8 @@
       ]) !!}
       {{-- Right Side Of Navbar --}}
       <ul class="nav navbar-nav navbar-right">
-        {{-- <li data-toggle="tooltip" title="Email" data-placement="bottom">
-          <a href="https://webmail1.hostinger.co.id" target="_blank">
-            {!! app('is_mobile') ? 'Email&nbsp;<span class="pull-right"><i class="fa fa-envelope"></i></span>' : '<i class="fa fa-envelope"></i>' !!}
-          </a>
-        </li> --}}
-        <li data-toggle="tooltip" title="Kunjungi website" data-placement="bottom">
-          <a href="{{ route('web.root') }}" target="_blank">
+        <li data-toggle="tooltip" title="Kunjungi situs" data-placement="bottom">
+          <a href="{{ url(env('APP_URL')) }}" target="_blank">
             {!! app('is_mobile') ? 'Kunjungi website&nbsp;<span class="pull-right"><i class="fa fa-external-link"></i></span>' : '<i class="fa fa-globe"></i>' !!}
           </a>
         </li>
@@ -109,7 +104,7 @@
                 </a>
               </li>
               <li>
-                <a href="{{ url(env('APP_WEBMAIL_URL', adminPath() . '/webmail')) }}" target="_blank">
+                <a href="{{ url(adminPath() . '/webmail') }}" target="_blank">
                   <i class="fa fa-btn fa-envelope"></i> Email
                 </a>
               </li>
