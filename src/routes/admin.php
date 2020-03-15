@@ -4,6 +4,13 @@ $prefix = '\ZetthCore\Http\Controllers';
 Route::get('/', function () {
     return redirect(adminPath() . '/login');
 })->name('index');
+Route::get('/webmail', function () {
+    if (env('APP_WEBMAIL_URL')) {
+        return redirect(url(env('APP_WEBMAIL_URL')));
+    }
+
+    abort(404);
+})->name('webmail');
 Route::middleware(['throttle:' . (env('APP_DEBUG') ? 60 : 10) . ',1'])->group(function () use ($prefix) {
     Route::get('/login', $prefix . '\Auth\LoginController@showLoginForm')->name('login.form');
     Route::post('/login', $prefix . '\Auth\LoginController@login')->name('login.post');
