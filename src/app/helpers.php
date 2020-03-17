@@ -17,7 +17,7 @@ if (!function_exists('adminPath')) {
     function adminPath()
     {
         if (isAdminPath()) {
-            return env('ADMIN_PATH', 'manager');
+            return '/' . env('ADMIN_PATH', 'manager');
         }
 
         return null;

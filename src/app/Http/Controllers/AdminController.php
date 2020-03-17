@@ -22,7 +22,7 @@ class AdminController extends BaseController
 
     public function themes(Request $r, $path)
     {
-        if (strpos($path, 'admin') !== false) {
+        if (strpos($path, 'AdminSC') !== false) {
             $path = \Str::start(str_replace(['../', './', 'admin'], '', urldecode($path)), '/');
             $path = base_path('vendor/zafranf/zetthcore/src/resources/themes' . $path);
         } else {
