@@ -20,7 +20,7 @@ Route::get('/test/connection', function () {
 })->name('test.connection');
 
 /* template admin route */
-Route::get('/themes/admin/{path}', '\ZetthCore\Http\Controllers\AdminController@themes')->where('path', '.*')->name('themes.admin');
+Route::get('/themes/admin/{path}', $prefix . '\AdminController@themes')->where('path', '.*')->name('themes.admin');
 
 Route::middleware('auth')->group(function () use ($prefix) {
     Route::post('/logout', $prefix . '\Auth\LoginController@logout')->name('logout.post');
