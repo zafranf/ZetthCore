@@ -251,6 +251,7 @@
       $('#box-popular-post').addClass('hide');
       $('#box-recent-comment').addClass('hide'); */
       $('.loading').removeClass('hide');
+      $('#pageview-chart').addClass('hide');
       $('#table-data-popular').addClass('hide');
       $('#table-data-comment').addClass('hide');
       if (CONNECT){
@@ -266,6 +267,7 @@
         }).done(function(data) {
           if (data.status) {
             $('#box-pageview-chart .loading').addClass('hide');
+            $('#pageview-chart').removeClass('hide');
             pageview_chart(data.rows);
           }
         });
