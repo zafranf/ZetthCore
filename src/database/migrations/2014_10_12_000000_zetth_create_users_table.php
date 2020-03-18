@@ -21,6 +21,8 @@ class ZetthCreateUsersTable extends Migration
             $table->string('password');
             $table->text('about')->nullable();
             $table->string('image')->nullable();
+            $table->date('birthdate')->nullable();
+            $table->enum('gender', ['na', 'm', 'f'])->default('na')->nullable();
             $table->string('timezone')->default('Asia/Jakarta');
             $table->string('language')->default('id');
             $table->string('phone')->nullable();
