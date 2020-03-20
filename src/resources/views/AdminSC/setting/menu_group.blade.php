@@ -31,7 +31,7 @@
       let options = {
         "processing": true,
         "serverSide": true,
-        "ajax": SITE_URL + "{{ adminPath() }}/setting/menu-groups/data",
+        "ajax": ADMIN_URL + "/setting/menu-groups/data",
         "pageLength": 20,
         "lengthMenu": [
           [10, 20, 50, 100, -1], 
@@ -64,7 +64,7 @@
           "sortable": false,
           "render": function (data, type, row, meta) {
             let actions = '';
-            let url = SITE_URL + "{{ adminPath() }}/setting/menu-groups/" + data;
+            let url = ADMIN_URL + "/setting/menu-groups/" + data;
             let del = "_delete('" + url + "')";
             {!! _get_access_buttons() !!}
             $('[data-toggle="tooltip"]').tooltip();
@@ -103,7 +103,7 @@
             "sortable": false,
             "render": function (data, type, row, meta) {
               let actions = '';
-              let url = SITE_URL + "{{ adminPath() }}/setting/menu-groups/" + data;
+              let url = ADMIN_URL + "/setting/menu-groups/" + data;
               let del = "_delete('" + url + "')";
               {!! _get_access_buttons() !!}
               $('[data-toggle="tooltip"]').tooltip();

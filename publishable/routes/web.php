@@ -13,6 +13,13 @@
 
 /* Site Routes */
 Route::name('web.')->middleware(['site'])->group(function () {
+    Route::post('/login', 'Auth\LoginController@login')->name('login.post');
+    Route::post('/logout', 'Auth\LoginController@logout')->name('logout.post');
+    if (env('APP_DEBUG')) {
+        Route::get('/logout', 'Auth\LoginController@logout')->name('logout.get');
+        Route::get('/test', 'TestController@index')->name('test');
+    }
+
     /* Action Routes */
     Route::post('/contact', 'Site\ActionController@contact')->name('contact.post');
     Route::post('/comment', 'Site\ActionController@comment')->name('comment.post');
@@ -27,6 +34,11 @@ Route::name('web.')->middleware(['site'])->group(function () {
 
     /* Log all visits */
     Route::middleware(['visitor_log'])->group(function () {
+        /* check login status */
+        Route::middleware(['guest'])->group(function () {
+            Route::get('/login', 'Auth\LoginController@showLoginForm')->name('login');
+        });
+
         /* Front Routes */
         Route::get('/', 'Site\MainController@index')->name('root');
         Route::get('/search', 'Site\MainController@search')->name('search');

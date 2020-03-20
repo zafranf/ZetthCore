@@ -28,7 +28,7 @@
       var table = $('#table-data').DataTable({
         "processing": true,
         "serverSide": true,
-        "ajax": SITE_URL + "{{ adminPath() }}/log/errors/data",
+        "ajax": ADMIN_URL + "/log/errors/data",
         "pageLength": 20,
         "lengthMenu": [
           [10, 20, 50, 100, -1], 

@@ -30,7 +30,7 @@
       let options = {
         "processing": true,
         "serverSide": true,
-        "ajax": SITE_URL + "{{ adminPath() }}/report/subscribers/data",
+        "ajax": ADMIN_URL + "/report/subscribers/data",
         "pageLength": 20,
         "lengthMenu": [
           [10, 20, 50, 100, -1], 
@@ -62,7 +62,7 @@
           "sortable": false,
           "render": function (data, type, row, meta) {
             let actions = '';
-            let url = SITE_URL + "{{ adminPath() }}/report/subscribers/" + data;
+            let url = ADMIN_URL + "/report/subscribers/" + data;
             let del = "_delete('" + url + "')";
             {!! _get_access_buttons() !!}
             $('[data-toggle="tooltip"]').tooltip();
@@ -100,7 +100,7 @@
             "sortable": false,
             "render": function (data, type, row, meta) {
               let actions = '';
-              let url = SITE_URL + "{{ adminPath() }}/report/subscribers/" + data;
+              let url = ADMIN_URL + "/report/subscribers/" + data;
               let del = "_delete('" + url + "')";
               {!! _get_access_buttons() !!}
               $('[data-toggle="tooltip"]').tooltip();

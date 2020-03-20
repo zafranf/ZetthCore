@@ -30,7 +30,7 @@
       let options = {
         "processing": true,
         "serverSide": true,
-        "ajax": SITE_URL + "{{ adminPath() }}/content/gallery/photos/data",
+        "ajax": ADMIN_URL + "/content/gallery/photos/data",
         "pageLength": 20,
         "lengthMenu": [
           [10, 20, 50, 100, -1], 
@@ -62,7 +62,7 @@
           "sortable": false,
           "render": function (data, type, row, meta) {
             var actions = '';
-            var url = SITE_URL + "{{ adminPath() }}/content/gallery/photos/" + data;
+            var url = ADMIN_URL + "/content/gallery/photos/" + data;
             var del = "_delete('" + url + "')";
             {!! _get_access_buttons() !!}
             $('[data-toggle="tooltip"]').tooltip();
@@ -101,7 +101,7 @@
             "sortable": false,
             "render": function (data, type, row, meta) {
               let actions = '';
-              let url = SITE_URL + "{{ adminPath() }}/content/gallery/photos/" + data;
+              let url = ADMIN_URL + "/content/gallery/photos/" + data;
               let del = "_delete('" + url + "')";
               {!! _get_access_buttons() !!}
               $('[data-toggle="tooltip"]').tooltip();

@@ -170,6 +170,9 @@
       margin-bottom: 3px;
       padding-bottom: 0;
     }
+    .loading {
+      padding-left: 10px;
+    }
     @media (max-width: 768px) {
       .btn-quick {
         font-size: inherit;
@@ -248,6 +251,9 @@
       $('#box-popular-post').addClass('hide');
       $('#box-recent-comment').addClass('hide'); */
       $('.loading').removeClass('hide');
+      $('#pageview-chart').addClass('hide');
+      $('#table-data-popular').addClass('hide');
+      $('#table-data-comment').addClass('hide');
       if (CONNECT){
         /* get data pageview */
         $.ajax({
@@ -261,6 +267,7 @@
         }).done(function(data) {
           if (data.status) {
             $('#box-pageview-chart .loading').addClass('hide');
+            $('#pageview-chart').removeClass('hide');
             pageview_chart(data.rows);
           }
         });
@@ -276,6 +283,7 @@
         }).done(function(data) {
           if (data.status) {
             $('#box-popular-post .loading').addClass('hide');
+            $('#table-data-popular').removeClass('hide');
             popular_post(data.rows);
           }
         });
@@ -291,6 +299,7 @@
         }).done(function(data) {
           if (data.status) {
             $('#box-recent-comment .loading').addClass('hide');
+            $('#table-data-comment').removeClass('hide');
             recent_comments(data.rows);
           }
         });
