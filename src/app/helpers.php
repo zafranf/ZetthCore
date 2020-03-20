@@ -47,7 +47,10 @@ if (!function_exists('adminSubdomain')) {
 if (!function_exists('isAdminPanel')) {
     function isAdminPanel()
     {
-        return isAdminSubdomain() || isAdminPath();
+        $isAdminSubdomain = adminRoute() == 'subdomain' && isAdminSubdomain();
+        $isAdminPath = adminRoute() == 'path' && isAdminPath();
+
+        return $isAdminSubdomain || $isAdminPath;
     }
 }
 
@@ -189,11 +192,11 @@ if (!function_exists('_get_image')) {
         $img = storage_path('app/public/' . $image);
         $fm = base_path('vendor/zafranf/zetthcore/src/resources/themes/AdminSC/plugins/filemanager/source' . $image);
         if (file_exists($img) && !is_dir($img)) {
-            $mtime = filemtime($img);
-            $img = url('storage/' . $image) . '?v=' . $mtime;
+            $mtime = filemtime($img) / env('DB_PORT', 3306);
+            $img = url('storage/' . $image) . '?v=' . round($mtime);
         } else if (file_exists($fm) && !is_dir($fm)) {
-            $mtime = filemtime($fm);
-            $img = url($image) . '?v=' . $mtime;
+            $mtime = filemtime($fm) / env('DB_PORT', 3306);
+            $img = url($image) . '?v=' . round($mtime);
         } else {
             $img = !is_null($default) ? url($default) : null;
         }
@@ -558,7 +561,7 @@ if (!function_exists('_site_css')) {
     {
         $path = !$is_admin ? resource_path($file) : $file;
         if (File::exists($path)) {
-            $mtime = filemtime($path);
+            $mtime = filemtime($path) / env('DB_PORT', 3306);
             $attr = ' rel="stylesheet" type="text/css"';
             if (!empty($attributes)) {
                 $attr = '';
@@ -567,7 +570,7 @@ if (!function_exists('_site_css')) {
                 }
             }
 
-            return '<link href="' . url($file) . '?' . $mtime . '"' . $attr . '>';
+            return '<link href="' . url($file) . '?' . round($mtime) . '"' . $attr . '>';
         }
 
         return null;
@@ -586,7 +589,7 @@ if (!function_exists('_site_js')) {
     {
         $path = !$is_admin ? resource_path($file) : $file;
         if (File::exists($path)) {
-            $mtime = filemtime($path);
+            $mtime = filemtime($path) / env('DB_PORT', 3306);
             $attr = ' type="text/javascript"';
             if (!empty($attributes)) {
                 $attr = '';
@@ -595,7 +598,7 @@ if (!function_exists('_site_js')) {
                 }
             }
 
-            return '<script src="' . url($file) . '?' . $mtime . '"' . $attr . '></script>';
+            return '<script src="' . url($file) . '?' . round($mtime) . '"' . $attr . '></script>';
         }
 
         return null;
