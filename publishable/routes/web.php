@@ -13,6 +13,8 @@
 
 /* Site Routes */
 Route::name('web.')->middleware(['site'])->group(function () {
+    Route::post('/register', 'Auth\RegisterController@register')->name('register.post');
+    Route::post('/verification', 'Auth\VerificationController@verify')->name('verify.post');
     Route::post('/login', 'Auth\LoginController@login')->name('login.post');
     Route::post('/logout', 'Auth\LoginController@logout')->name('logout.post');
     if (env('APP_DEBUG')) {
@@ -36,6 +38,7 @@ Route::name('web.')->middleware(['site'])->group(function () {
     Route::middleware(['visitor_log'])->group(function () {
         /* check login status */
         Route::middleware(['guest'])->group(function () {
+            Route::get('/register', 'Auth\LoginController@showRegistrationForm')->name('register');
             Route::get('/login', 'Auth\LoginController@showLoginForm')->name('login');
         });
 
@@ -46,6 +49,8 @@ Route::name('web.')->middleware(['site'])->group(function () {
         /* Gallery Routes */
         Route::get('/albums', 'Site\GalleryController@album')->name('albums');
         Route::get('/album/{slug}', 'Site\GalleryController@album_detail')->name('album');
+        // Route::get('/photos', 'Site\GalleryController@photo')->name('photos');
+        // Route::get('/photo/{slug}', 'Site\GalleryController@photo_detail')->name('photo');
         Route::get('/videos', 'Site\GalleryController@video')->name('videos');
         Route::get('/video/{slug}', 'Site\GalleryController@video_detail')->name('video');
 
@@ -54,11 +59,10 @@ Route::name('web.')->middleware(['site'])->group(function () {
         Route::get('/maintenance', 'Site\MiscController@maintenance')->name('maintenance');
         Route::get('/thankyou', 'Site\MiscController@thankyou')->name('thankyou');
 
-        /* Term Routes */
-        Route::get('/{term_type}/{slug}', 'Site\PostController@term')->name('term')->where('term_type', 'category|tag');
+        /* Posts by Routes */
+        Route::get('/{by_type}/{slug}', 'Site\PostController@by')->name('posts.by')->where('by_type', 'category|tag|author');
 
-        /* Post Routes */
-        Route::get('/author/{name?}', 'Site\PostController@index')->name('posts.author');
+        /* Posts Routes */
         Route::get('/{type}', 'Site\PostController@index')->name('posts')->where('type', 'posts|articles|news');
         Route::get('/{type}/{slug}', 'Site\PostController@detail')->name('post')->where('type', 'post|article|news');
 
