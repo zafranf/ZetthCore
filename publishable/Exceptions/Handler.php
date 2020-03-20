@@ -54,6 +54,7 @@ class Handler extends ExceptionHandler
     public function render($request, Exception $e)
     {
         if ($this->isHttpException($e)) {
+            $this->visitorLog();
             $theme = $this->getTemplate();
             if (isAdminPanel()) {
                 $theme = 'zetthcore::AdminSC';
@@ -71,6 +72,7 @@ class Handler extends ExceptionHandler
                             'url' => '',
                         ],
                     ],
+                    'status_code' => $e->getStatusCode(),
                 ], $e->getStatusCode());
             }
         } else if ($e instanceof ModelNotFoundException) {
