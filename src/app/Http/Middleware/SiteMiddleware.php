@@ -31,11 +31,11 @@ class SiteMiddleware
         /* check status */
         if ($status == 0) {
             if ($uri != "comingsoon") {
-                return redirect(route('comingsoon'));
+                return redirect(route('web.comingsoon'));
             }
         } else if ($status == 2) {
             if ($uri != "maintenance") {
-                return redirect(route('maintenance'));
+                return redirect(route('web.maintenance'));
             }
         } else {
             if ($uri == "maintenance" || $uri == "comingsoon") {
