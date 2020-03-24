@@ -166,7 +166,7 @@ class UserController extends AdminController
         $this->saveSocmed($user, $r);
 
         /* log aktifitas */
-        $this->activityLog('<b>' . app('user')->fullname . '</b> menambahkan pengguna "' . $user->name . '"');
+        $this->activityLog('<b>[~name]</b> menambahkan pengguna "' . $user->name . '"');
 
         /* clear cache */
         \Cache::flush();
@@ -307,7 +307,7 @@ class UserController extends AdminController
         $this->saveSocmed($user, $r);
 
         /* log aktifitas */
-        $this->activityLog('<b>' . app('user')->fullname . '</b> memperbarui pengguna "' . $user->name . '"');
+        $this->activityLog('<b>[~name]</b> memperbarui pengguna "' . $user->name . '"');
 
         /* clear cache */
         \Cache::flush();
@@ -324,7 +324,7 @@ class UserController extends AdminController
     public function destroy(Request $r, User $user)
     {
         /* log aktifitas */
-        $this->activityLog('<b>' . app('user')->fullname . '</b> menghapus pengguna "' . $user->name . '"');
+        $this->activityLog('<b>[~name]</b> menghapus pengguna "' . $user->name . '"');
 
         /* soft delete */
         $user->delete();

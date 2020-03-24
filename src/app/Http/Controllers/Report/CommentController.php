@@ -138,7 +138,7 @@ class CommentController extends AdminController
     public function destroy(PostComment $comment)
     {
         /* log aktifitas */
-        $this->activityLog('<b>' . app('user')->fullname . '</b> menghapus Komentar "' . $comment->email . '"');
+        $this->activityLog('<b>[~name]</b> menghapus Komentar "' . $comment->email . '"');
 
         /* soft delete */
         $comment->delete();

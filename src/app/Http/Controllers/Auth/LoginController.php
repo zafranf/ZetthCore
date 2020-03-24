@@ -88,7 +88,7 @@ class LoginController extends AdminController
         $this->clearLoginAttempts($r);
 
         /* log aktifitas */
-        $this->activityLog('<b>' . app('user')->fullname . '</b> masuk halaman admin');
+        $this->activityLog('<b>[~name]</b> masuk halaman admin');
 
         /* set redirect for user admin */
         if (app('user')->is_admin) {
@@ -114,7 +114,7 @@ class LoginController extends AdminController
         }
 
         /* log aktifitas */
-        $this->activityLog('<b>' . app('user')->fullname . '</b> keluar dari halaman admin');
+        $this->activityLog('<b>[~name]</b> keluar dari halaman admin');
 
         $this->guard()->logout();
 
