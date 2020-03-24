@@ -20,7 +20,7 @@ class User extends Authenticatable implements MustVerifyEmail
      * @var array
      */
     protected $fillable = [
-        'name', 'fullname', 'email', 'password', 'is_first_login', 'status', 'verification_code', 'created_at',
+        'name', 'fullname', 'email', 'password', 'is_first_login', 'status', 'verify_code', 'verify_code_expire', 'created_at',
     ];
 
     /**
@@ -29,7 +29,7 @@ class User extends Authenticatable implements MustVerifyEmail
      * @var array
      */
     protected $hidden = [
-        'password', 'token', 'token_expire', 'verification_code', 'verified_at',
+        'password', 'token', 'token_expire', 'verify_code', 'verify_code_expire', 'verified_at',
     ];
 
     public function role_ids()
