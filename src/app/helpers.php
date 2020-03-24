@@ -198,11 +198,7 @@ if (!function_exists('_get_image')) {
             $mtime = filemtime($fm) / env('DB_PORT', 3306);
             $img = url($image) . '?v=' . $mtime;
         } else {
-            if ($image != $default) {
-                return _get_image($default);
-            }
-
-            return null;
+            return $default;
         }
 
         return $img;
