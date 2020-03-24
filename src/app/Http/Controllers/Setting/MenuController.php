@@ -131,7 +131,7 @@ class MenuController extends AdminController
         $menu->save();
 
         /* log aktifitas */
-        $this->activityLog('<b>[~name]</b> menambahkan Menu "' . $menu->name . '"');
+        $this->activityLog('[~name] menambahkan Menu "' . $menu->name . '"');
 
         /* clear cache */
         \Cache::flush();
@@ -230,7 +230,7 @@ class MenuController extends AdminController
         $menu->save();
 
         /* log aktifitas */
-        $this->activityLog('<b>[~name]</b> memperbarui Menu "' . $menu->name . '"');
+        $this->activityLog('[~name] memperbarui Menu "' . $menu->name . '"');
 
         /* clear cache */
         \Cache::flush();
@@ -252,7 +252,7 @@ class MenuController extends AdminController
         ]);
 
         /* log aktifitas */
-        $this->activityLog('<b>[~name]</b> menghapus Menu "' . $menu->name . '"');
+        $this->activityLog('[~name] menghapus Menu "' . $menu->name . '"');
 
         /* soft delete */
         $menu->delete();
