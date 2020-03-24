@@ -148,7 +148,7 @@ class PostController extends AdminController
         $this->process_tags($tags, $post->id);
 
         /* log aktifitas */
-        $this->activityLog('<b>' . app('user')->fullname . '</b> menambahkan artikel "' . $post->title . '"');
+        $this->activityLog('[~name] menambahkan artikel "' . $post->title . '"');
 
         /* clear cache */
         \Cache::flush();
@@ -264,7 +264,7 @@ class PostController extends AdminController
         $this->process_tags($tags, $post->id);
 
         /* log aktifitas */
-        $this->activityLog('<b>' . app('user')->fullname . '</b> memperbarui artikel "' . $post->title . '"');
+        $this->activityLog('[~name] memperbarui artikel "' . $post->title . '"');
 
         /* clear cache */
         \Cache::flush();
@@ -281,7 +281,7 @@ class PostController extends AdminController
     public function destroy(Post $post)
     {
         /* log aktifitas */
-        $this->activityLog('<b>' . app('user')->fullname . '</b> menghapus artikel "' . $post->title . '"');
+        $this->activityLog('[~name] menghapus artikel "' . $post->title . '"');
 
         /* soft delete */
         $post->delete();

@@ -23,6 +23,11 @@ class ZetthCreateUsersTable extends Migration
             $table->string('image')->nullable();
             $table->date('birthdate')->nullable();
             $table->enum('gender', ['na', 'm', 'f'])->default('na')->nullable();
+            $table->text('address')->nullable();
+            $table->string('street')->nullable();
+            $table->string('town')->nullable();
+            $table->string('zipcode')->nullable();
+            $table->string('country')->default('Indonesia');
             $table->string('timezone')->default('Asia/Jakarta');
             $table->string('language')->default('id');
             $table->string('phone')->nullable();
@@ -32,7 +37,8 @@ class ZetthCreateUsersTable extends Migration
             $table->datetime('token_expire')->nullable();
             $table->boolean('is_first_login')->comment('0=no, 1=yes')->unsigned()->default(1);
             $table->boolean('status')->comment('0=inactive, 1=active, 2=suspend, 3=banned')->unsigned();
-            $table->string('verification_code')->nullable();
+            $table->string('verify_code')->nullable();
+            $table->datetime('verify_code_expire')->nullable();
             $table->timestamp('verified_at')->nullable();
             $table->timestamps();
             $table->softDeletes();

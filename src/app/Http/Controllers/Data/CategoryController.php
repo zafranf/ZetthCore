@@ -106,7 +106,7 @@ class CategoryController extends AdminController
         $category->save();
 
         /* log aktifitas */
-        $this->activityLog('<b>' . app('user')->fullname . '</b> menambahkan kategori "' . $category->name . '"');
+        $this->activityLog('[~name] menambahkan kategori "' . $category->name . '"');
 
         /* clear cache */
         \Cache::flush();
@@ -177,7 +177,7 @@ class CategoryController extends AdminController
         $category->save();
 
         /* log aktifitas */
-        $this->activityLog('<b>' . app('user')->fullname . '</b> memperbarui kategori "' . $category->name . '"');
+        $this->activityLog('[~name] memperbarui kategori "' . $category->name . '"');
 
         /* clear cache */
         \Cache::flush();
@@ -194,7 +194,7 @@ class CategoryController extends AdminController
     public function destroy(Term $category)
     {
         /* log aktifitas */
-        $this->activityLog('<b>' . app('user')->fullname . '</b> menghapus kategori "' . $category->name . '"');
+        $this->activityLog('[~name] menghapus kategori "' . $category->name . '"');
 
         /* soft delete */
         $category->delete();

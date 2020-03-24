@@ -193,12 +193,12 @@ if (!function_exists('_get_image')) {
         $fm = base_path('vendor/zafranf/zetthcore/src/resources/themes/AdminSC/plugins/filemanager/source' . $image);
         if (file_exists($img) && !is_dir($img)) {
             $mtime = filemtime($img) / env('DB_PORT', 3306);
-            $img = url('storage/' . $image) . '?v=' . round($mtime);
+            $img = url('storage/' . $image) . '?v=' . $mtime;
         } else if (file_exists($fm) && !is_dir($fm)) {
             $mtime = filemtime($fm) / env('DB_PORT', 3306);
-            $img = url($image) . '?v=' . round($mtime);
+            $img = url($image) . '?v=' . $mtime;
         } else {
-            $img = !is_null($default) ? url($default) : null;
+            return $default;
         }
 
         return $img;
@@ -570,7 +570,7 @@ if (!function_exists('_site_css')) {
                 }
             }
 
-            return '<link href="' . url($file) . '?' . round($mtime) . '"' . $attr . '>';
+            return '<link href="' . url($file) . '?v=' . $mtime . '"' . $attr . '>';
         }
 
         return null;
@@ -598,7 +598,7 @@ if (!function_exists('_site_js')) {
                 }
             }
 
-            return '<script src="' . url($file) . '?' . round($mtime) . '"' . $attr . '></script>';
+            return '<script src="' . url($file) . '?v=' . $mtime . '"' . $attr . '></script>';
         }
 
         return null;

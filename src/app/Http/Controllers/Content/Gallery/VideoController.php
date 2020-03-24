@@ -110,7 +110,7 @@ class VideoController extends AdminController
         $video->save();
 
         /* log aktifitas */
-        $this->activityLog('<b>' . app('user')->fullname . '</b> menambahkan video "' . $video->title . '"');
+        $this->activityLog('[~name] menambahkan video "' . $video->title . '"');
 
         /* clear cache */
         \Cache::flush();
@@ -183,7 +183,7 @@ class VideoController extends AdminController
         $video->save();
 
         /* log aktifitas */
-        $this->activityLog('<b>' . app('user')->fullname . '</b> memperbarui video "' . $video->title . '"');
+        $this->activityLog('[~name] memperbarui video "' . $video->title . '"');
 
         /* clear cache */
         \Cache::flush();
@@ -200,7 +200,7 @@ class VideoController extends AdminController
     public function destroy(Post $video)
     {
         /* log aktifitas */
-        $this->activityLog('<b>' . app('user')->fullname . '</b> menghapus video "' . $video->title . '"');
+        $this->activityLog('[~name] menghapus video "' . $video->title . '"');
 
         /* soft delete */
         $video->delete();

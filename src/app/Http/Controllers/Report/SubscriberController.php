@@ -134,7 +134,7 @@ class SubscriberController extends AdminController
         $subscriber->save();
 
         /* log aktifitas */
-        $this->activityLog('<b>' . app('user')->fullname . '</b> memperbarui Pelanggan "' . $subscriber->email . '"');
+        $this->activityLog('[~name] memperbarui Pelanggan "' . $subscriber->email . '"');
 
         return redirect($this->current_url)->with('success', 'Pelanggan berhasil disimpan!');
     }
@@ -148,7 +148,7 @@ class SubscriberController extends AdminController
     public function destroy(Subscriber $subscriber)
     {
         /* log aktifitas */
-        $this->activityLog('<b>' . app('user')->fullname . '</b> menghapus Pelanggan "' . $subscriber->email . '"');
+        $this->activityLog('[~name] menghapus Pelanggan "' . $subscriber->email . '"');
 
         /* soft delete */
         $subscriber->delete();

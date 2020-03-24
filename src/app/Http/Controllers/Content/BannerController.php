@@ -142,7 +142,7 @@ class BannerController extends AdminController
         $this->sortQuery($r, $orders);
 
         /* log aktifitas */
-        $this->activityLog('<b>' . app('user')->fullname . '</b> menambahkan spanduk "' . $banner->title . '"');
+        $this->activityLog('[~name] menambahkan spanduk "' . $banner->title . '"');
 
         /* clear cache */
         \Cache::flush();
@@ -241,7 +241,7 @@ class BannerController extends AdminController
         $this->sortQuery($r, $orders);
 
         /* log aktifitas */
-        $this->activityLog('<b>' . app('user')->fullname . '</b> memperbarui spanduk "' . $banner->title . '"');
+        $this->activityLog('[~name] memperbarui spanduk "' . $banner->title . '"');
 
         /* clear cache */
         \Cache::flush();
@@ -258,7 +258,7 @@ class BannerController extends AdminController
     public function destroy(Banner $banner)
     {
         /* log aktifitas */
-        $this->activityLog('<b>' . app('user')->fullname . '</b> menghapus spanduk "' . $banner->title . '"');
+        $this->activityLog('[~name] menghapus spanduk "' . $banner->title . '"');
 
         /* soft delete */
         $banner->delete();

@@ -119,7 +119,7 @@ class UserController extends AdminController
     {
         /* validation */
         $this->validate($r, [
-            'name' => 'required|alpha_num|min:3|max:30|unique:users',
+            'name' => 'required|alpha_dash|min:3|max:30|unique:users',
             'fullname' => 'required|min:1|max:100',
             'email' => 'required|email',
             'image' => 'mimes:jpg,jpeg,png,svg|max:512|dimensions:max_width=512,max_height=512',
@@ -166,7 +166,7 @@ class UserController extends AdminController
         $this->saveSocmed($user, $r);
 
         /* log aktifitas */
-        $this->activityLog('<b>' . app('user')->fullname . '</b> menambahkan pengguna "' . $user->name . '"');
+        $this->activityLog('[~name] menambahkan pengguna "' . $user->name . '"');
 
         /* clear cache */
         \Cache::flush();
@@ -256,7 +256,7 @@ class UserController extends AdminController
     {
         /* validation */
         $validation = [
-            'name' => 'required|alpha_num|min:3|max:30|unique:users,name,' . $user->id . ',id',
+            'name' => 'required|alpha_dash|min:3|max:30|unique:users,name,' . $user->id . ',id',
             'fullname' => 'required|max:100',
             'email' => 'required|email',
             'image' => 'mimes:jpg,jpeg,png,svg|max:512|dimensions:max_width=512,max_height=512',
@@ -307,7 +307,7 @@ class UserController extends AdminController
         $this->saveSocmed($user, $r);
 
         /* log aktifitas */
-        $this->activityLog('<b>' . app('user')->fullname . '</b> memperbarui pengguna "' . $user->name . '"');
+        $this->activityLog('[~name] memperbarui pengguna "' . $user->name . '"');
 
         /* clear cache */
         \Cache::flush();
@@ -324,7 +324,7 @@ class UserController extends AdminController
     public function destroy(Request $r, User $user)
     {
         /* log aktifitas */
-        $this->activityLog('<b>' . app('user')->fullname . '</b> menghapus pengguna "' . $user->name . '"');
+        $this->activityLog('[~name] menghapus pengguna "' . $user->name . '"');
 
         /* soft delete */
         $user->delete();

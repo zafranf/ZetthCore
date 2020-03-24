@@ -24,22 +24,22 @@ class SiteMiddleware
         $status = app('site')->status;
 
         /* next on subscribe */
-        if ($request->isMethod('post') && $uri != "subscribe") {
+        if ($request->isMethod('post') && $uri == "subscribe") {
             return $next($request);
         }
 
         /* check status */
         if ($status == 0) {
             if ($uri != "comingsoon") {
-                return redirect('comingsoon');
+                return redirect(route('web.comingsoon'));
             }
         } else if ($status == 2) {
             if ($uri != "maintenance") {
-                return redirect('maintenance');
+                return redirect(route('web.maintenance'));
             }
         } else {
             if ($uri == "maintenance" || $uri == "comingsoon") {
-                return redirect('/');
+                return redirect(route('web.root'));
             }
         }
 
