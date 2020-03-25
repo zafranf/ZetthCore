@@ -11,14 +11,12 @@
           <div class="form-group">
             <label for="logo" class="col-md-4 control-label">
               Logo
-              <small class="help-block">Maksimal dimensi logo adalah 512x512 px dengan ukuran maksimal 384
-                KB</small>
+              <small class="help-block">Maksimal dimensi logo adalah 512px x 512px dengan ukuran maksimal 384 KB</small>
             </label>
             <div class="col-md-8">
               <div class="fileinput fileinput-new" data-provides="fileinput">
                 <div class="fileinput-new thumbnail">
-                  <img
-                    src="{{ _get_image("assets/images/" . app('site')->logo, url(adminPath() . "/themes/admin/AdminSC/images/logo.v2.png")) }}">
+                  <img src="{{ _get_image("assets/images/" . app('site')->logo, url(adminPath() . "/themes/admin/AdminSC/images/logo.v2.png")) }}">
                 </div>
                 <div class="fileinput-preview fileinput-exists thumbnail"></div>
                 <div>
@@ -29,11 +27,11 @@
                   </span>
                   <a href="#" class="btn btn-default fileinput-exists" data-dismiss="fileinput">Batal</a>
                   @if (isset(app('site')->logo))
-                  <small class="help-inline-table">
-                    <label class="pull-right">
-                      <input type="checkbox" name="logo_remove" id="logo_remove"> Hapus
-                    </label>
-                  </small>
+                    <small class="help-inline-table">
+                      <label class="pull-right">
+                        <input type="checkbox" name="logo_remove" id="logo_remove"> Hapus
+                      </label>
+                    </small>
                   @endif
                 </div>
               </div>
@@ -42,20 +40,16 @@
           <div class="form-group">
             <label for="icon" class="col-md-4 control-label">
               Ikon
-              <small class="help-block">Maksimal dimensi ikon adalah 128x128 px dengan ukuran maksimal 96
-                KB</small>
+              <small class="help-block">Maksimal dimensi ikon adalah 128px x 128px dengan ukuran maksimal 96 KB</small>
             </label>
             <div class="col-md-8">
               <div class="fileinput fileinput-new input-group" data-provides="fileinput">
                 <div class="form-control" data-trigger="fileinput">
                   <div class="fileinput-new thumbnail"
                     style="width:20px!important;padding:0;margin-bottom:8px;position:absolute;left:5px;">
-                    <img
-                      src="{{ _get_image("assets/images/" . app('site')->icon, url(adminPath() . "/themes/admin/AdminSC/images/logo.v2.png")) }}"
-                      width="20">
+                    <img src="{{ _get_image("assets/images/" . app('site')->icon, url(adminPath() . "/themes/admin/AdminSC/images/logo.v2.png")) }}" width="20">
                   </div>
-                  <div class="fileinput-preview fileinput-exists thumbnail"
-                    style="width:20px!important;padding:0;margin-bottom:8px;position:absolute;left:5px;">
+                  <div class="fileinput-preview fileinput-exists thumbnail" style="width:20px!important;padding:0;margin-bottom:8px;position:absolute;left:5px;">
                   </div>
                   <span class="fileinput-filename" style="margin-bottom:5px;position:relative;left:20px;"></span>
                 </div>
@@ -71,9 +65,9 @@
                   <input type="checkbox" name="use_logo" id="use_logo"> Gunakan logo
                 </label>
                 @if (isset(app('site')->icon))
-                <label class="pull-right">
-                  <input type="checkbox" name="icon_remove" id="icon_remove"> Hapus
-                </label>
+                  <label class="pull-right">
+                    <input type="checkbox" name="icon_remove" id="icon_remove"> Hapus
+                  </label>
                 @endif
               </small>
             </div>
@@ -81,36 +75,31 @@
           <div class="form-group">
             <label for="name" class="col-md-4 control-label">Nama Situs</label>
             <div class="col-md-8">
-              <input type="text" class="form-control autofocus" id="name" name="name"
-                value="{{ app('site')->name ?? '' }}" placeholder="Nama situs.." maxlength="50">
+              <input type="text" class="form-control autofocus" id="name" name="name" value="{{ app('site')->name ?? '' }}" placeholder="Nama situs.." maxlength="50">
             </div>
           </div>
           <div class="form-group">
             <label for="slogan" class="col-md-4 control-label">Slogan</label>
             <div class="col-md-8">
-              <input type="text" class="form-control" id="tagline" name="tagline" value="{{ app('site')->tagline ?? '' }}"
-                placeholder="Slogan situs.." maxlength="100">
+              <input type="text" class="form-control" id="tagline" name="tagline" value="{{ app('site')->tagline ?? '' }}" placeholder="Slogan situs.." maxlength="100">
             </div>
           </div>
           <div class="form-group">
             <label for="email" class="col-md-4 control-label">Surel</label>
             <div class="col-md-8">
-              <input type="text" class="form-control" id="email" name="email" value="{{ app('site')->email ?? '' }}"
-                placeholder="Alamat surel.." maxlength="100">
+              <input type="text" class="form-control" id="email" name="email" value="{{ app('site')->email ?? '' }}" placeholder="Alamat surel.." maxlength="100">
             </div>
           </div>
           <div class="form-group">
             <label for="phone" class="col-md-4 control-label">Telepon</label>
             <div class="col-md-8">
-              <input type="text" class="form-control" id="phone" name="phone" value="{{ app('site')->phone ?? '' }}"
-                placeholder="Nomor telepon.." maxlength="16">
+              <input type="text" class="form-control" id="phone" name="phone" value="{{ app('site')->phone ?? '' }}" placeholder="Nomor telepon.." maxlength="16">
             </div>
           </div>
           <div class="form-group" {!! (Auth::user()->id != 1)?'style="display:none;"':'' !!}>
             <label for="perpage" class="col-md-4 control-label">Data Perhalaman</label>
             <div class="col-md-8">
-              <input type="number" class="form-control" id="perpage" name="perpage"
-                value="{{ app('site')->perpage ?? 0 }}" placeholder="Jumlah data perhalaman.." min="3" max="100">
+              <input type="number" class="form-control" id="perpage" name="perpage" value="{{ app('site')->perpage ?? 0 }}" placeholder="Jumlah data perhalaman.." min="3" max="100">
             </div>
           </div>
           <div class="form-group">
@@ -161,8 +150,7 @@
           <div class="form-group" {!! (app('site')->status == 1) ? 'style="display:none;"' : '' !!} id="d-active-at">
             <label for="active_at" class="col-md-4 control-label">Aktif pada</label>
             <div class="col-md-8">
-              <input type="text" class="form-control" id="active-at" name="active_at"
-                value="{{ isset(app('site')->active_at) ? carbon(app('site')->active_at)->format('Y-m-d') : '' }}" {!!
+              <input type="text" class="form-control" id="active-at" name="active_at" value="{{ isset(app('site')->active_at) ? carbon(app('site')->active_at)->format('Y-m-d') : '' }}" {!!
                 (app('site')->status == 1) ? 'readonly' : '' !!} placeholder="Dibuka pada..">
             </div>
           </div>
@@ -182,52 +170,52 @@
             </label>
             <div class="col-md-8">
               @if (isset($socmed_data) && count($socmed_data) > 0)
-              @foreach ($socmed_data as $key => $val)
-              @php
-              $rand = rand(111111111, 999999999);
-              @endphp
-              <div id="div-socmed-{{ $rand }}">
+                @foreach ($socmed_data as $key => $val)
+                  @php
+                    $rand = rand(111111111, 999999999);
+                  @endphp
+                  <div id="div-socmed-{{ $rand }}">
+                    <div class="col-md-3 col-xs-6 no-padding">
+                      <select class="form-control custom-select2" id="socmed-id-{{ $rand }}" name="socmed_id[]">
+                        <option value="">--Pilih--</option>
+                        @if (isset($socmeds))
+                          @foreach ($socmeds as $socmed)
+                            @php
+                              $sl = ($socmed->id==$val->socmed->id) ? 'selected' : ''
+                            @endphp
+                            <option value="{{ $socmed->id }}" {{ $sl }}>{{ $socmed->name }}</option>
+                          @endforeach
+                        @endif
+                      </select>
+                    </div>
+                    <div class="col-md-9 col-xs-6 no-padding">
+                      @if ($key > 0)
+                        <div class="input-group">
+                          <input type="text" class="form-control" id="socmed-uname-{{ $rand }}" name="socmed_uname[]" placeholder="Nama/ID akun.." maxlength="50" value="{{ $val->username }}">
+                          <span class="input-group-btn">
+                            <button type="button" class="btn" style="background:white;border:1px solid #ccc;" onclick="_remove('#div-socmed-{{ $rand }}')"><i class="fa fa-minus"></i></button>
+                          </span>
+                        </div>
+                      @else
+                        <input type="text" class="form-control" id="socmed-uname-{{ $rand }}" name="socmed_uname[]" placeholder="Nama/ID akun.." value="{{ $val->username }}">
+                      @endif
+                    </div>
+                  </div>
+                @endforeach
+              @else
                 <div class="col-md-3 col-xs-6 no-padding">
-                  <select class="form-control custom-select2" id="socmed-id-{{ $rand }}" name="socmed_id[]">
+                  <select class="form-control custom-select2" id="socmed-id" name="socmed_id[]">
                     <option value="">--Pilih--</option>
                     @if (isset($socmeds))
-                    @foreach ($socmeds as $socmed)
-                    @php
-                    $sl = ($socmed->id==$val->socmed->id) ? 'selected' : ''
-                    @endphp
-                    <option value="{{ $socmed->id }}" {{ $sl }}>{{ $socmed->name }}</option>
-                    @endforeach
+                      @foreach ($socmeds as $socmed)
+                        <option value="{{ $socmed->id }}">{{ $socmed->name }}</option>
+                      @endforeach
                     @endif
                   </select>
                 </div>
                 <div class="col-md-9 col-xs-6 no-padding">
-                  @if ($key > 0)
-                  <div class="input-group">
-                    <input type="text" class="form-control" id="socmed-uname-{{ $rand }}" name="socmed_uname[]" placeholder="Nama/ID akun.." maxlength="50" value="{{ $val->username }}">
-                    <span class="input-group-btn">
-                      <button type="button" class="btn" style="background:white;border:1px solid #ccc;" onclick="_remove('#div-socmed-{{ $rand }}')"><i class="fa fa-minus"></i></button>
-                    </span>
-                  </div>
-                  @else
-                  <input type="text" class="form-control" id="socmed-uname-{{ $rand }}" name="socmed_uname[]" placeholder="Nama/ID akun.." value="{{ $val->username }}">
-                  @endif
+                  <input type="text" class="form-control" id="socmed-uname" name="socmed_uname[]" placeholder="Nama/ID akun.." maxlength="50">
                 </div>
-              </div>
-              @endforeach
-              @else
-              <div class="col-md-3 col-xs-6 no-padding">
-                <select class="form-control custom-select2" id="socmed-id" name="socmed_id[]">
-                  <option value="">--Pilih--</option>
-                  @if (isset($socmeds))
-                    @foreach ($socmeds as $socmed)
-                      <option value="{{ $socmed->id }}">{{ $socmed->name }}</option>
-                    @endforeach
-                  @endif
-                </select>
-              </div>
-              <div class="col-md-9 col-xs-6 no-padding">
-                <input type="text" class="form-control" id="socmed-uname" name="socmed_uname[]" placeholder="Nama/ID akun.." maxlength="50">
-              </div>
               @endif
               <div id="div-socmed"></div>
             </div>
@@ -291,7 +279,7 @@
   </div>
 @endsection
 
-@section('styles')
+@push('styles')
   {!! _admin_css(adminPath() . '/themes/admin/AdminSC/plugins/jasny-bootstrap/3.1.3/css/jasny-bootstrap.min.css') !!}
   {!! _admin_css(adminPath() . '/themes/admin/AdminSC/plugins/bootstrap/tagsinput/0.8.0/css/bootstrap-tagsinput.css') !!}
   {!! _admin_css(adminPath() . '/themes/admin/AdminSC/plugins/bootstrap/datetimepicker/4.17.37/css/bootstrap-datetimepicker.min.css') !!}
@@ -313,9 +301,9 @@
       border-right: 0;
     }
   </style>
-@endsection
+@endpush
 
-@section('scripts')
+@push('scripts')
   {!! _admin_js(adminPath() . '/themes/admin/AdminSC/plugins/jasny-bootstrap/3.1.3/js/jasny-bootstrap.min.js') !!}
   {!! _admin_js(adminPath() . '/themes/admin/AdminSC/plugins/bootstrap/tagsinput/0.8.0/js/bootstrap-tagsinput.js') !!}
   {!! _admin_js(adminPath() . '/themes/admin/AdminSC/plugins/moment/2.13.0/js/moment.min.js') !!}
@@ -377,4 +365,4 @@
         });
       });
   </script>
-@endsection
+@endpush
