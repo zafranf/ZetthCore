@@ -205,7 +205,7 @@ class SiteController extends AdminController
         /* processing socmed */
         $this->process_socmed($r);
 
-        /* log aktifitas */
+        /* save activity */
         $this->activityLog('[~name] memperbarui Pengaturan - Situs');
 
         /* clear cache */

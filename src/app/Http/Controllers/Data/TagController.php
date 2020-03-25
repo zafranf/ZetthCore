@@ -104,7 +104,7 @@ class TagController extends AdminController
         $tag->status = bool($r->input('status')) ? 1 : 0;
         $tag->save();
 
-        /* log aktifitas */
+        /* save activity */
         $this->activityLog('[~name] menambahkan label "' . $tag->name . '"');
 
         /* clear cache */
@@ -174,7 +174,7 @@ class TagController extends AdminController
         $tag->status = bool($r->input('status')) ? 1 : 0;
         $tag->save();
 
-        /* log aktifitas */
+        /* save activity */
         $this->activityLog('[~name] memperbarui label "' . $tag->name . '"');
 
         /* clear cache */
@@ -191,7 +191,7 @@ class TagController extends AdminController
      */
     public function destroy(Term $tag)
     {
-        /* log aktifitas */
+        /* save activity */
         $this->activityLog('[~name] menghapus label "' . $tag->name . '"');
 
         /* soft delete */

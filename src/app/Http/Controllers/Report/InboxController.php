@@ -137,7 +137,7 @@ class InboxController extends AdminController
      */
     public function destroy(Inbox $inbox)
     {
-        /* log aktifitas */
+        /* save activity */
         $this->activityLog('[~name] menghapus Kotak Masuk "' . $inbox->email . '"');
 
         /* soft delete */

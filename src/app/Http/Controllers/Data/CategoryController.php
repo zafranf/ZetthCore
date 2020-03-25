@@ -105,7 +105,7 @@ class CategoryController extends AdminController
         $category->status = bool($r->input('status')) ? 1 : 0;
         $category->save();
 
-        /* log aktifitas */
+        /* save activity */
         $this->activityLog('[~name] menambahkan kategori "' . $category->name . '"');
 
         /* clear cache */
@@ -176,7 +176,7 @@ class CategoryController extends AdminController
         $category->status = bool($r->input('status')) ? 1 : 0;
         $category->save();
 
-        /* log aktifitas */
+        /* save activity */
         $this->activityLog('[~name] memperbarui kategori "' . $category->name . '"');
 
         /* clear cache */
@@ -193,7 +193,7 @@ class CategoryController extends AdminController
      */
     public function destroy(Term $category)
     {
-        /* log aktifitas */
+        /* save activity */
         $this->activityLog('[~name] menghapus kategori "' . $category->name . '"');
 
         /* soft delete */

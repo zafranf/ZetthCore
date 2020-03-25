@@ -87,7 +87,7 @@ class LoginController extends AdminController
 
         $this->clearLoginAttempts($r);
 
-        /* log aktifitas */
+        /* save activity */
         $this->activityLog('[~name] masuk halaman admin');
 
         /* set redirect for user admin */
@@ -113,7 +113,7 @@ class LoginController extends AdminController
             $redirect = app('admin_path') . '/login';
         }
 
-        /* log aktifitas */
+        /* save activity */
         $this->activityLog('[~name] keluar dari halaman admin');
 
         $this->guard()->logout();

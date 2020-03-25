@@ -108,7 +108,7 @@ class PageController extends AdminController
         $page->published_at = now();
         $page->save();
 
-        /* log aktifitas */
+        /* save activity */
         $this->activityLog('[~name] menambahkan halaman "' . $page->title . '"');
 
         /* clear cache */
@@ -181,7 +181,7 @@ class PageController extends AdminController
         $page->updated_by = app('user')->id;
         $page->save();
 
-        /* log aktifitas */
+        /* save activity */
         $this->activityLog('[~name] memperbarui halaman "' . $page->title . '"');
 
         /* clear cache */
@@ -198,7 +198,7 @@ class PageController extends AdminController
      */
     public function destroy(Post $page)
     {
-        /* log aktifitas */
+        /* save activity */
         $this->activityLog('[~name] menghapus halaman "' . $page->title . '"');
 
         /* soft delete */
