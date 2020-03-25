@@ -27,6 +27,7 @@ class CreatePostsTable extends Migration
             $table->integer('visited')->unsigned()->default(0);
             $table->integer('shared')->unsigned()->default(0);
             $table->integer('liked')->unsigned()->default(0);
+            $table->integer('disliked')->unsigned()->default(0);
             $table->string('short_url')->nullable();
             $table->boolean('status')->comment('0=pending, 1=active, 2=draft')->unsigned();
             $table->integer('created_by')->unsigned()->index();
