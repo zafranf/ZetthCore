@@ -210,7 +210,7 @@ if (!function_exists('getSiteURL')) {
     {
         $url = url($path ?? '/');
         if (adminRoute() == 'subdomain') {
-            $url = str_replace(adminSubdomain() . '.', '', $url);
+            $url = url(env('APP_URL') . ltrim($path, '/'));
         }
 
         return $url;

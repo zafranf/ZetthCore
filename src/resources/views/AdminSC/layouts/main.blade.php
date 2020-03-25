@@ -79,8 +79,8 @@
         {{-- Right Side Of Navbar --}}
         <ul class="nav navbar-nav navbar-right">
           <li data-toggle="tooltip" title="Kunjungi situs" data-placement="bottom">
-            <a href="{{ url(env('APP_URL')) }}" target="_blank">
-              {!! app('is_mobile') ? 'Kunjungi website&nbsp;<span class="pull-right"><i class="fa fa-external-link"></i></span>' : '<i class="fa fa-globe"></i>' !!}
+            <a href="{{ getSiteURL('/') }}" target="_blank">
+              {!! app('is_mobile') ? 'Kunjungi situs&nbsp;<span class="pull-right"><i class="fa fa-external-link"></i></span>' : '<i class="fa fa-globe"></i>' !!}
             </a>
           </li>
           {{-- <li><a href="{{ url('admin/help') }}" title="Help"><i class="fa fa-question-circle-o"></i></a></li> --}}
