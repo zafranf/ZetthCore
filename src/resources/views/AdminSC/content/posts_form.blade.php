@@ -30,9 +30,9 @@
           <input type="text" id="title" class="form-control {{ isset($data) ? '' : 'autofocus' }} no-border-top-right no-border-left no-radius input-lg" name="title" placeholder="Judul.." maxlength="100" value="{{ $data->title ?? old('title') }}">
           <div class="input-group">
             <span class="input-group-addon no-border-top-right no-border-left no-radius input-sm" id="url_span">{{ getSiteURL('/post/') }}/</span>
-            <input type="text" id="slug" class="form-control no-border-top-right no-radius input-sm" name="slug" placeholder="Tautan otomatis.. (klik 2x untuk edit)" readonly value="{{ $data->slug ?? old('slug') }}">
+            <input type="text" id="slug" class="form-control no-border-top-right no-radius input-sm" name="slug" placeholder="Tautan otomatis.. (dapat disesuaikan, klik 2x untuk menyesuaikan)" readonly value="{{ $data->slug ?? old('slug') }}">
           </div>
-          <textarea id="excerpt" name="excerpt" class="form-control no-border-top-right no-border-left no-radius input-xlarge" placeholder="Kutipan/deskripsi singkat (opsional).." rows="3">{{ $data->excerpt ?? old('excerpt') }}</textarea>
+          <textarea id="excerpt" name="excerpt" class="form-control no-border-top-right no-border-left no-radius input-xlarge" placeholder="Kutipan/deskripsi singkat tentang artikel (opsional).." rows="3">{{ $data->excerpt ?? old('excerpt') }}</textarea>
           <textarea id="content" name="content" class="form-control no-border-top-right no-border-bottom no-radius input-xlarge" placeholder="Ketikkan tulisan anda di sini...">{{ $data->content ?? old('content') }}</textarea>
         </div>
         <div class="col-sm-4 col-md-3 right-side">
@@ -100,7 +100,7 @@
             </div>
           </div>
           <div class="form-group">
-            <label for="time">Waktu</label><br>
+            <label for="time">Waktu Terbit</label><br>
             <div class="col-sm-6 col-xs-6 no-padding">
               <input type="text" class="form-control" id="date" name="date" value="{{ isset($data) ? carbon($data->published_at)->format("Y-m-d") : old('date') }}" placeholder="{{ carbon()->format("Y-m-d") }}">
             </div>
