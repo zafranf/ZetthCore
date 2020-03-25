@@ -44,7 +44,7 @@
 	</div>
 @endsection
 
-@section('styles')
+@push('styles')
   <style>
     .mce-fullscreen {
         z-index: 9999!important;
@@ -55,9 +55,9 @@
       top: 4px;
     }
   </style>
-@endsection
+@endpush
 
-@section('scripts')
+@push('scripts')
   {!! _admin_js(adminPath() . '/themes/admin/AdminSC/plugins/tinymce/4.3.2/tinymce.min.js') !!}
   <script>
     $(document).ready(function(){
@@ -103,4 +103,4 @@
       });
     });
   </script>
-@endsection
+@endpush

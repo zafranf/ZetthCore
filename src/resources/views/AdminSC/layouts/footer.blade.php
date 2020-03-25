@@ -28,7 +28,7 @@
   {!! _admin_js(adminPath() . '/themes/admin/AdminSC/plugins/jquery/2.2.4/js/jquery.min.js') !!}
   {!! _admin_js(adminPath() . '/themes/admin/AdminSC/plugins/bootstrap/3.3.6/js/bootstrap.min.js') !!}
   {!! _admin_js(adminPath() . '/themes/admin/AdminSC/plugins/sweetalert2/js/sweetalert2.min.js') !!}
-  @yield('scripts')
+  @stack('scripts')
   {!! _admin_js(adminPath() . '/themes/admin/AdminSC/js/app.min.js') !!}
 </body>
 

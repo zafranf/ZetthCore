@@ -15,8 +15,7 @@
         <div class="col-sm-10">
           <div class="input-group">
             <span class="input-group-addon" id="slug_span">{{ getSiteURL("/") }}/</span>
-            <input type="text" id="slug" class="form-control" name="slug" placeholder="Tautan otomatis (dapat disesuaikan).."
-              value="{{ isset($data) ? $data->slug : old('slug') }}" {{ isset($data) ? 'readonly' : '' }}>
+            <input type="text" id="slug" class="form-control" name="slug" placeholder="Tautan otomatis (dapat disesuaikan).." value="{{ isset($data) ? $data->slug : old('slug') }}" {{ isset($data) ? 'readonly' : '' }}>
           </div>
         </div>
       </div>
@@ -47,6 +46,8 @@
   </div>
 @endsection
 
+@include('zetthcore::AdminSC.components.tinymce')
+
 @section('styles')
   <style>
     .mce-fullscreen {
@@ -61,52 +62,24 @@
   </style>
 @endsection
 
-@section('scripts')
-  {!! _admin_js(adminPath() . '/themes/admin/AdminSC/plugins/tinymce/4.3.2/tinymce.min.js') !!}
+@push('scripts')
   <script>
     $(document).ready(function(){
-        @if (!isset($data))
-          $('#title').on('keyup blur', function(){
-            var slug = _get_slug($(this).val());
-            $('#slug').val(slug);
-          });
-
-          $('#slug').on('blur', function(){
-            var slug = _get_slug($(this).val());
-            $('#slug').val(slug);
-          });
-        @endif
-
-        tinymce.init({
-          relative_urls: false,
-          selector: '#content',
-          skin: 'custom',
-          language: 'id',
-          height: 200,
-          plugins: [
-            "advlist autolink link image lists charmap print preview hr anchor pagebreak",
-            "searchreplace wordcount visualblocks visualchars insertdatetime media nonbreaking",
-            "table {{ app('is_desktop') ? 'contextmenu ' : '' }}directionality emoticons paste textcolor responsivefilemanager code",
-            "placeholder youtube fullscreen"
-          ],
-          toolbar1: "undo redo | bold italic underline blockquote | link unlink | image | fullscreen",
-          image_advtab: true,
-          image_caption: true,
-          menubar : false,
-          external_filemanager_path:"{{ asset(adminPath() . '/larafile/') }}/",
-          filemanager_title:"Filemanager",
-          filemanager_folder: '/',
-          filemanager_language: 'id',
-          external_plugins: { "filemanager" : "{{ asset(adminPath() . '/larafile/plugin.min.js') }}" },
-          setup : function(ed) {
-            ed.on('init', function() 
-            {
-              /* this.getDoc().body.style.fontSize = '12px'; */
-              this.getDoc().body.style.fontFamily = 'arial, helvetica, sans-serif';
-              /* this.getDoc().body.style.fontWeight = '300'; */
-            });
-          }
+      @if (!isset($data))
+        $('#title').on('keyup blur', function(){
+          var slug = _get_slug($(this).val());
+          $('#slug').val(slug);
         });
-      });
+
+        $('#slug').on('blur', function(){
+          var slug = _get_slug($(this).val());
+          $('#slug').val(slug);
+        });
+      @endif
+
+      setTimeout(function(){
+        $('#mceu_25 iframe').height(200);
+      }, 500);
+    });
   </script>
-@endsection
+@endpush

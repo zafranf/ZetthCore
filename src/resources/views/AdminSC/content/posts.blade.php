@@ -20,7 +20,7 @@
   </div>
 @endsection
 
-@section('styles')
+@push('styles')
   {!! _admin_css(adminPath() . '/themes/admin/AdminSC/plugins/DataTables/1.10.12/css/jquery.dataTables.min.css') !!}
   <style>
     .zetth-share-button {
@@ -76,9 +76,9 @@
       }
     }
   </style>
-@endsection
+@endpush
 
-@section('scripts')
+@push('scripts')
   {!! _admin_js(adminPath() . '/themes/admin/AdminSC/plugins/moment/2.13.0/js/moment.min.js') !!}
   {!! _admin_js(adminPath() . '/themes/admin/AdminSC/plugins/DataTables/1.10.12/js/jquery.dataTables.min.js') !!}
   <script>
@@ -247,4 +247,4 @@
         let table = $('#table-data').DataTable(options);
       });
   </script>
-@endsection
+@endpush
