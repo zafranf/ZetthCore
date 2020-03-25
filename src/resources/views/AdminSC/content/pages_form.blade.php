@@ -48,7 +48,7 @@
 
 @include('zetthcore::AdminSC.components.tinymce')
 
-@section('styles')
+@push('styles')
   <style>
     .mce-fullscreen {
       z-index: 9999 !important;
@@ -60,7 +60,7 @@
       top: 4px;
     }
   </style>
-@endsection
+@endpush
 
 @push('scripts')
   <script>

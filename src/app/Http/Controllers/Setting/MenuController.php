@@ -130,7 +130,7 @@ class MenuController extends AdminController
         $menu->group_id = (int) $r->input('group');
         $menu->save();
 
-        /* log aktifitas */
+        /* save activity */
         $this->activityLog('[~name] menambahkan Menu "' . $menu->name . '"');
 
         /* clear cache */
@@ -229,7 +229,7 @@ class MenuController extends AdminController
         $menu->group_id = (int) $r->input('group');
         $menu->save();
 
-        /* log aktifitas */
+        /* save activity */
         $this->activityLog('[~name] memperbarui Menu "' . $menu->name . '"');
 
         /* clear cache */
@@ -251,7 +251,7 @@ class MenuController extends AdminController
             'group' => 'required|exists:menu_groups,id',
         ]);
 
-        /* log aktifitas */
+        /* save activity */
         $this->activityLog('[~name] menghapus Menu "' . $menu->name . '"');
 
         /* soft delete */

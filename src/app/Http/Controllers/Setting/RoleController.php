@@ -116,7 +116,7 @@ class RoleController extends AdminController
         /* save menu group */
         $this->saveMenuGroup($r, $role);
 
-        /* log aktifitas */
+        /* save activity */
         $this->activityLog('[~name] menambahkan Peran "' . $role->name . '"');
 
         /* clear cache */
@@ -210,7 +210,7 @@ class RoleController extends AdminController
         /* save menu group */
         $this->saveMenuGroup($r, $role);
 
-        /* log aktifitas */
+        /* save activity */
         $this->activityLog('[~name] memperbarui Peran "' . $role->name . '"');
 
         /* Clear cache */
@@ -230,7 +230,7 @@ class RoleController extends AdminController
      */
     public function destroy(Role $role)
     {
-        /* log aktifitas */
+        /* save activity */
         $this->activityLog('[~name] menghapus Peran "' . $role->display_name . '"');
 
         /* soft delete */

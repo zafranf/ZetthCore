@@ -137,7 +137,7 @@ class IntermController extends AdminController
      */
     public function destroy(IntermData $interm)
     {
-        /* log aktifitas */
+        /* save activity */
         $this->activityLog('[~name] menghapus Pencarian "' . $interm->email . '"');
 
         /* soft delete */

@@ -87,7 +87,7 @@
   </div>
 @endsection
 
-@section('styles')
+@push('styles')
   <style>
     ol.default {
       list-style-type: none;
@@ -149,9 +149,9 @@
       border-right: none;
     }
   </style>
-@endsection
+@endpush
 
-@section('scripts')
+@push('scripts')
   {!! _admin_js(adminPath() . '/themes/admin/AdminSC/plugins/jquery/sortable/0.9.13/jquery-sortable.min.js') !!}
   <script>
     $(function() {
@@ -166,4 +166,4 @@
       });
     });
   </script>
-@endsection
+@endpush

@@ -116,7 +116,7 @@ class PhotoController extends AdminController
         /* process photos */
         $this->process_photos($r->input('photos'), $album->id);
 
-        /* log aktifitas */
+        /* save activity */
         $this->activityLog('[~name] menambahkan album "' . $album->name . '"');
 
         /* clear cache */
@@ -192,7 +192,7 @@ class PhotoController extends AdminController
         /* process photos */
         $this->process_photos($r->input('photos'), $album->id);
 
-        /* log aktifitas */
+        /* save activity */
         $this->activityLog('[~name] memperbarui album "' . $album->name . '"');
 
         /* clear cache */
@@ -209,7 +209,7 @@ class PhotoController extends AdminController
      */
     public function destroy(Album $album)
     {
-        /* log aktifitas */
+        /* save activity */
         $this->activityLog('[~name] menghapus album "' . $album->name . '"');
 
         /* soft delete */

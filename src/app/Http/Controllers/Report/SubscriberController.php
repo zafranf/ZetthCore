@@ -133,7 +133,7 @@ class SubscriberController extends AdminController
         $subscriber->status = bool($r->input('status')) ? 1 : 0;
         $subscriber->save();
 
-        /* log aktifitas */
+        /* save activity */
         $this->activityLog('[~name] memperbarui Pelanggan "' . $subscriber->email . '"');
 
         return redirect($this->current_url)->with('success', 'Pelanggan berhasil disimpan!');
@@ -147,7 +147,7 @@ class SubscriberController extends AdminController
      */
     public function destroy(Subscriber $subscriber)
     {
-        /* log aktifitas */
+        /* save activity */
         $this->activityLog('[~name] menghapus Pelanggan "' . $subscriber->email . '"');
 
         /* soft delete */

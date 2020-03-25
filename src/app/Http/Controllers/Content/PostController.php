@@ -147,7 +147,7 @@ class PostController extends AdminController
         /* processing tags */
         $this->process_tags($tags, $post->id);
 
-        /* log aktifitas */
+        /* save activity */
         $this->activityLog('[~name] menambahkan artikel "' . $post->title . '"');
 
         /* clear cache */
@@ -263,7 +263,7 @@ class PostController extends AdminController
         /* processing tags */
         $this->process_tags($tags, $post->id);
 
-        /* log aktifitas */
+        /* save activity */
         $this->activityLog('[~name] memperbarui artikel "' . $post->title . '"');
 
         /* clear cache */
@@ -280,7 +280,7 @@ class PostController extends AdminController
      */
     public function destroy(Post $post)
     {
-        /* log aktifitas */
+        /* save activity */
         $this->activityLog('[~name] menghapus artikel "' . $post->title . '"');
 
         /* soft delete */
