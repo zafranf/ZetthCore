@@ -154,12 +154,12 @@
 	</div>
 @endsection
 
-@section('styles')
+@push('styles')
 	{!! _admin_css(adminPath() . '/themes/admin/AdminSC/plugins/jasny-bootstrap/3.1.3/css/jasny-bootstrap.min.css') !!}
 	{!! _admin_css(adminPath() . '/themes/admin/AdminSC/plugins/select2/4.0.0/css/select2.min.css') !!}
-@endsection
+@endpush
 
-@section('scripts')
+@push('scripts')
 	{!! _admin_js(adminPath() . '/themes/admin/AdminSC/plugins/jasny-bootstrap/3.1.3/js/jasny-bootstrap.min.js') !!}
 	{!! _admin_js(adminPath() . '/themes/admin/AdminSC/plugins/select2/4.0.0/js/select2.min.js') !!}
   <script>
@@ -198,4 +198,4 @@
       });
     });
   </script>
-@endsection
+@endpush
