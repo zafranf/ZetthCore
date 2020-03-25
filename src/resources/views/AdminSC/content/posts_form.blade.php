@@ -29,10 +29,10 @@
         <div class="col-sm-8 col-md-9 left-side no-padding">
           <input type="text" id="title" class="form-control {{ isset($data) ? '' : 'autofocus' }} no-border-top-right no-border-left no-radius input-lg" name="title" placeholder="Judul.." maxlength="100" value="{{ $data->title ?? old('title') }}">
           <div class="input-group">
-            <span class="input-group-addon no-border-top-right no-border-left no-radius input-sm" id="url_span">{{ url('/post/') }}/</span>
-            <input type="text" id="slug" class="form-control no-border-top-right no-radius input-sm" name="slug" placeholder="Tautan otomatis.. (klik 2x untuk edit)" readonly value="{{ $data->slug ?? old('slug') }}">
+            <span class="input-group-addon no-border-top-right no-border-left no-radius input-sm" id="url_span">{{ getSiteURL('/post/') }}/</span>
+            <input type="text" id="slug" class="form-control no-border-top-right no-radius input-sm" name="slug" placeholder="Tautan otomatis.. (dapat disesuaikan, klik 2x untuk menyesuaikan)" readonly value="{{ $data->slug ?? old('slug') }}">
           </div>
-          <textarea id="excerpt" name="excerpt" class="form-control no-border-top-right no-border-left no-radius input-xlarge" placeholder="Kutipan/deskripsi singkat (opsional).." rows="3">{{ $data->excerpt ?? old('excerpt') }}</textarea>
+          <textarea id="excerpt" name="excerpt" class="form-control no-border-top-right no-border-left no-radius input-xlarge" placeholder="Kutipan/deskripsi singkat tentang artikel (opsional).." rows="3">{{ $data->excerpt ?? old('excerpt') }}</textarea>
           <textarea id="content" name="content" class="form-control no-border-top-right no-border-bottom no-radius input-xlarge" placeholder="Ketikkan tulisan anda di sini...">{{ $data->content ?? old('content') }}</textarea>
         </div>
         <div class="col-sm-4 col-md-3 right-side">
@@ -100,7 +100,7 @@
             </div>
           </div>
           <div class="form-group">
-            <label for="time">Waktu</label><br>
+            <label for="time">Waktu Terbit</label><br>
             <div class="col-sm-6 col-xs-6 no-padding">
               <input type="text" class="form-control" id="date" name="date" value="{{ isset($data) ? carbon($data->published_at)->format("Y-m-d") : old('date') }}" placeholder="{{ carbon()->format("Y-m-d") }}">
             </div>
@@ -148,7 +148,9 @@
   </div>
 @endsection
 
-@section('styles')
+@include('zetthcore::AdminSC.components.tinymce')
+
+@push('styles')
   {{-- {!! _admin_css(adminPath() . '/themes/admin/AdminSC/plugins/jasny-bootstrap/3.1.3/css/jasny-bootstrap.min.css') !!} --}}
   {!! _admin_css(adminPath() . '/themes/admin/AdminSC/plugins/bootstrap/tagsinput/0.8.0/css/bootstrap-tagsinput.css') !!}
   {!! _admin_css(adminPath() . '/themes/admin/AdminSC/plugins/bootstrap/datetimepicker/4.17.37/css/bootstrap-datetimepicker.min.css') !!}
@@ -285,51 +287,108 @@
       top: 1px;
     }
   </style>
-@endsection
+@endpush
 
-@section('scripts')
+@push('scripts')
   {{-- {!! _admin_js(adminPath() . '/themes/admin/AdminSC/plugins/jasny-bootstrap/3.1.3/js/jasny-bootstrap.min.js') !!} --}}
   {!! _admin_js(adminPath() . '/themes/admin/AdminSC/plugins/bootstrap/tagsinput/0.8.0/js/bootstrap-tagsinput.js') !!}
   {!! _admin_js(adminPath() . '/themes/admin/AdminSC/plugins/moment/2.13.0/js/moment.min.js') !!}
   {!! _admin_js(adminPath() . '/themes/admin/AdminSC/plugins/bootstrap/datetimepicker/4.17.37/js/bootstrap-datetimepicker.min.js') !!}
   {!! _admin_js(adminPath() . '/themes/admin/AdminSC/plugins/fancybox/2.1.5/js/jquery.fancybox.js') !!}
   {!! _admin_js(adminPath() . '/themes/admin/AdminSC/plugins/typeahead/0.11.1/js/typeahead.bundle.min.js') !!}
-  {!! _admin_js(adminPath() . '/themes/admin/AdminSC/plugins/tinymce/4.3.2/tinymce.min.js') !!}
   {!! _admin_js(adminPath() . '/themes/admin/AdminSC/plugins/select2/4.0.0/js/select2.min.js') !!}
   <script>
     var selected = ['{!! isset($data) ? implode("','", $categories_ ) : '' !!}'];
-      var lsH,tmH = 0;
-      $(function () {
-        $('#date').datetimepicker({
-          format: 'YYYY-MM-DD'
-        });
-        $('#time').datetimepicker({
-          format: 'HH:mm'
-        });
-        _resize_tinymce();
+    var lsH,tmH = 0;
+    $(function () {
+      $('#date').datetimepicker({
+        format: 'YYYY-MM-DD'
+      });
+      $('#time').datetimepicker({
+        format: 'HH:mm'
+      });
+      _resize_tinymce();
+    });
+
+    function responsive_filemanager_callback(field_id){
+      var val = $('#'+field_id).val();
+      var path = val.replace(SITE_URL, "");
+      var img = '<img src="'+path+'">';
+      if (field_id.indexOf("featured") < 0) {
+        $('.zetth-upload-new').hide();
+        $('.zetth-upload-exists').show();
+        $('.zetth-upload-exists.thumbnail').html(img);
+        $('#btn-remove').parent().show();
+        $('#cover_remove').attr("checked", false);
+      }/*  else {
+        path = path.replace('/storage/assets/images/upload/', "");
+      } */
+      $('#'+field_id).val(path);
+    }
+
+    $(document).ready(function(){
+      var wFB = window.innerWidth - 30;
+      var hFB = window.innerHeight - 60;
+      /* var fImage = {{ isset($data->images) ? count($data->images) : 1 }}; */
+      
+      $('input').on('keypress', function(e){
+        key = e.keyCode;
+        if (key==13) {
+          e.preventDefault();
+        }
       });
 
-      function responsive_filemanager_callback(field_id){
-        var val = $('#'+field_id).val();
-        var path = val.replace(SITE_URL, "");
-        var img = '<img src="'+path+'">';
-        if (field_id.indexOf("featured") < 0) {
-          $('.zetth-upload-new').hide();
-          $('.zetth-upload-exists').show();
-          $('.zetth-upload-exists.thumbnail').html(img);
-          $('#btn-remove').parent().show();
-          $('#cover_remove').attr("checked", false);
-        }/*  else {
-          path = path.replace('/storage/assets/images/upload/', "");
-        } */
-        $('#'+field_id).val(path);
-      }
+      $('#btn-upload').fancybox({
+        type      : 'iframe',
+        autoScale : false,
+        autoSize : true,
+        beforeLoad : function() {
+          this.width  = wFB;
+          this.height = hFB;
+        }/*,
+        afterClose : function(){
+          alert('from iframe btn');
+        }*/
+      });
 
-      $(document).ready(function(){
-        var wFB = window.innerWidth - 30;
-        var hFB = window.innerHeight - 60;
-        /* var fImage = {{ isset($data->images) ? count($data->images) : 1 }}; */
-        
+      $('#btn-remove').on('click', function(){
+        $('#cover').val('');
+        $('.zetth-upload-new').show();
+        $('.zetth-upload-exists').hide();
+        $('#btn-remove').parent().hide();
+      });
+
+      $('#btn-add-category').on('click', function() {
+        var categories = "";
+        @if (isset($categories) && count($categories) > 0)
+          @foreach (generateArrayLevel($categories, 'subcategory') as $category)
+            categories += '<option value="{{ $category->id }}" {{ isset($data) && ($data->parent_id == $category->id) ? 'selected' : '' }}>{!! $category->name !!}</option>';
+          @endforeach
+        @endif
+        var inp = '<form class="form-horizontal" role="form">';
+          inp+= '<div class="form-group"><label class="control-label col-sm-4" for="category_name">Kategori</label><div class="col-sm-6"><input type="text" class="form-control" id="category_name" placeholder="Nama kategori.." maxlength="30"></div></div>';
+          inp+= '<div class="form-group"><label class="control-label col-sm-4" for="category_desc">Deskripsi</label><div class="col-sm-6"><textarea id="category_desc" name="category_desc" class="form-control" placeholder="Penjelasan singkat kategori.."></textarea></div></div>';
+          inp+= '<div class="form-group"><label class="control-label col-sm-4" for="category_parent">Induk</label><div class="col-sm-6"><select id="category_parent" name="category_parent" class="form-control custom-select2"><option value="">[Tidak ada]</option>'+categories+'</select></div></div>';
+          inp+= '</form>';
+        var btn = '<button type="button" class="btn btn-default" data-dismiss="modal" id="btn-modal-cancel">Batal</button> <button type="button" class="btn btn-warning" data-dismiss="modal" id="btn-modal-add">Tambah</button>';
+
+        $('.modal-title').text('Tambah Kategori');
+        $('.modal-body').html(inp);
+        $('.modal-footer').html(btn);
+
+        $('#zetth-modal').on('shown.bs.modal', function () {
+          $('#category_name').select();
+        });
+
+        $('#btn-modal-add').on('click', function(){
+          var par = {
+            name: $('#category_name').val(),
+            desc: $('#category_desc').val(),
+            parent: $('#category_parent').val()
+          };
+          _insert_new_category(par);
+        });
+
         $('input').on('keypress', function(e){
           key = e.keyCode;
           if (key==13) {
@@ -337,255 +396,165 @@
           }
         });
 
-        $('#btn-upload').fancybox({
-          type      : 'iframe',
-          autoScale : false,
-          autoSize : true,
-          beforeLoad : function() {
-            this.width  = wFB;
-            this.height = hFB;
-          }/*,
-          afterClose : function(){
-            alert('from iframe btn');
-          }*/
+        $(".custom-select2").select2({
+          minimumResultsForSearch: Infinity
         });
-
-        $('#btn-remove').on('click', function(){
-          $('#cover').val('');
-          $('.zetth-upload-new').show();
-          $('.zetth-upload-exists').hide();
-          $('#btn-remove').parent().hide();
-        });
-
-        tinymce.init({
-          relative_urls: false,
-          selector: '#content',
-          /*codesample_dialog_height: 300,*/
-          height: (lsH-190),
-          skin: 'custom',
-          language: 'id',
-          plugins: [
-            "advlist autolink link image lists charmap print preview hr anchor pagebreak",
-            "searchreplace wordcount visualblocks visualchars insertdatetime media nonbreaking",
-            "table {{ app('is_desktop') ? 'contextmenu ' : '' }}directionality emoticons paste textcolor code codesample",
-            "placeholder youtube fullscreen"
-          ],
-          toolbar: "undo redo | bullist numlist blockquote | link unlink | youtube image table | styleselect fontselect | fontsizeselect codesample code fullscreen",
-          image_advtab: true,
-          image_caption: true,
-          menubar: false,
-          external_filemanager_path:"{{ asset(adminPath() . '/larafile/') }}/",
-          filemanager_title:"Filemanager",
-          filemanager_folder: '/',
-          filemanager_language: 'id',
-          external_plugins: { "filemanager" : "{{ asset(adminPath() . '/larafile/plugin.min.js') }}" },
-          setup : function(ed) {
-            ed.on('init', function() 
-            {
-              /* this.getDoc().body.style.fontSize = '12px'; */
-              this.getDoc().body.style.fontFamily = 'arial, helvetica, sans-serif';
-              /* this.getDoc().body.style.fontWeight = '300'; */
-            });
-          }
-        });
-
-        $('#btn-add-category').on('click', function() {
-          var categories = "";
-          @if (isset($categories) && count($categories) > 0)
-            @foreach (generateArrayLevel($categories, 'subcategory') as $category)
-              categories += '<option value="{{ $category->id }}" {{ isset($data) && ($data->parent_id == $category->id) ? 'selected' : '' }}>{!! $category->name !!}</option>';
-            @endforeach
-          @endif
-          var inp = '<form class="form-horizontal" role="form">';
-            inp+= '<div class="form-group"><label class="control-label col-sm-4" for="category_name">Kategori</label><div class="col-sm-6"><input type="text" class="form-control" id="category_name" placeholder="Nama kategori.." maxlength="30"></div></div>';
-            inp+= '<div class="form-group"><label class="control-label col-sm-4" for="category_desc">Deskripsi</label><div class="col-sm-6"><textarea id="category_desc" name="category_desc" class="form-control" placeholder="Penjelasan singkat kategori.."></textarea></div></div>';
-            inp+= '<div class="form-group"><label class="control-label col-sm-4" for="category_parent">Induk</label><div class="col-sm-6"><select id="category_parent" name="category_parent" class="form-control custom-select2"><option value="">[Tidak ada]</option>'+categories+'</select></div></div>';
-            inp+= '</form>';
-          var btn = '<button type="button" class="btn btn-default" data-dismiss="modal" id="btn-modal-cancel">Batal</button> <button type="button" class="btn btn-warning" data-dismiss="modal" id="btn-modal-add">Tambah</button>';
-
-          $('.modal-title').text('Tambah Kategori');
-          $('.modal-body').html(inp);
-          $('.modal-footer').html(btn);
-
-          $('#zetth-modal').on('shown.bs.modal', function () {
-            $('#category_name').select();
-          });
-
-          $('#btn-modal-add').on('click', function(){
-            var par = {
-              name: $('#category_name').val(),
-              desc: $('#category_desc').val(),
-              parent: $('#category_parent').val()
-            };
-            _insert_new_category(par);
-          });
-
-          $('input').on('keypress', function(e){
-            key = e.keyCode;
-            if (key==13) {
-              e.preventDefault();
-            }
-          });
-
-          $(".custom-select2").select2({
-            minimumResultsForSearch: Infinity
-          });
-        });
-
-        @if (!isset($data)) 
-          var title = $('#title');
-          var slug = $('#slug');
-
-          $('#title').on('keyup blur', function(){
-            ttl_val = title.val();
-            if (ttl_val == "") {
-              slug.val('');
-            } else {
-              url = _get_slug(ttl_val);
-              slug.val(url);
-            }
-          });
-
-          $('#slug').on('dblclick', function(){
-            slug.focus();
-            slug.attr("readonly", false);
-          });
-
-          $('#slug').on('blur', function(){
-            ro = slug.attr('readonly');
-            if (!ro) {
-              sl_val = slug.val();
-              slug.val(_get_slug(sl_val));
-              slug.attr("readonly", true);
-            }
-          });
-        @endif
-
-        $('#title').on('keydown', function(e){
-          if (e.keyCode == 9){
-            setTimeout(function() {
-              $('#excerpt').focus();
-            }, 0);
-          }
-        });
-
-        /* categories typeahead */
-        var categories = new Bloodhound({
-          datumTokenizer: Bloodhound.tokenizers.obj.whitespace('name'),
-          queryTokenizer: Bloodhound.tokenizers.whitespace,
-          prefetch: {
-            url: "{{ url(adminPath() . '/ajax/term/categories') }}",
-            cache: false,
-            filter: function(list) {
-              return $.map(list, function(category) {
-                return { name: category };
-              });
-            }
-          }
-        });
-        categories.initialize();
-
-        $('#category').typeahead({
-            minLength: 1
-          }, {
-          name: 'categories',
-          displayKey: 'name',
-          valueKey: 'name',
-          source: categories.ttAdapter(),
-          templates: {
-            empty: '<div class="empty-message" style="padding:0 10px;">Kategori tidak ada, silakan buat baru..</div>'
-          }
-        }).on('typeahead:selected typeahead:autocompleted', function(e, val) {
-          if ($.inArray(val.name, selected)<0){
-            var par = {
-              name: val.name,
-              desc: '',
-              parent: '',
-            };
-            _insert_new_category(par);
-            selected.push(val.name);
-          }
-          $('#category').typeahead('val', '');
-        });
-
-        /* tagsinput */
-        var tags = new Bloodhound({
-          datumTokenizer: Bloodhound.tokenizers.obj.whitespace('name'),
-          queryTokenizer: Bloodhound.tokenizers.whitespace,
-          prefetch: {
-            url: "{{ url(adminPath() . '/ajax/term/tags') }}",
-            cache: false,
-            filter: function(list) {
-            return $.map(list, function(tag) {
-              return { name: tag }; });
-            }
-          }
-        });
-        tags.initialize();
-        
-        $('#tags').tagsinput({
-          tagClass: function(item){
-            /* return 'label label-warning' */
-          },
-          typeaheadjs: {
-            name: 'tags',
-            displayKey: 'name',
-            valueKey: 'name',
-            source: tags.ttAdapter(),
-            templates: {
-              empty: '<div class="empty-message" style="padding:0 10px;">Label tidak ada, tekan enter untuk buat baru..</div>'
-            }
-          }
-        });
-        /*resize tinymce height when add tags*/
-        /*$('#tags').on('itemAdded', function(){
-
-        });*/
-        /*resize tinymce height when remove tags*/
-        /*$('#tags').on('itemRemoved', function(){
-
-        });*/
-        /*resize tinymce height when change cover*/
-        /*$('.fileinput').on('change.bs.fileinput', function(){
-
-        });*/
-        /*resize tinymce height when remove cover*/
-        /*$('a.fileinput-exists').on('click', function(){
-          setTimeout(function(){
-
-          }, 0);
-        });*/
       });
 
-      function _insert_new_category(par) {
-        var cat = '<li>'+par.name+'<span class="pull-right"><i class="fa fa-minus-square-o" style="cursor:pointer;" onclick="_remove_category(this)" title="Remove '+par.name+'"></i></span>'
-            +'<input type="hidden" name="categories[]" value="'+par.name+'">'
-            +'<input type="hidden" name="descriptions[]" value="'+par.desc+'">'
-            +'<input type="hidden" name="parents[]" value="'+par.parent+'">'
-            +'</li>';
-        $('#category-list').append(cat);
-      }
+      @if (!isset($data)) 
+        var title = $('#title');
+        var slug = $('#slug');
 
-      function _resize_tinymce(){
-        setTimeout(function(){
-          _resize_tinymce();
-        }, 0);
-        lsH = $('.right-side').height();
-        tmH = lsH - 210;
-        $('#mceu_25 iframe').height(tmH);
-      }
+        $('#title').on('keyup blur', function(){
+          ttl_val = title.val();
+          if (ttl_val == "") {
+            slug.val('');
+          } else {
+            url = _get_slug(ttl_val);
+            slug.val(url);
+          }
+        });
 
-      function _remove_category(el){
-        txt = $(el).closest('li').text();
-        slIdx = selected.indexOf(txt);
-        if (slIdx > -1) {
-          selected.splice(slIdx, 1);
+        $('#slug').on('dblclick', function(){
+          slug.focus();
+          slug.attr("readonly", false);
+        });
+
+        $('#slug').on('blur', function(){
+          ro = slug.attr('readonly');
+          if (!ro) {
+            sl_val = slug.val();
+            slug.val(_get_slug(sl_val));
+            slug.attr("readonly", true);
+          }
+        });
+      @endif
+
+      $('#title').on('keydown', function(e){
+        if (e.keyCode == 9){
+          setTimeout(function() {
+            $('#excerpt').focus();
+          }, 0);
         }
-        $(el).closest('li').remove();
-      }
+      });
 
-      /* function _remove_featured(el){
-        $('#box-featured-image'+el).remove();
-      } */
+      /* categories typeahead */
+      var categories = new Bloodhound({
+        datumTokenizer: Bloodhound.tokenizers.obj.whitespace('name'),
+        queryTokenizer: Bloodhound.tokenizers.whitespace,
+        prefetch: {
+          url: "{{ url(adminPath() . '/ajax/term/categories') }}",
+          cache: false,
+          filter: function(list) {
+            return $.map(list, function(category) {
+              return { name: category };
+            });
+          }
+        }
+      });
+      categories.initialize();
+
+      $('#category').typeahead({
+          minLength: 1
+        }, {
+        name: 'categories',
+        displayKey: 'name',
+        valueKey: 'name',
+        source: categories.ttAdapter(),
+        templates: {
+          empty: '<div class="empty-message" style="padding:0 10px;">Kategori tidak ada, silakan buat baru..</div>'
+        }
+      }).on('typeahead:selected typeahead:autocompleted', function(e, val) {
+        if ($.inArray(val.name, selected)<0){
+          var par = {
+            name: val.name,
+            desc: '',
+            parent: '',
+          };
+          _insert_new_category(par);
+          selected.push(val.name);
+        }
+        $('#category').typeahead('val', '');
+      });
+
+      /* tagsinput */
+      var tags = new Bloodhound({
+        datumTokenizer: Bloodhound.tokenizers.obj.whitespace('name'),
+        queryTokenizer: Bloodhound.tokenizers.whitespace,
+        prefetch: {
+          url: "{{ url(adminPath() . '/ajax/term/tags') }}",
+          cache: false,
+          filter: function(list) {
+          return $.map(list, function(tag) {
+            return { name: tag }; });
+          }
+        }
+      });
+      tags.initialize();
+      
+      $('#tags').tagsinput({
+        tagClass: function(item){
+          /* return 'label label-warning' */
+        },
+        typeaheadjs: {
+          name: 'tags',
+          displayKey: 'name',
+          valueKey: 'name',
+          source: tags.ttAdapter(),
+          templates: {
+            empty: '<div class="empty-message" style="padding:0 10px;">Label tidak ada, tekan enter untuk buat baru..</div>'
+          }
+        }
+      });
+      /*resize tinymce height when add tags*/
+      /*$('#tags').on('itemAdded', function(){
+
+      });*/
+      /*resize tinymce height when remove tags*/
+      /*$('#tags').on('itemRemoved', function(){
+
+      });*/
+      /*resize tinymce height when change cover*/
+      /*$('.fileinput').on('change.bs.fileinput', function(){
+
+      });*/
+      /*resize tinymce height when remove cover*/
+      /*$('a.fileinput-exists').on('click', function(){
+        setTimeout(function(){
+
+        }, 0);
+      });*/
+    });
+
+    function _insert_new_category(par) {
+      var cat = '<li>'+par.name+'<span class="pull-right"><i class="fa fa-minus-square-o" style="cursor:pointer;" onclick="_remove_category(this)" title="Remove '+par.name+'"></i></span>'
+          +'<input type="hidden" name="categories[]" value="'+par.name+'">'
+          +'<input type="hidden" name="descriptions[]" value="'+par.desc+'">'
+          +'<input type="hidden" name="parents[]" value="'+par.parent+'">'
+          +'</li>';
+      $('#category-list').append(cat);
+    }
+
+    function _resize_tinymce(){
+      setTimeout(function(){
+        _resize_tinymce();
+      }, 0);
+      lsH = $('.right-side').height();
+      tmH = lsH - 210;
+      $('#mceu_25 iframe').height(tmH);
+    }
+
+    function _remove_category(el){
+      txt = $(el).closest('li').text();
+      slIdx = selected.indexOf(txt);
+      if (slIdx > -1) {
+        selected.splice(slIdx, 1);
+      }
+      $(el).closest('li').remove();
+    }
+
+    /* function _remove_featured(el){
+      $('#box-featured-image'+el).remove();
+    } */
   </script>
-@endsection
+@endpush

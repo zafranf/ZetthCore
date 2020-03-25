@@ -123,7 +123,7 @@
   </div>
 @endsection
 
-@section('styles')
+@push('styles')
   {!! _admin_css(adminPath() . '/themes/admin/AdminSC/plugins/bootstrap/daterangepicker/2.1.24/daterangepicker.css') !!}
   <style>
     #content-div {
@@ -183,9 +183,9 @@
       }
     }
   </style>
-@endsection
+@endpush
 
-@section('scripts')
+@push('scripts')
   {!! _admin_js(adminPath() . '/themes/admin/AdminSC/plugins/moment/2.13.0/js/moment.min.js') !!}
   {!! _admin_js(adminPath() . '/themes/admin/AdminSC/plugins/bootstrap/daterangepicker/2.1.24/daterangepicker.js') !!}
   {!! _admin_js(adminPath() . '/themes/admin/AdminSC/plugins/highcharts/4.2.6/highcharts.js') !!}
@@ -458,4 +458,4 @@
     combobox(start, end, label);
   });
   </script>
-@endsection
+@endpush

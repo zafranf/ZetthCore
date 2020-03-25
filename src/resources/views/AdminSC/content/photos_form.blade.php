@@ -81,7 +81,7 @@
   </div>
 @endsection
 
-@section('styles')
+@push('styles')
   {{-- {!! _admin_css(adminPath() . '/themes/admin/AdminSC/plugins/jasny-bootstrap/3.1.3/css/jasny-bootstrap.min.css') !!} --}}
   {!! _admin_css(adminPath() . '/themes/admin/AdminSC/plugins/fancybox/2.1.5/css/jquery.fancybox.css') !!}
   <style>
@@ -108,9 +108,9 @@
       }
     }
   </style>
-@endsection
+@endpush
 
-@section('scripts')
+@push('scripts')
   {{-- {!! _admin_js(adminPath() . '/themes/admin/AdminSC/plugins/jasny-bootstrap/3.1.3/js/jasny-bootstrap.min.js') !!} --}}
   {!! _admin_js(adminPath() . '/themes/admin/AdminSC/plugins/fancybox/2.1.5/js/jquery.fancybox.js') !!}
   <script>
@@ -186,4 +186,4 @@
       $('#photo-box').append(photodel);
     }
   </script>
-@endsection
+@endpush

@@ -23,7 +23,7 @@
   {!! _admin_css(adminPath() . '/themes/admin/AdminSC/plugins/DataTables/1.10.12/css/jquery.dataTables.min.css') !!}
 @endsection
 
-@section('scripts')
+@push('scripts')
   {!! _admin_js(adminPath() . '/themes/admin/AdminSC/plugins/DataTables/1.10.12/js/jquery.dataTables.min.js') !!}
   <script>
     $(document).ready(function() {
@@ -115,4 +115,4 @@
       let table = $('#table-data').DataTable(options);
     });
   </script>
-@endsection
+@endpush

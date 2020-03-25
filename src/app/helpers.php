@@ -205,6 +205,44 @@ if (!function_exists('_get_image')) {
     }
 }
 
+if (!function_exists('getSiteURL')) {
+    function getSiteURL($path = null)
+    {
+        $url = url($path ?? '/');
+        if (adminRoute() == 'subdomain') {
+            $url = url(env('APP_URL') . ltrim($path, '/'));
+        }
+
+        return $url;
+    }
+}
+
+if (!function_exists('getCacheTime')) {
+    function getCacheTime()
+    {
+        $minutes = env('APP_ENV') != 'production' ? 1 : env('CACHE_TIME', 10);
+
+        return now()->addMinutes($minutes);
+    }
+}
+
+if (!function_exists('getEmailFile')) {
+    function getEmailFile($file)
+    {
+        $path = str_replace('.', '/', $file);
+        $file_path = resource_path('views/' . $path . '.blade.php');
+        if (file_exists($file_path) && !is_dir($file_path)) {
+            return $file;
+        }
+
+        /* get default view */
+        $arr = explode("/", $path);
+        $file = end($arr);
+
+        return 'emails/' . $file;
+    }
+}
+
 if (!function_exists('getMenu')) {
     function getMenu($group = 'admin', $cache = true)
     {
@@ -640,31 +678,5 @@ if (!function_exists('carbon_query')) {
     function carbon_query($carbon = null)
     {
         return carbon($carbon, null, 'store');
-    }
-}
-
-if (!function_exists('getCacheTime')) {
-    function getCacheTime()
-    {
-        $minutes = env('APP_ENV') != 'production' ? 1 : env('CACHE_TIME', 10);
-
-        return now()->addMinutes($minutes);
-    }
-}
-
-if (!function_exists('getEmailFile')) {
-    function getEmailFile($file)
-    {
-        $path = str_replace('.', '/', $file);
-        $file_path = resource_path('views/' . $path . '.blade.php');
-        if (file_exists($file_path) && !is_dir($file_path)) {
-            return $file;
-        }
-
-        /* get default view */
-        $arr = explode("/", $path);
-        $file = end($arr);
-
-        return 'emails/' . $file;
     }
 }

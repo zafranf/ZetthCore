@@ -1,5 +1,5 @@
 @php 
-$page_title = 'Masuk Aplikasi';
+  $page_title = 'Masuk Aplikasi';
 @endphp
 @include('zetthcore::AdminSC.layouts.header')
   <div class="container">

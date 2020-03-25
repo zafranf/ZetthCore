@@ -1,35 +1,34 @@
 @php
-function sortMenu($data, $level = 0) {
-  $adminPath = app('admin_path');
-  echo ($level == 0) && count($data) > 0 ? 'Geser untuk atur posisi' : '';
-  echo ($level == 0) ? '<ol class="default vertical">' : '<ol>';
-  echo count($data) == 0 ? '<span style="color:grey">Belum ada menu yang terdaftar..</span>' : '';
-  foreach ($data as $menu) {
-  echo '<li data-id="' . $menu->id . '" data-name="' . $menu->name . '">';
-    echo '<span>';
-      if (isset($menu->icon)) {
-      echo '<i class="' . $menu->icon . '"></i> ';
+  function sortMenu($data, $level = 0) {
+    $adminPath = app('admin_path');
+    echo ($level == 0) && count($data) > 0 ? 'Geser untuk atur posisi' : '';
+    echo ($level == 0) ? '<ol class="default vertical">' : '<ol>';
+    echo count($data) == 0 ? '<span style="color:grey">Belum ada menu yang terdaftar..</span>' : '';
+    foreach ($data as $menu) {
+    echo '<li data-id="' . $menu->id . '" data-name="' . $menu->name . '">';
+      echo '<span>';
+        if (isset($menu->icon)) {
+        echo '<i class="' . $menu->icon . '"></i> ';
+        }
+        echo $menu->name;
+        echo '<a onclick="_delete(\'' . url($adminPath . '/setting/menus/'.$menu->id. '?group='.$menu->group_id).'\')"
+          class="btn btn-default btn-xs pull-right" data-toggle="tooltip" title="Hapus"><i
+            class="fa fa-trash"></i></a>';
+        echo '<a href="' . url($adminPath . '/setting/menus/' . $menu->id . '/edit?group=' . $menu->group_id) . '"
+          class="btn btn-default btn-xs pull-right" data-toggle="tooltip" title="Edit"><i class="fa fa-edit"></i></a>';
+        echo '</span>';
+      if (count($menu->submenu) > 0) {
+      sortMenu($menu->submenu, $level + 1);
       }
-      echo $menu->name;
-      echo '<a onclick="_delete(\'' . url($adminPath . '/setting/menus/'.$menu->id. '?group='.$menu->group_id).'\')"
-        class="btn btn-default btn-xs pull-right" data-toggle="tooltip" title="Hapus"><i
-          class="fa fa-trash"></i></a>';
-      echo '<a href="' . url($adminPath . '/setting/menus/' . $menu->id . '/edit?group=' . $menu->group_id) . '"
-        class="btn btn-default btn-xs pull-right" data-toggle="tooltip" title="Edit"><i class="fa fa-edit"></i></a>';
-      echo '</span>';
-    if (count($menu->submenu) > 0) {
-    sortMenu($menu->submenu, $level + 1);
+      echo '<ol></ol>';
+      echo '</li>';
     }
-    echo '<ol></ol>';
-    echo '</li>';
+    echo '</ol>';
   }
-  echo '</ol>';
-}
 @endphp
+@extends('zetthcore::AdminSC.layouts.main')
 
-  @extends('zetthcore::AdminSC.layouts.main')
-
-  @section('content')
+@section('content')
   <div class="panel-body">
     <form class="form-horizontal" action="{{ url($current_url) }}{{ isset($data) ? '/' . $data->id : '' }}"
       method="post" enctype="multipart/form-data">
@@ -86,9 +85,9 @@ function sortMenu($data, $level = 0) {
       </div>
     </form>
   </div>
-  @endsection
+@endsection
 
-  @section('styles')
+@section('styles')
   <style>
     ol.default {
       list-style-type: none;
@@ -150,9 +149,9 @@ function sortMenu($data, $level = 0) {
       border-right: none;
     }
   </style>
-  @endsection
+@endsection
 
-  @section('scripts')
+@section('scripts')
   {!! _admin_js(adminPath() . '/themes/admin/AdminSC/plugins/jquery/sortable/0.9.13/jquery-sortable.min.js') !!}
   <script>
     $(function() {
@@ -167,4 +166,4 @@ function sortMenu($data, $level = 0) {
       });
     });
   </script>
-  @endsection
+@endsection
