@@ -128,7 +128,7 @@ class ActivityController extends AdminController
     public function datatable(Request $r)
     {
         /* get data */
-        $data = ActivityLog::select('method', 'ip', 'description', 'path', 'created_at')->orderBy('created_at', 'desc');
+        $data = ActivityLog::select('method', 'ip', 'description', 'path', 'created_at', 'user_id')->orderBy('created_at', 'desc')->with('user');
 
         /* generate datatable */
         if ($r->ajax()) {

@@ -47,8 +47,4 @@ class User extends Authenticatable implements MustVerifyEmail
         return $query->where('status', 1);
     }
 
-    /* public function roles()
-{
-return $this->belongsToMany('ZetthCore\Models\Role', 'role_user', 'role_id', 'user_id');
-} */
 }

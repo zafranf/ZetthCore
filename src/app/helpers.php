@@ -205,12 +205,29 @@ if (!function_exists('_get_image')) {
     }
 }
 
+if (!function_exists('getSiteConfig')) {
+    function getSiteConfig()
+    {
+        /* get application setting */
+        $host = parse_url(url('/'))['host'];
+        if (isWWW($host)) {
+            $host = str_replace('www.', '', $host);
+        }
+        if (adminRoute() == 'subdomain' && isAdminSubdomain()) {
+            $host = str_replace(adminSubdomain() . '.', '', $host);
+        }
+        $site = \ZetthCore\Models\Site::where('domain', $host)->orWhere('domain', 'www.' . $host)->with('socmed_data', 'socmed_data.socmed')->first();
+
+        return $site;
+    }
+}
+
 if (!function_exists('getSiteURL')) {
     function getSiteURL($path = null)
     {
         $url = url($path ?? '/');
         if (adminRoute() == 'subdomain') {
-            $url = url(env('APP_URL') . ltrim($path, '/'));
+            $url = url(env('APP_URL') . '/' . ltrim($path, '/'));
         }
 
         return $url;
@@ -229,6 +246,10 @@ if (!function_exists('getCacheTime')) {
 if (!function_exists('getEmailFile')) {
     function getEmailFile($file)
     {
+        if (strpos($file, 'zetthcore::') !== false) {
+            return $file;
+        }
+
         $path = str_replace('.', '/', $file);
         $file_path = resource_path('views/' . $path . '.blade.php');
         if (file_exists($file_path) && !is_dir($file_path)) {

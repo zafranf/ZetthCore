@@ -148,7 +148,12 @@ class PostController extends AdminController
         $this->process_tags($tags, $post->id);
 
         /* save activity */
-        $this->activityLog('[~name] menambahkan artikel "' . $post->title . '"');
+        $this->activityLog('[~name] (' . $this->getUserRoles() . ') membuat artikel "' . $post->slug . '"');
+
+        /* notif to subscriber */
+        if (app('site')->enable_subscribe && $r->input('info_subscriber')) {
+            $this->sendToSubscriber($post);
+        }
 
         /* clear cache */
         \Cache::flush();
@@ -264,7 +269,7 @@ class PostController extends AdminController
         $this->process_tags($tags, $post->id);
 
         /* save activity */
-        $this->activityLog('[~name] memperbarui artikel "' . $post->title . '"');
+        $this->activityLog('[~name] (' . $this->getUserRoles() . ') memperbarui artikel "' . $post->title . '"');
 
         /* clear cache */
         \Cache::flush();
@@ -281,7 +286,7 @@ class PostController extends AdminController
     public function destroy(Post $post)
     {
         /* save activity */
-        $this->activityLog('[~name] menghapus artikel "' . $post->title . '"');
+        $this->activityLog('[~name] (' . $this->getUserRoles() . ') menghapus artikel "' . $post->title . '"');
 
         /* soft delete */
         $post->delete();
@@ -392,6 +397,11 @@ class PostController extends AdminController
         $postrel->post_id = $pid;
         $postrel->term_id = $tid;
         $postrel->save();
+    }
+
+    public function sendToSubscriber(Post $post)
+    {
+        \ZetthCore\Jobs\NotifSubscriber::dispatch($post);
     }
 
 }
