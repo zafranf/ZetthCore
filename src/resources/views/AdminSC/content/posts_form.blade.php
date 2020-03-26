@@ -64,6 +64,14 @@
             </div>
           </div>
           <div class="form-group">
+            <label for="info-subscriber">Pelanggan Info</label><br>
+            <div class="col-sm-12 col-xs-12 no-padding">
+              <label>
+                <input name="info_subscriber" type="checkbox" value="1" {{ app('site')->enable_subscribe ? 'checked' : '' }}> Infokan ke Pelanggan
+              </label>
+            </div>
+          </div>
+          <div class="form-group">
             <label for="visitor">Pengunjung</label><br>
             <div class="col-sm-4 col-xs-4 no-padding">
               <label>

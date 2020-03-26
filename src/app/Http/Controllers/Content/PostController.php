@@ -150,6 +150,11 @@ class PostController extends AdminController
         /* save activity */
         $this->activityLog('[~name] menambahkan artikel "' . $post->title . '"');
 
+        /* notif to subscriber */
+        if (app('site')->enable_subscribe && $r->input('info_subscriber')) {
+            $this->sendToSubscriber($post);
+        }
+
         /* clear cache */
         \Cache::flush();
 
@@ -392,6 +397,11 @@ class PostController extends AdminController
         $postrel->post_id = $pid;
         $postrel->term_id = $tid;
         $postrel->save();
+    }
+
+    public function sendToSubscriber(Post $post)
+    {
+        \ZetthCore\Jobs\NotifSubscriber::dispatch($post);
     }
 
 }
