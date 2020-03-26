@@ -90,4 +90,9 @@ class AdminController extends BaseController
             }
         }
     }
+
+    public function getUserRoles()
+    {
+        return implode(',', \Auth::user()->getRoles());
+    }
 }

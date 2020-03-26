@@ -34,7 +34,7 @@
         ],
         "columns": [
           { "width": "30px" },
-          { "data": "created_at", "width": "120px" },
+          { "data": "created_at_tz", "width": "120px" },
           { "data": "ip", "width": "100px" },
           { "data": "description" },
         ],
@@ -44,6 +44,13 @@
           "sortable": false,
           "render": function (data, type, row, meta) {
             return meta.row + meta.settings._iDisplayStart + 1;
+          },
+        }, {
+          "targets": 3,
+          "data": 'description',
+          "sortable": false,
+          "render": function (data, type, row, meta) {
+            return data.replace('[~name]', '<b>'+row.user.fullname+'</b>');
           }
         }],
       });
