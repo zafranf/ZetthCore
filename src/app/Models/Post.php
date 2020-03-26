@@ -56,6 +56,14 @@ class Post extends Model
     {
         return $this->hasMany('ZetthCore\Models\PostComment');
     }
+    public function likes()
+    {
+        return $this->hasMany('App\Models\PostLike');
+    }
+    public function likes_user()
+    {
+        return $this->hasOne('App\Models\PostLike')->where('user_id', app('user')->id ?? null);
+    }
 
     public function scopePosts($query)
     {
