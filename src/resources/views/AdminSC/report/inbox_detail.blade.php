@@ -2,7 +2,7 @@
 
 @section('content')
   <div class="panel-body">
-      <div class="row">
+    <div class="row">
       <div class="col-md-2">Dari</div>
       <div class="col-md-10">{{ $data->name }} ({{ $data->email }})</div>
     </div>
@@ -23,7 +23,7 @@
   </div>
 @endsection
 
-@section('styles')
+@push('styles')
   <style>
     .zetth-share-button {
       position: relative;
@@ -43,4 +43,4 @@
       text-decoration: none;
     }
   </style>
-@endsection
+@endpush
