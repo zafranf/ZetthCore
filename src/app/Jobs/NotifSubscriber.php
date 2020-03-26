@@ -51,7 +51,7 @@ class NotifSubscriber implements ShouldQueue
                 ]);
 
                 /* delay */
-                sleep(1 / 10);
+                sleep(1 / 60);
             }
         }
     }

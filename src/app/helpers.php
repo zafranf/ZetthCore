@@ -227,7 +227,7 @@ if (!function_exists('getSiteURL')) {
     {
         $url = url($path ?? '/');
         if (adminRoute() == 'subdomain') {
-            $url = url(env('APP_URL') . ltrim($path, '/'));
+            $url = url(env('APP_URL') . '/' . ltrim($path, '/'));
         }
 
         return $url;
