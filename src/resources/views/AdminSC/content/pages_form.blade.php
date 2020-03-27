@@ -14,7 +14,7 @@
         <label for="slug" class="col-sm-2 control-label">Tautan</label>
         <div class="col-sm-10">
           <div class="input-group">
-            <span class="input-group-addon" id="slug_span">{{ getSiteURL("/") }}/</span>
+            <span class="input-group-addon" id="slug_span">{{ getSiteURL("/") }}</span>
             <input type="text" id="slug" class="form-control" name="slug" placeholder="Tautan otomatis (dapat disesuaikan).." value="{{ isset($data) ? $data->slug : old('slug') }}" {{ isset($data) ? 'readonly' : '' }}>
           </div>
         </div>
