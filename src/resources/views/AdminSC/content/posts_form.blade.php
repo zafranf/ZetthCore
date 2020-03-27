@@ -319,7 +319,7 @@
 
     function responsive_filemanager_callback(field_id){
       var val = $('#'+field_id).val();
-      var path = val.replace(SITE_URL, "");
+      var path = val.replace(SITE_URL, "").replace(ADMIN_URL, "");
       var img = '<img src="'+path+'">';
       if (field_id.indexOf("featured") < 0) {
         $('.zetth-upload-new').hide();
