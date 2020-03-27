@@ -47,7 +47,7 @@ class LoginController extends AdminController
     public function showLoginForm()
     {
         $data = [
-            'current_url' => app('admin_path') . '/login',
+            'current_url' => adminPath() . '/login',
         ];
 
         return view('zetthcore::AdminSC.auth.login', $data);
@@ -83,20 +83,36 @@ class LoginController extends AdminController
      */
     protected function sendLoginResponse(Request $r)
     {
+        /* clear session * attempts */
         $r->session()->regenerate();
-
         $this->clearLoginAttempts($r);
-
-        /* save activity */
-        $this->activityLog('[~name] masuk halaman admin');
-
-        /* set redirect for user admin */
-        if (app('user')->is_admin) {
-            $this->redirectTo = app('admin_path') . '/dashboard';
-        }
 
         return $this->authenticated($r, $this->guard()->user())
         ?: redirect()->intended($this->redirectPath());
+    }
+
+    /**
+     * The user has been authenticated.
+     *
+     * @param  \Illuminate\Http\Request  $r
+     * @param  mixed  $user
+     * @return mixed
+     */
+    protected function authenticated(Request $r, $user)
+    {
+        if (!app('user')->is_admin) {
+            \Auth::logout();
+
+            return redirect(adminPath() . '/login')->withInput()->withErrors([
+                $this->username() => trans('auth.failed'),
+            ]);
+        }
+
+        /* set redirect for user admin */
+        $this->redirectTo = adminPath() . '/dashboard';
+
+        /* save activity */
+        $this->activityLog('[~name] masuk halaman admin');
     }
 
     /**
@@ -110,14 +126,14 @@ class LoginController extends AdminController
         /* set redirect */
         $redirect = '/';
         if (app('user')->is_admin) {
-            $redirect = app('admin_path') . '/login';
+            $redirect = adminPath() . '/login';
         }
 
         /* save activity */
         $this->activityLog('[~name] keluar dari halaman admin');
 
+        /* clear session */
         $this->guard()->logout();
-
         $r->session()->invalidate();
 
         return redirect($redirect);

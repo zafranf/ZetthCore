@@ -16,13 +16,13 @@
             </center>
             <form class="form-horizontal" role="form" method="POST" action="{{ url(app('admin_path') . '/login') }}">
               
-              <div class="form-group{{ isset($errors) && $errors->has('name') ? ' has-error' : '' }}">
+              <div class="form-group{{ isset($errors) && ($errors->has('name') || $errors->has('email')) ? ' has-error' : '' }}">
                 <label class="col-md-4 control-label">Pengguna</label>
                 <div class="col-md-6">
                   <input type="name" class="form-control" name="name" value="{{ old('name') }}" placeholder="Nama atau surel.." autofocus>
-                  @if (isset($errors) && $errors->has('name'))
+                  @if (isset($errors) && ($errors->has('name') || $errors->has('email')))
                     <span class="help-block">
-                      <strong>{{ $errors->first('name') }}</strong>
+                      <strong>{{ $errors->first() }}</strong>
                     </span>
                   @endif
                 </div>
