@@ -29,7 +29,7 @@
         <div class="col-sm-8 col-md-9 left-side no-padding">
           <input type="text" id="title" class="form-control {{ isset($data) ? '' : 'autofocus' }} no-border-top-right no-border-left no-radius input-lg" name="title" placeholder="Judul.." maxlength="100" value="{{ $data->title ?? old('title') }}">
           <div class="input-group">
-            <span class="input-group-addon no-border-top-right no-border-left no-radius input-sm" id="url_span">{{ getSiteURL('/post/') }}/</span>
+            <span class="input-group-addon no-border-top-right no-border-left no-radius input-sm" id="url_span">{{ getSiteURL('/post/') }}</span>
             <input type="text" id="slug" class="form-control no-border-top-right no-radius input-sm" name="slug" placeholder="Tautan otomatis.. (dapat disesuaikan, klik 2x untuk menyesuaikan)" readonly value="{{ $data->slug ?? old('slug') }}">
           </div>
           <textarea id="excerpt" name="excerpt" class="form-control no-border-top-right no-border-left no-radius input-xlarge" placeholder="Kutipan/deskripsi singkat tentang artikel (opsional).." rows="3">{{ $data->excerpt ?? old('excerpt') }}</textarea>
@@ -40,8 +40,7 @@
             <label for="cover">Sampul</label><br>
             <div class="zetth-upload">
               <div class="zetth-upload-new thumbnail">
-                <img
-                  src="{!! _get_image($data->cover ?? null, adminPath() . '/themes/admin/AdminSC/images/no-image.png') !!}">
+                <img src="{!! _get_image($data->cover ?? null, adminPath() . '/themes/admin/AdminSC/images/no-image.png') !!}">
               </div>
               <div class="zetth-upload-exists thumbnail"></div>
               <div>
