@@ -178,14 +178,14 @@ if (!function_exists('_get_button_post')) {
     }
 }
 
-if (!function_exists('_get_image')) {
+if (!function_exists('getImage')) {
     /**
-     * [_get_image description]
+     * [getImage description]
      * @param  string $path  [description]
      * @param  string $image [description]
      * @return [type]        [description]
      */
-    function _get_image($image, $default = null)
+    function getImage($image, $default = null)
     {
         $image = ltrim($image, '/');
         $image = str_replace('storage/', '', $image);
@@ -202,6 +202,19 @@ if (!function_exists('_get_image')) {
         }
 
         return $img;
+    }
+}
+
+if (!function_exists('getImageUser')) {
+    /**
+     * [getImageUser description]
+     * @param  string $path  [description]
+     * @param  string $image [description]
+     * @return [type]        [description]
+     */
+    function getImageUser($image = null)
+    {
+        return getImage('/assets/images/users/' . ($image ?? (\Auth::user()->image ?? '')), "/storage/assets/images/no-image-profile.jpg");
     }
 }
 

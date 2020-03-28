@@ -1,7 +1,7 @@
 <div style="background:#fff;width:90%;margin:0 auto;border:1px solid #ccc;color:#8B8B8B;padding:5px 10px;" id="zetth-email">
     <center>
       <a href="{{ getSiteURL('/') }}">
-        <img src="{{ _get_image("assets/images/" . $site->logo, url(adminPath() . "/themes/admin/AdminSC/images/logo.v2.png")) }}" style="max-height:200px;">
+        <img src="{{ getImage("/assets/images/" . $site->logo, url(adminPath() . "/themes/admin/AdminSC/images/logo.v2.png")) }}" style="max-height:200px;">
       </a>
     </center>
     <hr>

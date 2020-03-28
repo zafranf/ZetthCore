@@ -25,7 +25,7 @@
         <div class="col-sm-4">
           <div class="zetth-upload">
             <div class="zetth-upload-new thumbnail">
-              <img src="{!! _get_image(isset($data->id) ? $data->image : '', adminPath() . '/themes/admin/AdminSC/images/no-image.png') !!}">
+              <img src="{!! getImageisset($data->id) ? $data->image : '', adminPath() . '/themes/admin/AdminSC/images/no-image.png') !!}">
             </div>
             <div class="zetth-upload-exists thumbnail"></div>
             <div>
