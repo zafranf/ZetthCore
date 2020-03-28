@@ -129,7 +129,7 @@
           <div class="box-footer">
             {{ isset($data) ? method_field('PUT') : '' }}
             {{ csrf_field() }}
-            {{ _get_button_post($current_url, true) }}
+            {{ getButtonPost($current_url, true) }}
           </div>
         </div>
       </div>

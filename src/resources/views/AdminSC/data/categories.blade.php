@@ -68,7 +68,7 @@
             var actions = '';
             var url = ADMIN_URL + "/data/categories/" + data;
             var del = "_delete('" + url + "')";
-            {!! _get_access_buttons() !!}
+            {!! getAccessButtons() !!}
             $('[data-toggle="tooltip"]').tooltip();
 
             return actions;
@@ -107,7 +107,7 @@
               let actions = '';
               let url = ADMIN_URL + "/data/categories/" + data;
               let del = "_delete('" + url + "')";
-              {!! _get_access_buttons() !!}
+              {!! getAccessButtons() !!}
               $('[data-toggle="tooltip"]').tooltip();
 
               return actions;

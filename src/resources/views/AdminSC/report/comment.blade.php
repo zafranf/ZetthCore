@@ -44,7 +44,7 @@
           { "data": "email", "width": "200px" },
           { "data": "comment" },
           { "data": "status", "width": "50px" },
-          { "width": "40px" },
+          { "width": "80px" },
         ],
         "columnDefs": [{
           "targets": 0,
@@ -68,7 +68,7 @@
             let actions = '';
             let url = ADMIN_URL + "/report/comments/" + data;
             let del = "_delete('" + url + "')";
-            {!! _get_access_buttons() !!}
+            {!! getAccessButtons() !!}
             $('[data-toggle="tooltip"]').tooltip();
 
             return actions;
@@ -80,7 +80,7 @@
         options.columns = [
           { "width": "30px" },
           { },
-          { "width": "40px" },
+          { "width": "30px" },
         ];
         options.columnDefs = [
           {
@@ -107,7 +107,7 @@
               let actions = '';
               let url = ADMIN_URL + "/report/comments/" + data;
               let del = "_delete('" + url + "')";
-              {!! _get_access_buttons() !!}
+              {!! getAccessButtons() !!}
               $('[data-toggle="tooltip"]').tooltip();
 
               return actions;

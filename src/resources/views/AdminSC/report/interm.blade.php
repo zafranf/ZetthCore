@@ -59,7 +59,7 @@
             let actions = '';
             let url = ADMIN_URL + "/report/incoming-terms/" + data;
             let del = "_delete('" + url + "')";
-            {!! _get_access_buttons() !!}
+            {!! getAccessButtons() !!}
             $('[data-toggle="tooltip"]').tooltip();
 
             return actions;
@@ -97,7 +97,7 @@
               let actions = '';
               let url = ADMIN_URL + "/report/incoming-terms/" + data;
               let del = "_delete('" + url + "')";
-              {!! _get_access_buttons() !!}
+              {!! getAccessButtons() !!}
               $('[data-toggle="tooltip"]').tooltip();
 
               return actions;

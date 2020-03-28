@@ -147,7 +147,7 @@
 				<div class="col-md-offset-2 col-md-4">
 					{{ isset($data) ? method_field('PUT') : '' }}
 					{{ csrf_field() }}
-					{{ _get_button_post($current_url, true, $data->id ?? '') }}
+					{{ getButtonPost($current_url, true, $data->id ?? '') }}
 				</div>
 			</div>
 		</form>

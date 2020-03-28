@@ -65,7 +65,7 @@ if (!function_exists('isWWW')) {
     }
 }
 
-if (!function_exists('_get_status_text')) {
+if (!function_exists('getStatusText')) {
     /**
      * Undocumented function
      *
@@ -73,7 +73,7 @@ if (!function_exists('_get_status_text')) {
      * @param array $par
      * @return void
      */
-    function _get_status_text($status = 0, $par = [])
+    function getStatusText($status = 0, $par = [])
     {
         /* default params */
         $params = [
@@ -118,7 +118,7 @@ if (!function_exists('_get_status_text')) {
     }
 }
 
-if (!function_exists('_get_access_buttons')) {
+if (!function_exists('getAccessButtons')) {
     /**
      * Undocumented function
      *
@@ -126,7 +126,7 @@ if (!function_exists('_get_access_buttons')) {
      * @param string $btn
      * @return void
      */
-    function _get_access_buttons($url = '', $btn = '')
+    function getAccessButtons($url = '', $btn = '')
     {
         $add = app('is_desktop') ? 'TAMBAH' : '';
 
@@ -160,13 +160,13 @@ if (!function_exists('_get_access_buttons')) {
     }
 }
 
-if (!function_exists('_get_button_post')) {
+if (!function_exists('getButtonPost')) {
     /**
-     * [_get_button_post description]
+     * [getButtonPost description]
      * @param  string $page [description]
      * @return [type]       [description]
      */
-    function _get_button_post($page = '', $delete = false, $id = '')
+    function getButtonPost($page = '', $delete = false, $id = '')
     {
         echo '<div class="box-footer">';
         echo '<button type="submit" class="btn btn-warning">Simpan</button>';

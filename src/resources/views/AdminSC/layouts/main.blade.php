@@ -150,7 +150,7 @@
         <div class="panel panel-default">
           <div class="panel-heading">
             {{ $page_subtitle}}
-            {!! _get_access_buttons($current_url, 'add') !!}
+            {!! getAccessButtons($current_url, 'add') !!}
           </div>
 
           @yield('content')

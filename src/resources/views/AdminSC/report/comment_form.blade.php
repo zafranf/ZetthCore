@@ -63,7 +63,7 @@
             </div>
             <div class="form-group">
                 <div class="col-sm-offset-2 col-sm-10">
-                  {{ _get_button_post() }}
+                  {{ getButtonPost() }}
                 </div>
             </div>
         </form>
