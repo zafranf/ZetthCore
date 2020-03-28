@@ -205,6 +205,19 @@ if (!function_exists('getImage')) {
     }
 }
 
+if (!function_exists('getImageLogo')) {
+    /**
+     * [getImageLogo description]
+     * @param  string $path  [description]
+     * @param  string $image [description]
+     * @return [type]        [description]
+     */
+    function getImageLogo($image = null)
+    {
+        return getImage('/assets/images/' . ($image ?? (app('site')->logo ?? '')), adminPath() . "/themes/admin/AdminSC/images/logo.v2.png");
+    }
+}
+
 if (!function_exists('getImageUser')) {
     /**
      * [getImageUser description]
