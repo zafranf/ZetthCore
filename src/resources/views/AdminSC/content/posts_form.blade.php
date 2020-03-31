@@ -40,7 +40,7 @@
             <label for="cover">Sampul</label><br>
             <div class="zetth-upload">
               <div class="zetth-upload-new thumbnail">
-                <img src="{!! getImage$data->cover ?? null, adminPath() . '/themes/admin/AdminSC/images/no-image.png') !!}">
+                <img src="{!! getImage($data->cover ?? '') !!}">
               </div>
               <div class="zetth-upload-exists thumbnail"></div>
               <div>
