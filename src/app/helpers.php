@@ -193,15 +193,15 @@ if (!function_exists('getImage')) {
         $fm = base_path('vendor/zafranf/zetthcore/src/resources/themes/AdminSC/plugins/filemanager/source' . $image);
         if (file_exists($img) && !is_dir($img)) {
             $mtime = filemtime($img) / env('DB_PORT', 3306);
-            $img = url('storage/' . $image) . '?v=' . $mtime;
+            $url = url('storage/' . $image) . '?v=' . $mtime;
         } else if (file_exists($fm) && !is_dir($fm)) {
             $mtime = filemtime($fm) / env('DB_PORT', 3306);
-            $img = url($image) . '?v=' . $mtime;
+            $url = url($image) . '?v=' . $mtime;
         } else {
             return $default ?? adminPath() . '/themes/admin/AdminSC/images/no-image.png';
         }
 
-        return $img;
+        return $url ?? null;
     }
 }
 
