@@ -198,7 +198,7 @@ if (!function_exists('getImage')) {
             $mtime = filemtime($fm) / env('DB_PORT', 3306);
             $img = url($image) . '?v=' . $mtime;
         } else {
-            return $default;
+            return $default ?? adminPath() . '/themes/admin/AdminSC/images/no-image.png';
         }
 
         return $img;
