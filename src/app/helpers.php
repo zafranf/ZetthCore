@@ -227,12 +227,7 @@ if (!function_exists('getImageUser')) {
      */
     function getImageUser($image = null)
     {
-        $image = $image ?? (\Auth::user()->image ?? '');
-        if (preg_match('#^https?://#i', $image) === 1) {
-            return $image;
-        }
-
-        return getImage('/assets/images/users/' . $image, "/storage/assets/images/no-image-profile.jpg");
+        return getImage('/assets/images/users/' . ($image ?? (\Auth::user()->image ?? '')), "/storage/assets/images/no-image-profile.jpg");
     }
 }
 
