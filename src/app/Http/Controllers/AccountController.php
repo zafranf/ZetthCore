@@ -96,7 +96,7 @@ class AccountController extends AdminController
                 'file' => $file,
                 'folder' => '/assets/images/users/',
                 'name' => str_slug(app('user')->name),
-                'type' => $file->getMimeType(),
+                'type' => $file->getClientMimeType(),
                 'ext' => $file->getClientOriginalExtension(),
             ];
 

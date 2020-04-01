@@ -144,7 +144,7 @@ class UserController extends AdminController
                 'file' => $file,
                 'folder' => '/assets/images/users/',
                 'name' => str_slug($user->name),
-                'type' => $file->getMimeType(),
+                'type' => $file->getClientMimeType(),
                 'ext' => $file->getClientOriginalExtension(),
             ];
 
@@ -285,7 +285,7 @@ class UserController extends AdminController
                 'file' => $file,
                 'folder' => '/assets/images/users/',
                 'name' => str_slug($user->name),
-                'type' => $file->getMimeType(),
+                'type' => $file->getClientMimeType(),
                 'ext' => $file->getClientOriginalExtension(),
             ];
 
