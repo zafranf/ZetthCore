@@ -227,7 +227,12 @@ if (!function_exists('getImageUser')) {
      */
     function getImageUser($image = null)
     {
-        return getImage('/assets/images/users/' . ($image ?? (\Auth::user()->image ?? '')), "/storage/assets/images/no-image-profile.jpg");
+        $image = $image ?? (\Auth::user()->image ?? '');
+        if (\Str::startsWith($image, 'http')) {
+            return $image;
+        }
+
+        return getImage('/assets/images/users/' . $image, "/storage/assets/images/no-image-profile.jpg");
     }
 }
 
