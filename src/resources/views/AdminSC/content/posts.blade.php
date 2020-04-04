@@ -129,7 +129,7 @@
           "targets": 2,
           "data": 'title',
           "render": function (data, type, row, meta) {
-            let postlink = SITE_URL + '/post/' + row.slug;
+            let postlink = SITE_URL + '/{{ env('SINGLE_POST_PATH', 'post') }}/' + row.slug;
             let fblink = 'https://www.facebook.com/sharer/sharer.php?u='+postlink+'&amp;src=sdkpreparse';
             let twlink = 'https://twitter.com/intent/tweet?text=' + data + ' ' + postlink;
             let render = data + '<br>';
