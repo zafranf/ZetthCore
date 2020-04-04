@@ -4,6 +4,7 @@ namespace ZetthCore\Http\Controllers\Report;
 
 use Illuminate\Http\Request;
 use ZetthCore\Http\Controllers\AdminController;
+use ZetthCore\Models\Post;
 use ZetthCore\Models\PostComment;
 
 class CommentController extends AdminController
@@ -60,9 +61,30 @@ class CommentController extends AdminController
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $r)
     {
-        abort(403);
+        $this->breadcrumbs[] = [
+            'page' => 'Balas Komentar',
+            'icon' => '',
+            'url' => '',
+        ];
+
+        /* set variable for view */
+        $data = [
+            'current_url' => $this->current_url,
+            'breadcrumbs' => $this->breadcrumbs,
+            'page_title' => $this->page_title,
+            'page_subtitle' => 'Balas Komentar',
+        ];
+
+        /* check comment id */
+        if ($r->input('cid')) {
+            $data['reply'] = PostComment::with('commentator')->find($r->input('cid'));
+        } else {
+            abort(404);
+        }
+
+        return view('zetthcore::AdminSC.report.comment_form', $data);
     }
 
     /**
@@ -73,7 +95,69 @@ class CommentController extends AdminController
      */
     public function store(Request $r)
     {
-        abort(403);
+        /* validation */
+        $this->validate($r, [
+            'comment' => 'required',
+        ]);
+
+        /* get post */
+        $post = Post::find($r->input('pid'));
+        if (!$post) {
+            return redirect()->back()->withErrors([
+                'Data artikel tidak ditemukan',
+            ]);
+        }
+
+        /* get parent id */
+        $parent = PostComment::with('commentator')->find($r->input('cid'));
+        if (!$parent) {
+            return redirect()->back()->withErrors([
+                'Data komentar sumber tidak ditemukan',
+            ]);
+        }
+
+        /* save data */
+        $comment = new PostComment;
+        $comment->name = \Auth::user()->fullname;
+        $comment->email = \Auth::user()->email;
+        $comment->comment = $r->input('comment');
+        $comment->status = 1;
+        $comment->parent_id = $r->input('cid');
+        $comment->post_id = $r->input('pid');
+        $comment->created_by = \Auth::user()->id;
+        $comment->approved_by = \Auth::user()->id;
+        $comment->is_owner = 1;
+        $comment->save();
+
+        /* set approved */
+        if ($r->input('status')) {
+            $parent->status = bool($r->input('status')) ? 1 : 0;
+            $parent->approved_by = bool($r->status) ? \Auth::user()->id : null;
+            $parent->save();
+        }
+
+        /* send notif to commentator */
+        if ($parent->notify) {
+            /* send email notification */
+            $this->sendMail([
+                'view' => env('COMMENT_REPLIED_VIEW', 'zetthcore::AdminSC.emails.comment_replied'),
+                'data' => [
+                    'site' => getSiteConfig(),
+                    'post' => $post,
+                ],
+                'from' => env('MAIL_USERNAME', 'no-reply@' . env('APP_DOMAIN')),
+                'to' => $parent->commentator->email,
+                'subject' => '[' . env('APP_NAME') . '] Balasan komentar artikel "' . $post->title . '"',
+            ]);
+        }
+
+        /* save activity */
+        $this->activityLog('[~name] (' . $this->getUserRoles() . ') membalas komentar dari "' . $parent->commentator->fullname . '"');
+
+        /* clear cache */
+        \Cache::forget('_getPostscompletedesc' . $post->slug . '11');
+
+        return redirect($this->current_url)->with('success', 'Komentar berhasil dibalas!');
     }
 
     /**
@@ -114,7 +198,26 @@ class CommentController extends AdminController
      */
     public function edit(PostComment $comment)
     {
-        abort(403);
+        $this->breadcrumbs[] = [
+            'page' => 'Edit Komentar',
+            'icon' => '',
+            'url' => '',
+        ];
+
+        /* mark as read */
+        $comment->read = 1;
+        $comment->save();
+
+        /* set variable for view */
+        $data = [
+            'current_url' => $this->current_url,
+            'breadcrumbs' => $this->breadcrumbs,
+            'page_title' => $this->page_title,
+            'page_subtitle' => 'Edit Komentar',
+            'data' => $comment,
+        ];
+
+        return view('zetthcore::AdminSC.report.comment_form', $data);
     }
 
     /**

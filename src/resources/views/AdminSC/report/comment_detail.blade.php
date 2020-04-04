@@ -21,7 +21,7 @@
       </a>
     @endif
     &nbsp;
-    <a id="btn-reply" class="share-button" href="{{ url($current_url . "/create?cid=" . $data->id . "&pid=" . $data->post_id) }}">
+    <a id="btn-reply" class="share-button" href="{{ url($current_url . "/create?cid=" . ($data->parent_id ?? $data->id) . "&pid=" . $data->post_id) }}">
       <i class="fa fa-reply"></i> Balas
     </a>
     &nbsp;
