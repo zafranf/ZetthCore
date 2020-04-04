@@ -245,7 +245,7 @@
       $('#table-data tbody').on('click', 'tr td .btn-short-url', function() {
         let url = $(this).data('url');
         let html = 'Tekan ikon untuk menyalin tautan: <div class="input-group"><input id="zetth-short-url" type="text" class="form-control" readonly value="'+url+'"><span class="input-group-addon" onclick="copy()" style="cursor:pointer;"><i class="fa fa-copy"></i></span></div>';
-        $('.modal-title').text('Bagikan Tautan');
+        $('.modal-title').text('Salin Tautan');
         $('.modal-body').html(html);
         $('.modal-footer').hide();
       });
