@@ -28,14 +28,7 @@ class AppServiceProvider extends ServiceProvider
             }
 
             /* get application setting */
-            $host = parse_url(url('/'))['host'];
-            if (isWWW($host)) {
-                $host = str_replace('www.', '', $host);
-            }
-            if (adminRoute() == 'subdomain' && isAdminSubdomain()) {
-                $host = str_replace(adminSubdomain() . '.', '', $host);
-            }
-            $site = \ZetthCore\Models\Site::where('domain', $host)->orWhere('domain', 'www.' . $host)->with('socmed_data', 'socmed_data.socmed')->first();
+            $site = getSiteConfig();
             if (!$site) {
                 throw new \Exception("Site config not found", 1);
             }
