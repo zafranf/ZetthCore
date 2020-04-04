@@ -95,4 +95,34 @@ class AdminController extends BaseController
     {
         return implode(',', \Auth::user()->getRoles());
     }
+
+    public function commentApproval(Request $r, $type, $comment_id)
+    {
+        /* get comment */
+        $comment = \ZetthCore\Models\PostComment::with('commentator')->find($comment_id);
+        if (!$comment) {
+            abort(404);
+        }
+        if ($type == 'approve') {
+            $comment->status = 1;
+            $comment->approved_by = \Auth::user()->id;
+
+            /* text */
+            $log_text = '[~name] menyetujui komentar dari ' . $comment->commentator->fullname;
+            $success_text = 'Komentar berhasil disetujui!';
+        } else if ($type == 'unapprove') {
+            $comment->status = 0;
+            $comment->approved_by = null;
+
+            /* text */
+            $log_text = '[~name] membatalkan persetujuan komentar dari ' . $comment->commentator->fullname;
+            $success_text = 'Komentar berhasil batal disetujui!';
+        }
+        $comment->save();
+
+        /* save activity */
+        $this->activityLog($log_text);
+
+        return redirect()->back()->with('success', $success_text);
+    }
 }

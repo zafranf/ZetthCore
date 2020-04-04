@@ -49,6 +49,9 @@ Route::middleware('auth')->group(function () use ($prefix) {
     /* Route::get('/content/banners/sort', $prefix.'\Content\BannerController@sort')->name('banners.sort')->name('banners.sort');
     Route::put('/content/banners/sort', $prefix.'\Content\BannerController@sortSave')->name('banners.sortSave'); */
 
+    /* other action */
+    Route::get('/report/comments/{type}/{id}', $prefix . '\AdminController@commentApproval');
+
     Route::middleware('access')->group(function () use ($prefix) {
         /* dashboard */
         Route::get('/dashboard', $prefix . '\DashboardController@index')->name('dashboard.index');
