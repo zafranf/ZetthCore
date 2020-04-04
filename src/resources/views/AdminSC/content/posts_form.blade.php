@@ -24,8 +24,7 @@
 @section('content')
   <div class="panel-body no-padding-bottom">
     <div class="row" style="margin-top:-15px;">
-      <form id="form-post" action="{{ url($current_url) }}{{ isset($data) ? '/' . $data->id : '' }}" method="post"
-        enctype="multipart/form-data">
+      <form id="form-post" action="{{ url($current_url) }}{{ isset($data) ? '/' . $data->id : '' }}" method="post" enctype="multipart/form-data">
         <div class="col-sm-8 col-md-9 left-side no-padding">
           <input type="text" id="title" class="form-control {{ isset($data) ? '' : 'autofocus' }} no-border-top-right no-border-left no-radius input-lg" name="title" placeholder="Judul.." maxlength="100" value="{{ $data->title ?? old('title') }}">
           <div class="input-group">
