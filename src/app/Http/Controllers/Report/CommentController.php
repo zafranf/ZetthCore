@@ -144,6 +144,8 @@ class CommentController extends AdminController
                 'data' => [
                     'site' => getSiteConfig(),
                     'post' => $post,
+                    'parent' => $parent,
+                    'comment' => $comment,
                 ],
                 'from' => env('MAIL_USERNAME', 'no-reply@' . env('APP_DOMAIN')),
                 'to' => $parent->commentator->email,
