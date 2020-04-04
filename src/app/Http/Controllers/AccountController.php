@@ -113,7 +113,7 @@ class AccountController extends AdminController
         $this->saveSocmed($user, $r);
 
         /* save activity */
-        $this->activityLog('[~name] memperbarui akun');
+        $this->activityLog('[~name] (' . $this->getUserRoles() . ') memperbarui akun');
 
         return redirect($this->current_url)->with('success', 'Data akun berhasil disimpan!');
     }

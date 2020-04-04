@@ -206,7 +206,7 @@ class SiteController extends AdminController
         $this->process_socmed($r);
 
         /* save activity */
-        $this->activityLog('[~name] memperbarui Pengaturan - Situs');
+        $this->activityLog('[~name] (' . $this->getUserRoles() . ') memperbarui Pengaturan - Situs');
 
         /* clear cache */
         \Cache::flush();

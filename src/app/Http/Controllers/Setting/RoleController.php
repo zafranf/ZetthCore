@@ -117,7 +117,7 @@ class RoleController extends AdminController
         $this->saveMenuGroup($r, $role);
 
         /* save activity */
-        $this->activityLog('[~name] menambahkan Peran "' . $role->name . '"');
+        $this->activityLog('[~name] (' . $this->getUserRoles() . ') menambahkan Peran "' . $role->name . '"');
 
         /* clear cache */
         \Cache::flush();
@@ -211,7 +211,7 @@ class RoleController extends AdminController
         $this->saveMenuGroup($r, $role);
 
         /* save activity */
-        $this->activityLog('[~name] memperbarui Peran "' . $role->name . '"');
+        $this->activityLog('[~name] (' . $this->getUserRoles() . ') memperbarui Peran "' . $role->name . '"');
 
         /* Clear cache */
         // \Cache::forget('cacheMenuGroupUser_role');
@@ -231,7 +231,7 @@ class RoleController extends AdminController
     public function destroy(Role $role)
     {
         /* save activity */
-        $this->activityLog('[~name] menghapus Peran "' . $role->display_name . '"');
+        $this->activityLog('[~name] (' . $this->getUserRoles() . ') menghapus Peran "' . $role->display_name . '"');
 
         /* soft delete */
         $role->delete();

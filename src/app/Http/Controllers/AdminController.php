@@ -108,14 +108,14 @@ class AdminController extends BaseController
             $comment->approved_by = \Auth::user()->id;
 
             /* text */
-            $log_text = '[~name] menyetujui komentar dari ' . $comment->commentator->fullname;
+            $log_text = '[~name] (' . $this->getUserRoles() . ') menyetujui komentar dari ' . $comment->commentator->fullname;
             $success_text = 'Komentar berhasil disetujui!';
         } else if ($type == 'unapprove') {
             $comment->status = 0;
             $comment->approved_by = null;
 
             /* text */
-            $log_text = '[~name] membatalkan persetujuan komentar dari ' . $comment->commentator->fullname;
+            $log_text = '[~name] (' . $this->getUserRoles() . ') membatalkan persetujuan komentar dari ' . $comment->commentator->fullname;
             $success_text = 'Komentar berhasil batal disetujui!';
         }
         $comment->save();
