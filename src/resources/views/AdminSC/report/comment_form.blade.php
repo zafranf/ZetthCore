@@ -6,7 +6,7 @@
       @if (isset($data))
         <input type="hidden" name="name_old" value="{{ isset($data) ? $data->name : '' }}">
         <input type="hidden" name="comment_old" value="{{ isset($data) ? $data->comment : '' }}">
-        <div class="form-group">
+        <div class="form-group{{ isset($data) && $data->is_owner ? ' hide' : '' }}">
           <label for="name" class="col-sm-2 control-label">Nama</label>
           <div class="col-sm-10">
             <input type="text" class="form-control" id="name" name="name" value="{{ $data->name ?? old('name') }}">
@@ -24,16 +24,16 @@
         </div>
       @endif
       <div class="form-group">
-        <label for="text" class="col-sm-2 control-label">Komentar</label>
+        <label for="text" class="col-sm-2 control-label">{{ isset($reply) ? 'Balasan' : 'Komentar' }}</label>
         <div class="col-sm-10">
           <textarea rows="8" id="comment" name="comment" class="form-control" placeholder="Type your content here..">{{ $data->comment ?? old('comment') }}</textarea>
         </div>
       </div>
-      <div class="form-group">
+      <div class="form-group{{ (isset($reply) && (isset($reply) && $reply->status == 1)) || (isset($data) && $data->status == 1)  ? ' hide' : '' }}">
         <div class="col-sm-offset-2 col-sm-10">
           <div class="checkbox">
             <label>
-              <input type="checkbox" name="status" {{ (isset($data->status) && $data->status == 0) ? '' : 'checked' }}> Setujui
+              <input type="checkbox" name="status" {{ (isset($data) && $data->status == 0) ? '' : 'checked' }}> Setujui{{ isset($reply) && (isset($reply) && $reply->status == 0)  ? ' komentar pengunjung' : '' }}
             </label>
           </div>
         </div>

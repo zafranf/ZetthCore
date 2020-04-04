@@ -148,13 +148,13 @@ class CommentController extends AdminController
                     'comment' => $comment,
                 ],
                 'from' => env('MAIL_USERNAME', 'no-reply@' . env('APP_DOMAIN')),
-                'to' => $parent->commentator->email,
+                'to' => $parent->email,
                 'subject' => '[' . env('APP_NAME') . '] Balasan komentar artikel "' . $post->title . '"',
             ]);
         }
 
         /* save activity */
-        $this->activityLog('[~name] (' . $this->getUserRoles() . ') membalas komentar dari "' . $parent->commentator->fullname . '"');
+        $this->activityLog('[~name] (' . $this->getUserRoles() . ') membalas komentar dari "' . $parent->email . '"');
 
         /* clear cache */
         \Cache::forget('_getPostscompletedesc' . $post->slug . '11');
@@ -231,7 +231,26 @@ class CommentController extends AdminController
      */
     public function update(Request $r, PostComment $comment)
     {
-        abort(403);
+        /* validation */
+        $this->validate($r, [
+            'name' => 'required',
+            'comment' => 'required',
+        ]);
+
+        /* save data */
+        $comment->name = $r->input('name');
+        $comment->comment = $r->input('comment');
+        $comment->updated_by = \Auth::user()->user_id;
+        if (!$comment->is_owner && bool($r->input('status'))) {
+            $comment->status = 1;
+            $comment->approved_by = \Auth::user()->user_id;
+        }
+        $comment->save();
+
+        /* save activity */
+        $this->activityLog('[~name] (' . $this->getUserRoles() . ') mengubah komentar dari "' . $comment->email . '"');
+
+        return redirect($this->current_url)->with('success', 'Komentar berhasil disimpan!');
     }
 
     /**
@@ -243,7 +262,7 @@ class CommentController extends AdminController
     public function destroy(PostComment $comment)
     {
         /* save activity */
-        $this->activityLog('[~name] menghapus Komentar "' . $comment->email . '"');
+        $this->activityLog('[~name] menghapus Komentar dari "' . $comment->email . '"');
 
         /* soft delete */
         $comment->delete();
