@@ -70,7 +70,7 @@ function _getPosts($type = 'simple', $limit = null, $order = "desc", $slug = '')
 
     /* check complete params */
     if ($complete) {
-        $posts->with('comments', 'categories', 'tags', 'author', 'editor', 'likes_user');
+        $posts->with('comments_sub', 'categories', 'tags', 'author', 'editor', 'likes_user');
     } else {
         $posts->with('categories', 'author');
         $posts->withCount('comments');

@@ -19,7 +19,7 @@
     $(document).ready(function(){
       tinymce.init({
         relative_urls: false,
-        selector: '#content',
+        selector: '{{ $selector ?? '#content' }}',
         /*codesample_dialog_height: 300,*/
         height: (lsH-190),
         skin: 'custom',

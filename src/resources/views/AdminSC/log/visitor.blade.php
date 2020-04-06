@@ -73,7 +73,7 @@
             var actions = '';
             var url = ADMIN_URL + "/log/visitors/" + data;
             var del = "_delete('" + url + "')";
-            {!! _get_access_buttons() !!}
+            {!! getAccessButtons() !!}
             $('[data-toggle="tooltip"]').tooltip();
 
             return actions;

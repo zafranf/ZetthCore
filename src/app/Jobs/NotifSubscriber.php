@@ -47,7 +47,7 @@ class NotifSubscriber implements ShouldQueue
                     ],
                     'from' => env('MAIL_USERNAME', 'no-reply@' . env('APP_DOMAIN')),
                     'to' => $subscriber->email,
-                    'subject' => '[' . env('APP_NAME') . '] Artikel baru - ' . $this->post->title,
+                    'subject' => '[' . env('APP_NAME') . '] Artikel baru "' . $this->post->title . '"',
                 ]);
 
                 /* delay */

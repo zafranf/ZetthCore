@@ -129,15 +129,18 @@
           "targets": 2,
           "data": 'title',
           "render": function (data, type, row, meta) {
-            let postlink = SITE_URL + '/post/' + row.slug;
-            let fblink = 'https://www.facebook.com/sharer/sharer.php?u='+postlink+'&amp;src=sdkpreparse';
-            let twlink = 'https://twitter.com/intent/tweet?text=' + data + ' ' + postlink;
+            let sharelink = SITE_URL + '/action/share/' + row.slug;
+            let posturl = SITE_URL + '/{{ env('SINGLE_POST_PATH', 'post') }}/' + row.slug;
+            let fblink = 'https://www.facebook.com/sharer/sharer.php?u='+posturl+'&amp;src=sdkpreparse';
+            let twlink = 'https://twitter.com/intent/tweet?text=' + data + ' ' + posturl;
             let render = data + '<br>';
             render += 'oleh <b>' + row.author.fullname + '</b><br>';
             /* render += 'pada <b>' + row.published_string + '</b><br>'; */
-            render += '<a class="zetth-share-button" onclick="_open_window(\''+fblink+'\')"><i class="fa fa-facebook-square"></i> Share</a>&nbsp;'; 
-            render += '<a class="zetth-share-button" onclick="_open_window(\''+twlink+'\')"><i class="fa fa-twitter"></i> Tweet</a>&nbsp;';
-            render += '<a id="btn-short-url-'+row.id+'" class="zetth-share-button btn-short-url" data-toggle="modal" data-url="'+postlink+'" data-target="#zetth-modal"><i class="fa fa-link"></i> Salin</a>';
+            render += '<a class="zetth-share-button" onclick="_open_window(\''+sharelink+'/facebook'+'\')"><i class="fa fa-facebook-square"></i> Share</a>&nbsp;'; 
+            render += '<a class="zetth-share-button" onclick="_open_window(\''+sharelink+'/twitter'+'\')"><i class="fa fa-twitter"></i> Tweet</a>&nbsp;';
+            render += '<a class="zetth-share-button" onclick="_open_window(\''+sharelink+'/whatsapp'+'\')"><i class="fa fa-whatsapp"></i> WhatsApp</a>&nbsp;';
+            render += '<a class="zetth-share-button" onclick="_open_window(\''+sharelink+'/telegram'+'\')"><i class="fa fa-telegram">T</i> Telegram</a>&nbsp;';
+            render += '<a id="btn-short-url-'+row.id+'" class="zetth-share-button btn-short-url" data-toggle="modal" data-url="'+posturl+'" data-target="#zetth-modal"><i class="fa fa-link"></i> Salin</a>';
 
             return render;
           }
@@ -156,7 +159,7 @@
             var actions = '';
             var url = ADMIN_URL + "/content/posts/" + data;
             var del = "_delete('" + url + "')";
-            {!! _get_access_buttons() !!}
+            {!! getAccessButtons() !!}
             $('[data-toggle="tooltip"]').tooltip();
 
             return actions;
@@ -206,14 +209,17 @@
             "sortable": false,
             "data": "title",
             "render": function (data, type, row, meta) {
-              let postlink = SITE_URL + '/post/' + row.slug;
-              let fblink = 'https://www.facebook.com/sharer/sharer.php?u='+postlink+'&amp;src=sdkpreparse';
-              let twlink = 'https://twitter.com/intent/tweet?text=' + data + ' ' + postlink;
+            let sharelink = SITE_URL + '/action/share/' + row.slug;
+              let posturl = SITE_URL + '/post/' + row.slug;
+              let fblink = 'https://www.facebook.com/sharer/sharer.php?u='+posturl+'&amp;src=sdkpreparse';
+              let twlink = 'https://twitter.com/intent/tweet?text=' + data + ' ' + posturl;
               let render = data + '<br>';
               /* render += 'oleh <b>' + row.author.fullname + '</b><br>'; */
-              render += '<a class="zetth-share-button" onclick="_open_window(\''+fblink+'\')"><i class="fa fa-facebook-square"></i></a>&nbsp;'; 
-              render += '<a class="zetth-share-button" onclick="_open_window(\''+twlink+'\')"><i class="fa fa-twitter"></i></a>&nbsp;';
-              render += '<a id="btn-short-url-'+row.id+'" class="zetth-share-button btn-short-url" data-toggle="modal" data-url="'+postlink+'" data-target="#zetth-modal"><i class="fa fa-link"></i></a><br>';
+              render += '<a class="zetth-share-button" onclick="_open_window(\''+sharelink+'/facebook'+'\')"><i class="fa fa-facebook-square"></i></a>&nbsp;'; 
+              render += '<a class="zetth-share-button" onclick="_open_window(\''+sharelink+'/twitter'+'\')"><i class="fa fa-twitter"></i></a>&nbsp;';
+              render += '<a class="zetth-share-button" onclick="_open_window(\''+sharelink+'/whatsapp'+'\')"><i class="fa fa-whatsapp"></i></a>&nbsp;';
+              render += '<a class="zetth-share-button" onclick="_open_window(\''+sharelink+'/telegram'+'\')">T</a>&nbsp;';
+              render += '<a id="btn-short-url-'+row.id+'" class="zetth-share-button btn-short-url" data-toggle="modal" data-url="'+posturl+'" data-target="#zetth-modal"><i class="fa fa-link"></i></a><br>';
               render += _get_status_text(row.status);
 
               return render;
@@ -226,7 +232,7 @@
               let actions = '';
               let url = ADMIN_URL + "/content/posts/" + data;
               let del = "_delete('" + url + "')";
-              {!! _get_access_buttons() !!}
+              {!! getAccessButtons() !!}
               $('[data-toggle="tooltip"]').tooltip();
 
               return actions;
@@ -239,7 +245,7 @@
       $('#table-data tbody').on('click', 'tr td .btn-short-url', function() {
         let url = $(this).data('url');
         let html = 'Tekan ikon untuk menyalin tautan: <div class="input-group"><input id="zetth-short-url" type="text" class="form-control" readonly value="'+url+'"><span class="input-group-addon" onclick="copy()" style="cursor:pointer;"><i class="fa fa-copy"></i></span></div>';
-        $('.modal-title').text('Bagikan Tautan');
+        $('.modal-title').text('Salin Tautan');
         $('.modal-body').html(html);
         $('.modal-footer').hide();
       });

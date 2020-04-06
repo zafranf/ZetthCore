@@ -22,8 +22,7 @@
       <div class="form-group">
         <label for="content" class="col-sm-2 control-label">Konten</label>
         <div class="col-sm-10">
-          <textarea id="content" name="content" class="form-control"
-            placeholder="Tulis konten di sini..">{{ isset($data) ? $data->content : old('content') }}</textarea>
+          <textarea id="content" name="content" class="form-control" placeholder="Tulis konten di sini..">{{ isset($data) ? $data->content : old('content') }}</textarea>
         </div>
       </div>
       <div class="form-group">
@@ -39,7 +38,7 @@
         <div class="col-sm-offset-2 col-sm-10">
           {{ isset($data) ? method_field('PUT') : '' }}
           {{ csrf_field() }}
-          {{ _get_button_post($current_url, true, $data->id ?? '') }}
+          {{ getButtonPost($current_url, true, $data->id ?? '') }}
         </div>
       </div>
     </form>

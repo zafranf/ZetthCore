@@ -49,7 +49,7 @@ class Post extends Model
 
     public function comments_sub()
     {
-        return $this->hasMany('ZetthCore\Models\PostComment')->where('status', 1)->with('subcomments');
+        return $this->hasMany('ZetthCore\Models\PostComment')->where('status', 1)->whereNull('parent_id')->with(['subcomments', 'commentator']);
     }
 
     public function comments_all()

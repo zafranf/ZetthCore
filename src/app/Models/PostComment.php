@@ -14,6 +14,11 @@ class PostComment extends Model
         return $this->belongsTo('ZetthCore\Models\Post');
     }
 
+    public function commentator()
+    {
+        return $this->belongsTo('App\Models\User', 'created_by');
+    }
+
     public function approval()
     {
         return $this->belongsTo('App\Models\User', 'approved_by');
@@ -21,7 +26,7 @@ class PostComment extends Model
 
     public function subcomments()
     {
-        return $this->hasMany('ZetthCore\Models\PostComment', 'parent_id', 'id')->where('status', 1)->with('subcomments');
+        return $this->hasMany('ZetthCore\Models\PostComment', 'parent_id', 'id')->where('status', 1)->with(['subcomments', 'commentator']);
     }
 
     public function scopeActive($query)

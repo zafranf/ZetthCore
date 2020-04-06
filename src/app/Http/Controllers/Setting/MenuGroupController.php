@@ -103,7 +103,7 @@ class MenuGroupController extends AdminController
         $menugroup->save();
 
         /* activity log */
-        $this->activityLog('[~name] menambahkan Grup Menu "' . $menugroup->name . '"');
+        $this->activityLog('[~name] (' . $this->getUserRoles() . ') menambahkan Grup Menu "' . $menugroup->name . '"');
 
         /* clear cache */
         \Cache::flush();
@@ -182,7 +182,7 @@ class MenuGroupController extends AdminController
         $save = $this->sortMenu($r);
 
         /* activity log */
-        $this->activityLog('[~name] memperbarui Grup Menu "' . $menugroup->name . '"');
+        $this->activityLog('[~name] (' . $this->getUserRoles() . ') memperbarui Grup Menu "' . $menugroup->name . '"');
 
         /* clear cache */
         \Cache::flush();
@@ -199,7 +199,7 @@ class MenuGroupController extends AdminController
     public function destroy(Request $r, MenuGroup $menugroup)
     {
         /* activity log */
-        $this->activityLog('[~name] menghapus grup menu "' . $menugroup->name . '"');
+        $this->activityLog('[~name] (' . $this->getUserRoles() . ') menghapus grup menu "' . $menugroup->name . '"');
 
         /* soft delete */
         $menugroup->delete();

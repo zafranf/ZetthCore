@@ -106,7 +106,7 @@ class CategoryController extends AdminController
         $category->save();
 
         /* save activity */
-        $this->activityLog('[~name] menambahkan kategori "' . $category->name . '"');
+        $this->activityLog('[~name] (' . $this->getUserRoles() . ') menambahkan kategori "' . $category->name . '"');
 
         /* clear cache */
         \Cache::flush();
@@ -177,7 +177,7 @@ class CategoryController extends AdminController
         $category->save();
 
         /* save activity */
-        $this->activityLog('[~name] memperbarui kategori "' . $category->name . '"');
+        $this->activityLog('[~name] (' . $this->getUserRoles() . ') memperbarui kategori "' . $category->name . '"');
 
         /* clear cache */
         \Cache::flush();
@@ -194,7 +194,7 @@ class CategoryController extends AdminController
     public function destroy(Term $category)
     {
         /* save activity */
-        $this->activityLog('[~name] menghapus kategori "' . $category->name . '"');
+        $this->activityLog('[~name] (' . $this->getUserRoles() . ') menghapus kategori "' . $category->name . '"');
 
         /* soft delete */
         $category->delete();

@@ -25,7 +25,7 @@
         <div class="col-sm-4">
           <div class="zetth-upload">
             <div class="zetth-upload-new thumbnail">
-              <img src="{!! _get_image(isset($data->id) ? $data->image : '', adminPath() . '/themes/admin/AdminSC/images/no-image.png') !!}">
+              <img src="{!! getImage($data->image ?? '') !!}">
             </div>
             <div class="zetth-upload-exists thumbnail"></div>
             <div>
@@ -137,7 +137,7 @@
         <div class="col-sm-offset-2 col-sm-4">
           {{ isset($data->id) ? method_field('PUT') : '' }}
           {{ csrf_field() }}
-          {{ _get_button_post($current_url, true, $data->id ?? '') }}
+          {{ getButtonPost($current_url, true, $data->id ?? '') }}
         </div>
       </div>
     </form>

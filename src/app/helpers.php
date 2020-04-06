@@ -65,7 +65,7 @@ if (!function_exists('isWWW')) {
     }
 }
 
-if (!function_exists('_get_status_text')) {
+if (!function_exists('getStatusText')) {
     /**
      * Undocumented function
      *
@@ -73,7 +73,7 @@ if (!function_exists('_get_status_text')) {
      * @param array $par
      * @return void
      */
-    function _get_status_text($status = 0, $par = [])
+    function getStatusText($status = 0, $par = [])
     {
         /* default params */
         $params = [
@@ -118,7 +118,7 @@ if (!function_exists('_get_status_text')) {
     }
 }
 
-if (!function_exists('_get_access_buttons')) {
+if (!function_exists('getAccessButtons')) {
     /**
      * Undocumented function
      *
@@ -126,7 +126,7 @@ if (!function_exists('_get_access_buttons')) {
      * @param string $btn
      * @return void
      */
-    function _get_access_buttons($url = '', $btn = '')
+    function getAccessButtons($url = '', $btn = '')
     {
         $add = app('is_desktop') ? 'TAMBAH' : '';
 
@@ -160,13 +160,13 @@ if (!function_exists('_get_access_buttons')) {
     }
 }
 
-if (!function_exists('_get_button_post')) {
+if (!function_exists('getButtonPost')) {
     /**
-     * [_get_button_post description]
+     * [getButtonPost description]
      * @param  string $page [description]
      * @return [type]       [description]
      */
-    function _get_button_post($page = '', $delete = false, $id = '')
+    function getButtonPost($page = '', $delete = false, $id = '')
     {
         echo '<div class="box-footer">';
         echo '<button type="submit" class="btn btn-warning">Simpan</button>';
@@ -178,14 +178,14 @@ if (!function_exists('_get_button_post')) {
     }
 }
 
-if (!function_exists('_get_image')) {
+if (!function_exists('getImage')) {
     /**
-     * [_get_image description]
+     * [getImage description]
      * @param  string $path  [description]
      * @param  string $image [description]
      * @return [type]        [description]
      */
-    function _get_image($image, $default = null)
+    function getImage($image, $default = null)
     {
         $image = ltrim($image, '/');
         $image = str_replace('storage/', '', $image);
@@ -193,15 +193,41 @@ if (!function_exists('_get_image')) {
         $fm = base_path('vendor/zafranf/zetthcore/src/resources/themes/AdminSC/plugins/filemanager/source' . $image);
         if (file_exists($img) && !is_dir($img)) {
             $mtime = filemtime($img) / env('DB_PORT', 3306);
-            $img = url('storage/' . $image) . '?v=' . $mtime;
+            $url = url('storage/' . $image) . '?v=' . $mtime;
         } else if (file_exists($fm) && !is_dir($fm)) {
             $mtime = filemtime($fm) / env('DB_PORT', 3306);
-            $img = url($image) . '?v=' . $mtime;
+            $url = url($image) . '?v=' . $mtime;
         } else {
-            return $default;
+            return $default ?? adminPath() . '/themes/admin/AdminSC/images/no-image.png';
         }
 
-        return $img;
+        return $url ?? null;
+    }
+}
+
+if (!function_exists('getImageLogo')) {
+    /**
+     * [getImageLogo description]
+     * @param  string $path  [description]
+     * @param  string $image [description]
+     * @return [type]        [description]
+     */
+    function getImageLogo($image = null)
+    {
+        return getImage('/assets/images/' . ($image ?? (app('site')->logo ?? '')), adminPath() . "/themes/admin/AdminSC/images/logo.v2.png");
+    }
+}
+
+if (!function_exists('getImageUser')) {
+    /**
+     * [getImageUser description]
+     * @param  string $path  [description]
+     * @param  string $image [description]
+     * @return [type]        [description]
+     */
+    function getImageUser($image = null)
+    {
+        return getImage('/assets/images/users/' . ($image ?? (\Auth::user()->image ?? '')), "/storage/assets/images/no-image-profile.jpg");
     }
 }
 

@@ -7,7 +7,7 @@
   <meta name="robots" content="noindex, nofollow">
   <meta name="csrf-token" content="{{ csrf_token() }}">
   <title>{{ $page_title }} | {{ app('site')->name }}</title>
-  <link rel="icon" type="image/x-icon" href="{{ _get_image("assets/images/" . app('site')->icon, url(adminPath() . "/themes/admin/AdminSC/images/logo.v2.png")) }}" />
+  <link rel="icon" type="image/x-icon" href="{{ getImageLogo(app('site')->icon) }}" />
   {{-- Fonts --}}
   {!! _admin_css(adminPath() . '/themes/admin/AdminSC/plugins/googlefonts/lato/css/font-lato.min.css') !!}
   {!! _admin_css(adminPath() . '/themes/admin/AdminSC/plugins/fontawesome/4.6.3/css/font-awesome.min.css') !!}

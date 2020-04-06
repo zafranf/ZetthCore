@@ -144,7 +144,7 @@ class UserController extends AdminController
                 'file' => $file,
                 'folder' => '/assets/images/users/',
                 'name' => str_slug($user->name),
-                'type' => $file->getMimeType(),
+                'type' => $file->getClientMimeType(),
                 'ext' => $file->getClientOriginalExtension(),
             ];
 
@@ -166,7 +166,7 @@ class UserController extends AdminController
         $this->saveSocmed($user, $r);
 
         /* save activity */
-        $this->activityLog('[~name] menambahkan pengguna "' . $user->name . '"');
+        $this->activityLog('[~name] (' . $this->getUserRoles() . ') menambahkan pengguna "' . $user->name . '"');
 
         /* clear cache */
         \Cache::flush();
@@ -285,7 +285,7 @@ class UserController extends AdminController
                 'file' => $file,
                 'folder' => '/assets/images/users/',
                 'name' => str_slug($user->name),
-                'type' => $file->getMimeType(),
+                'type' => $file->getClientMimeType(),
                 'ext' => $file->getClientOriginalExtension(),
             ];
 
@@ -307,7 +307,7 @@ class UserController extends AdminController
         $this->saveSocmed($user, $r);
 
         /* save activity */
-        $this->activityLog('[~name] memperbarui pengguna "' . $user->name . '"');
+        $this->activityLog('[~name] (' . $this->getUserRoles() . ') memperbarui pengguna "' . $user->name . '"');
 
         /* clear cache */
         \Cache::flush();
@@ -324,7 +324,7 @@ class UserController extends AdminController
     public function destroy(Request $r, User $user)
     {
         /* save activity */
-        $this->activityLog('[~name] menghapus pengguna "' . $user->name . '"');
+        $this->activityLog('[~name] (' . $this->getUserRoles() . ') menghapus pengguna "' . $user->name . '"');
 
         /* soft delete */
         $user->delete();

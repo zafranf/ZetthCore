@@ -28,7 +28,7 @@
         <div class="col-sm-offset-2 col-sm-4">
           {{ isset($group) ? method_field('PUT') : '' }}
           {{ csrf_field() }}
-          {{ _get_button_post($current_url) }}
+          {{ getButtonPost($current_url) }}
         </div>
       </div>
     </form>

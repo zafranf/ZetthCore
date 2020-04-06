@@ -48,7 +48,7 @@
 						<div class="col-md-8">
 							<div class="fileinput fileinput-new" data-provides="fileinput">
 								<div class="fileinput-new thumbnail">
-									<img src="{{ _get_image('/assets/images/user/' . (isset($data) ? $data->image : ''), url("themes/admin/AdminSC/images/no-image.png")) }}">
+									<img src="{{ getImageUser($data->image ?? '') }}">
 								</div>
 								<div class="fileinput-preview fileinput-exists thumbnail"></div>
 								<div>
@@ -147,7 +147,7 @@
 				<div class="col-md-offset-2 col-md-4">
 					{{ isset($data) ? method_field('PUT') : '' }}
 					{{ csrf_field() }}
-					{{ _get_button_post($current_url, true, $data->id ?? '') }}
+					{{ getButtonPost($current_url, true, $data->id ?? '') }}
 				</div>
 			</div>
 		</form>

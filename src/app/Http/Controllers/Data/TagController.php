@@ -105,7 +105,7 @@ class TagController extends AdminController
         $tag->save();
 
         /* save activity */
-        $this->activityLog('[~name] menambahkan label "' . $tag->name . '"');
+        $this->activityLog('[~name] (' . $this->getUserRoles() . ') menambahkan label "' . $tag->name . '"');
 
         /* clear cache */
         \Cache::flush();
@@ -175,7 +175,7 @@ class TagController extends AdminController
         $tag->save();
 
         /* save activity */
-        $this->activityLog('[~name] memperbarui label "' . $tag->name . '"');
+        $this->activityLog('[~name] (' . $this->getUserRoles() . ') memperbarui label "' . $tag->name . '"');
 
         /* clear cache */
         \Cache::flush();
@@ -192,7 +192,7 @@ class TagController extends AdminController
     public function destroy(Term $tag)
     {
         /* save activity */
-        $this->activityLog('[~name] menghapus label "' . $tag->name . '"');
+        $this->activityLog('[~name] (' . $this->getUserRoles() . ') menghapus label "' . $tag->name . '"');
 
         /* soft delete */
         $tag->delete();

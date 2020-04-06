@@ -5,7 +5,6 @@ use DB;
 use Illuminate\Http\Request;
 use ZetthCore\Http\Controllers\AdminController;
 use ZetthCore\Models\Post;
-use ZetthCore\Models\PostComment;
 use ZetthCore\Models\Term;
 use ZetthCore\Models\VisitorLog;
 
@@ -325,24 +324,22 @@ class AjaxController extends AdminController
             'status' => false,
         ];
 
+        /* set start and end date */
         $start = $r->input('start');
         $end = $r->input('end');
 
-        $comms = PostComment::where('created_by', 0)
-            ->orderBy('created_at', 'DESC')
-            ->with('post')
-            ->take(5)
-            ->get();
+        /* get the 5 latest comments */
+        $comments = _getComments(5);
 
-        if ($comms) {
-            foreach ($comms as $k => $v) {
+        if ($comments) {
+            foreach ($comments as $k => $v) {
                 $today = date("Y-m-d");
-                $post = app('is_desktop') ? str_limit($v->post->title, 60) : str_limit($v->post->title, 20);
-                $res['rows'][$k]['id'] = $v->comment_id;
-                $res['rows'][$k]['text'] = app('is_desktop') ? str_limit(strip_tags($v->comment_text), 75) : str_limit(strip_tags($v->comment_text), 20);
-                $res['rows'][$k]['name'] = $v->comment_name;
+                $post = app('is_desktop') ? \Str::limit($v->post->title, 60) : \Str::limit($v->post->title, 20);
+                $res['rows'][$k]['id'] = $v->id;
+                $res['rows'][$k]['text'] = app('is_desktop') ? \Str::limit(strip_tags($v->comment), 75) : \Str::limit(strip_tags($v->comment), 20);
+                $res['rows'][$k]['name'] = $v->name;
                 $res['rows'][$k]['post'] = '<a style="text-decoration:none;">' . $post . '</a>';
-                $res['rows'][$k]['time'] = str_replace($today, "", $v->created_at);
+                $res['rows'][$k]['time'] = str_replace($today, "", carbon($v->created_at));
             }
 
             $res['status'] = true;

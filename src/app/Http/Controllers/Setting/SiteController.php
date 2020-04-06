@@ -166,7 +166,7 @@ class SiteController extends AdminController
                 'file' => $file,
                 'folder' => '/assets/images/',
                 'name' => 'logo',
-                'type' => $file->getMimeType(),
+                'type' => $file->getClientMimeType(),
                 'ext' => $file->getClientOriginalExtension(),
             ];
 
@@ -189,7 +189,7 @@ class SiteController extends AdminController
                     'file' => $file,
                     'folder' => '/assets/images/',
                     'name' => 'icon',
-                    'type' => $file->getMimeType(),
+                    'type' => $file->getClientMimeType(),
                     'ext' => $file->getClientOriginalExtension(),
                 ];
 
@@ -206,7 +206,7 @@ class SiteController extends AdminController
         $this->process_socmed($r);
 
         /* save activity */
-        $this->activityLog('[~name] memperbarui Pengaturan - Situs');
+        $this->activityLog('[~name] (' . $this->getUserRoles() . ') memperbarui Pengaturan - Situs');
 
         /* clear cache */
         \Cache::flush();

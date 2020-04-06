@@ -96,7 +96,7 @@ class AccountController extends AdminController
                 'file' => $file,
                 'folder' => '/assets/images/users/',
                 'name' => str_slug(app('user')->name),
-                'type' => $file->getMimeType(),
+                'type' => $file->getClientMimeType(),
                 'ext' => $file->getClientOriginalExtension(),
             ];
 
@@ -113,7 +113,7 @@ class AccountController extends AdminController
         $this->saveSocmed($user, $r);
 
         /* save activity */
-        $this->activityLog('[~name] memperbarui akun');
+        $this->activityLog('[~name] (' . $this->getUserRoles() . ') memperbarui akun');
 
         return redirect($this->current_url)->with('success', 'Data akun berhasil disimpan!');
     }

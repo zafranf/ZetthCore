@@ -24,8 +24,7 @@
 @section('content')
   <div class="panel-body no-padding-bottom">
     <div class="row" style="margin-top:-15px;">
-      <form id="form-post" action="{{ url($current_url) }}{{ isset($data) ? '/' . $data->id : '' }}" method="post"
-        enctype="multipart/form-data">
+      <form id="form-post" action="{{ url($current_url) }}{{ isset($data) ? '/' . $data->id : '' }}" method="post" enctype="multipart/form-data">
         <div class="col-sm-8 col-md-9 left-side no-padding">
           <input type="text" id="title" class="form-control {{ isset($data) ? '' : 'autofocus' }} no-border-top-right no-border-left no-radius input-lg" name="title" placeholder="Judul.." maxlength="100" value="{{ $data->title ?? old('title') }}">
           <div class="input-group">
@@ -40,7 +39,7 @@
             <label for="cover">Sampul</label><br>
             <div class="zetth-upload">
               <div class="zetth-upload-new thumbnail">
-                <img src="{!! _get_image($data->cover ?? null, adminPath() . '/themes/admin/AdminSC/images/no-image.png') !!}">
+                <img src="{!! getImage($data->cover ?? '') !!}">
               </div>
               <div class="zetth-upload-exists thumbnail"></div>
               <div>
@@ -319,7 +318,7 @@
 
     function responsive_filemanager_callback(field_id){
       var val = $('#'+field_id).val();
-      var path = val.replace(SITE_URL, "");
+      var path = val.replace(SITE_URL, "").replace(ADMIN_URL, "");
       var img = '<img src="'+path+'">';
       if (field_id.indexOf("featured") < 0) {
         $('.zetth-upload-new').hide();

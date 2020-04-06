@@ -16,7 +16,7 @@
             <div class="col-md-8">
               <div class="fileinput fileinput-new" data-provides="fileinput">
                 <div class="fileinput-new thumbnail">
-                  <img src="{{ _get_image("assets/images/" . app('site')->logo, url(adminPath() . "/themes/admin/AdminSC/images/logo.v2.png")) }}">
+                  <img src="{{ getImageLogo() }}">
                 </div>
                 <div class="fileinput-preview fileinput-exists thumbnail"></div>
                 <div>
@@ -47,7 +47,7 @@
                 <div class="form-control" data-trigger="fileinput">
                   <div class="fileinput-new thumbnail"
                     style="width:20px!important;padding:0;margin-bottom:8px;position:absolute;left:5px;">
-                    <img src="{{ _get_image("assets/images/" . app('site')->icon, url(adminPath() . "/themes/admin/AdminSC/images/logo.v2.png")) }}" width="20">
+                    <img src="{{ getImageLogo(app('site')->icon) }}" width="20">
                   </div>
                   <div class="fileinput-preview fileinput-exists thumbnail" style="width:20px!important;padding:0;margin-bottom:8px;position:absolute;left:5px;">
                   </div>
@@ -272,7 +272,7 @@
         <div class="col-md-offset-2 col-md-10">
           {{ isset(app('site')->id) ? method_field('PUT') : '' }}
           {{ csrf_field() }}
-          {{ _get_button_post(url(app('admin_path') . '/dashboard')) }}
+          {{ getButtonPost(url(app('admin_path') . '/dashboard')) }}
         </div>
       </div>
     </form>

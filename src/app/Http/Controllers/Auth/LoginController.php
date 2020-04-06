@@ -112,7 +112,7 @@ class LoginController extends AdminController
         $this->redirectTo = adminPath() . '/dashboard';
 
         /* save activity */
-        $this->activityLog('[~name] masuk halaman admin');
+        $this->activityLog('[~name] (' . $this->getUserRoles() . ') masuk halaman admin');
     }
 
     /**

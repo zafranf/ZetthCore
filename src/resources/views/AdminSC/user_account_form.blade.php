@@ -12,7 +12,7 @@
             <div class="col-md-8">
               <div class="fileinput fileinput-new" data-provides="fileinput">
                 <div class="fileinput-new thumbnail">
-                  <img src="{{ _get_image('/assets/images/users/' . (isset($data) ? $data->image : ''), url(adminPath() . "/themes/admin/AdminSC/images/no-image.png")) }}">
+                  <img src="{{ getImageUser($data->image) }}">
                 </div>
                 <div class="fileinput-preview fileinput-exists thumbnail"></div>
                 <div>
@@ -129,7 +129,7 @@
           <div class="box-footer">
             {{ isset($data) ? method_field('PUT') : '' }}
             {{ csrf_field() }}
-            {{ _get_button_post($current_url, true) }}
+            {{ getButtonPost($current_url, true) }}
           </div>
         </div>
       </div>

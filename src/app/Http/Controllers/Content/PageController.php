@@ -109,7 +109,7 @@ class PageController extends AdminController
         $page->save();
 
         /* save activity */
-        $this->activityLog('[~name] menambahkan halaman "' . $page->title . '"');
+        $this->activityLog('[~name] (' . $this->getUserRoles() . ') menambahkan halaman "' . $page->title . '"');
 
         /* clear cache */
         \Cache::flush();
@@ -182,7 +182,7 @@ class PageController extends AdminController
         $page->save();
 
         /* save activity */
-        $this->activityLog('[~name] memperbarui halaman "' . $page->title . '"');
+        $this->activityLog('[~name] (' . $this->getUserRoles() . ') memperbarui halaman "' . $page->title . '"');
 
         /* clear cache */
         \Cache::flush();
@@ -199,7 +199,7 @@ class PageController extends AdminController
     public function destroy(Post $page)
     {
         /* save activity */
-        $this->activityLog('[~name] menghapus halaman "' . $page->title . '"');
+        $this->activityLog('[~name] (' . $this->getUserRoles() . ') menghapus halaman "' . $page->title . '"');
 
         /* soft delete */
         $page->delete();

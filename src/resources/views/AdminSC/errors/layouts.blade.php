@@ -3,7 +3,7 @@
   <head>
     <title>@yield('title') - {{ env('APP_NAME') }}</title>
     <link href="https://fonts.googleapis.com/css?family=Lato:100" rel="stylesheet" type="text/css">
-    <link rel="shortcut icon" href="{{ _get_image("assets/images/" . app('site')->icon, url("themes/admin/AdminSC/images/" . (app('site')->logo ?? 'logo.v2.png'))) }}">
+    <link rel="shortcut icon" href="{{ getImageLogo(app('site')->icon) }}">
 
     <style>
       html, body {
