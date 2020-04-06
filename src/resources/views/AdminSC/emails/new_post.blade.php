@@ -8,7 +8,7 @@
     <p>Halo,</p>
     <p>Kami baru saja membuat artikel baru. Klik tautan di bawah untuk langsung membacanya.</p>
     <p>
-      <a href="{{ getSiteURL(env('SINGLE_POST_PATH', 'post') . '/' . $post->slug) }}" style="padding:5px;border:1px solid transparent;color:#fff;background:#ed4568;border-radius:4px;text-decoration:none;">Baca artikel</a>
+      <a href="{{ getSiteURL(env('POST_PATH', 'post') . '/' . $post->slug) }}" style="padding:5px;border:1px solid transparent;color:#fff;background:#ed4568;border-radius:4px;text-decoration:none;">Baca artikel</a>
     </p>
     <hr>
     <p><small>*mohon untuk tidak membalas email ini.</small></p>
