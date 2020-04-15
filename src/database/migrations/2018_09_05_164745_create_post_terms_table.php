@@ -13,11 +13,12 @@ class CreatePostTermsTable extends Migration
      */
     public function up()
     {
-        Schema::create('post_terms', function (Blueprint $table) {
-            $table->unsignedInteger('post_id');
-            $table->unsignedInteger('term_id');
+        Schema::create('termables', function (Blueprint $table) {
+            $table->integer('term_id')->unsigned();
+            $table->string('termable_type');
+            $table->integer('termable_id')->unsigned();
 
-            $table->primary(['post_id', 'term_id']);
+            $table->primary(['termable_id', 'term_id']);
         });
     }
 
@@ -28,6 +29,6 @@ class CreatePostTermsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('post_terms');
+        Schema::dropIfExists('termables');
     }
 }
