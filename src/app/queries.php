@@ -286,7 +286,7 @@ function _getComments($limit = null, $order = 'desc')
     $cache_name = '_getComments' . $order;
 
     /* inisiasi query */
-    $comments = \ZetthCore\Models\PostComment::active()->with('post');
+    $comments = \ZetthCore\Models\Comment::active()->with('post');
 
     /* check order */
     if (in_array($order, ['rand', 'random'])) {
