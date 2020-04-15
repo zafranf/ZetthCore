@@ -4,8 +4,8 @@ namespace ZetthCore\Http\Controllers\Report;
 
 use Illuminate\Http\Request;
 use ZetthCore\Http\Controllers\AdminController;
+use ZetthCore\Models\Comment;
 use ZetthCore\Models\Post;
-use ZetthCore\Models\PostComment;
 
 class CommentController extends AdminController
 {
@@ -79,7 +79,7 @@ class CommentController extends AdminController
 
         /* check comment id */
         if ($r->input('cid')) {
-            $data['reply'] = PostComment::with('commentator')->find($r->input('cid'));
+            $data['reply'] = Comment::with('commentator')->find($r->input('cid'));
         } else {
             abort(404);
         }
@@ -109,7 +109,7 @@ class CommentController extends AdminController
         }
 
         /* get parent id */
-        $parent = PostComment::with('commentator')->find($r->input('cid'));
+        $parent = Comment::with('commentator')->find($r->input('cid'));
         if (!$parent) {
             return redirect()->back()->withErrors([
                 'Data komentar sumber tidak ditemukan',
@@ -117,7 +117,7 @@ class CommentController extends AdminController
         }
 
         /* save data */
-        $comment = new PostComment;
+        $comment = new Comment;
         $comment->name = \Auth::user()->fullname;
         $comment->email = \Auth::user()->email;
         $comment->comment = $r->input('comment');
@@ -165,10 +165,10 @@ class CommentController extends AdminController
     /**
      * Display the specified resource.
      *
-     * @param  \ZetthCore\Models\PostComment  $comment
+     * @param  \ZetthCore\Models\Comment  $comment
      * @return \Illuminate\Http\Response
      */
-    public function show(PostComment $comment)
+    public function show(Comment $comment)
     {
         $this->breadcrumbs[] = [
             'page' => 'Detail',
@@ -195,10 +195,10 @@ class CommentController extends AdminController
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \ZetthCore\Models\PostComment  $comment
+     * @param  \ZetthCore\Models\Comment  $comment
      * @return \Illuminate\Http\Response
      */
-    public function edit(PostComment $comment)
+    public function edit(Comment $comment)
     {
         $this->breadcrumbs[] = [
             'page' => 'Edit Komentar',
@@ -226,10 +226,10 @@ class CommentController extends AdminController
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $r
-     * @param  \ZetthCore\Models\PostComment  $inbox
+     * @param  \ZetthCore\Models\Comment  $inbox
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $r, PostComment $comment)
+    public function update(Request $r, Comment $comment)
     {
         /* validation */
         $this->validate($r, [
@@ -256,10 +256,10 @@ class CommentController extends AdminController
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \ZetthCore\Models\PostComment  $comment
+     * @param  \ZetthCore\Models\Comment  $comment
      * @return \Illuminate\Http\Response
      */
-    public function destroy(PostComment $comment)
+    public function destroy(Comment $comment)
     {
         /* save activity */
         $this->activityLog('[~name] (' . $this->getUserRoles() . ') menghapus Komentar dari "' . $comment->email . '"');
@@ -276,7 +276,7 @@ class CommentController extends AdminController
     public function datatable(Request $r)
     {
         /* get data */
-        $data = PostComment::select('id', 'name', 'email', \DB::raw('substring(comment, 1, 100) as comment'), 'status')->orderBy('created_at', 'desc');
+        $data = Comment::select('id', 'name', 'email', \DB::raw('substring(comment, 1, 100) as comment'), 'status')->orderBy('created_at', 'desc');
 
         /* generate datatable */
         if ($r->ajax()) {

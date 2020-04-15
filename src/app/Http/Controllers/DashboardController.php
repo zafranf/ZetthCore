@@ -39,7 +39,7 @@ class DashboardController extends AdminController
             'message' => \ZetthCore\Models\Inbox::select(\DB::raw('count(*) as unread'))
                 ->where('read', 0)
                 ->first(),
-            'comment' => \ZetthCore\Models\PostComment::select(\DB::raw('count(*) as unread'))
+            'comment' => \ZetthCore\Models\Comment::select(\DB::raw('count(*) as unread'))
                 ->where('read', 0)
                 ->first(),
         ];
