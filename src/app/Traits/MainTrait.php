@@ -83,8 +83,8 @@ trait MainTrait
             'file' => $e->getFile(),
             'line' => $e->getLine(),
             'message' => substr($e->getMessage(), 0, 191),
-            'path' => \Request::path(),
-            'params' => json_encode(\Request::all()),
+            'path' => !app()->runningInConsole() ? \Request::path() : null,
+            'params' => !app()->runningInConsole() ? json_encode(\Request::all()) : [],
             'trace' => json_encode($e->getTrace()),
         ];
         if (isset($e->data)) {
