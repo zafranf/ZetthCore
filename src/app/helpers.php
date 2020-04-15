@@ -65,6 +65,13 @@ if (!function_exists('isWWW')) {
     }
 }
 
+if (!function_exists('isHTML')) {
+    function isHTML($string)
+    {
+        return $string != strip_tags($string);
+    }
+}
+
 if (!function_exists('getStatusText')) {
     /**
      * Undocumented function
