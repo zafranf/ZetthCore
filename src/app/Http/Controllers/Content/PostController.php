@@ -2,9 +2,9 @@
 
 namespace ZetthCore\Http\Controllers\Content;
 
+use App\Models\Post;
 use Illuminate\Http\Request;
 use ZetthCore\Http\Controllers\AdminController;
-use ZetthCore\Models\Post;
 use ZetthCore\Models\Term;
 use ZetthCore\Models\Termable;
 
