@@ -12,24 +12,19 @@ class Post extends Model
     protected $dates = ['published_at', 'deleted_at'];
     public $appends = ['published_string'];
 
-    public function rels()
-    {
-        return $this->hasMany('ZetthCore\Models\PostTerm');
-    }
-
     public function terms()
     {
-        return $this->belongsToMany('ZetthCore\Models\Term', 'post_terms');
+        return $this->morphToMany('ZetthCore\Models\Term', 'termable');
     }
 
     public function categories()
     {
-        return $this->belongsToMany('ZetthCore\Models\Term', 'post_terms')->where('type', 'category');
+        return $this->morphToMany('ZetthCore\Models\Term', 'termable')->where('type', 'category');
     }
 
     public function tags()
     {
-        return $this->belongsToMany('ZetthCore\Models\Term', 'post_terms')->where('type', 'tag');
+        return $this->morphToMany('ZetthCore\Models\Term', 'termable')->where('type', 'tag');
     }
 
     public function author()
@@ -44,17 +39,17 @@ class Post extends Model
 
     public function comments()
     {
-        return $this->hasMany('ZetthCore\Models\PostComment')->where('status', 1);
+        return $this->hasMany('ZetthCore\Models\Comment')->where('status', 1);
     }
 
     public function comments_sub()
     {
-        return $this->hasMany('ZetthCore\Models\PostComment')->where('status', 1)->whereNull('parent_id')->with(['subcomments', 'commentator']);
+        return $this->hasMany('ZetthCore\Models\Comment')->where('status', 1)->whereNull('parent_id')->with(['subcomments', 'commentator']);
     }
 
     public function comments_all()
     {
-        return $this->hasMany('ZetthCore\Models\PostComment');
+        return $this->hasMany('ZetthCore\Models\Comment');
     }
     public function likes()
     {
