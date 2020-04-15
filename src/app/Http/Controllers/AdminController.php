@@ -99,7 +99,7 @@ class AdminController extends BaseController
     public function commentApproval(Request $r, $type, $comment_id)
     {
         /* get comment */
-        $comment = \ZetthCore\Models\Comment::with('commentator')->find($comment_id);
+        $comment = \App\Models\Comment::with('commentator')->find($comment_id);
         if (!$comment) {
             abort(404);
         }

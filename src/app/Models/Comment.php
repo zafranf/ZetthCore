@@ -11,7 +11,7 @@ class Comment extends Model
 
     public function post()
     {
-        return $this->belongsTo('ZetthCore\Models\Post');
+        return $this->belongsTo('ZetthCore\Models\Post', 'commentable_id');
     }
 
     public function commentator()

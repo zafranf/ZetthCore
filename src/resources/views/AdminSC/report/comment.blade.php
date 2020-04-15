@@ -42,7 +42,7 @@
           { "width": "30px" },
           { "data": "name", "width": "200px" },
           { "data": "email", "width": "200px" },
-          { "data": "comment" },
+          { "data": "content" },
           { "data": "status", "width": "50px" },
           { "width": "80px" },
         ],

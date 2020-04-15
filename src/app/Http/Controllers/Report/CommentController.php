@@ -97,7 +97,7 @@ class CommentController extends AdminController
     {
         /* validation */
         $this->validate($r, [
-            'comment' => 'required',
+            'content' => 'required',
         ]);
 
         /* get post */
@@ -120,10 +120,11 @@ class CommentController extends AdminController
         $comment = new Comment;
         $comment->name = \Auth::user()->fullname;
         $comment->email = \Auth::user()->email;
-        $comment->comment = $r->input('comment');
+        $comment->content = $r->input('content');
         $comment->status = 1;
-        $comment->parent_id = $r->input('cid');
-        $comment->post_id = $r->input('pid');
+        $comment->parent_id = $parent->id;
+        $comment->commentable_type = $parent->commentable_type;
+        $comment->commentable_id = $r->input('pid');
         $comment->created_by = \Auth::user()->id;
         $comment->approved_by = \Auth::user()->id;
         $comment->is_owner = 1;
@@ -234,12 +235,12 @@ class CommentController extends AdminController
         /* validation */
         $this->validate($r, [
             'name' => 'required',
-            'comment' => 'required',
+            'content' => 'required',
         ]);
 
         /* save data */
         $comment->name = $r->input('name');
-        $comment->comment = $r->input('comment');
+        $comment->content = $r->input('content');
         $comment->updated_by = \Auth::user()->user_id;
         if (!$comment->is_owner && bool($r->input('status'))) {
             $comment->status = 1;
@@ -276,7 +277,7 @@ class CommentController extends AdminController
     public function datatable(Request $r)
     {
         /* get data */
-        $data = Comment::select('id', 'name', 'email', \DB::raw('substring(comment, 1, 100) as comment'), 'status')->orderBy('created_at', 'desc');
+        $data = Comment::select('id', 'name', 'email', \DB::raw('substring(content, 1, 100) as content'), 'status')->orderBy('created_at', 'desc');
 
         /* generate datatable */
         if ($r->ajax()) {

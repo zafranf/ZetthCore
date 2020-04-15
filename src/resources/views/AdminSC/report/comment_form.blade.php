@@ -5,7 +5,7 @@
     <form class="form-horizontal" action="{{ url($current_url) }}{{ isset($data) ? '/' . $data->id : '' }}" method="post">
       @if (isset($data))
         <input type="hidden" name="name_old" value="{{ isset($data) ? $data->name : '' }}">
-        <input type="hidden" name="comment_old" value="{{ isset($data) ? $data->comment : '' }}">
+        <input type="hidden" name="content_old" value="{{ isset($data) ? $data->content : '' }}">
         <div class="form-group{{ isset($data) && $data->is_owner ? ' hide' : '' }}">
           <label for="name" class="col-sm-2 control-label">Nama</label>
           <div class="col-sm-10">
@@ -19,14 +19,14 @@
           <label for="reply_to" class="col-sm-2 control-label">Balas ke</label>
           <div class="col-sm-10">
             <div id="reply-to-name" style="position:relative;margin-top:3px;font-weight:bold;line-height:30px;">{{ $reply->commentator->fullname }}</div>
-            <div id="reply-to-text" style="padding:5px 8px;background:#eee;border:1px solid #ccc;border-radius:4px;max-height:200px;overflow-y:scroll;">{!! $reply->comment !!}</div>
+            <div id="reply-to-text" style="padding:5px 8px;background:#eee;border:1px solid #ccc;border-radius:4px;max-height:200px;overflow-y:scroll;">{!! $reply->content !!}</div>
           </div>
         </div>
       @endif
       <div class="form-group">
         <label for="text" class="col-sm-2 control-label">{{ isset($reply) ? 'Balasan' : 'Komentar' }}</label>
         <div class="col-sm-10">
-          <textarea rows="8" id="comment" name="comment" class="form-control" placeholder="Type your content here..">{{ $data->comment ?? old('comment') }}</textarea>
+          <textarea rows="8" id="content" name="content" class="form-control" placeholder="Type your content here..">{{ $data->content ?? old('content') }}</textarea>
         </div>
       </div>
       <div class="form-group{{ (isset($reply) && (isset($reply) && $reply->status == 1)) || (isset($data) && $data->status == 1)  ? ' hide' : '' }}">
@@ -50,7 +50,7 @@
 @endsection
 
 @include('zetthcore::AdminSC.components.tinymce', [
-  'selector' => '#comment'
+  'selector' => '#content'
 ])
 
 @push('styles')
