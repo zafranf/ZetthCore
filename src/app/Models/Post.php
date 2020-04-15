@@ -39,17 +39,17 @@ class Post extends Model
 
     public function comments()
     {
-        return $this->hasMany('ZetthCore\Models\Comment')->where('status', 1);
+        return $this->morphMany('ZetthCore\Models\Comment', 'commentable')->where('status', 1);
     }
 
     public function comments_sub()
     {
-        return $this->hasMany('ZetthCore\Models\Comment')->where('status', 1)->whereNull('parent_id')->with(['subcomments', 'commentator']);
+        return $this->morphMany('ZetthCore\Models\Comment', 'commentable')->where('status', 1)->whereNull('parent_id')->with(['subcomments', 'commentator']);
     }
 
     public function comments_all()
     {
-        return $this->hasMany('ZetthCore\Models\Comment');
+        return $this->morphMany('ZetthCore\Models\Comment', 'commentable');
     }
     public function likes()
     {
