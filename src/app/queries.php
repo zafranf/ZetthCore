@@ -51,7 +51,7 @@ function _getPosts($type = 'simple', $limit = null, $order = "desc", $slug = '')
     $cache_name = '_getPosts' . $type . $order . $slug;
 
     /* inisiasi query */
-    $posts = \ZetthCore\Models\Post::active()->posts();
+    $posts = \App\Models\Post::active()->posts();
     if (!empty($slug)) {
         if (in_array($type, ['category', 'tag'])) {
             if ($type == 'category') {
@@ -165,7 +165,7 @@ function _getPages($limit = null, $order = 'desc', $slug = '')
     $cache_name = '_getPages' . $order . $slug;
 
     /* inisiasi query */
-    $pages = \ZetthCore\Models\Post::active()->pages();
+    $pages = \App\Models\Post::active()->pages();
     if (!empty($slug)) {
         $pages->where('slug', $slug)->orWhere('title', 'like', '%' . $slug . '%');
     }
@@ -243,7 +243,7 @@ function _getVideos($limit = null, $order = 'desc', $slug = '')
     $cache_name = '_getVideos' . $order . $slug;
 
     /* inisiasi query */
-    $videos = \ZetthCore\Models\Post::active()->videos();
+    $videos = \App\Models\Post::active()->videos();
 
     /* check order */
     if (in_array($order, ['rand', 'random'])) {

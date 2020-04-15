@@ -51,13 +51,15 @@ class Post extends Model
     {
         return $this->morphMany('ZetthCore\Models\Comment', 'commentable');
     }
+
     public function likes()
     {
-        return $this->hasMany('App\Models\PostLike');
+        return $this->morphMany('App\Models\Like', 'likeable');
     }
+
     public function likes_user()
     {
-        return $this->hasOne('App\Models\PostLike')->where('user_id', app('user')->id ?? null);
+        return $this->morphOne('App\Models\Like', 'likeable')->where('user_id', app('user')->id ?? null);
     }
 
     public function scopePosts($query)
