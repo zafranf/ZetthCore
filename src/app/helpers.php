@@ -192,23 +192,21 @@ if (!function_exists('getImage')) {
      * @param  string $image [description]
      * @return [type]        [description]
      */
-    function getImage($image, $default = null)
+    function getImage($image, $template = 'original', $default = null)
     {
         $image = ltrim($image, '/');
         $image = str_replace('storage/', '', $image);
-        $img = storage_path('app/public/' . $image);
-        $fm = base_path('vendor/zafranf/zetthcore/src/resources/themes/AdminSC/plugins/filemanager/source' . $image);
-        if (file_exists($img) && !is_dir($img)) {
-            $mtime = filemtime($img) / env('DB_PORT', 3306);
-            $url = url('storage/' . $image) . '?v=' . $mtime;
-        } else if (file_exists($fm) && !is_dir($fm)) {
-            $mtime = filemtime($fm) / env('DB_PORT', 3306);
-            $url = url($image) . '?v=' . $mtime;
+        $file = storage_path('app/public/' . $image);
+        if (file_exists($file) && !is_dir($file)) {
+            $image = str_replace('assets/images/', '', $image);
+            $mtime = filemtime($file) / env('DB_PORT', 3306);
+
+            return url('imache/' . $template . '/' . $image) . '?v=' . $mtime;
         } else {
-            return $default ?? adminPath() . '/themes/admin/AdminSC/images/no-image.png';
+            return url($default ?? adminPath() . '/themes/admin/AdminSC/images/no-image.png');
         }
 
-        return $url ?? null;
+        return null;
     }
 }
 
@@ -221,7 +219,7 @@ if (!function_exists('getImageLogo')) {
      */
     function getImageLogo($image = null)
     {
-        return getImage('/assets/images/' . ($image ?? (app('site')->logo ?? '')), adminPath() . "/themes/admin/AdminSC/images/logo.v2.png");
+        return getImage('/assets/images/' . ($image ?? (app('site')->logo ?? '')), 'original', adminPath() . "/themes/admin/AdminSC/images/logo.v2.png");
     }
 }
 
@@ -234,7 +232,7 @@ if (!function_exists('getImageUser')) {
      */
     function getImageUser($image = null)
     {
-        return getImage('/assets/images/users/' . ($image ?? (\Auth::user()->image ?? '')), "/storage/assets/images/no-image-profile.jpg");
+        return getImage('/assets/images/users/' . ($image ?? (\Auth::user()->image ?? '')), 'original', getImage('/assets/images/no-image-profile.jpg'));
     }
 }
 
