@@ -344,10 +344,10 @@ class PostController extends AdminController
         $post->delete();
 
         /* remove image file */
-        $file = storage_path('app/public/assets/images/posts/' . $post->cover);
-        if (file_exists($file) && !is_dir($file)) {
-            unlink($file);
-        }
+        // $file = storage_path('app/public/assets/images/posts/' . $post->cover);
+        // if (file_exists($file) && !is_dir($file)) {
+        //     unlink($file);
+        // }
 
         /* clear cache */
         \Cache::flush();

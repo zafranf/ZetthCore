@@ -314,10 +314,10 @@ class BannerController extends AdminController
         $banner->delete();
 
         /* remove image file */
-        $file = storage_path('app/public/assets/images/banners/' . $banner->image);
-        if (file_exists($file) && !is_dir($file)) {
-            unlink($file);
-        }
+        // $file = storage_path('app/public/assets/images/banners/' . $banner->image);
+        // if (file_exists($file) && !is_dir($file)) {
+        //     unlink($file);
+        // }
 
         /* clear cache */
         \Cache::flush();
