@@ -177,9 +177,6 @@
         selector: '[data-toggle=tooltip]' 
       });
 
-      var wFB = window.innerWidth - 30,
-        hFB = window.innerHeight - 60;
-
       $('.select2').on('change',function(){
         if ($('#url').val()=="external"){
           $('#url_external').attr("disabled", false).show();
