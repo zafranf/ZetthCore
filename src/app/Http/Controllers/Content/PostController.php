@@ -12,6 +12,11 @@ class PostController extends AdminController
 {
     private $current_url;
     private $page_title;
+    private $width;
+    private $height;
+    private $ratio;
+    private $weight;
+    private $image_rule;
 
     /**
      * Constructor
@@ -30,6 +35,20 @@ class PostController extends AdminController
             'page' => 'Artikel',
             'icon' => '',
             'url' => $this->current_url,
+        ];
+
+        /* validation */
+        $this->width = config('site.post.image.dimension.width') ?? 1280;
+        $this->height = config('site.post.image.dimension.height') ?? 720;
+        $this->ratio = str_replace(':', '/', config('site.post.image.ratio') ?? '16:9');
+        $this->weight = config('site.post.image.weight') ?? 256;
+        if ($this->weight > 512) {
+            $this->weight = 512;
+        }
+        $this->image_rule = [
+            'nullable',
+            'mimes:jpg,jpeg,png,svg,webp',
+            'dimensions:max_width=' . $this->width . ',max_height=' . $this->height . ',ratio:' . $this->ratio,
         ];
     }
 
@@ -72,6 +91,7 @@ class PostController extends AdminController
             'url' => '',
         ];
 
+        /* get categories */
         $categories = Term::where('type', 'category')
             ->where('parent_id', 0)
             ->where('status', 1)
@@ -106,6 +126,7 @@ class PostController extends AdminController
             'content' => 'required',
             'categories' => 'required',
             'tags' => 'required',
+            'cover' => $this->image_rule,
         ]);
 
         /* set variables */
@@ -128,7 +149,7 @@ class PostController extends AdminController
         $post->content = $r->input('content');
         $post->excerpt = $r->input('excerpt') ?? substr(strip_tags($post->content), 0, 255);
         $post->type = 'article';
-        $post->cover = $r->input('cover');
+        // $post->cover = $r->input('cover');
         $post->status = $r->input('status');
         $post->share = ($r->input('share')) ? 1 : 0;
         $post->like = ($r->input('like')) ? 1 : 0;
@@ -136,6 +157,23 @@ class PostController extends AdminController
         $post->published_at = carbon_query($date . ' ' . $time);
         // $post->short_url = $uniq;
         $post->created_by = app('user')->id;
+        $post->save();
+
+        /* process image */
+        if ($r->hasFile('cover')) {
+            $file = $r->file('cover');
+            $par = [
+                'file' => $file,
+                'folder' => '/assets/images/posts/',
+                'name' => 'post-' . (md5($post->id . env('DB_PORT', 3306))),
+                'type' => $file->getClientMimeType(),
+                'ext' => $file->getClientOriginalExtension(),
+            ];
+
+            if ($this->uploadImage($par)) {
+                $post->cover = $par['name'] . '.' . $par['ext'];
+            }
+        }
         $post->save();
 
         /* delete post relation */
@@ -244,12 +282,6 @@ class PostController extends AdminController
         $post->content = $r->input('content');
         $post->excerpt = $r->input('excerpt') ?? substr(strip_tags($post->content), 0, 255);
         $post->type = 'article';
-        if ($r->input('cover')) {
-            $post->cover = $r->input('cover');
-        }
-        if ($r->input('cover_remove')) {
-            $post->cover = '';
-        }
         $post->status = $r->input('status');
         $post->share = ($r->input('share')) ? 1 : 0;
         $post->like = ($r->input('like')) ? 1 : 0;
@@ -257,6 +289,26 @@ class PostController extends AdminController
         $post->published_at = carbon_query($date . ' ' . $time);
         // $post->short_url = $uniq;
         $post->updated_by = app('user')->id;
+        $post->save();
+
+        /* process image */
+        if ($r->hasFile('cover')) {
+            $file = $r->file('cover');
+            $par = [
+                'file' => $file,
+                'folder' => '/assets/images/posts/',
+                'name' => 'post-' . (md5($post->id . env('DB_PORT', 3306))),
+                'type' => $file->getClientMimeType(),
+                'ext' => $file->getClientOriginalExtension(),
+            ];
+
+            if ($this->uploadImage($par)) {
+                $post->cover = $par['name'] . '.' . $par['ext'];
+            }
+        }
+        if ($r->input('cover_remove')) {
+            $post->cover = null;
+        }
         $post->save();
 
         /* delete post relation */
@@ -291,6 +343,12 @@ class PostController extends AdminController
         /* soft delete */
         $post->delete();
 
+        /* remove image file */
+        // $file = storage_path('app/public/assets/images/posts/' . $post->cover);
+        // if (file_exists($file) && !is_dir($file)) {
+        //     unlink($file);
+        // }
+
         /* clear cache */
         \Cache::flush();
 
@@ -306,7 +364,7 @@ class PostController extends AdminController
     public function datatable(Request $r)
     {
         /* get data */
-        $data = Post::/* select('id', 'cover', 'title', 'slug', 'status', 'visited', 'shared', 'liked', 'created_by')-> */articles()->with('author', 'comments_all', 'categories')->orderBy('created_at', 'desc');
+        $data = Post::select('id', \DB::raw('CONCAT("/storage/assets/images/posts/", cover) as cover'), 'title', 'slug', 'status', 'visited', 'shared', 'liked', 'created_by')->articles()->with('author', 'comments_all', 'categories')->orderBy('created_at', 'desc');
 
         /* generate datatable */
         if ($r->ajax()) {

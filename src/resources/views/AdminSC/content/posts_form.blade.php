@@ -36,21 +36,26 @@
         </div>
         <div class="col-sm-4 col-md-3 right-side">
           <div class="form-group" style="padding-top:10px;">
-            <label for="cover">Sampul</label><br>
-            <div class="zetth-upload">
-              <div class="zetth-upload-new thumbnail">
-                <img src="{!! getImage($data->cover ?? '') !!}">
+            <label for="cover">
+              Sampul
+              <small class="help-block">Maksimal dimensi sampul adalah
+                {{ config('site.post.image.dimension.width') ?? 1280 }}px x 
+                {{ config('site.post.image.dimension.height') ?? 720 }}px dengan 
+                rasio {{ config('site.post.image.ratio') ?? '16:9' }} dan 
+                ukuran maksimal {{ (config('site.post.image.weight') > 512 ? 512 : config('site.post.image.weight')) ?? 256 }}KB</small>
+            </label>
+            <div class="fileinput fileinput-new" data-provides="fileinput">
+              <div class="fileinput-new thumbnail">
+                <img src="{{ getImage('/assets/images/posts/' . ($data->cover ?? null)) }}">
               </div>
-              <div class="zetth-upload-exists thumbnail"></div>
+              <div class="fileinput-preview fileinput-exists thumbnail"></div>
               <div>
-                <span class="btn btn-default">
-                  <a href="{{ $urlFilemanager }}" type="button" class="zetth-upload-new" id="btn-upload">Pilih</a>
-                  <a href="{{ $urlFilemanager }}" type="button" class="zetth-upload-exists" id="btn-upload">Ganti</a>
+                <span class="btn btn-default btn-file">
+                  <span class="fileinput-new">Pilih</span>
+                  <span class="fileinput-exists">Ganti</span>
+                  <input type="file" id="cover" name="cover" accept="image/*">
                 </span>
-                <span class="btn btn-default" style="display:none;">
-                  <a type="button" class="zetth-upload-exists" id="btn-remove">Batal</a>
-                </span>
-                <input name="cover" id="cover" type="hidden" accept="image/*">
+                <a href="#" class="btn btn-default fileinput-exists" data-dismiss="fileinput">Batal</a>
                 @if (isset($data->cover))
                   <small class="help-inline-table">
                     <label class="pull-right">
@@ -62,7 +67,7 @@
             </div>
           </div>
           <div class="form-group">
-            <label for="info-subscriber">Pelanggan Info</label><br>
+            <label for="info-subscriber">Pelanggan Artikel</label><br>
             <div class="col-sm-12 col-xs-12 no-padding">
               <label>
                 <input name="info_subscriber" type="checkbox" value="1" {{ app('site')->enable_subscribe ? 'checked' : '' }}> Infokan ke Pelanggan
@@ -157,7 +162,7 @@
 @include('zetthcore::AdminSC.components.tinymce')
 
 @push('styles')
-  {{-- {!! _admin_css(adminPath() . '/themes/admin/AdminSC/plugins/jasny-bootstrap/3.1.3/css/jasny-bootstrap.min.css') !!} --}}
+  {!! _admin_css(adminPath() . '/themes/admin/AdminSC/plugins/jasny-bootstrap/3.1.3/css/jasny-bootstrap.min.css') !!}
   {!! _admin_css(adminPath() . '/themes/admin/AdminSC/plugins/bootstrap/tagsinput/0.8.0/css/bootstrap-tagsinput.css') !!}
   {!! _admin_css(adminPath() . '/themes/admin/AdminSC/plugins/bootstrap/datetimepicker/4.17.37/css/bootstrap-datetimepicker.min.css') !!}
   {!! _admin_css(adminPath() . '/themes/admin/AdminSC/plugins/fancybox/2.1.5/css/jquery.fancybox.css') !!}
@@ -203,18 +208,6 @@
       min-height: 640px;
     }
 
-    .zetth-upload a {
-      text-decoration: none;
-    }
-
-    .zetth-upload .thumbnail {
-      margin-bottom: 5px;
-    }
-
-    .zetth-upload-exists {
-      display: none;
-    }
-
     @media (max-width: 767px) {
       .left-side {
         border-right: 0;
@@ -236,7 +229,6 @@
     }
 
     #category-list li {
-
       display: inline-block;
       margin: 5px 0;
       padding: 5px;
@@ -296,7 +288,7 @@
 @endpush
 
 @push('scripts')
-  {{-- {!! _admin_js(adminPath() . '/themes/admin/AdminSC/plugins/jasny-bootstrap/3.1.3/js/jasny-bootstrap.min.js') !!} --}}
+  {!! _admin_js(adminPath() . '/themes/admin/AdminSC/plugins/jasny-bootstrap/3.1.3/js/jasny-bootstrap.min.js') !!}
   {!! _admin_js(adminPath() . '/themes/admin/AdminSC/plugins/bootstrap/tagsinput/0.8.0/js/bootstrap-tagsinput.js') !!}
   {!! _admin_js(adminPath() . '/themes/admin/AdminSC/plugins/moment/2.13.0/js/moment.min.js') !!}
   {!! _admin_js(adminPath() . '/themes/admin/AdminSC/plugins/bootstrap/datetimepicker/4.17.37/js/bootstrap-datetimepicker.min.js') !!}
@@ -316,22 +308,6 @@
       _resize_tinymce();
     });
 
-    function responsive_filemanager_callback(field_id){
-      var val = $('#'+field_id).val();
-      var path = val.replace(SITE_URL, "").replace(ADMIN_URL, "");
-      var img = '<img src="'+path+'">';
-      if (field_id.indexOf("featured") < 0) {
-        $('.zetth-upload-new').hide();
-        $('.zetth-upload-exists').show();
-        $('.zetth-upload-exists.thumbnail').html(img);
-        $('#btn-remove').parent().show();
-        $('#cover_remove').attr("checked", false);
-      }/*  else {
-        path = path.replace('/storage/assets/images/upload/', "");
-      } */
-      $('#'+field_id).val(path);
-    }
-
     $(document).ready(function(){
       var wFB = window.innerWidth - 30;
       var hFB = window.innerHeight - 60;
@@ -342,26 +318,6 @@
         if (key==13) {
           e.preventDefault();
         }
-      });
-
-      $('#btn-upload').fancybox({
-        type      : 'iframe',
-        autoScale : false,
-        autoSize : true,
-        beforeLoad : function() {
-          this.width  = wFB;
-          this.height = hFB;
-        }/*,
-        afterClose : function(){
-          alert('from iframe btn');
-        }*/
-      });
-
-      $('#btn-remove').on('click', function(){
-        $('#cover').val('');
-        $('.zetth-upload-new').show();
-        $('.zetth-upload-exists').hide();
-        $('#btn-remove').parent().hide();
       });
 
       $('#btn-add-category').on('click', function() {
@@ -512,24 +468,6 @@
           }
         }
       });
-      /*resize tinymce height when add tags*/
-      /*$('#tags').on('itemAdded', function(){
-
-      });*/
-      /*resize tinymce height when remove tags*/
-      /*$('#tags').on('itemRemoved', function(){
-
-      });*/
-      /*resize tinymce height when change cover*/
-      /*$('.fileinput').on('change.bs.fileinput', function(){
-
-      });*/
-      /*resize tinymce height when remove cover*/
-      /*$('a.fileinput-exists').on('click', function(){
-        setTimeout(function(){
-
-        }, 0);
-      });*/
     });
 
     function _insert_new_category(par) {
@@ -558,9 +496,5 @@
       }
       $(el).closest('li').remove();
     }
-
-    /* function _remove_featured(el){
-      $('#box-featured-image'+el).remove();
-    } */
   </script>
 @endpush
