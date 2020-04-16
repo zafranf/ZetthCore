@@ -170,7 +170,7 @@ class SiteController extends AdminController
                 'ext' => $file->getClientOriginalExtension(),
             ];
 
-            if ($this->uploadImage($par, true)) {
+            if ($this->uploadImage($par)) {
                 $app->logo = $par['name'] . '.' . $par['ext'];
             }
         }

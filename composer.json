@@ -33,6 +33,7 @@
             "ZetthCore\\": "src/app"
         },
         "classmap": [
+            "src/app/",
             "src/database/seeds",
             "src/database/factories"
         ],

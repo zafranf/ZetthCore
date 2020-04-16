@@ -51,9 +51,13 @@ return array(
      */
 
     'templates' => array(
-        'small' => 'Intervention\Image\Templates\Small',
-        'medium' => 'Intervention\Image\Templates\Medium',
-        'large' => 'Intervention\Image\Templates\Large',
+        'thumbnail' => 'ZetthCore\Vendor\ImageCache\Thumbnail',
+        'small' => 'ZetthCore\Vendor\ImageCache\Small',
+        'medium' => 'ZetthCore\Vendor\ImageCache\Medium',
+        'large' => 'ZetthCore\Vendor\ImageCache\Large',
+        'opengraph' => 'ZetthCore\Vendor\ImageCache\OpenGraph',
+        'banner' => 'ZetthCore\Vendor\ImageCache\Banner',
+        'post' => 'ZetthCore\Vendor\ImageCache\Post',
     ),
 
     /*
@@ -67,4 +71,40 @@ return array(
 
     'lifetime' => 43200,
 
+    /*
+    |--------------------------------------------------------------------------
+    | Default size
+    |--------------------------------------------------------------------------
+    |
+    | Default size for templates.
+    |
+     */
+
+    'default' => [
+        'thumbnail' => [
+            'width' => 100,
+            'height' => 75,
+            'blur' => 2,
+        ],
+        'small' => [
+            'width' => 200,
+            'height' => 150,
+            'blur' => 4,
+        ],
+        'medium' => [
+            'width' => 400,
+            'height' => 300,
+            'blur' => 8,
+        ],
+        'large' => [
+            'width' => 800,
+            'height' => 600,
+            'blur' => 16,
+        ],
+        'opengraph' => [
+            'width' => 1200,
+            'height' => 630,
+            'blur' => 18,
+        ],
+    ],
 );
