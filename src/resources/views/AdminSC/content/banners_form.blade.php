@@ -172,17 +172,6 @@
       });
     });
 
-    function responsive_filemanager_callback(field_id){
-      var val = $('#'+field_id).val();
-      var path = val.replace(SITE_URL, "");
-      var img = '<img src="'+path+'">';
-      $('.zetth-upload-new').hide();
-      $('.zetth-upload-exists').show();
-      $('.zetth-upload-exists.thumbnail').html(img);
-      $('#image_remove').attr("checked", false);
-      $('#'+field_id).val(path);
-    }
-
     $(document).ready(function(){
       $("body").tooltip({ 
         selector: '[data-toggle=tooltip]' 
@@ -197,20 +186,6 @@
         }else{
           $('#url_external').attr("disabled", true).hide();
         }
-      });
-      $('#btn-upload').fancybox({
-        type      : 'iframe',
-        autoScale : false,
-        autoSize : false,
-        beforeLoad : function() {
-          this.width  = wFB;
-          this.height = hFB;
-        }
-      });
-      $('#btn-remove').on('click', function(){
-        $('#post_cover').val('');
-        $('.zetth-upload-new').show();
-        $('.zetth-upload-exists').hide();
       });
     });
   </script>
