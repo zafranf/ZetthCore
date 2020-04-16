@@ -51,17 +51,15 @@ class Install extends Command
         $this->force = $this->option('force') ? ' --force' : '';
 
         if (!file_exists(base_path('.env'))) {
-            throw new \Exception("Salin berkas .env.example sebagai .env kemudian atur semua nilainya", 1);
-        } else if (env('APP_DOMAIN') === null) {
-            throw new \Exception("Harap atur APP_DOMAIN di dalam berkas .env", 1);
+            throw new \Exception("Copy .env.example as .env and set the values first", 1);
+        }
+        if (env('APP_DOMAIN') === null) {
+            throw new \Exception("Please set APP_DOMAIN in .env file", 1);
         }
 
         $this->publishConfig();
-        $this->line('');
         $this->migratingTable();
-        $this->line('');
         $this->seedingTable();
-        $this->line('');
         $this->linkFolders();
 
         if ($this->option('fresh')) {
@@ -87,6 +85,7 @@ class Install extends Command
         // $this->process('php artisan vendor:publish --tag=zetthroutes --force');
         // $this->process('php artisan vendor:publish --tag=zetthmigrate --force');
         $this->info('Publish files finished!');
+        $this->line('');
     }
 
     public function migratingTable()
@@ -99,6 +98,7 @@ class Install extends Command
             $this->process('php artisan migrate' . $this->force);
         }
         $this->info('Migration finished!');
+        $this->line('');
     }
 
     public function seedingTable()
@@ -110,6 +110,7 @@ class Install extends Command
         $this->info('Seeding additional seeder');
         $this->process('php artisan db:seed' . $this->force);
         $this->info('Seeding additional seeder finished!');
+        $this->line('');
     }
 
     public function linkFolders()
@@ -117,88 +118,36 @@ class Install extends Command
         $this->info('Link folders');
 
         $this->info('Linking storage folder');
-        if ($this->option('fresh')) {
-            if (is_link(public_path('storage'))) {
-                $this->info('Removing "public/storage" folder');
-                $this->process('cd ' . public_path() . ' && rm -rf storage && cd ' . base_path());
-            }
+        if (is_link(public_path('storage'))) {
+            $this->info('The [public/storage] directory already linked.');
+        } else {
+            $storage_path = storage_path('app/public');
+            $this->process('cd ' . public_path() . ' && ln -s ' . $storage_path . ' storage && cd ' . base_path());
+            $this->info('The [public/storage] directory has been linked.');
         }
-        $storage_path = storage_path('app/public');
-        $this->process('cd ' . public_path() . ' && ln -s ' . $storage_path . ' storage && cd ' . base_path());
-        $this->info('The [public/storage] directory has been linked.');
 
-        /* link filemanager to public as larafile */
-        $this->info('Linking filemanager folder');
-        if ($this->option('fresh')) {
-            if (is_link(public_path('larafile'))) {
-                $this->info('Removing "public/larafile" folder');
-                $this->process('cd ' . public_path() . ' && rm -rf larafile && cd ' . base_path());
-            }
-        }
-        // $filemanager_path = storage_path('app/public/filemanager');
-        $filemanager_path = base_path('vendor/zafranf/zetthcore/src/resources/assets/filemanager');
-        // $this->process('cd ' . public_path() . ' && ln -s ' . $filemanager_path . ' larafile && cd ' . base_path());
-        // $this->info('The [public/larafile] directory has been linked.');
+        /* set filemanager root path */
+        $filemanager_path = dirname(__DIR__) . '/../../resources/assets/filemanager';
 
         /* linking public/files to filemanager */
         $this->info('Linking assets filemanager folder');
-        if ($this->option('fresh')) {
-            if (is_link($filemanager_path . '/files')) {
-                $this->info('Removing "filemanager/files" folder');
-                $this->process('cd ' . $filemanager_path . ' && rm -rf files && cd ' . base_path());
-            }
+        if (is_link($filemanager_path . '/files')) {
+            $this->info('The [files] directory already linked.');
+        } else {
+            $files_path = storage_path('app/public/assets/files');
+            $this->process('cd ' . $filemanager_path . ' && ln -s ' . $files_path . ' && cd ' . base_path());
+            $this->info('The [files] directory has been linked.');
         }
-        $files_path = storage_path('app/public/assets/files');
-        $this->process('cd ' . $filemanager_path . ' && ln -s ' . $files_path . ' && cd ' . base_path());
-        $this->info('The [files] directory has been linked.');
 
         /* linking public/thumbs to filemanager */
         $this->info('Linking assets thumbs filemanager folder');
-        if ($this->option('fresh')) {
-            if (is_link($filemanager_path . '/thumbs')) {
-                $this->info('Removing "filemanager/thumbs" folder');
-                $this->process('cd ' . $filemanager_path . ' && rm -rf thumbs && cd ' . base_path());
-            }
+        if (is_link($filemanager_path . '/thumbs')) {
+            $this->info('The [thumbs] directory already linked.');
+        } else {
+            $thumbs_path = storage_path('app/public/assets/thumbs');
+            $this->process('cd ' . $filemanager_path . ' && ln -s ' . $thumbs_path . ' && cd ' . base_path());
+            $this->info('The [thumbs] directory has been linked.');
         }
-        $thumbs_path = storage_path('app/public/assets/thumbs');
-        $this->process('cd ' . $filemanager_path . ' && ln -s ' . $thumbs_path . ' && cd ' . base_path());
-        $this->info('The [thumbs] directory has been linked.');
-
-        /* link filemanager-standalone to public as larafile-standalone */
-        /* $this->info('Linking filemanager-standalone folder');
-        if ($this->option('fresh')) {
-        if (is_link(public_path('larafile-standalone'))) {
-        $this->info('Removing "public/larafile-standalone" folder');
-        $this->process('cd ' . public_path() . ' && rm -rf larafile-standalone && cd ' . base_path());
-        }
-        }
-        $filemanager_standalone_path = base_path('vendor/zafranf/zetthcore/src/resources/themes/AdminSC/plugins/filemanager-standalone');
-        $this->process('cd ' . public_path() . ' && ln -s ' . $filemanager_standalone_path . ' larafile-standalone && cd ' . base_path());
-        $this->info('The [public/larafile-standalone] directory has been linked.'); */
-
-        /* linking public/files to filemanager-standalone */
-        /* $this->info('Linking assets filemanager-standalone folder');
-        if ($this->option('fresh')) {
-        if (is_link($filemanager_standalone_path . '/files')) {
-        $this->info('Removing "filemanager/files" folder');
-        $this->process('cd ' . $filemanager_standalone_path . ' && rm -rf files && cd ' . base_path());
-        }
-        }
-        $files_path = storage_path('app/public/assets/files');
-        $this->process('cd ' . $filemanager_standalone_path . ' && ln -s ' . $files_path . ' && cd ' . base_path());
-        $this->info('The [files] directory has been linked.'); */
-
-        /* linking public/thumbs to filemanager-standalone */
-        /* $this->info('Linking assets thumbs filemanager-standalone folder');
-        if ($this->option('fresh')) {
-        if (is_link($filemanager_standalone_path . '/thumbs')) {
-        $this->info('Removing "filemanager/thumbs" folder');
-        $this->process('cd ' . $filemanager_standalone_path . ' && rm -rf thumbs && cd ' . base_path());
-        }
-        }
-        $thumbs_path = storage_path('app/public/assets/thumbs');
-        $this->process('cd ' . $filemanager_standalone_path . ' && ln -s ' . $thumbs_path . ' && cd ' . base_path());
-        $this->info('The [thumbs] directory has been linked.'); */
 
         $this->info('Link folders finished!');
     }
