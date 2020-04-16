@@ -155,19 +155,6 @@
   {!! _admin_css(adminPath() . '/themes/admin/AdminSC/plugins/jasny-bootstrap/3.1.3/css/jasny-bootstrap.min.css') !!}
   {!! _admin_css(adminPath() . '/themes/admin/AdminSC/plugins/fancybox/2.1.5/css/jquery.fancybox.css') !!}
   {!! _admin_css(adminPath() . '/themes/admin/AdminSC/plugins/select2/4.0.0/css/select2.min.css') !!}
-  <style>
-    .zetth-upload a {
-      text-decoration: none;
-    }
-
-    .zetth-upload .thumbnail {
-      margin-bottom: 5px;
-    }
-
-    .zetth-upload-exists {
-      display: none;
-    }
-  </style>
 @endpush
 
 @push('scripts')
