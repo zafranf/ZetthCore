@@ -130,7 +130,7 @@
           "data": 'title',
           "render": function (data, type, row, meta) {
             let sharelink = SITE_URL + '/action/share/' + row.slug;
-            let posturl = SITE_URL + '/{{ env('SINGLE_POST_PATH', 'post') }}/' + row.slug;
+            let posturl = SITE_URL + '/{{ env('POST_PATH', 'post') }}/' + row.slug;
             let fblink = 'https://www.facebook.com/sharer/sharer.php?u='+posturl+'&amp;src=sdkpreparse';
             let twlink = 'https://twitter.com/intent/tweet?text=' + data + ' ' + posturl;
             let render = data + '<br>';

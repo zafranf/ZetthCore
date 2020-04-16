@@ -5,13 +5,13 @@ namespace ZetthCore\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class PostComment extends Model
+class Comment extends Model
 {
     use SoftDeletes;
 
     public function post()
     {
-        return $this->belongsTo('ZetthCore\Models\Post');
+        return $this->belongsTo('ZetthCore\Models\Post', 'commentable_id');
     }
 
     public function commentator()
@@ -26,7 +26,7 @@ class PostComment extends Model
 
     public function subcomments()
     {
-        return $this->hasMany('ZetthCore\Models\PostComment', 'parent_id', 'id')->where('status', 1)->with(['subcomments', 'commentator']);
+        return $this->hasMany('ZetthCore\Models\Comment', 'parent_id', 'id')->where('status', 1)->with(['subcomments', 'commentator']);
     }
 
     public function scopeActive($query)

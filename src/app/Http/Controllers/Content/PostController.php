@@ -2,11 +2,11 @@
 
 namespace ZetthCore\Http\Controllers\Content;
 
+use App\Models\Post;
 use Illuminate\Http\Request;
 use ZetthCore\Http\Controllers\AdminController;
-use ZetthCore\Models\Post;
-use ZetthCore\Models\PostTerm;
 use ZetthCore\Models\Term;
+use ZetthCore\Models\Termable;
 
 class PostController extends AdminController
 {
@@ -139,7 +139,7 @@ class PostController extends AdminController
         $post->save();
 
         /* delete post relation */
-        PostTerm::where('post_id', $post->id)->delete();
+        Termable::where('termable_id', $post->id)->delete();
 
         /* processing categories */
         $this->process_categories($categories, $descriptions, $parents, $post->id);
@@ -260,7 +260,7 @@ class PostController extends AdminController
         $post->save();
 
         /* delete post relation */
-        PostTerm::where('post_id', $post->id)->delete();
+        Termable::where('termable_id', $post->id)->delete();
 
         /* processing categories */
         $this->process_categories($categories, $descriptions, $parents, $post->id);
@@ -393,9 +393,10 @@ class PostController extends AdminController
      */
     public function process_postrels($pid, $tid)
     {
-        $postrel = new PostTerm;
-        $postrel->post_id = $pid;
+        $postrel = new Termable;
         $postrel->term_id = $tid;
+        $postrel->termable_type = 'App\Models\Post';
+        $postrel->termable_id = $pid;
         $postrel->save();
     }
 

@@ -5,11 +5,11 @@ namespace ZetthCore\Models;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 
-class PostLike extends Model
+class Like extends Model
 {
-    protected $primaryKey = ['post_id', 'user_id'];
+    protected $primaryKey = ['likeable_id', 'user_id'];
     protected $fillable = [
-        'post_id', 'user_id', 'like',
+        'likeable_type', 'likeable_id', 'user_id', 'like',
     ];
     public $timestamps = false;
     public $incrementing = false;

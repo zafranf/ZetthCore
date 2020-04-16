@@ -113,14 +113,6 @@ class AppServiceProvider extends ServiceProvider
         $router->aliasMiddleware('access', \ZetthCore\Http\Middleware\AccessMiddleware::class);
         $router->aliasMiddleware('site', \ZetthCore\Http\Middleware\SiteMiddleware::class);
         $router->aliasMiddleware('visitor_log', \ZetthCore\Http\Middleware\VisitorLogMiddleware::class);
-
-        $router->pushMiddlewareToGroup('web', \RenatoMarinho\LaravelPageSpeed\Middleware\InlineCss::class);
-        $router->pushMiddlewareToGroup('web', \RenatoMarinho\LaravelPageSpeed\Middleware\ElideAttributes::class);
-        $router->pushMiddlewareToGroup('web', \RenatoMarinho\LaravelPageSpeed\Middleware\InsertDNSPrefetch::class);
-        $router->pushMiddlewareToGroup('web', \RenatoMarinho\LaravelPageSpeed\Middleware\RemoveComments::class);
-        $router->pushMiddlewareToGroup('web', \RenatoMarinho\LaravelPageSpeed\Middleware\TrimUrls::class);
-        $router->pushMiddlewareToGroup('web', \RenatoMarinho\LaravelPageSpeed\Middleware\RemoveQuotes::class);
-        $router->pushMiddlewareToGroup('web', \RenatoMarinho\LaravelPageSpeed\Middleware\CollapseWhitespace::class);
     }
 
     public function publishAll()

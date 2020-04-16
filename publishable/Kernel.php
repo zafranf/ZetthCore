@@ -43,6 +43,8 @@ class Kernel extends HttpKernel
             \RenatoMarinho\LaravelPageSpeed\Middleware\TrimUrls::class,
             \RenatoMarinho\LaravelPageSpeed\Middleware\RemoveQuotes::class,
             \RenatoMarinho\LaravelPageSpeed\Middleware\CollapseWhitespace::class,
+
+            \App\Http\Middleware\TrimDomains::class,
         ],
 
         'api' => [

@@ -8,7 +8,7 @@
     Waktu: {{ generateDate($data->created_at,'id', 'dddd, Do MMMM YYYY HH:mm') }} <br>
     Artikel: <a style="text-decoration:none;">{{ $data->post->title }}</a> <br>
     <br>
-    {!! nl2br(e(strip_tags($data->comment))) !!}
+    {!! nl2br(e(strip_tags($data->content))) !!}
     <br>
     <br>
     @if ($data->status == 0)
@@ -21,7 +21,7 @@
       </a>
     @endif
     &nbsp;
-    <a id="btn-reply" class="share-button" href="{{ url($current_url . "/create?cid=" . ($data->parent_id ?? $data->id) . "&pid=" . $data->post_id) }}">
+    <a id="btn-reply" class="share-button" href="{{ url($current_url . "/create?cid=" . ($data->parent_id ?? $data->id) . "&pid=" . $data->commentable_id) }}">
       <i class="fa fa-reply"></i> Balas
     </a>
     &nbsp;

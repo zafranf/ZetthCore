@@ -13,12 +13,13 @@ class CreatePostLikesTable extends Migration
      */
     public function up()
     {
-        Schema::create('post_likes', function (Blueprint $table) {
-            $table->unsignedInteger('post_id');
-            $table->unsignedInteger('user_id');
+        Schema::create('likes', function (Blueprint $table) {
+            $table->integer('user_id')->unsigned();
             $table->boolean('like')->unsigned();
+            $table->string('likeable_type');
+            $table->integer('likeable_id')->unsigned();
 
-            $table->primary(['post_id', 'user_id']);
+            $table->primary(['likeable_id', 'user_id']);
         });
     }
 
@@ -29,6 +30,6 @@ class CreatePostLikesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('post_likes');
+        Schema::dropIfExists('likes');
     }
 }

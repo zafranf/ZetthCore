@@ -12,24 +12,19 @@ class Post extends Model
     protected $dates = ['published_at', 'deleted_at'];
     public $appends = ['published_string'];
 
-    public function rels()
-    {
-        return $this->hasMany('ZetthCore\Models\PostTerm');
-    }
-
     public function terms()
     {
-        return $this->belongsToMany('ZetthCore\Models\Term', 'post_terms');
+        return $this->morphToMany('ZetthCore\Models\Term', 'termable');
     }
 
     public function categories()
     {
-        return $this->belongsToMany('ZetthCore\Models\Term', 'post_terms')->where('type', 'category');
+        return $this->morphToMany('ZetthCore\Models\Term', 'termable')->where('type', 'category');
     }
 
     public function tags()
     {
-        return $this->belongsToMany('ZetthCore\Models\Term', 'post_terms')->where('type', 'tag');
+        return $this->morphToMany('ZetthCore\Models\Term', 'termable')->where('type', 'tag');
     }
 
     public function author()
@@ -44,25 +39,27 @@ class Post extends Model
 
     public function comments()
     {
-        return $this->hasMany('ZetthCore\Models\PostComment')->where('status', 1);
+        return $this->morphMany('ZetthCore\Models\Comment', 'commentable')->where('status', 1);
     }
 
     public function comments_sub()
     {
-        return $this->hasMany('ZetthCore\Models\PostComment')->where('status', 1)->whereNull('parent_id')->with(['subcomments', 'commentator']);
+        return $this->morphMany('ZetthCore\Models\Comment', 'commentable')->where('status', 1)->whereNull('parent_id')->with(['subcomments', 'commentator']);
     }
 
     public function comments_all()
     {
-        return $this->hasMany('ZetthCore\Models\PostComment');
+        return $this->morphMany('ZetthCore\Models\Comment', 'commentable');
     }
+
     public function likes()
     {
-        return $this->hasMany('App\Models\PostLike');
+        return $this->morphMany('App\Models\Like', 'likeable');
     }
+
     public function likes_user()
     {
-        return $this->hasOne('App\Models\PostLike')->where('user_id', app('user')->id ?? null);
+        return $this->morphOne('App\Models\Like', 'likeable')->where('user_id', app('user')->id ?? null);
     }
 
     public function scopePosts($query)
