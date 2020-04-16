@@ -10,6 +10,11 @@ class BannerController extends AdminController
 {
     private $current_url;
     private $page_title;
+    private $width;
+    private $height;
+    private $ratio;
+    private $weight;
+    private $image_rule;
 
     /**
      * Constructor
@@ -29,6 +34,20 @@ class BannerController extends AdminController
             'icon' => '',
             'url' => $this->current_url,
         ];
+
+        /* validation */
+        $this->width = config('site.banner.image.dimension.width') ?? 1280;
+        $this->height = config('site.banner.image.dimension.height') ?? 720;
+        $this->ratio = str_replace(':', '/', config('site.banner.image.ratio') ?? '16:9');
+        $this->weight = config('site.banner.image.weight') ?? 256;
+        if ($this->weight > 512) {
+            $this->weight = 512;
+        }
+        $this->image_rule = [
+            'required',
+            'mimes:jpg,jpeg,png,svg,webp',
+            'dimensions:max_width=' . $this->width . ',max_height=' . $this->height . ',ratio:' . $this->ratio,
+        ];
     }
 
     /**
@@ -38,6 +57,7 @@ class BannerController extends AdminController
      */
     public function index()
     {
+        /* check banner type */
         if (config('site.banner.single')) {
             $banner = Banner::first();
             if ($banner) {
@@ -90,7 +110,7 @@ class BannerController extends AdminController
             'page_subtitle' => 'Tambah Spanduk',
             'banners' => $additional['banners'],
             'post_opts' => $additional['posts'],
-            'data' => [],
+            // 'data' => [],
         ];
 
         return view('zetthcore::AdminSC.content.banners_form', $data);
@@ -111,11 +131,11 @@ class BannerController extends AdminController
         $validate = [
             'title' => 'required',
             'description' => 'required',
-            'image' => 'required',
+            'image' => $this->image_rule,
         ];
         if (bool($r->input('only_image'))) {
             $validate = [
-                'image' => 'required',
+                'image' => $this->image_rule,
             ];
         }
         $this->validate($r, $validate);
@@ -127,9 +147,25 @@ class BannerController extends AdminController
         $banner->url = $r->input('url');
         $banner->url_external = bool($r->input('url_external')) ? 1 : 0;
         $banner->target = $r->input('target');
-        $banner->image = $r->input('image');
         $banner->only_image = bool($r->input('only_image')) ? 1 : 0;
         $banner->status = bool($r->input('status')) ? 1 : 0;
+        $banner->save();
+
+        /* process image */
+        if ($r->hasFile('image')) {
+            $file = $r->file('image');
+            $par = [
+                'file' => $file,
+                'folder' => '/assets/images/banners/',
+                'name' => 'banner-' . (md5($banner->id . env('DB_PORT', 3306))),
+                'type' => $file->getClientMimeType(),
+                'ext' => $file->getClientOriginalExtension(),
+            ];
+
+            if ($this->uploadImage($par)) {
+                $banner->image = $par['name'] . '.' . $par['ext'];
+            }
+        }
         $banner->save();
 
         /* set order */
@@ -213,7 +249,7 @@ class BannerController extends AdminController
         ];
         if (bool($r->input('only_image'))) {
             $validate = [
-                // 'image' => 'required',
+                'image' => $this->image_rule,
             ];
         }
         $this->validate($r, $validate);
@@ -224,11 +260,25 @@ class BannerController extends AdminController
         $banner->url = $r->input('url');
         $banner->url_external = bool($r->input('url_external')) ? 1 : 0;
         $banner->target = $r->input('target');
-        if ($r->input('image')) {
-            $banner->image = $r->input('image');
-        }
         $banner->only_image = bool($r->input('only_image')) ? 1 : 0;
         $banner->status = bool($r->input('status')) ? 1 : 0;
+        $banner->save();
+
+        /* process image */
+        if ($r->hasFile('image')) {
+            $file = $r->file('image');
+            $par = [
+                'file' => $file,
+                'folder' => '/assets/images/banners/',
+                'name' => 'banner-' . (md5($banner->id . env('DB_PORT', 3306))),
+                'type' => $file->getClientMimeType(),
+                'ext' => $file->getClientOriginalExtension(),
+            ];
+
+            if ($this->uploadImage($par)) {
+                $banner->image = $par['name'] . '.' . $par['ext'];
+            }
+        }
         $banner->save();
 
         /* set order */
@@ -263,6 +313,12 @@ class BannerController extends AdminController
         /* soft delete */
         $banner->delete();
 
+        /* remove image file */
+        $file = storage_path('app/public/assets/images/banners/' . $banner->image);
+        if (file_exists($file) && !is_dir($file)) {
+            unlink($file);
+        }
+
         /* clear cache */
         \Cache::flush();
 
@@ -278,7 +334,7 @@ class BannerController extends AdminController
     public function datatable(Request $r)
     {
         /* get data */
-        $data = Banner::select('id', 'title', 'description', 'image', 'order', 'status')->orderBy('order');
+        $data = Banner::select('id', 'title', 'description', 'image', 'order', 'status')->orderBy('order', 'asc');
 
         /* generate datatable */
         if ($r->ajax()) {
