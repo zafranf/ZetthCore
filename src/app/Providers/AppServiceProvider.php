@@ -144,6 +144,7 @@ class AppServiceProvider extends ServiceProvider
         $this->publishes([
             $publishable_path . '/Middleware/Authenticate.php' => app_path('Http/Middleware/Authenticate.php'),
             $publishable_path . '/Middleware/RedirectIfAuthenticated.php' => app_path('Http/Middleware/RedirectIfAuthenticated.php'),
+            $publishable_path . '/Middleware/TrimDomains.php' => app_path('Http/Middleware/TrimDomains.php'),
         ], 'zetthmiddleware');
 
         /* $this->publishes([
