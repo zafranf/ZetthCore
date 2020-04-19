@@ -83,7 +83,11 @@ class MenuController extends AdminController
             'breadcrumbs' => $this->breadcrumbs,
             'page_title' => $this->page_title,
             'page_subtitle' => 'Tambah Menu',
-            'menus' => Menu::where('group_id', _get('group'))->where('parent_id', 0)->with('allSubmenu')->orderBy('order')->get(),
+            'menus' => Menu::where('group_id', _get('group'))
+                ->whereNull('parent_id')
+                ->with('allSubmenu')
+                ->orderBy('order')
+                ->get(),
             'post_opts' => $additional['posts'],
         ];
 
@@ -105,6 +109,16 @@ class MenuController extends AdminController
             'group' => 'required|exists:menu_groups,id',
         ]);
 
+        /* set default order */
+        $order = 1;
+        $lastOrder = Menu::select('order')
+            ->whereNull('parent_id')
+            ->orderBy('order', 'desc')
+            ->first();
+        if ($lastOrder) {
+            $order = $lastOrder->order + 1;
+        }
+
         /* save data */
         $menu = new Menu;
         $menu->name = $r->input('name');
@@ -117,7 +131,7 @@ class MenuController extends AdminController
         }
         $menu->route_name = $r->input('route_name');
         $menu->target = $r->input('target');
-        // $menu->order = (int) $r->input('order');
+        $menu->order = $order;
         $menu->icon = $r->input('icon');
         $menu->status = bool($r->input('status')) ? 1 : 0;
         $menu->is_crud = bool($r->input('is_crud')) ? 1 : 0;
@@ -126,7 +140,9 @@ class MenuController extends AdminController
         $menu->read = bool($r->input('read')) ? 1 : 0;
         $menu->update = bool($r->input('update')) ? 1 : 0;
         $menu->delete = bool($r->input('delete')) ? 1 : 0;
-        $menu->parent_id = (int) $r->input('parent');
+        if ($r->input('parent')) {
+            $menu->parent_id = $r->input('parent');
+        }
         $menu->group_id = (int) $r->input('group');
         $menu->save();
 
@@ -174,7 +190,11 @@ class MenuController extends AdminController
             'breadcrumbs' => $this->breadcrumbs,
             'page_title' => $this->page_title,
             'page_subtitle' => 'Edit Menu',
-            'menus' => Menu::where('group_id', _get('group'))->where('parent_id', 0)->with('allSubmenu')->orderBy('order')->get(),
+            'menus' => Menu::where('group_id', _get('group'))
+                ->whereNull('parent_id')
+                ->with('allSubmenu')
+                ->orderBy('order')
+                ->get(),
             'post_opts' => $additional['posts'],
             'data' => $menu,
         ];
@@ -199,11 +219,11 @@ class MenuController extends AdminController
         ]);
 
         /* get order number if null */
-        if (!$r->input('order')) {
-            $parent_id = $r->input('parent') ?? 0;
-            $parent = Menu::where('parent_id', (int) $parent_id)->orderBy('order', 'desc')->first();
-            $order = $parent->order + 1;
-        }
+        // if (!$r->input('order')) {
+        //     $parent_id = $r->input('parent') ?? 0;
+        //     $parent = Menu::where('parent_id', (int) $parent_id)->orderBy('order', 'desc')->first();
+        //     $order = $parent->order + 1;
+        // }
 
         /* save data */
         $menu->name = $r->input('name');
@@ -216,7 +236,7 @@ class MenuController extends AdminController
         }
         $menu->route_name = $r->input('route_name');
         $menu->target = $r->input('target');
-        $menu->order = $r->input('order') ?? $order;
+        // $menu->order = $order;
         $menu->icon = $r->input('icon');
         $menu->status = bool($r->input('status')) ? 1 : 0;
         $menu->is_crud = bool($r->input('is_crud')) ? 1 : 0;
@@ -225,7 +245,9 @@ class MenuController extends AdminController
         $menu->read = bool($r->input('read')) ? 1 : 0;
         $menu->update = bool($r->input('update')) ? 1 : 0;
         $menu->delete = bool($r->input('delete')) ? 1 : 0;
-        $menu->parent_id = (int) $r->input('parent');
+        if ($r->input('parent')) {
+            $menu->parent_id = $r->input('parent');
+        }
         $menu->group_id = (int) $r->input('group');
         $menu->save();
 
@@ -285,7 +307,7 @@ class MenuController extends AdminController
     public function sort(Request $r)
     {
         /* get data */
-        $menus = Menu::where('parent_id', 0)->with('allSubmenu')->orderBy('order')->get();
+        $menus = Menu::whereNull('parent_id')->with('allSubmenu')->orderBy('order')->get();
 
         /* set variable for view */
         $data = [

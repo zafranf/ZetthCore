@@ -59,12 +59,12 @@
           <input type="text" class="form-control" id="url_external" name="url_external" value="{{ isset($data) ? (($data->url=="#") ? '' : $data->url) : '' }}" placeholder="http://example.com" {!! (isset($data) && ($data->url_external) ) ? 'style="margin-top:5px;" ' : 'style="margin-top:5px;display:none;" disabled ' !!}>
         </div>
       </div>
-      {{-- <div class="form-group">
-        <label for="url" class="col-sm-2 control-label">URL</label>
+      <div class="form-group">
+        <label for="icon" class="col-sm-2 control-label">Ikon</label>
         <div class="col-sm-4">
-          <input type="text" class="form-control" id="url" name="url" placeholder="Alamat URL.." value="{{ isset($data) ? $data->url : '' }}">
+          <input type="text" class="form-control" id="icon" name="icon" placeholder="Ikon menu.." value="{{ isset($data) ? $data->icon : '' }}">
         </div>
-      </div> --}}
+      </div>
       <div class="form-group">
         <label for="target" class="col-sm-2 control-label">Target</label>
         <div class="col-sm-4">
