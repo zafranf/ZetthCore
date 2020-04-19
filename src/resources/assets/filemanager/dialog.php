@@ -345,7 +345,13 @@ $get_params = http_build_query($get_params);
             }
 			.grid li {
 				margin: 2px;
-			}
+            }
+            ul.list-view2 li {
+                width: 33%!important;
+            }
+            ul.list-view2 li>figure {
+                width: 100%!important;
+            }
 			@media (max-width: 767px) {
                 .container-fluid {
                     /* padding: 0!important; */
@@ -363,6 +369,12 @@ $get_params = http_build_query($get_params);
                 }
                 .grid figure, .grid .img-precontainer .img-container img, .grid figcaption {
                     width: 110px;
+                }
+                ul.list-view2 li {
+                    width: 100%!important;
+                }
+                ul.list-view2 li>figure {
+                    width: unset!important;
                 }
 			}
         </style>
