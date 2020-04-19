@@ -1,6 +1,6 @@
 <?php
 
-return array(
+return [
 
     /*
     |--------------------------------------------------------------------------
@@ -30,9 +30,9 @@ return array(
     |
      */
 
-    'paths' => array(
+    'paths' => [
         storage_path('app/public/assets/images'),
-    ),
+    ],
 
     /*
     |--------------------------------------------------------------------------
@@ -50,7 +50,7 @@ return array(
     |
      */
 
-    'templates' => array(
+    'templates' => [
         'thumbnail' => 'ZetthCore\Vendor\ImageCache\Thumbnail',
         'small' => 'ZetthCore\Vendor\ImageCache\Small',
         'medium' => 'ZetthCore\Vendor\ImageCache\Medium',
@@ -58,7 +58,7 @@ return array(
         'opengraph' => 'ZetthCore\Vendor\ImageCache\OpenGraph',
         'banner' => 'ZetthCore\Vendor\ImageCache\Banner',
         'post' => 'ZetthCore\Vendor\ImageCache\Post',
-    ),
+    ],
 
     /*
     |--------------------------------------------------------------------------
@@ -107,4 +107,4 @@ return array(
             'blur' => 18,
         ],
     ],
-);
+];
