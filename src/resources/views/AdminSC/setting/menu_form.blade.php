@@ -28,24 +28,33 @@
             <option value="#">[Tidak ada]</option>
             <option value="external" {{ (isset($data) && ($data->url_external) ) ? 'selected' : '' }}>[Tautan Luar]</option>
             <option value="/" {{ (isset($data) && $data->url == "/" ) ? 'selected' : '' }}>Beranda</option>
-            <option value="posts" {{ (isset($data) && $data->url == "posts" ) ? 'selected' : '' }}>Artikel</option>
-            {{-- <option value="pages" {{ (isset($data) && $data->url == "pages" ) ? 'selected' : '' }}>Halaman</option> --}}
-            <option value="albums" {{ (isset($data) && $data->url == "albums" ) ? 'selected' : '' }}>Galeri Foto</option>
-            <option value="videos" {{ (isset($data) && $data->url == "videos" ) ? 'selected' : '' }}>Galeri Video</option>
-            <option value="contact" {{ (isset($data) && $data->url == "contact" ) ? 'selected' : '' }}>Kontak</option>
-            @php $type = ''; @endphp
-						@foreach ($post_opts as $n => $post)
-							@if ($type != $post->type)
-								{!! ($n > 0) ? '</optgroup>' : '' !!}
-								@php $type = $post->type @endphp
-								<optgroup label="{{ ucfirst($type) }}">
-							@endif
-							@if ($post->type == "page" || $post->type == "video")
-								<option value="{{ $post->slug }}" {{ $post->slug == "#" ? 'disabled' : '' }} {{ (isset($data->id) && $post->slug == $data->url) ? 'selected' : '' }}>{{ $post->title }}</option>
-							@elseif ($post->type == "article")
-								<option value="{{ 'article/' . $post->slug }}" {{ $post->slug == "#" ? 'disabled' : '' }} {{ (isset($data->id) && 'article/' . $post->slug == $data->url) ? 'selected' : '' }}>{{ $post->title }}</option>
-							@endif
-						@endforeach
+            <option value="{{ env('POSTS_PATH', 'posts') }}" {{ (isset($data) && $data->url == env('POSTS_PATH', 'posts') ) ? 'selected' : '' }}>Artikel</option>
+            {{-- <option value="{{ env('PAGES_PATH', 'pages') }}" {{ (isset($data) && $data->url == env('PAGES_PATH', 'pages') ) ? 'selected' : '' }}>Halaman</option> --}}
+            <option value="{{ env('ALBUMS_PATH', 'albums') }}" {{ (isset($data) && $data->url == env('ALBUMS_PATH', 'albums') ) ? 'selected' : '' }}>Galeri Foto</option>
+            <option value="{{ env('VIDEOS_PATH', 'videos') }}" {{ (isset($data) && $data->url == env('VIDEOS_PATH', 'videos') ) ? 'selected' : '' }}>Galeri Video</option>
+            <option value="{{ env('CONTACT_PATH', 'contact') }}" {{ (isset($data) && $data->url == env('CONTACT_PATH', 'contact') ) ? 'selected' : '' }}>Kontak</option>
+            @php 
+              $types = [
+                'page' => 'Halaman',
+                'article' => 'Artikel',
+                'video' => 'Video',
+              ];
+              $type = ''; 
+            @endphp
+            @foreach ($post_opts as $n => $post)
+              @if ($type != $post->type)
+                {!! ($n > 0) ? '</optgroup>' : '' !!}
+                @php 
+                  $type = $post->type; 
+                @endphp
+                <optgroup label="{{ ucfirst($types[$post->type]) }}">
+              @endif
+              @if ($post->type == "page" || $post->type == "video")
+                <option value="{{ $post->slug }}" {{ $post->slug == "#" ? 'disabled' : '' }} {{ (isset($data) && $post->slug == $data->url) ? 'selected' : '' }}>{{ $post->title }}</option>
+              @elseif ($post->type == "article")
+                <option value="{{ env('POST_PATH', 'post') . '/' . $post->slug }}" {{ $post->slug == "#" ? 'disabled' : '' }} {{ (isset($data) && env('POST_PATH', 'post') . '/' . $post->slug == $data->url) ? 'selected' : '' }}>{{ $post->title }}</option>
+              @endif
+            @endforeach
           </select>
           <input type="text" class="form-control" id="url_external" name="url_external" value="{{ isset($data) ? (($data->url=="#") ? '' : $data->url) : '' }}" placeholder="http://example.com" {!! (isset($data) && ($data->url_external) ) ? 'style="margin-top:5px;" ' : 'style="margin-top:5px;display:none;" disabled ' !!}>
         </div>
