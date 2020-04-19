@@ -10,7 +10,7 @@ if ($_SESSION['RF']["verify"] != "RESPONSIVEfilemanager") {
 }
 $languages = include 'lang/languages.php';
 
-if (isset($_SESSION['RF']['language']) && file_exists('lang/' . basename($_SESSION['RF']['language']) . '.php')) {
+if (isset($_SESSION['RF']['language']) && file_exists(__DIR__ . '/lang/' . basename($_SESSION['RF']['language']) . '.php')) {
     if (array_key_exists($_SESSION['RF']['language'], $languages)) {
         include 'lang/' . basename($_SESSION['RF']['language']) . '.php';
     } else {

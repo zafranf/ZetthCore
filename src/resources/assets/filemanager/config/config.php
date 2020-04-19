@@ -14,7 +14,8 @@ mb_http_input('UTF-8');
 mb_language('uni');
 mb_regex_encoding('UTF-8');
 ob_start('mb_output_handler');
-date_default_timezone_set('Asia/Jakarta');
+$timezone = getTimezone();
+date_default_timezone_set($timezone);
 setlocale(LC_CTYPE, 'en_US'); //correct transliteration
 
 /*
@@ -213,7 +214,9 @@ $config = array(
     | in Megabytes
     |
      */
-    'MaxSizeUpload' => 10,
+    'MaxSizeUpload' => (1 * 3 / 4),
+
+    'MaxNumberOfFiles' => 20,
 
     /*
     |--------------------------------------------------------------------------
@@ -335,15 +338,15 @@ $config = array(
     //Permissions configuration
     //******************
     'delete_files' => true,
-    'create_folders' => false,
-    'delete_folders' => false,
+    'create_folders' => true,
+    'delete_folders' => true,
     'upload_files' => true,
-    'rename_files' => false,
-    'rename_folders' => false,
+    'rename_files' => true,
+    'rename_folders' => true,
     'duplicate_files' => false,
-    'extract_files' => false,
-    'copy_cut_files' => false, // for copy/cut files
-    'copy_cut_dirs' => false, // for copy/cut directories
+    'extract_files' => true,
+    'copy_cut_files' => true, // for copy/cut files
+    'copy_cut_dirs' => true, // for copy/cut directories
     'chmod_files' => false, // change file permissions
     'chmod_dirs' => false, // change folder permissions
     'preview_text_files' => true, // eg.: txt, log etc.

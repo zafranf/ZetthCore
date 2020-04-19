@@ -332,6 +332,37 @@ if (!function_exists('getMenu')) {
     }
 }
 
+if (!function_exists('getTimezone')) {
+    function getTimezone($type = null)
+    {
+        /* get env timezone */
+        $timezone = env('APP_TIMEZONE', 'UTC');
+        if ($type == 'env') {
+            return $timezone;
+        }
+
+        /* get config site timezone */
+        if (app()->bound('site') || class_exists('site')) {
+            $timezone = app('site')->timezone;
+
+            if ($type == 'site') {
+                return $timezone;
+            }
+        }
+
+        /* get user timezone */
+        if (app('user')) {
+            $timezone = app('user')->timezone;
+
+            if ($type == 'user') {
+                return $timezone;
+            }
+        }
+
+        return $timezone;
+    }
+}
+
 if (!function_exists('menuFilterPermission')) {
     function menuFilterPermission($menus)
     {
@@ -698,17 +729,8 @@ if (!function_exists('_site_js')) {
 if (!function_exists('carbon')) {
     function carbon($carbon = null, $lang = 'id', $type = 'display')
     {
-        /* set default timezone */
-        $timezone = env('APP_TIMEZONE', 'UTC');
-        if (app()->bound('site') || class_exists('site')) {
-            $timezone = app('site')->timezone;
-        }
-
-        /* check user timezone */
-        $user_settings = app('user') ? json_decode(app('user')->settings) : '[]';
-        if (isset($user_settings->timezone)) {
-            $timezone = $user_settings->timezone;
-        }
+        /* get timezone */
+        $timezone = getTimezone();
 
         /* initialize new carbon */
         if (is_null($carbon)) {

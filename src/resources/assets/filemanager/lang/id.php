@@ -53,7 +53,7 @@ return array(
         7 => 'Failed to write file to disk',
         8 => 'A PHP extension stopped the file upload',
         'post_max_size' => 'The uploaded file exceeds the post_max_size directive in php.ini',
-        'max_file_size' => 'File is too big',
+        'max_file_size' => 'Ukuran berkas terlalu besar',
         'min_file_size' => 'File is too small',
         'accept_file_types' => 'Filetype not allowed',
         'max_number_of_files' => 'Maximum number of files exceeded',
@@ -118,7 +118,7 @@ return array(
     'Edit_File' => "Edit file's content",
     'File_Save_OK' => "File successfully saved.",
     'File_Save_Error' => "There was an error while saving the file.",
-    'New_File' => 'New File',
+    'New_File' => 'Berkas Baru',
     'No_Extension' => 'You have to add a file extension.',
     'Valid_Extensions' => 'Valid extensions: %s', // %s = txt,log etc.
     'Upload_message' => "Drop file here to upload",
@@ -136,8 +136,8 @@ return array(
     'no path' => "No path",
     'no file' => "No file",
     'view type number missing' => "View type number missing",
-    'Not enough Memory' => "Not enough Memory",
-    'max_size_reached' => "Your image folder has reach its maximale size of %d MB.", //%d = max overall size
+    'Not enough Memory' => "Memori tidak cukup",
+    'max_size_reached' => "Your image folder has reach its maximum size of %d MB.", //%d = max overall size
     'B' => "B",
     'KB' => "KB",
     'MB' => "MB",

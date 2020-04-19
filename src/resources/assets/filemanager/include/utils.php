@@ -42,8 +42,8 @@ if ( ! function_exists('transs'))
 
 		// language
 		if ( ! isset($_SESSION['RF']['language'])
-			|| file_exists('lang/' . basename($_SESSION['RF']['language']) . '.php') === false
-			|| ! is_readable('lang/' . basename($_SESSION['RF']['language']) . '.php')
+			|| file_exists(__DIR__ . '/lang/' . basename($_SESSION['RF']['language']) . '.php') === false
+			|| ! is_readable(__DIR__ . 'lang/' . basename($_SESSION['RF']['language']) . '.php')
 		)
 		{
 			$lang = $config['default_language'];
