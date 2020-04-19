@@ -76,7 +76,7 @@ class TagController extends AdminController
             'breadcrumbs' => $this->breadcrumbs,
             'page_title' => $this->page_title,
             'page_subtitle' => 'Tambah Label',
-            // 'tags' => Term::where('type', 'tag')->where('parent_id', 0)->with('allSubtag')->orderBy('name')->get(),
+            // 'tags' => Term::where('type', 'tag')->whereNull('parent_id')->with('allSubtag')->orderBy('name')->get(),
         ];
 
         return view('zetthcore::AdminSC.data.tags_form', $data);
@@ -145,7 +145,7 @@ class TagController extends AdminController
             'breadcrumbs' => $this->breadcrumbs,
             'page_title' => $this->page_title,
             'page_subtitle' => 'Edit Label',
-            // 'tags' => Term::where('type', 'tag')->where('parent_id', 0)->with('allSubtag')->orderBy('name')->get(),
+            // 'tags' => Term::where('type', 'tag')->whereNull('parent_id')->with('allSubtag')->orderBy('name')->get(),
             'data' => $tag,
         ];
 

@@ -76,7 +76,11 @@ class CategoryController extends AdminController
             'breadcrumbs' => $this->breadcrumbs,
             'page_title' => $this->page_title,
             'page_subtitle' => 'Tambah Kategori',
-            'categories' => Term::where('type', 'category')->where('parent_id', 0)->with('subcategory_all')->orderBy('name')->get(),
+            'categories' => Term::where('type', 'category')
+                ->whereNull('parent_id')
+                ->with('subcategory_all')
+                ->orderBy('name')
+                ->get(),
         ];
 
         return view('zetthcore::AdminSC.data.categories_form', $data);
@@ -101,7 +105,9 @@ class CategoryController extends AdminController
         $category->slug = str_slug($category->name);
         $category->description = $r->input('description');
         $category->type = 'category';
-        $category->parent_id = (int) $r->input('parent');
+        if ($r->input('parent')) {
+            $category->parent_id = $r->input('parent');
+        }
         $category->status = bool($r->input('status')) ? 1 : 0;
         $category->save();
 
@@ -146,7 +152,11 @@ class CategoryController extends AdminController
             'breadcrumbs' => $this->breadcrumbs,
             'page_title' => $this->page_title,
             'page_subtitle' => 'Edit Kategori',
-            'categories' => Term::where('type', 'category')->where('parent_id', 0)->with('subcategory_all')->orderBy('name')->get(),
+            'categories' => Term::where('type', 'category')
+                ->whereNull('parent_id')
+                ->with('subcategory_all')
+                ->orderBy('name')
+                ->get(),
             'data' => $category,
         ];
 
@@ -172,7 +182,9 @@ class CategoryController extends AdminController
         $category->slug = str_slug($category->name);
         $category->description = $r->input('description');
         $category->type = 'category';
-        $category->parent_id = (int) $r->input('parent');
+        if ($r->input('parent')) {
+            $category->parent_id = $r->input('parent');
+        }
         $category->status = bool($r->input('status')) ? 1 : 0;
         $category->save();
 

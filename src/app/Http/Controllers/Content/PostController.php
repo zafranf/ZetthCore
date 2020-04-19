@@ -93,7 +93,7 @@ class PostController extends AdminController
 
         /* get categories */
         $categories = Term::where('type', 'category')
-            ->where('parent_id', 0)
+            ->whereNull('parent_id')
             ->where('status', 1)
             ->orderBy('name', 'asc')
             ->with('subcategory')
@@ -226,7 +226,7 @@ class PostController extends AdminController
 
         /* get active categories */
         $categories = Term::where('type', 'category')
-            ->where('parent_id', 0)
+            ->whereNull('parent_id')
             ->where('status', 1)
             ->orderBy('name', 'asc')
             ->with('subcategory')
@@ -395,7 +395,9 @@ class PostController extends AdminController
                 $term->name = $category;
                 $term->slug = str_slug($term->name);
                 $term->description = $descriptions[$k];
-                $term->parent_id = $parents[$k] ?? 0;
+                if (isset($parents[$k]) && $parents[$k] != 0) {
+                    $term->parent_id = $parents[$k];
+                }
                 $term->type = 'category';
                 $term->status = 1;
                 $term->save();
