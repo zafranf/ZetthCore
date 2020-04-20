@@ -28,6 +28,7 @@
             'list' => [
               'tag' => 'li',
               'active' => true,
+              'active_class' => 'active'
             ],
             'link' => [
               'tag' => 'a',
@@ -58,7 +59,8 @@
               ]
             ],
             'link' => [
-              'active' => true
+              'active' => true,
+              'active_class' => 'active'
             ]
           ],
           'sub_level' => [

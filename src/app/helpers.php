@@ -414,10 +414,11 @@ if (!function_exists('generateMenu')) {
         }
 
         /* list */
-        $list_tag = $params[$index]['list']['tag'] ?? 'li';
+        $list_tag = $params[$index]['list']['tag'] ?? (isset($params[$index]['list']) && !$params[$index]['list'] ? null : 'li');
         $list_id = $params[$index]['list']['id'] ?? null;
         $list_class = $params[$index]['list']['class'] ?? null;
         $list_active = $params[$index]['list']['active'] ?? null;
+        $list_active_class = $params[$index]['list']['active_class'] ?? null;
         $list_attr = $params[$index]['list']['attributes'] ?? null;
         $list_attributes = '';
         if (!is_null($list_attr)) {
@@ -431,6 +432,7 @@ if (!function_exists('generateMenu')) {
         $link_id = $params[$index]['link']['id'] ?? null;
         $link_class = $params[$index]['link']['class'] ?? null;
         $link_active = $params[$index]['link']['active'] ?? null;
+        $link_active_class = $params[$index]['link']['active_class'] ?? null;
         $link_attr = $params[$index]['link']['attributes'] ?? null;
         $link_attributes = '';
         if (!is_null($link_attr)) {
@@ -457,7 +459,7 @@ if (!function_exists('generateMenu')) {
             $href = (!is_null($menu->route_name) ? route($menu->route_name) : url($menu->url));
 
             /* set active */
-            $active = ($href == url()->current()) ? 'active' : '';
+            $active = $href == url()->current();
 
             /* check additional class for parent */
             if (count($menu->submenu)) {
@@ -502,7 +504,7 @@ if (!function_exists('generateMenu')) {
             if (!is_null($list_tag)) {
                 $print .= '<' . $list_tag .
                     (!is_null($list_id) ? ' id="' . $list_id . '"' : '') .
-                    (!is_null($list_class) || $list_active ? ' class="' . $list_class . ' ' . (bool($list_active) ? $active : '') . '"' : '') .
+                    (!is_null($list_class) || $list_active ? ' class="' . $list_class . ' ' . (bool($list_active) && bool($active) ? $list_active_class : '') . '"' : '') .
                     (!is_null($list_attr) ? $list_attributes : '') . '>';
             }
 
@@ -510,15 +512,15 @@ if (!function_exists('generateMenu')) {
             if (!is_null($link_tag)) {
                 $print .= '<' . $link_tag .
                     (!is_null($link_id) ? ' id="' . $link_id . '"' : '') .
-                    (!is_null($link_class) || $link_active ? ' class="' . $link_class . ' ' . (bool($link_active) ? $active : '') . '"' : '') .
+                    (!is_null($link_class) || $link_active ? ' class="' . $link_class . ' ' . (bool($link_active) && bool($active) ? $link_active_class : '') . '"' : '') .
                     (!is_null($href) ? ' href="' . $href . '"' : '') .
                     (!is_null($link_attr) ? $link_attributes : '') . '>';
                 if (isset($link_additional['position']) && $link_additional['position'] == 'before') {
-                    $print .= $link_additional['html'];
+                    $print .= ($link_additional['html'] ?? '<i class="' . $menu->icon . '"></i>&nbsp;');
                 }
                 $print .= $menu->name;
                 if (isset($link_additional['position']) && $link_additional['position'] == 'after') {
-                    $print .= $link_additional['html'];
+                    $print .= ($link_additional['html'] ?? '&nbsp;<i class="' . $menu->icon . '"></i>');
                 }
                 $print .= '</' . $link_tag . '>';
             }
