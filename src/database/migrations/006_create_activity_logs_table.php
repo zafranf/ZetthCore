@@ -21,7 +21,7 @@ class CreateActivityLogsTable extends Migration
             $table->json('get');
             $table->json('post');
             $table->json('files');
-            $table->integer('user_id')->unsigned()->nullable();
+            $table->bigInteger('user_id')->unsigned()->nullable();
             // $table->integer('count')->unsigned()->default(1);
             $table->timestamps();
         });

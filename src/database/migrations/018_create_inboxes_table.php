@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateSocmedsTable extends Migration
+class CreateInboxesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,15 @@ class CreateSocmedsTable extends Migration
      */
     public function up()
     {
-        Schema::create('socmeds', function (Blueprint $table) {
-            $table->increments('id');
+        Schema::create('inboxes', function (Blueprint $table) {
+            $table->bigIncrements('id');
             $table->string('name');
-            $table->string('url');
-            $table->string('icon');
-            $table->string('color');
+            $table->string('email');
+            $table->string('phone')->nullable();
+            $table->string('site')->nullable();
+            $table->string('subject')->nullable();
+            $table->text('message');
+            $table->boolean('read')->comment('0=unread, 1=read')->unsigned();
             $table->boolean('status')->comment('0=inactive, 1=active')->unsigned();
             $table->timestamps();
             $table->softDeletes();
@@ -32,6 +35,6 @@ class CreateSocmedsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('socmeds');
+        Schema::dropIfExists('inboxes');
     }
 }

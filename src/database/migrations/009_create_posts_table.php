@@ -14,7 +14,7 @@ class CreatePostsTable extends Migration
     public function up()
     {
         Schema::create('posts', function (Blueprint $table) {
-            $table->increments('id');
+            $table->bigIncrements('id');
             $table->string('title')->index();
             $table->string('slug')->index();
             $table->text('content');
@@ -30,9 +30,9 @@ class CreatePostsTable extends Migration
             $table->integer('disliked')->unsigned()->default(0);
             $table->string('short_url')->nullable();
             $table->boolean('status')->comment('0=pending, 1=active, 2=draft')->unsigned();
-            $table->integer('created_by')->unsigned()->index();
-            $table->integer('updated_by')->unsigned()->nullable();
-            $table->integer('deleted_by')->unsigned()->nullable();
+            $table->bigInteger('created_by')->unsigned()->index();
+            $table->bigInteger('updated_by')->unsigned()->nullable();
+            $table->bigInteger('deleted_by')->unsigned()->nullable();
             $table->timestamp('published_at')->nullable();
             $table->timestamps();
             $table->softDeletes();

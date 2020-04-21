@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateIntermsTable extends Migration
+class CreateTermsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,13 @@ class CreateIntermsTable extends Migration
      */
     public function up()
     {
-        Schema::create('interms', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('host')->index();
-            $table->string('param');
+        Schema::create('terms', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->string('name');
+            $table->string('slug');
+            $table->string('description')->nullable();
+            $table->enum('type', ['tag', 'category'])->default('category');
+            $table->bigInteger('parent_id')->unsigned()->nullable();
             $table->boolean('status')->comment('0=inactive, 1=active')->unsigned();
             $table->timestamps();
             $table->softDeletes();
@@ -30,6 +33,6 @@ class CreateIntermsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('interms');
+        Schema::dropIfExists('terms');
     }
 }

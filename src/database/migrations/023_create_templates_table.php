@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateInboxesTable extends Migration
+class CreateTemplatesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,15 +13,12 @@ class CreateInboxesTable extends Migration
      */
     public function up()
     {
-        Schema::create('inboxes', function (Blueprint $table) {
-            $table->increments('id');
+        Schema::create('templates', function (Blueprint $table) {
+            $table->bigIncrements('id');
             $table->string('name');
-            $table->string('email');
-            $table->string('phone')->nullable();
-            $table->string('site')->nullable();
-            $table->string('subject')->nullable();
-            $table->text('message');
-            $table->boolean('read')->comment('0=unread, 1=read')->unsigned();
+            $table->string('slug');
+            $table->string('description')->nullable();
+            $table->string('author')->nullable();
             $table->boolean('status')->comment('0=inactive, 1=active')->unsigned();
             $table->timestamps();
             $table->softDeletes();
@@ -35,6 +32,6 @@ class CreateInboxesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('inboxes');
+        Schema::dropIfExists('templates');
     }
 }

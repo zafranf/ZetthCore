@@ -14,9 +14,9 @@ class CreatePostTermsTable extends Migration
     public function up()
     {
         Schema::create('termables', function (Blueprint $table) {
-            $table->integer('term_id')->unsigned();
+            $table->bigInteger('term_id')->unsigned();
             $table->string('termable_type');
-            $table->integer('termable_id')->unsigned();
+            $table->bigInteger('termable_id')->unsigned();
 
             $table->primary(['termable_id', 'term_id']);
         });

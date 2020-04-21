@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreatePostCommentsTable extends Migration
+class CreateCommentsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -14,7 +14,7 @@ class CreatePostCommentsTable extends Migration
     public function up()
     {
         Schema::create('comments', function (Blueprint $table) {
-            $table->increments('id');
+            $table->bigIncrements('id');
             $table->string('name');
             $table->string('email');
             $table->string('site')->nullable();
@@ -24,12 +24,12 @@ class CreatePostCommentsTable extends Migration
             $table->boolean('read')->comment('0=unread, 1=read')->unsigned();
             $table->boolean('status')->comment('0=pending, 1=active')->unsigned();
             $table->boolean('is_owner')->comment('0=false, 1=true')->unsigned();
-            $table->integer('parent_id')->unsigned()->nullable();
+            $table->bigInteger('parent_id')->unsigned()->nullable();
             $table->string('commentable_type');
-            $table->integer('commentable_id')->unsigned();
-            $table->integer('approved_by')->unsigned()->nullable();
-            $table->integer('created_by')->unsigned()->nullable();
-            $table->integer('updated_by')->unsigned()->nullable();
+            $table->bigInteger('commentable_id')->unsigned();
+            $table->bigInteger('approved_by')->unsigned()->nullable();
+            $table->bigInteger('created_by')->unsigned()->nullable();
+            $table->bigInteger('updated_by')->unsigned()->nullable();
             $table->timestamps();
             $table->softDeletes();
         });
