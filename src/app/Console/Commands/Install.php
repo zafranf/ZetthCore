@@ -92,12 +92,31 @@ class Install extends Command
     {
         if ($this->option('fresh')) {
             $this->info('Freshing migration tables');
-            $this->process('php artisan migrate:fresh' . $this->force);
-        } else {
-            $this->info('Migrating tables');
-            $this->process('php artisan migrate' . $this->force);
+
+            $tables = \DB::select('SHOW TABLES');
+            foreach ($tables as $table) {
+                $droplist[] = $table->$colname;
+            }
+            $droplist = implode(',', $droplist);
+
+            \DB::beginTransaction();
+            //turn off referential integrity
+            \DB::statement('SET FOREIGN_KEY_CHECKS = 0');
+            \DB::statement("DROP TABLE $droplist");
+            //turn referential integrity back on
+            \DB::statement('SET FOREIGN_KEY_CHECKS = 1');
+            \DB::commit();
         }
-        $this->info('Migration finished!');
+
+        $defaultMigrationPath = dirname(__DIR__) . '/../../database/migrations';
+
+        $this->info('Migration default table');
+        $this->process('php artisan migrate --realpath --path=' . $defaultMigrationPath . $this->force);
+        $this->info('Migration default table finished!');
+
+        $this->info('Migration additional table');
+        $this->process('php artisan migrate' . $this->force);
+        $this->info('Migration additional table finished!');
         $this->line('');
     }
 
