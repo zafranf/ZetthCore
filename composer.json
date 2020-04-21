@@ -9,6 +9,7 @@
         "intervention/imagecache": "^2.4",
         "jenssegers/agent": "^2.6",
         "laravel/framework": "^6.0",
+        "laravel/socialite": "^4.3",
         "santigarcor/laratrust": "5.2.*",
         "yajra/laravel-datatables-oracle": "~9.0",
         "zafranf/helpers": "dev-master"
