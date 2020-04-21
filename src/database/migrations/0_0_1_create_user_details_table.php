@@ -18,6 +18,10 @@ class CreateUserDetailsTable extends Migration
             $table->text('about')->nullable();
             $table->date('birthdate')->nullable();
             $table->enum('gender', ['na', 'm', 'f'])->default('na')->nullable();
+            $table->tinyInteger('height')->nullable()->unsigned()->comment('in cm');
+            $table->tinyInteger('weight')->nullable()->unsigned()->comment('in kg');
+            $table->string('religion')->nullable();
+            $table->string('blood_type')->nullable();
             $table->text('address')->nullable();
             $table->string('street1')->nullable();
             $table->string('street2')->nullable();
