@@ -116,7 +116,7 @@ class Install extends Command
         $this->info('Migrating default table');
         $this->process('php artisan migrate --realpath --path=' . $defaultMigrationPath . $this->force);
         $this->info('Migrating default table finished!');
-
+        $this->line('');
         $this->info('Migrating additional table');
         $this->process('php artisan migrate' . $this->force);
         $this->info('Migrating additional table finished!');
@@ -128,7 +128,7 @@ class Install extends Command
         $this->info('Seeding default seeder');
         $this->process('php artisan db:seed --class="\ZetthCore\Seeder\ZetthSeeder"' . $this->force);
         $this->info('Seeding default seeder finished!');
-
+        $this->line('');
         $this->info('Seeding additional seeder');
         $this->process('php artisan db:seed' . $this->force);
         $this->info('Seeding additional seeder finished!');
