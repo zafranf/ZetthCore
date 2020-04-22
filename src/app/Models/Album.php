@@ -11,17 +11,17 @@ class Album extends Model
 
     public function cover()
     {
-        return $this->hasOne('ZetthCore\Models\AlbumDetail', 'album_id')->select('id', 'album_id', 'file');
+        return $this->morphOne('ZetthCore\Models\File', 'fileable');
     }
 
     public function photo()
     {
-        return $this->hasOne('ZetthCore\Models\AlbumDetail', 'album_id');
+        return $this->morphOne('ZetthCore\Models\File', 'fileable');
     }
 
     public function photos()
     {
-        return $this->hasMany('ZetthCore\Models\AlbumDetail', 'album_id');
+        return $this->morphMany('ZetthCore\Models\File', 'fileable');
     }
 
     public function scopeActive($query)

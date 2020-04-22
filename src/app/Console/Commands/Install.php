@@ -153,10 +153,10 @@ class Install extends Command
 
         /* linking public/files to filemanager */
         $this->info('Linking assets filemanager folder');
-        if (is_link($filemanager_path . '/files')) {
+        if (is_link($filemanager_path . '/upload')) {
             $this->info('The [files] directory already linked.');
         } else {
-            $files_path = storage_path('app/public/assets/files');
+            $files_path = storage_path('app/public/assets/images/upload');
             $this->process('cd ' . $filemanager_path . ' && ln -s ' . $files_path . ' && cd ' . base_path());
             $this->info('The [files] directory has been linked.');
         }

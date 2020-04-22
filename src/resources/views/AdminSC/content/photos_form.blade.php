@@ -114,7 +114,7 @@
   {{-- {!! _admin_js(adminPath() . '/themes/admin/AdminSC/plugins/jasny-bootstrap/3.1.3/js/jasny-bootstrap.min.js') !!} --}}
   {!! _admin_js(adminPath() . '/themes/admin/AdminSC/plugins/fancybox/2.1.5/js/jquery.fancybox.js') !!}
   <script>
-    var max_img = 100;
+    var max_img = 20;
     var no_img = {{ $no_img }};
     var wFB = window.innerWidth - 30;
     var hFB = window.innerHeight - 60;
@@ -124,7 +124,7 @@
         swal('Maksimal ' + max_img + ' foto');
       } else {
         $.fancybox({
-          href : '{!! url(adminPath() . "/larafile/dialog.php?type=1&multiple=1&field_id=input_tmp&lang=id&fldr=/images") !!}',
+          href : '{!! url(adminPath() . "/larafile/dialog.php?type=1&multiple=1&field_id=input_tmp&lang=id") !!}',
           type : 'iframe',
           autoScale : false,
           autoSize : true,

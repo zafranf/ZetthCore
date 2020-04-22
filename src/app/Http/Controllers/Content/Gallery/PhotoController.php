@@ -2,10 +2,10 @@
 
 namespace ZetthCore\Http\Controllers\Content\Gallery;
 
+use App\Models\Album;
+use App\Models\File;
 use Illuminate\Http\Request;
 use ZetthCore\Http\Controllers\AdminController;
-use ZetthCore\Models\Album;
-use ZetthCore\Models\AlbumDetail;
 
 class PhotoController extends AdminController
 {
@@ -245,22 +245,42 @@ class PhotoController extends AdminController
         /* mapping photos */
         $data = [];
         foreach ($photos['files'] as $n => $file) {
+            $info = pathinfo($file);
+            $file = str_replace(url('/'), '', $file);
+            $fgc = $this->fgc($file);
             $data[] = [
+                'name' => str_replace('.' . $info['extension'], '', $info['basename']),
                 'file' => $file,
                 'description' => $photos['descriptions'][$n],
-                // 'status' => 1,
-                'album_id' => $album_id,
-                'created_at' => \Carbon\Carbon::now(),
+                'type' => 'image',
+                'mime' => $fgc['mime'],
+                'size' => $fgc['size'],
+                'fileable_type' => 'App\Models\Album',
+                'fileable_id' => $album_id,
+                'created_by' => app('user')->id,
+                'created_at' => now(),
+                'updated_at' => now(),
             ];
         }
 
         /* delete existings */
-        $del = AlbumDetail::where('album_id', $album_id)->forceDelete();
+        $del = File::where('fileable_type', 'App\Models\Album')->where('fileable_id', $album_id)->forceDelete();
 
         /* save all photos */
-        $save = AlbumDetail::insert($data);
+        $save = File::insert($data);
 
         return $save;
+    }
+
+    private function fgc($path)
+    {
+        $path = str_replace('storage', 'storage/app/public', $path);
+        $path = base_path($path);
+
+        return [
+            'size' => \File::size($path),
+            'mime' => \File::mimeType($path),
+        ];
     }
 
 }

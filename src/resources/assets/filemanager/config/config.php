@@ -81,7 +81,7 @@ $config = array(
     | with start and final /
     |
      */
-    'upload_dir' => '/storage/assets/files/',
+    'upload_dir' => '/storage/assets/images/upload/',
     /*
     |--------------------------------------------------------------------------
     | relative path from filemanager folder to upload folder
@@ -90,7 +90,7 @@ $config = array(
     | with final /
     |
      */
-    'current_path' => 'files/',
+    'current_path' => 'upload/',
 
     /*
     |--------------------------------------------------------------------------
