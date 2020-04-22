@@ -6,7 +6,7 @@ use App\Models\Post;
 use Illuminate\Http\Request;
 use ZetthCore\Http\Controllers\AdminController;
 use ZetthCore\Models\Term;
-use ZetthCore\Models\Termable;
+use ZetthCore\Models\TermData;
 
 class PostController extends AdminController
 {
@@ -180,7 +180,7 @@ class PostController extends AdminController
         $post->save();
 
         /* delete post relation */
-        Termable::where('termable_id', $post->id)->delete();
+        TermData::where('termable_id', $post->id)->delete();
 
         /* processing categories */
         $this->process_categories($categories, $descriptions, $parents, $post->id);
@@ -315,7 +315,7 @@ class PostController extends AdminController
         $post->save();
 
         /* delete post relation */
-        Termable::where('termable_id', $post->id)->delete();
+        TermData::where('termable_id', $post->id)->delete();
 
         /* processing categories */
         $this->process_categories($categories, $descriptions, $parents, $post->id);
@@ -391,6 +391,7 @@ class PostController extends AdminController
         foreach ($categories as $k => $category) {
             $chkCategory = Term::where('name', str_slug($category))
                 ->where('type', 'category')
+                ->where('group', 'post')
                 ->first();
 
             if (!$chkCategory) {
@@ -402,6 +403,7 @@ class PostController extends AdminController
                     $term->parent_id = $parents[$k];
                 }
                 $term->type = 'category';
+                $term->group = 'post';
                 $term->status = 1;
                 $term->save();
 
@@ -425,15 +427,17 @@ class PostController extends AdminController
     public function process_tags($tags, $pid)
     {
         foreach ($tags as $tag) {
-            $chkTag = Term::where('name', str_slug($tag))->
-                where('type', 'tag')->
-                first();
+            $chkTag = Term::where('name', str_slug($tag))
+                ->where('type', 'tag')
+                ->where('group', 'post')
+                ->first();
 
             if (!$chkTag) {
                 $term = new Term;
                 $term->name = strtolower($tag);
                 $term->slug = str_slug($term->name);
                 $term->type = 'tag';
+                $term->group = 'post';
                 $term->status = 1;
                 $term->save();
 
@@ -456,7 +460,7 @@ class PostController extends AdminController
      */
     public function process_postrels($pid, $tid)
     {
-        $postrel = new Termable;
+        $postrel = new TermData;
         $postrel->term_id = $tid;
         $postrel->termable_type = 'App\Models\Post';
         $postrel->termable_id = $pid;

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateTermablesTable extends Migration
+class CreateTermDataTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateTermablesTable extends Migration
      */
     public function up()
     {
-        Schema::create('termables', function (Blueprint $table) {
+        Schema::create('term_data', function (Blueprint $table) {
             $table->bigInteger('term_id')->unsigned();
             $table->string('termable_type');
             $table->bigInteger('termable_id')->unsigned();
@@ -29,6 +29,6 @@ class CreateTermablesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('termables');
+        Schema::dropIfExists('term_data');
     }
 }

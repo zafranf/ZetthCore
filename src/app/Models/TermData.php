@@ -4,7 +4,7 @@ namespace ZetthCore\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Termable extends Model
+class TermData extends Model
 {
     public $timestamps = false;
 

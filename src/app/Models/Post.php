@@ -14,17 +14,17 @@ class Post extends Model
 
     public function terms()
     {
-        return $this->morphToMany('ZetthCore\Models\Term', 'termable');
+        return $this->morphToMany('ZetthCore\Models\Term', 'termable', 'term_data')->where('group', 'post');
     }
 
     public function categories()
     {
-        return $this->morphToMany('ZetthCore\Models\Term', 'termable')->where('type', 'category');
+        return $this->morphToMany('ZetthCore\Models\Term', 'termable', 'term_data')->where('type', 'category')->where('group', 'post');
     }
 
     public function tags()
     {
-        return $this->morphToMany('ZetthCore\Models\Term', 'termable')->where('type', 'tag');
+        return $this->morphToMany('ZetthCore\Models\Term', 'termable', 'term_data')->where('type', 'tag')->where('group', 'post');
     }
 
     public function author()
