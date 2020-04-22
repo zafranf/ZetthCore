@@ -23,6 +23,9 @@ class CreateFilesTable extends Migration
             $table->bigInteger('size')->unsigned()->comment('in Bytes');
             $table->string('fileable_type');
             $table->bigInteger('fileable_id')->unsigned();
+            $table->bigInteger('created_by')->unsigned()->index();
+            $table->bigInteger('updated_by')->unsigned()->nullable();
+            $table->bigInteger('deleted_by')->unsigned()->nullable();
             $table->timestamps();
             $table->softDeletes();
         });
