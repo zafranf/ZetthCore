@@ -7,7 +7,6 @@ use Illuminate\Http\Request;
 use ZetthCore\Http\Controllers\AdminController;
 use ZetthCore\Models\Role;
 use ZetthCore\Models\Socmed;
-use ZetthCore\Models\SocmedData;
 
 class UserController extends AdminController
 {
@@ -98,13 +97,8 @@ class UserController extends AdminController
             'page_title' => $this->page_title,
             'page_subtitle' => 'Tambah Pengguna',
             'roles' => Role::where($whrRole)->get(),
+            'socmeds' => Socmed::where('status', 1)->get(),
         ];
-
-        /* socmed */
-        $data['socmeds'] = Socmed::where('status', 1)->get();
-        /* $data['socmed_data'] = SocmedData::where([
-        'type' => 'user',
-        ])->with('socmed')->get(); */
 
         return view('zetthcore::AdminSC.data.users_form', $data);
     }
@@ -232,15 +226,9 @@ class UserController extends AdminController
             'page_title' => $this->page_title,
             'page_subtitle' => 'Edit Pengguna',
             'roles' => Role::where($whrRole)->get(),
+            'socmeds' => Socmed::where('status', 1)->get(),
             'data' => $user,
         ];
-
-        /* socmed */
-        $data['socmeds'] = Socmed::where('status', 1)->get();
-        $data['socmed_data'] = SocmedData::where([
-            'type' => 'user',
-            'data_id' => $user->id,
-        ])->with('socmed')->get();
 
         return view('zetthcore::AdminSC.data.users_form', $data);
     }

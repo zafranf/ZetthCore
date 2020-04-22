@@ -53,36 +53,36 @@
             <div class="col-md-8">
               @if (isset($data->socmed) && count($data->socmed) > 0)
                 @foreach ($data->socmed as $key => $val)
-                @php
-                  $rand = rand(111111111, 999999999);
-                @endphp
-                <div id="div-socmed-{{ $rand }}">
-                  <div class="col-md-3 no-padding">
-                    <select name="socmed_id[]" class="form-control zetth-select">
-                      <option value="">--Pilih--</option>
-                      @if (isset($socmeds))
-                        @foreach ($socmeds as $socmed)
-                          @php
-                            $sl = ($socmed->id == $val->socmed_id) ? 'selected' : '';
-                          @endphp
-                          <option value="{{ $socmed->id }}" {{ $sl }}>{{ $socmed->name }}</option>
-                        @endforeach
-                      @endif
-                    </select>
-                  </div>
-                  <div class="col-md-9 no-padding">
-                    @if ($key > 0)
-                      <div class="input-group">
+                  @php
+                    $rand = rand(111111111, 999999999);
+                  @endphp
+                  <div id="div-socmed-{{ $rand }}">
+                    <div class="col-md-3 no-padding">
+                      <select name="socmed_id[]" class="form-control zetth-select">
+                        <option value="">--Pilih--</option>
+                        @if (isset($socmeds))
+                          @foreach ($socmeds as $socmed)
+                            @php
+                              $sl = ($socmed->id == $val->socmed_id) ? 'selected' : '';
+                            @endphp
+                            <option value="{{ $socmed->id }}" {{ $sl }}>{{ $socmed->name }}</option>
+                          @endforeach
+                        @endif
+                      </select>
+                    </div>
+                    <div class="col-md-9 no-padding">
+                      @if ($key > 0)
+                        <div class="input-group">
+                          <input type="text" class="form-control" name="socmed_uname[]" placeholder="Nama/ID akun.." value="{{ $val->username }}">
+                          <span class="input-group-btn">
+                            <button type="button" class="btn" style="background:white;border:1px solid #ccc;" onclick="_remove('#div-socmed-{{ $rand }}')"><i class="fa fa-minus"></i></button>
+                          </span>
+                        </div>
+                      @else
                         <input type="text" class="form-control" name="socmed_uname[]" placeholder="Nama/ID akun.." value="{{ $val->username }}">
-                        <span class="input-group-btn">
-                          <button type="button" class="btn" style="background:white;border:1px solid #ccc;" onclick="_remove('#div-socmed-{{ $rand }}')"><i class="fa fa-minus"></i></button>
-                        </span>
-                      </div>
-                    @else
-                      <input type="text" class="form-control" name="socmed_uname[]" placeholder="Nama/ID akun.." value="{{ $val->username }}">
-                    @endif
+                      @endif
+                    </div>
                   </div>
-                </div>
                 @endforeach
               @else
                 <div class="col-md-3 col-xs-6 no-padding">
