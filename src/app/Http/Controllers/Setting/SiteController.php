@@ -113,8 +113,8 @@ class SiteController extends AdminController
     {
         /* validation */
         $r->validate([
-            'logo' => 'mimes:jpg,jpeg,png,svg,webp|max:384|dimensions:max_width=512,max_height=512',
-            'icon' => 'mimes:jpg,jpeg,png,svg,webp,ico|max:96|dimensions:max_width=128,max_height=128',
+            'logo' => 'nullable|image|mimes:jpeg,png,svg,webp|max:384|dimensions:max_width=512,max_height=512',
+            'icon' => 'nullable|image|mimes:jpeg,png,svg,webp,ico|max:96|dimensions:max_width=128,max_height=128',
             'name' => 'required|max:50',
             'tagline' => 'nullable|max:100',
             'email' => 'nullable|max:100|email',
