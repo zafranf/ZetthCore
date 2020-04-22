@@ -29,21 +29,4 @@ class Role extends LaratrustRole
 
         return $menus;
     }
-
-    /* public function getMenusAttribute($value)
-{
-// dd($this->menugroups);
-// $menugroups = $this->menu_groups()->with('menu.submenu')->get();
-$menus = collect([]);
-foreach ($this->menugroups as $group) {
-$menus = $menus->merge($group->menu);
-}
-
-return $menus;
-}
-
-public function getMenuGroupsAttribute($value)
-{
-return $this->menu_groups()->with('menu.submenu')->get();
-} */
 }

@@ -14,7 +14,7 @@ class CreateUserVerificationsTable extends Migration
     public function up()
     {
         Schema::create('user_verifications', function (Blueprint $table) {
-            $table->bigIncrements('user_id');
+            $table->bigInteger('user_id')->unsigned();
             $table->string('verify_code')->nullable();
             $table->datetime('verify_code_expire')->nullable();
             $table->timestamp('verified_at')->nullable();

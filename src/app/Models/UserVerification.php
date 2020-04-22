@@ -8,6 +8,12 @@ class UserVerification extends Model
 {
     protected $dates = ['verified_at'];
     protected $primaryKey = 'user_id';
-    protected $fillable = ['*'];
+    protected $guarded = [];
+    public $incrementing = false;
     public $timestamps = false;
+
+    public function user()
+    {
+        return $this->belongsTo('ZetthCore\Models\User');
+    }
 }

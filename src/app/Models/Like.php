@@ -8,9 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Like extends Model
 {
     protected $primaryKey = ['likeable_id', 'user_id'];
-    protected $fillable = [
-        'likeable_type', 'likeable_id', 'user_id', 'like',
-    ];
+    protected $guarded = [];
     public $timestamps = false;
     public $incrementing = false;
 

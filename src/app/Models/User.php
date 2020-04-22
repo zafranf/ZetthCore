@@ -20,7 +20,7 @@ class User extends Authenticatable implements MustVerifyEmail
      * @var array
      */
     protected $fillable = [
-        'name', 'fullname', 'email', 'password', 'image', 'is_first_login', 'status', 'verify_code', 'verify_code_expire', 'created_at',
+        'name', 'fullname', 'email', 'password', 'image', 'is_first_login', 'status',
     ];
 
     /**
@@ -45,6 +45,11 @@ class User extends Authenticatable implements MustVerifyEmail
     public function detail()
     {
         return $this->hasOne('ZetthCore\Models\UserDetail');
+    }
+
+    public function verify()
+    {
+        return $this->hasOne('ZetthCore\Models\UserVerification');
     }
 
     public function getIsAdminAttribute()

@@ -7,15 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class VisitorLog extends Model
 {
-    public $incrementing = false;
-
-    /* protected $primaryKey = [
-    'ip', 'page', 'referral', 'agent', 'browser', 'browser_version', 'device', 'device_name', 'os', 'os_version', 'is_robot', 'robot_name', 'count',
-    ]; */
-
-    // protected $fillable = ['id', 'ip', 'page', 'referral', 'agent', 'browser', 'browser_version', 'device', 'device_name', 'os', 'os_version', 'is_robot', 'robot_name', 'count', 'created_at', 'updated_at'];
-
     protected $guarded = [];
+    public $incrementing = false;
 
     /**
      * https://stackoverflow.com/a/51691212/6885956

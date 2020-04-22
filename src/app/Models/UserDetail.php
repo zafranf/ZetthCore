@@ -7,5 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 class UserDetail extends Model
 {
     protected $primaryKey = 'user_id';
-    protected $fillable = ['*'];
+    protected $guarded = [];
+    public $incrementing = false;
 }

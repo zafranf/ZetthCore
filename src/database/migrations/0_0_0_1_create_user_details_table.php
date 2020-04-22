@@ -14,7 +14,7 @@ class CreateUserDetailsTable extends Migration
     public function up()
     {
         Schema::create('user_details', function (Blueprint $table) {
-            $table->bigIncrements('user_id');
+            $table->bigInteger('user_id')->unsigned();
             $table->text('about')->nullable();
             $table->date('birthdate')->nullable();
             $table->enum('gender', ['na', 'm', 'f'])->default('na')->nullable();
