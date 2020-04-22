@@ -113,13 +113,13 @@ class Install extends Command
 
         $defaultMigrationPath = dirname(__DIR__) . '/../../database/migrations';
 
-        $this->info('Migration default table');
+        $this->info('Migrating default table');
         $this->process('php artisan migrate --realpath --path=' . $defaultMigrationPath . $this->force);
-        $this->info('Migration default table finished!');
+        $this->info('Migrating default table finished!');
 
-        $this->info('Migration additional table');
+        $this->info('Migrating additional table');
         $this->process('php artisan migrate' . $this->force);
-        $this->info('Migration additional table finished!');
+        $this->info('Migrating additional table finished!');
         $this->line('');
     }
 
