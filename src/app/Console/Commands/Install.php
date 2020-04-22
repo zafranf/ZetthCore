@@ -107,6 +107,8 @@ class Install extends Command
             //turn referential integrity back on
             \DB::statement('SET FOREIGN_KEY_CHECKS = 1');
             \DB::commit();
+            $this->info('Tables cleared');
+            $this->info('');
         }
 
         $defaultMigrationPath = dirname(__DIR__) . '/../../database/migrations';
