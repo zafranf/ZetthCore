@@ -82,7 +82,9 @@ class AccountController extends AdminController
         }
 
         /* upload image */
-        if ($r->hasFile('image')) {
+        if ($r->input('image_remove')) {
+            $user->image = null;
+        } else if ($r->hasFile('image')) {
             $file = $r->file('image');
             $par = [
                 'file' => $file,

@@ -21,7 +21,14 @@
                     <span class="fileinput-exists">Ganti</span>
                     <input name="image" id="image" type="file" accept="image/*">
                   </span>
-                  <a href="#" class="btn btn-default fileinput-exists" data-dismiss="fileinput">Hapus</a>
+                  <a href="#" class="btn btn-default fileinput-exists" data-dismiss="fileinput">Batal</a>
+                  @if ($data->image)
+                    <small class="help-inline-table">
+                      <label class="pull-right">
+                        <input type="checkbox" name="image_remove" id="image_remove"> Hapus
+                      </label>
+                    </small>
+                  @endif
                 </div>
               </div>
             </div>
