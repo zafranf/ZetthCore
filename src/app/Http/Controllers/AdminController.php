@@ -69,6 +69,19 @@ class AdminController extends BaseController
         ];
     }
 
+    public function saveDetail($user, $r)
+    {
+        /* save user detail */
+        $detail = \ZetthCore\Models\UserDetail::updateOrCreate([
+            'user_id' => $user->id,
+        ], [
+            'about' => $r->input('about'),
+        ]);
+
+        /* save socmed */
+        $this->saveSocmed($user, $r);
+    }
+
     /**
      * Save user's social media
      */

@@ -7,7 +7,6 @@ use Illuminate\Http\Request;
 use ZetthCore\Http\Controllers\AdminController;
 use ZetthCore\Models\Role;
 use ZetthCore\Models\Socmed;
-use ZetthCore\Models\UserDetail;
 
 class UserController extends AdminController
 {
@@ -117,7 +116,7 @@ class UserController extends AdminController
             'name' => 'required|alpha_dash|min:3|max:30|unique:users',
             'fullname' => 'required|min:1|max:100',
             'email' => 'required|email',
-            'image' => 'mimes:jpg,jpeg,png,svg|max:512|dimensions:max_width=512,max_height=512',
+            'image' => 'nullable|image|mimes:jpg,jpeg,png,svg|max:384|dimensions:max_width=512,max_height=512',
             'password' => 'required|min:6',
             'password_confirmation' => 'same:password',
         ]);
@@ -244,7 +243,7 @@ class UserController extends AdminController
             'name' => 'required|alpha_dash|min:3|max:30|unique:users,name,' . $user->id . ',id',
             'fullname' => 'required|max:100',
             'email' => 'required|email',
-            'image' => 'mimes:jpg,jpeg,png,svg|max:512|dimensions:max_width=512,max_height=512',
+            'image' => 'nullable|image|mimes:jpg,jpeg,png,svg|max:384|dimensions:max_width=512,max_height=512',
         ];
         if ($r->input('password') !== null || $r->input('password_confirmation') !== null) {
             $validation['password'] = 'required|min:6';
@@ -348,19 +347,6 @@ class UserController extends AdminController
         }
 
         abort(403);
-    }
-
-    public function saveDetail($user, $r)
-    {
-        /* save user detail */
-        $detail = UserDetail::firstOrCreate([
-            'user_id' => $user->id,
-        ], [
-            'about' => $r->input('about'),
-        ]);
-
-        /* save socmed */
-        $this->saveSocmed($user, $r);
     }
 
     /**

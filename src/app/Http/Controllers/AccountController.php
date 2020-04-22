@@ -41,7 +41,7 @@ class AccountController extends AdminController
             'breadcrumbs' => $this->breadcrumbs,
             'page_title' => $this->page_title,
             'page_subtitle' => 'Akun',
-            'data' => app('user')->load('socmed'),
+            'data' => app('user')->load(['socmed', 'detail']),
             'socmeds' => Socmed::where('status', 1)->get(),
         ];
 
@@ -54,7 +54,7 @@ class AccountController extends AdminController
         $validation = [
             'fullname' => 'required|max:100',
             'email' => 'required|email',
-            'image' => 'nullable|image|mimes:jpeg,png,svg|max:512|dimensions:max_width=512,max_height=512',
+            'image' => 'nullable|image|mimes:jpeg,png,svg|max:384|dimensions:max_width=512,max_height=512',
         ];
         if ($r->input('password_old') !== null || $r->input('password') !== null || $r->input('password_confirmation') !== null) {
             $validation['password_old'] = 'required';
@@ -80,7 +80,6 @@ class AccountController extends AdminController
         if ($r->input('password') !== null) {
             $user->password = bcrypt($r->input('password'));
         }
-        $user->about = $r->input('about');
 
         /* upload image */
         if ($r->hasFile('image')) {
@@ -102,8 +101,8 @@ class AccountController extends AdminController
         /* save user */
         $user->save();
 
-        /* save socmed */
-        $this->saveSocmed($user, $r);
+        /* save user detail */
+        $this->saveDetail($user, $r);
 
         /* save activity */
         $this->activityLog('[~name] (' . $this->getUserRoles() . ') memperbarui akun');
