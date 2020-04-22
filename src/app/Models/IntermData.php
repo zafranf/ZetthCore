@@ -8,5 +8,4 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class IntermData extends Model
 {
     use SoftDeletes;
-    protected $table = 'interm_datas';
 }

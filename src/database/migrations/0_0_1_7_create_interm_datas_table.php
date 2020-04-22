@@ -13,7 +13,7 @@ class CreateIntermDatasTable extends Migration
      */
     public function up()
     {
-        Schema::create('interm_datas', function (Blueprint $table) {
+        Schema::create('interm_data', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('host')->index();
             $table->string('text');
@@ -31,6 +31,6 @@ class CreateIntermDatasTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('interm_datas');
+        Schema::dropIfExists('interm_data');
     }
 }
