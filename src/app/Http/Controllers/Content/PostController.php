@@ -171,6 +171,7 @@ class PostController extends AdminController
                 'name' => 'post-' . (md5($post->id . env('DB_PORT', 3306))),
                 'type' => $file->getClientMimeType(),
                 'ext' => $file->getClientOriginalExtension(),
+                'size' => $file->getClientSize(),
             ];
 
             if ($this->uploadImage($par)) {
@@ -303,6 +304,7 @@ class PostController extends AdminController
                 'name' => 'post-' . (md5($post->id . env('DB_PORT', 3306))),
                 'type' => $file->getClientMimeType(),
                 'ext' => $file->getClientOriginalExtension(),
+                'size' => $file->getClientSize(),
             ];
 
             if ($this->uploadImage($par)) {

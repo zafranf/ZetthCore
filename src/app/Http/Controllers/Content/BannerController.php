@@ -163,6 +163,7 @@ class BannerController extends AdminController
                 'name' => 'banner-' . (md5($banner->id . env('DB_PORT', 3306))),
                 'type' => $file->getClientMimeType(),
                 'ext' => $file->getClientOriginalExtension(),
+                'size' => $file->getClientSize(),
             ];
 
             if ($this->uploadImage($par)) {
@@ -276,6 +277,7 @@ class BannerController extends AdminController
                 'name' => 'banner-' . (md5($banner->id . env('DB_PORT', 3306))),
                 'type' => $file->getClientMimeType(),
                 'ext' => $file->getClientOriginalExtension(),
+                'size' => $file->getClientSize(),
             ];
 
             if ($this->uploadImage($par)) {

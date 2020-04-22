@@ -138,6 +138,7 @@ class UserController extends AdminController
                 'name' => str_slug($user->name),
                 'type' => $file->getClientMimeType(),
                 'ext' => $file->getClientOriginalExtension(),
+                'size' => $file->getClientSize(),
             ];
 
             if ($this->uploadImage($par)) {
@@ -269,6 +270,7 @@ class UserController extends AdminController
                 'name' => str_slug($user->name),
                 'type' => $file->getClientMimeType(),
                 'ext' => $file->getClientOriginalExtension(),
+                'size' => $file->getClientSize(),
             ];
 
             if ($this->uploadImage($par)) {

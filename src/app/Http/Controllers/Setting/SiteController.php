@@ -164,6 +164,7 @@ class SiteController extends AdminController
                 'name' => 'logo',
                 'type' => $file->getClientMimeType(),
                 'ext' => $file->getClientOriginalExtension(),
+                'size' => $file->getClientSize(),
             ];
 
             if ($this->uploadImage($par)) {
@@ -187,6 +188,7 @@ class SiteController extends AdminController
                     'name' => 'icon',
                     'type' => $file->getClientMimeType(),
                     'ext' => $file->getClientOriginalExtension(),
+                    'size' => $file->getClientSize(),
                 ];
 
                 if ($this->uploadImage($par)) {

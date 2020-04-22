@@ -90,6 +90,7 @@ class AccountController extends AdminController
                 'name' => str_slug(app('user')->name),
                 'type' => $file->getClientMimeType(),
                 'ext' => $file->getClientOriginalExtension(),
+                'size' => $file->getClientSize(),
             ];
 
             if ($this->uploadImage($par)) {
