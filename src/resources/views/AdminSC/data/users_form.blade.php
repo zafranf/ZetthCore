@@ -40,7 +40,7 @@
 					<div class="form-group">
 						<label for="about" class="col-md-4 control-label">Tentang</label>
 						<div class="col-md-8">
-							<textarea id="about" name="about" class="form-control" placeholder="Tentang.." rows="4">{{ isset($data) ? $data->about : old('about') }}</textarea>
+							<textarea id="about" name="about" class="form-control" placeholder="Tentang.." rows="4">{{ isset($data) ? $data->detail->about : old('about') }}</textarea>
 						</div>
 					</div>
 					<div class="form-group">

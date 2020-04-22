@@ -243,13 +243,11 @@ if (!function_exists('getSiteConfig')) {
         $host = parse_url(url('/'))['host'];
         if (isWWW($host)) {
             $host = str_replace('www.', '', $host);
-        }
-        if (adminRoute() == 'subdomain' && isAdminSubdomain()) {
+        } else if (adminRoute() == 'subdomain' && isAdminSubdomain()) {
             $host = str_replace(adminSubdomain() . '.', '', $host);
         }
-        $site = \App\Models\Site::where('domain', $host)->orWhere('domain', 'www.' . $host)->with('socmed')->first();
 
-        return $site;
+        return \App\Models\Site::where('domain', $host)->with('socmed')->first();
     }
 }
 

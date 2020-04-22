@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use ZetthCore\Http\Controllers\AdminController;
 use ZetthCore\Models\Role;
 use ZetthCore\Models\Socmed;
+use ZetthCore\Models\UserDetail;
 
 class UserController extends AdminController
 {
@@ -127,8 +128,6 @@ class UserController extends AdminController
         $user->fullname = $r->input('fullname');
         $user->email = $r->input('email');
         $user->password = bcrypt($r->input('password'));
-        $user->about = $r->input('about');
-        // $user->is_admin = bool($r->input('is_admin')) ? 1 : 0;
         $user->status = bool($r->input('status')) ? 1 : 0;
 
         /* upload image */
@@ -151,13 +150,11 @@ class UserController extends AdminController
         /* save user */
         $user->save();
 
+        /* save user detail */
+        $this->saveDetail($user, $r);
+
         /* attach role */
         $this->assignRole($user, $r->input('role'));
-        // $user->is_admin = $user->hasRole(['super', 'admin', 'author', 'editor']) ? 1 : 0;
-        // $user->save();
-
-        /* save socmed */
-        $this->saveSocmed($user, $r);
 
         /* save activity */
         $this->activityLog('[~name] (' . $this->getUserRoles() . ') menambahkan pengguna "' . $user->name . '"');
@@ -227,7 +224,7 @@ class UserController extends AdminController
             'page_subtitle' => 'Edit Pengguna',
             'roles' => Role::where($whrRole)->get(),
             'socmeds' => Socmed::where('status', 1)->get(),
-            'data' => $user,
+            'data' => $user->load('detail'),
         ];
 
         return view('zetthcore::AdminSC.data.users_form', $data);
@@ -262,8 +259,6 @@ class UserController extends AdminController
         if ($r->input('password') !== null) {
             $user->password = bcrypt($r->input('password'));
         }
-        $user->about = $r->input('about');
-        // $user->is_admin = bool($r->input('is_admin')) ? 1 : 0;
         $user->status = bool($r->input('status')) ? 1 : 0;
 
         /* upload image */
@@ -286,13 +281,11 @@ class UserController extends AdminController
         /* save user */
         $user->save();
 
+        /* save user detail */
+        $this->saveDetail($user, $r);
+
         /* attach role */
         $this->assignRole($user, $r->input('role'));
-        // $user->is_admin = $user->hasRole(['super', 'admin', 'author', 'editor']) ? 1 : 0;
-        // $user->save();
-
-        /* save socmed */
-        $this->saveSocmed($user, $r);
 
         /* save activity */
         $this->activityLog('[~name] (' . $this->getUserRoles() . ') memperbarui pengguna "' . $user->name . '"');
@@ -355,6 +348,19 @@ class UserController extends AdminController
         }
 
         abort(403);
+    }
+
+    public function saveDetail($user, $r)
+    {
+        /* save user detail */
+        $detail = UserDetail::firstOrCreate([
+            'user_id' => $user->id,
+        ], [
+            'about' => $r->input('about'),
+        ]);
+
+        /* save socmed */
+        $this->saveSocmed($user, $r);
     }
 
     /**

@@ -64,10 +64,13 @@ class LaratrustSeeder extends Seeder
             $user = \App\Models\User::create([
                 'name' => $key,
                 'fullname' => ucwords(str_replace('_', ' ', $key_fullname)),
-                'email' => $key . '@mail.co',
+                'email' => $key . '@' . env('APP_DOMAIN', 'localhost'),
                 'password' => bcrypt('123123'),
                 // 'language' => 'id',
                 'status' => 1,
+            ]);
+            $user->detail()->create([
+                'user_id' => $user->id,
             ]);
 
             $user->attachRole($role);
