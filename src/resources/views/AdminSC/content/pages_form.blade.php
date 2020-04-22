@@ -47,20 +47,6 @@
 
 @include('zetthcore::AdminSC.components.tinymce')
 
-@push('styles')
-  <style>
-    .mce-fullscreen {
-      z-index: 9999 !important;
-    }
-
-    #mceu_9 {
-      position: absolute;
-      right: 4px;
-      top: 4px;
-    }
-  </style>
-@endpush
-
 @push('scripts')
   <script>
     $(document).ready(function(){

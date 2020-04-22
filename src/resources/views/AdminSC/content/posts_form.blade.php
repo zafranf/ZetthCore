@@ -168,17 +168,8 @@
   {!! _admin_css(adminPath() . '/themes/admin/AdminSC/plugins/fancybox/2.1.5/css/jquery.fancybox.css') !!}
   {!! _admin_css(adminPath() . '/themes/admin/AdminSC/plugins/select2/4.0.0/css/select2.min.css') !!}
   <style>
-    #mceu_15 {
-      position: absolute;
-      right: 4px;
-      top: 4px;
-    }
     .mce-tinymce {
       border: 0 !important;
-    }
-
-    .mce-fullscreen {
-      z-index: 9999 !important;
     }
 
     .mce-toolbar-grp {
