@@ -76,16 +76,16 @@ class AdminController extends BaseController
     {
         /* processing socmed */
         $del = \ZetthCore\Models\SocmedData::where([
-            'type' => 'user',
-            'data_id' => $user->id,
+            'socmedable_type' => 'App\Models\User',
+            'socmedable_id' => $user->id,
         ])->forceDelete();
         foreach ($r->input('socmed_id') as $key => $val) {
             if ($r->input('socmed_id')[$key] != "" && $r->input('socmed_uname')[$key] != "") {
                 $socmed = new \ZetthCore\Models\SocmedData;
                 $socmed->username = $r->input('socmed_uname')[$key];
-                $socmed->type = 'user';
                 $socmed->socmed_id = $r->input('socmed_id')[$key];
-                $socmed->data_id = $user->id;
+                $socmed->socmedable_type = 'App\Models\User';
+                $socmed->socmedable_id = $user->id;
                 $socmed->save();
             }
         }

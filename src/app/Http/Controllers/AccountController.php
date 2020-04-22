@@ -5,7 +5,6 @@ namespace ZetthCore\Http\Controllers;
 use Illuminate\Http\Request;
 use ZetthCore\Http\Controllers\AdminController;
 use ZetthCore\Models\Socmed;
-use ZetthCore\Models\SocmedData;
 
 class AccountController extends AdminController
 {
@@ -42,15 +41,9 @@ class AccountController extends AdminController
             'breadcrumbs' => $this->breadcrumbs,
             'page_title' => $this->page_title,
             'page_subtitle' => 'Akun',
-            'data' => app('user'),
+            'data' => app('user')->load('socmed'),
+            'socmeds' => Socmed::where('status', 1)->get(),
         ];
-
-        /* socmed */
-        $data['socmeds'] = Socmed::where('status', 1)->get();
-        $data['socmed_data'] = SocmedData::where([
-            'type' => 'user',
-            'data_id' => app('user')->id,
-        ])->with('socmed')->get();
 
         return view('zetthcore::AdminSC.user_account_form', $data);
     }

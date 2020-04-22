@@ -53,12 +53,8 @@ class SiteController extends AdminController
             'breadcrumbs' => $this->breadcrumbs,
             'page_title' => $this->page_title,
             'page_subtitle' => 'Situs',
+            'socmeds' => Socmed::where('status', 1)->get(),
         ];
-
-        $data['socmeds'] = Socmed::where('status', 1)->get();
-        $data['socmed_data'] = SocmedData::where([
-            'type' => 'site',
-        ])->with('socmed')->get();
 
         return view('zetthcore::AdminSC.setting.site', $data);
     }
@@ -228,15 +224,16 @@ class SiteController extends AdminController
     public function process_socmed(Request $r)
     {
         $del = SocmedData::where([
-            'type' => 'site',
+            'socmedable_type' => 'App\Models\Site',
+            'socmedable_id' => app('site')->id,
         ])->forceDelete();
         foreach ($r->input('socmed_id') as $key => $val) {
             if ($r->input('socmed_id')[$key] != "" && $r->input('socmed_uname')[$key] != "") {
                 $socmed = new SocmedData;
                 $socmed->username = $r->input('socmed_uname')[$key];
-                $socmed->type = 'site';
                 $socmed->socmed_id = $r->input('socmed_id')[$key];
-                $socmed->data_id = 1;
+                $socmed->socmedable_type = 'App\Models\Site';
+                $socmed->socmedable_id = app('site')->id;
                 $socmed->save();
             }
         }

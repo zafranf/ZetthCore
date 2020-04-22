@@ -8,9 +8,9 @@ class Site extends Model
 {
     protected $dates = ['active_at'];
 
-    public function socmed_data()
+    public function socmed()
     {
-        return $this->hasMany('ZetthCore\Models\SocmedData', 'data_id')->where('type', 'site');
+        return $this->morphMany('ZetthCore\Models\SocmedData', 'socmedable');
     }
 
     public function template()

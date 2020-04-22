@@ -37,6 +37,11 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasMany('ZetthCore\Models\RoleUser');
     }
 
+    public function socmed()
+    {
+        return $this->morphMany('ZetthCore\Models\SocmedData', 'socmedable');
+    }
+
     public function getIsAdminAttribute()
     {
         return $this->can('admin.dashboard.index');

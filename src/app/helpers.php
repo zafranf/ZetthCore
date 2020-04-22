@@ -247,7 +247,7 @@ if (!function_exists('getSiteConfig')) {
         if (adminRoute() == 'subdomain' && isAdminSubdomain()) {
             $host = str_replace(adminSubdomain() . '.', '', $host);
         }
-        $site = \ZetthCore\Models\Site::where('domain', $host)->orWhere('domain', 'www.' . $host)->with('socmed_data', 'socmed_data.socmed')->first();
+        $site = \App\Models\Site::where('domain', $host)->orWhere('domain', 'www.' . $host)->with('socmed')->first();
 
         return $site;
     }

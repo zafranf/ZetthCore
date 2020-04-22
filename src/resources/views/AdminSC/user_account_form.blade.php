@@ -51,8 +51,8 @@
           <div class="form-group">
             <label for="label" class="col-md-4 control-label">Akun</label>
             <div class="col-md-8">
-              @if (isset($socmed_data) && count($socmed_data) > 0)
-                @foreach ($socmed_data as $key => $val)
+              @if (isset($data->socmed) && count($data->socmed) > 0)
+                @foreach ($data->socmed as $key => $val)
                 @php
                   $rand = rand(111111111, 999999999);
                 @endphp
@@ -63,7 +63,7 @@
                       @if (isset($socmeds))
                         @foreach ($socmeds as $socmed)
                           @php
-                            $sl = ($socmed->id == $val->socmed->id) ? 'selected' : '';
+                            $sl = ($socmed->id == $val->socmed_id) ? 'selected' : '';
                           @endphp
                           <option value="{{ $socmed->id }}" {{ $sl }}>{{ $socmed->name }}</option>
                         @endforeach
