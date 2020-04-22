@@ -33,6 +33,7 @@ class CreateUserDetailsTable extends Migration
             $table->string('phone')->nullable();
             $table->string('company')->nullable();
             $table->string('website')->nullable();
+            $table->timestamps();
         });
     }
 

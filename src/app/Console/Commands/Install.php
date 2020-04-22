@@ -93,9 +93,10 @@ class Install extends Command
         if ($this->option('fresh')) {
             $this->info('Freshing migration tables');
 
+            $colname = 'Tables_in_' . env('DB_DATABASE');
             $tables = \DB::select('SHOW TABLES');
             foreach ($tables as $table) {
-                $droplist[] = $table->$colname;
+                $droplist[] = $table->{$colname};
             }
             $droplist = implode(',', $droplist);
 
