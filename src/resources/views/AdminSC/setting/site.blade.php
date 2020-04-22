@@ -26,7 +26,7 @@
                     <input type="file" id="logo" name="logo" accept="image/*">
                   </span>
                   <a href="#" class="btn btn-default fileinput-exists" data-dismiss="fileinput">Batal</a>
-                  @if (isset(app('site')->logo))
+                  @if (app('site')->logo)
                     <small class="help-inline-table">
                       <label class="pull-right">
                         <input type="checkbox" name="logo_remove" id="logo_remove"> Hapus
@@ -64,7 +64,7 @@
                 <label>
                   <input type="checkbox" name="use_logo" id="use_logo"> Gunakan logo
                 </label>
-                @if (isset(app('site')->icon))
+                @if (app('site')->icon)
                   <label class="pull-right">
                     <input type="checkbox" name="icon_remove" id="icon_remove"> Hapus
                   </label>
