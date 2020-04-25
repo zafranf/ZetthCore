@@ -8,4 +8,9 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class SocmedData extends Model
 {
     use SoftDeletes;
+
+    public function socmed()
+    {
+        return $this->belongsTo('ZetthCore\Models\Socmed');
+    }
 }
