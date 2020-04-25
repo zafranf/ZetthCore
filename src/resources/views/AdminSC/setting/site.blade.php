@@ -11,7 +11,7 @@
           <div class="form-group">
             <label for="logo" class="col-md-4 control-label">
               Logo
-              <small class="help-block">Maksimal dimensi logo adalah 512px x 512px dengan ukuran maksimal 384 KB</small>
+              <small class="help-block">Maksimal dimensi logo adalah 512px x 512px dengan ukuran maksimal 384KB</small>
             </label>
             <div class="col-md-8">
               <div class="fileinput fileinput-new" data-provides="fileinput">
