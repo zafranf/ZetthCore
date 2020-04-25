@@ -18,7 +18,7 @@ class CreateMenuTable extends Migration
             $table->string('name');
             $table->string('description')->nullable();
             $table->string('url')->nullable();
-            $table->boolean('url_external')->comment('0=false, 1=true')->unsigned()->default(0);
+            $table->enum('url_external', ['yes', 'no'])->default('no');
             $table->string('route_name')->nullable();
             $table->string('icon')->nullable();
             $table->enum('target', ['_self', '_blank'])->default('_self');
@@ -26,12 +26,12 @@ class CreateMenuTable extends Migration
             $table->enum('status', ['active', 'inactive'])->default('inactive');
             $table->bigInteger('group_id')->unsigned()->default(1);
             $table->bigInteger('parent_id')->unsigned()->nullable();
-            $table->boolean('is_crud')->unsigned()->default(0);
-            $table->boolean('index')->unsigned()->default(1);
-            $table->boolean('create')->unsigned()->default(0);
-            $table->boolean('read')->unsigned()->default(0);
-            $table->boolean('update')->unsigned()->default(0);
-            $table->boolean('delete')->unsigned()->default(0);
+            $table->enum('is_crud', ['yes', 'no'])->default('no');
+            $table->enum('index', ['yes', 'no'])->default('yes');
+            $table->enum('create', ['yes', 'no'])->default('no');
+            $table->enum('read', ['yes', 'no'])->default('no');
+            $table->enum('update', ['yes', 'no'])->default('no');
+            $table->enum('delete', ['yes', 'no'])->default('no');
             $table->timestamps();
             $table->softDeletes();
         });

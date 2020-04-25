@@ -30,10 +30,10 @@ class CreateSitesTable extends Migration
             $table->text('address')->nullable();
             $table->string('coordinate')->comment('latitude, longitude')->nullable();
             $table->string('google_analytics')->nullable();
-            $table->boolean('enable_subscribe')->comment('0=no, 1=yes')->default(1);
-            $table->boolean('enable_like')->comment('0=no, 1=yes')->default(1);
-            $table->boolean('enable_share')->comment('0=no, 1=yes')->default(1);
-            $table->boolean('enable_comment')->comment('0=no, 1=yes')->default(1);
+            $table->enum('enable_subscribe', ['yes', 'no'])->default('yes');
+            $table->enum('enable_like', ['yes', 'no'])->default('yes');
+            $table->enum('enable_share', ['yes', 'no'])->default('yes');
+            $table->enum('enable_comment', ['yes', 'no'])->default('yes');
             $table->tinyInteger('perpage')->unsigned()->default(10);
             $table->enum('status', ['active', 'comingsoon', 'maintenance', 'suspend'])->default('comingsoon');
             $table->dateTime('active_at');

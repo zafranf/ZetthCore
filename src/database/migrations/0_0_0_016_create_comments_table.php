@@ -20,10 +20,10 @@ class CreateCommentsTable extends Migration
             $table->string('site')->nullable();
             $table->string('phone')->nullable();
             $table->text('content');
-            $table->boolean('notify')->comment('0=no, 1=yes')->unsigned();
-            $table->boolean('read')->comment('0=unread, 1=read')->unsigned();
+            $table->enum('notify', ['yes', 'no'])->default('no');
+            $table->enum('read', ['yes', 'no'])->default('no');
             $table->enum('status', ['active', 'inactive'])->default('inactive');
-            $table->boolean('is_owner')->comment('0=false, 1=true')->unsigned();
+            $table->enum('is_owner', ['yes', 'no'])->default('no');
             $table->bigInteger('parent_id')->unsigned()->nullable();
             $table->string('commentable_type');
             $table->bigInteger('commentable_id')->unsigned();

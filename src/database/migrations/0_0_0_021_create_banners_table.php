@@ -19,7 +19,7 @@ class CreateBannersTable extends Migration
             $table->string('description')->nullable();
             $table->string('image')->nullable();
             $table->string('url')->nullable();
-            $table->boolean('url_external')->comment('0=false, 1=true')->unsigned();
+            $table->enum('url_external', ['yes', 'no'])->default('no');
             $table->enum('target', ['_self', '_blank'])->default('_self');
             $table->tinyInteger('order')->default(1)->unsigned();
             $table->boolean('only_image')->comment('0=false, 1=true')->unsigned()->default(0);
