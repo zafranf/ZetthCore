@@ -288,16 +288,26 @@ trait MainTrait
         $name = $par['name'];
         $type = $par['type'];
         $ext = $par['ext'];
+        $size = $par['size'];
 
         /* checking folder */
         if (!is_dir($folder)) {
-            mkdir($folder);
+            $folder = storage_path('app/public');
+            $folders = explode('/', trim($par['folder'], '/'));
+            foreach ($folders as $foldr) {
+                $folder .= '/' . $foldr;
+                if (!is_dir($folder)) {
+                    mkdir($folder);
+                }
+            }
         }
 
         /* process upload */
-        $move = $file->move($folder, $name . "." . $ext);
-
-        return $move;
+        if (strpos($type, 'image') !== false) {
+            return $this->uploadImage($par);
+        } else {
+            return $file->move($folder, $name . "." . $ext);
+        }
     }
 
     /**
@@ -307,26 +317,28 @@ trait MainTrait
      */
     public function uploadImage($par = [], $optimation = false)
     {
-        /* preparing image file */
-        $img = \Image::make($par['file']);
+        /* set variable */
+        $file = $par['file'];
+        $folder = public_path($par['folder']);
+        $name = $par['name'];
+        $type = $par['type'];
+        $ext = $par['ext'];
+        $size = $par['size'];
 
         /* folder check */
-        $folder = storage_path('app/public');
-        $folders = explode('/', trim($par['folder'], '/'));
-        foreach ($folders as $foldr) {
-            $folder .= '/' . $foldr;
-            if (!is_dir($folder)) {
-                mkdir($folder);
+        if (!is_dir($folder)) {
+            $folder = storage_path('app/public');
+            $folders = explode('/', trim($par['folder'], '/'));
+            foreach ($folders as $foldr) {
+                $folder .= '/' . $foldr;
+                if (!is_dir($folder)) {
+                    mkdir($folder);
+                }
             }
         }
-        // $folder = storage_path('app/public/' . $par['folder']);
-        // dd($folder);
 
-        /* insert watermark */
-        /* if (isset($par['watermark'])) {
-        $wmImg = \Image::make($par['watermark']);
-        $img->insert($wmImg, 'center');
-        } */
+        /* preparing image file */
+        $img = \Image::make($par['file']);
 
         /* save original */
         $img->save($folder . '/' . $par['name'] . '.' . $par['ext']);
