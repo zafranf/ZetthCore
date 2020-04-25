@@ -99,7 +99,7 @@ class MenuGroupController extends AdminController
         $menugroup->name = $r->input('name');
         $menugroup->slug = str_slug($menugroup->name);
         $menugroup->description = $r->input('description');
-        $menugroup->status = bool($r->input('status')) ? 1 : 0;
+        $menugroup->status = $r->input('status') ?? 'inactive';
         $menugroup->save();
 
         /* activity log */
@@ -175,7 +175,7 @@ class MenuGroupController extends AdminController
         $menugroup->name = $r->input('name');
         $menugroup->slug = str_slug($menugroup->name);
         $menugroup->description = $r->input('description');
-        $menugroup->status = bool($r->input('status')) ? 1 : 0;
+        $menugroup->status = $r->input('status') ?? 'inactive';
         $menugroup->save();
 
         /* save position */
@@ -219,7 +219,7 @@ class MenuGroupController extends AdminController
         $whr = [];
         if (!app('user')->hasRole('super')) {
             $whr = [
-                // ['status', 1],
+                // ['status', 'active],
                 ['id', '!=', 1],
                 // ['id', '!=', 2],
             ];
@@ -241,16 +241,18 @@ class MenuGroupController extends AdminController
     {
         /* mapping values */
         $updates = [];
-        $sorts = empty($data) ? json_decode($r->input('sort'))[0] : $data;
-        foreach ($sorts as $order => $sort) {
-            $updates[] = Menu::where('id', $sort->id)->update([
-                'order' => ($order + 1),
-                'parent_id' => $parent,
-            ]);
-            if (count($sort->children) > 0) {
-                foreach ($sort->children as $child) {
-                    if (!empty($child)) {
-                        $updates = array_merge($updates, $this->sortMenu($r, $child, $sort->id));
+        if ($r->input('sort')) {
+            $sorts = empty($data) ? json_decode($r->input('sort'))[0] : $data;
+            foreach ($sorts as $order => $sort) {
+                $updates[] = Menu::where('id', $sort->id)->update([
+                    'order' => ($order + 1),
+                    'parent_id' => $parent,
+                ]);
+                if (count($sort->children) > 0) {
+                    foreach ($sort->children as $child) {
+                        if (!empty($child)) {
+                            $updates = array_merge($updates, $this->sortMenu($r, $child, $sort->id));
+                        }
                     }
                 }
             }
