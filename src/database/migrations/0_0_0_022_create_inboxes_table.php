@@ -21,7 +21,7 @@ class CreateInboxesTable extends Migration
             $table->string('site')->nullable();
             $table->string('subject')->nullable();
             $table->text('message');
-            $table->enum('read', ['read', 'unread'])->default('unread');
+            $table->enum('read', ['yes', 'no'])->default('no');
             $table->enum('status', ['active', 'inactive'])->default('inactive');
             $table->timestamps();
             $table->softDeletes();
