@@ -74,7 +74,7 @@ class RoleController extends AdminController
         ];
 
         /* get data menugroups */
-        $menugroups = MenuGroup::where('status', 1)->get();
+        $menugroups = MenuGroup::where('status', 'active')->get();
 
         /* set variable for view */
         $data = [
@@ -107,7 +107,7 @@ class RoleController extends AdminController
         $role->name = str_slug($name);
         $role->display_name = $name;
         $role->description = $r->input('description');
-        $role->status = bool($r->input('status')) ? 1 : 0;
+        $role->status = $r->input('status') ?? 'inactive';
         $role->save();
 
         /* set permissions */
@@ -159,7 +159,7 @@ class RoleController extends AdminController
         }
 
         /* get data menugroups */
-        $menugroups = MenuGroup::where('status', 1)->get();
+        $menugroups = MenuGroup::where('status', 'active')->get();
         $role = $role->load('menu_groups');
 
         /* set variable for view */
@@ -196,7 +196,7 @@ class RoleController extends AdminController
         $role->name = str_slug($name);
         $role->display_name = $name;
         $role->description = $r->input('description');
-        $role->status = bool($r->input('status')) ? 1 : 0;
+        $role->status = $r->input('status') ?? 'inactive';
         $role->save();
 
         /* set permissions */
@@ -250,16 +250,16 @@ class RoleController extends AdminController
         /* where roles */
         if (app('user')->hasRole('super')) {
             $whrRole = [
-                // ['status', 1],
+                // ['status', 'active],
             ];
         } else if (app('user')->hasRole('admin')) {
             $whrRole = [
-                // ['status', 1],
+                // ['status', 'active],
                 ['id', '!=', 1],
             ];
         } else {
             $whrRole = [
-                // ['status', 1],
+                // ['status', 'active],
                 ['id', '!=', 1],
                 ['id', '!=', 2],
             ];
