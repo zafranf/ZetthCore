@@ -100,8 +100,8 @@ class IntermController extends AdminController
         ];
 
         /* mark as read */
-        $interm->read = 1;
-        $interm->save();
+        // $interm->read = 'yes';
+        // $interm->save();
 
         return view('zetthcore::AdminSC.report.interm_detail', $data);
     }
