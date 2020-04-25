@@ -249,7 +249,7 @@ class PhotoController extends AdminController
             $file = str_replace(url('/'), '', $file);
             $fgc = $this->fgc($file);
             $data[] = [
-                'name' => str_replace('.' . $info['extension'], '', $info['basename']),
+                'name' => $info['filename'],
                 'file' => $file,
                 'description' => $photos['descriptions'][$n],
                 'type' => 'image',

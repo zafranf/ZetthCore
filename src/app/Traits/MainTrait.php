@@ -337,10 +337,19 @@ trait MainTrait
         }
 
         /* set variable */
-        $filename = $file->getFileName();
-        $type = $file->getClientMimeType();
-        $ext = $file->getClientOriginalExtension();
-        $size = $file->getClientSize();
+        if (filter_var($file, FILTER_VALIDATE_URL)) {
+            $headers = get_headers($file, 1);
+            $info = pathinfo($file);
+            $filename = $info['filename'];
+            $type = $headers['Content-Type'];
+            $ext = $info['extension'];
+            $size = $headers['Content-Length'];
+        } else {
+            $filename = $file->getFileName();
+            $type = $file->getClientMimeType();
+            $ext = $file->getClientOriginalExtension();
+            $size = $file->getClientSize();
+        }
 
         /* preparing image file */
         $img = \Image::make($file);
