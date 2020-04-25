@@ -18,7 +18,7 @@ class PageSeeder extends Seeder
             'slug' => 'about',
             'content' => '<p>Ini adalah contoh halaman <b>Tentang Kami</b>. Silakan sesuaikan isinya di sini.</p>',
             'type' => 'page',
-            'status' => 'yes',
+            'status' => 'active',
             'created_by' => 2,
         ]);
     }
