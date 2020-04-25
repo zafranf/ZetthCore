@@ -105,10 +105,11 @@ class CategoryController extends AdminController
         $category->slug = str_slug($category->name);
         $category->description = $r->input('description');
         $category->type = 'category';
+        $category->group = 'post';
         if ($r->input('parent')) {
-            $category->parent_id = $r->input('parent');
+            $category->parent_id = (int) $r->input('parent');
         }
-        $category->status = bool($r->input('status')) ? 1 : 0;
+        $category->status = $r->input('status') ?? 'inactive';
         $category->save();
 
         /* save activity */
@@ -183,9 +184,9 @@ class CategoryController extends AdminController
         $category->description = $r->input('description');
         $category->type = 'category';
         if ($r->input('parent')) {
-            $category->parent_id = $r->input('parent');
+            $category->parent_id = (int) $r->input('parent');
         }
-        $category->status = bool($r->input('status')) ? 1 : 0;
+        $category->status = $r->input('status') ?? 'inactive';
         $category->save();
 
         /* save activity */
@@ -223,7 +224,10 @@ class CategoryController extends AdminController
     public function datatable(Request $r)
     {
         /* get data */
-        $data = Term::select('id', 'name', 'description', 'status')->where('type', 'category')->orderBy('created_at', 'desc');
+        $data = Term::select('id', 'name', 'description', 'status')
+            ->where('type', 'category')
+            ->where('group', 'post')
+            ->orderBy('created_at', 'desc');
 
         /* generate datatable */
         if ($r->ajax()) {

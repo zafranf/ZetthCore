@@ -76,7 +76,6 @@ class TagController extends AdminController
             'breadcrumbs' => $this->breadcrumbs,
             'page_title' => $this->page_title,
             'page_subtitle' => 'Tambah Label',
-            // 'tags' => Term::where('type', 'tag')->whereNull('parent_id')->with('allSubtag')->orderBy('name')->get(),
         ];
 
         return view('zetthcore::AdminSC.data.tags_form', $data);
@@ -101,7 +100,8 @@ class TagController extends AdminController
         $tag->slug = str_slug($tag->name);
         $tag->description = $r->input('description');
         $tag->type = 'tag';
-        $tag->status = bool($r->input('status')) ? 1 : 0;
+        $tag->group = 'post';
+        $tag->status = $r->input('status') ?? 'inactive';
         $tag->save();
 
         /* save activity */
@@ -145,7 +145,6 @@ class TagController extends AdminController
             'breadcrumbs' => $this->breadcrumbs,
             'page_title' => $this->page_title,
             'page_subtitle' => 'Edit Label',
-            // 'tags' => Term::where('type', 'tag')->whereNull('parent_id')->with('allSubtag')->orderBy('name')->get(),
             'data' => $tag,
         ];
 
@@ -171,7 +170,8 @@ class TagController extends AdminController
         $tag->slug = str_slug($tag->name);
         $tag->description = $r->input('description');
         $tag->type = 'tag';
-        $tag->status = bool($r->input('status')) ? 1 : 0;
+        $tag->group = 'post';
+        $tag->status = $r->input('status') ?? 'inactive';
         $tag->save();
 
         /* save activity */
@@ -209,7 +209,10 @@ class TagController extends AdminController
     public function datatable(Request $r)
     {
         /* get data */
-        $data = Term::select('id', 'name', 'description', 'status')->where('type', 'tag')->orderBy('created_at', 'desc');
+        $data = Term::select('id', 'name', 'description', 'status')
+            ->where('type', 'tag')
+            ->where('group', 'post')
+            ->orderBy('created_at', 'desc');
 
         /* generate datatable */
         if ($r->ajax()) {

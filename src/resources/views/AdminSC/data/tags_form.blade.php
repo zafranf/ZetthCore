@@ -19,7 +19,7 @@
           <div class="col-sm-offset-2 col-sm-10">
             <div class="checkbox">
               <label>
-                <input type="checkbox" name="status" {{ (isset($data) && $data->status == 0) ? '' : 'checked' }}> Aktif
+                <input type="checkbox" name="status" value="active" {{ (isset($data) && $data->status == 'inactive') ? '' : 'checked' }}> Aktif
               </label>
             </div>
           </div>
