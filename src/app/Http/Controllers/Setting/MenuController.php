@@ -124,24 +124,24 @@ class MenuController extends AdminController
         $menu->name = $r->input('name');
         $menu->description = $r->input('description');
         $menu->url = $r->input('url');
-        $menu->url_external = 0;
+        $menu->url_external = 'no';
         if ($r->input('url') == 'external') {
             $menu->url = $r->input('url_external');
-            $menu->url_external = 1;
+            $menu->url_external = 'yes';
         }
         $menu->route_name = $r->input('route_name');
         $menu->target = $r->input('target');
         $menu->order = $order;
         $menu->icon = $r->input('icon');
-        $menu->status = bool($r->input('status')) ? 1 : 0;
-        $menu->is_crud = bool($r->input('is_crud')) ? 1 : 0;
-        $menu->index = bool($r->input('index')) ? 1 : 0;
-        $menu->create = bool($r->input('create')) ? 1 : 0;
-        $menu->read = bool($r->input('read')) ? 1 : 0;
-        $menu->update = bool($r->input('update')) ? 1 : 0;
-        $menu->delete = bool($r->input('delete')) ? 1 : 0;
+        $menu->status = $r->input('status') ?? 'inactive';
+        $menu->is_crud = $r->input('is_crud') ?? 'no';
+        $menu->index = $r->input('index') ?? 'no';
+        $menu->create = $r->input('create') ?? 'no';
+        $menu->read = $r->input('read') ?? 'no';
+        $menu->update = $r->input('update') ?? 'no';
+        $menu->delete = $r->input('delete') ?? 'no';
         if ($r->input('parent')) {
-            $menu->parent_id = $r->input('parent');
+            $menu->parent_id = (int) $r->input('parent');
         }
         $menu->group_id = (int) $r->input('group');
         $menu->save();
@@ -229,24 +229,24 @@ class MenuController extends AdminController
         $menu->name = $r->input('name');
         $menu->description = $r->input('description');
         $menu->url = $r->input('url');
-        $menu->url_external = 0;
+        $menu->url_external = 'no';
         if ($r->input('url') == 'external') {
             $menu->url = $r->input('url_external');
-            $menu->url_external = 1;
+            $menu->url_external = 'yes';
         }
         $menu->route_name = $r->input('route_name');
         $menu->target = $r->input('target');
         // $menu->order = $order;
         $menu->icon = $r->input('icon');
-        $menu->status = bool($r->input('status')) ? 1 : 0;
-        $menu->is_crud = bool($r->input('is_crud')) ? 1 : 0;
-        $menu->index = bool($r->input('index')) ? 1 : 0;
-        $menu->create = bool($r->input('create')) ? 1 : 0;
-        $menu->read = bool($r->input('read')) ? 1 : 0;
-        $menu->update = bool($r->input('update')) ? 1 : 0;
-        $menu->delete = bool($r->input('delete')) ? 1 : 0;
+        $menu->status = $r->input('status') ?? 'inactive';
+        $menu->is_crud = $r->input('is_crud') ?? 'no';
+        $menu->index = $r->input('index') ?? 'no';
+        $menu->create = $r->input('create') ?? 'no';
+        $menu->read = $r->input('read') ?? 'no';
+        $menu->update = $r->input('update') ?? 'no';
+        $menu->delete = $r->input('delete') ?? 'no';
         if ($r->input('parent')) {
-            $menu->parent_id = $r->input('parent');
+            $menu->parent_id = (int) $r->input('parent');
         }
         $menu->group_id = (int) $r->input('group');
         $menu->save();
