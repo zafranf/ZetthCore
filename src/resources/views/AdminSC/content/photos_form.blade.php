@@ -33,7 +33,7 @@
             <div class="col-sm-12">
               <div class="checkbox">
                 <label>
-                  <input type="checkbox" name="status" {{ (isset($album->status) && $album->status == 0) ? '' : 'checked' }}> Aktif
+                  <input type="checkbox" name="status" value="active" {{ (isset($album->status) && $album->status == 'inactive') ? '' : 'checked' }}> Aktif
                 </label>
               </div>
             </div>

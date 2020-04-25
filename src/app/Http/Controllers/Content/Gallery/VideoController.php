@@ -104,7 +104,7 @@ class VideoController extends AdminController
         $video->excerpt = substr(strip_tags($video->content), 0, 255);
         $video->type = 'video';
         $video->cover = $r->input('cover');
-        $video->status = bool($r->input('status')) ? 1 : 0;
+        $album->status = $r->input('status') ?? 'inactive';
         $video->created_by = app('user')->id;
         $video->published_at = now();
         $video->save();
@@ -178,7 +178,7 @@ class VideoController extends AdminController
         $video->excerpt = substr(strip_tags($video->content), 0, 255);
         $video->type = 'video';
         $video->cover = $r->input('cover');
-        $video->status = bool($r->input('status')) ? 1 : 0;
+        $album->status = $r->input('status') ?? 'inactive';
         $video->updated_by = app('user')->id;
         $video->save();
 

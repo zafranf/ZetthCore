@@ -110,7 +110,7 @@ class PhotoController extends AdminController
         $album->slug = str_slug($album->name);
         $album->description = $r->input('description');
         $album->type = 'photo';
-        $album->status = bool($r->input('status')) ? 1 : 0;
+        $album->status = $r->input('status') ?? 'inactive';
         $album->save();
 
         /* process photos */
@@ -186,7 +186,7 @@ class PhotoController extends AdminController
         $album->slug = str_slug($album->name);
         $album->description = $r->input('description');
         $album->type = 'photo';
-        $album->status = bool($r->input('status')) ? 1 : 0;
+        $album->status = $r->input('status') ?? 'inactive';
         $album->save();
 
         /* process photos */
