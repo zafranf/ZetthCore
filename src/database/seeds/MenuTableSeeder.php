@@ -29,9 +29,9 @@ class MenuTableSeeder extends Seeder
         // $dash->icon = 'fa fa-dashboard';
         $dash->target = '_self';
         $dash->order = $mainOrder++;
-        $dash->status = 1;
-        $dash->is_crud = 1;
-        $dash->index = 1;
+        $dash->status = 'active';
+        $dash->is_crud = 'yes';
+        $dash->index = 'yes';
         $dash->save();
 
         $setOrder = 1;
@@ -42,9 +42,9 @@ class MenuTableSeeder extends Seeder
         $set->route_name = 'admin.setting.index';
         // $set->icon = 'fa fa-cog';
         $set->order = $mainOrder++;
-        $set->status = 1;
-        $set->is_crud = 1;
-        $set->index = 1;
+        $set->status = 'active';
+        $set->is_crud = 'yes';
+        $set->index = 'yes';
         $set->save();
 
         /* menu situs */
@@ -54,14 +54,14 @@ class MenuTableSeeder extends Seeder
         $setApl->route_name = 'admin.setting.site.index';
         // $setApl->icon = 'fa fa-desktop';
         $setApl->order = $setOrder++;
-        $setApl->status = 1;
+        $setApl->status = 'active';
         $setApl->parent_id = $set->id;
-        $setApl->is_crud = 1;
-        $setApl->index = 1;
-        $setApl->create = 0;
-        $setApl->read = 0;
-        $setApl->update = 1;
-        $setApl->delete = 0;
+        $setApl->is_crud = 'yes';
+        $setApl->index = 'yes';
+        $setApl->create = 'no';
+        $setApl->read = 'no';
+        $setApl->update = 'yes';
+        $setApl->delete = 'no';
         $setApl->save();
 
         /* menu menu */
@@ -71,14 +71,14 @@ class MenuTableSeeder extends Seeder
         $setMenu->route_name = 'admin.setting.menu-groups.index';
         // $setMenu->icon = 'fa fa-menu';
         $setMenu->order = $setOrder++;
-        $setMenu->status = 1;
+        $setMenu->status = 'active';
         $setMenu->parent_id = $set->id;
-        $setMenu->is_crud = 1;
-        $setMenu->index = 1;
-        $setMenu->create = 1;
-        $setMenu->read = 0;
-        $setMenu->update = 1;
-        $setMenu->delete = 1;
+        $setMenu->is_crud = 'yes';
+        $setMenu->index = 'yes';
+        $setMenu->create = 'yes';
+        $setMenu->read = 'no';
+        $setMenu->update = 'yes';
+        $setMenu->delete = 'yes';
         $setMenu->save();
 
         /* menu peran */
@@ -88,14 +88,14 @@ class MenuTableSeeder extends Seeder
         $setRole->route_name = 'admin.setting.roles.index';
         // $setRole->icon = 'fa fa-key';
         $setRole->order = $setOrder++;
-        $setRole->status = 1;
+        $setRole->status = 'active';
         $setRole->parent_id = $set->id;
-        $setRole->is_crud = 1;
-        $setRole->index = 1;
-        $setRole->create = 1;
-        $setRole->read = 0;
-        $setRole->update = 1;
-        $setRole->delete = 1;
+        $setRole->is_crud = 'yes';
+        $setRole->index = 'yes';
+        $setRole->create = 'yes';
+        $setRole->read = 'no';
+        $setRole->update = 'yes';
+        $setRole->delete = 'yes';
         $setRole->save();
 
         $dataOrder = 1;
@@ -106,9 +106,9 @@ class MenuTableSeeder extends Seeder
         $data->route_name = 'admin.data.index';
         // $data->icon = 'fa fa-cog';
         $data->order = $mainOrder++;
-        $data->status = 1;
-        $data->is_crud = 1;
-        $data->index = 1;
+        $data->status = 'active';
+        $data->is_crud = 'yes';
+        $data->index = 'yes';
         $data->save();
 
         /* menu pengguna */
@@ -118,14 +118,14 @@ class MenuTableSeeder extends Seeder
         $dataUser->route_name = 'admin.data.users.index';
         // $dataUser->icon = 'fa fa-user';
         $dataUser->order = $dataOrder++;
-        $dataUser->status = 1;
+        $dataUser->status = 'active';
         $dataUser->parent_id = $data->id;
-        $dataUser->is_crud = 1;
-        $dataUser->index = 1;
-        $dataUser->create = 1;
-        $dataUser->read = 1;
-        $dataUser->update = 1;
-        $dataUser->delete = 1;
+        $dataUser->is_crud = 'yes';
+        $dataUser->index = 'yes';
+        $dataUser->create = 'yes';
+        $dataUser->read = 'yes';
+        $dataUser->update = 'yes';
+        $dataUser->delete = 'yes';
         $dataUser->save();
 
         /* menu kategori */
@@ -135,14 +135,14 @@ class MenuTableSeeder extends Seeder
         $dataCat->route_name = 'admin.data.categories.index';
         // $dataCat->icon = 'pg-unordered_list';
         $dataCat->order = $dataOrder++;
-        $dataCat->status = 1;
+        $dataCat->status = 'active';
         $dataCat->parent_id = $data->id;
-        $dataCat->is_crud = 1;
-        $dataCat->index = 1;
-        $dataCat->create = 1;
-        $dataCat->read = 0;
-        $dataCat->update = 1;
-        $dataCat->delete = 1;
+        $dataCat->is_crud = 'yes';
+        $dataCat->index = 'yes';
+        $dataCat->create = 'yes';
+        $dataCat->read = 'no';
+        $dataCat->update = 'yes';
+        $dataCat->delete = 'yes';
         $dataCat->save();
 
         /* menu label */
@@ -152,14 +152,14 @@ class MenuTableSeeder extends Seeder
         $dataTag->route_name = 'admin.data.tags.index';
         // $dataTag->icon = 'fa fa-list';
         $dataTag->order = $dataOrder++;
-        $dataTag->status = 1;
+        $dataTag->status = 'active';
         $dataTag->parent_id = $data->id;
-        $dataTag->is_crud = 1;
-        $dataTag->index = 1;
-        $dataTag->create = 1;
-        $dataTag->read = 0;
-        $dataTag->update = 1;
-        $dataTag->delete = 1;
+        $dataTag->is_crud = 'yes';
+        $dataTag->index = 'yes';
+        $dataTag->create = 'yes';
+        $dataTag->read = 'no';
+        $dataTag->update = 'yes';
+        $dataTag->delete = 'yes';
         $dataTag->save();
 
         $contentOrder = 1;
@@ -170,9 +170,9 @@ class MenuTableSeeder extends Seeder
         $content->route_name = 'admin.content.index';
         // $content->icon = 'fa fa-edit';
         $content->order = $mainOrder++;
-        $content->status = 1;
-        $content->is_crud = 1;
-        $content->index = 1;
+        $content->status = 'active';
+        $content->is_crud = 'yes';
+        $content->index = 'yes';
         $content->save();
 
         /* menu spanduk */
@@ -182,14 +182,14 @@ class MenuTableSeeder extends Seeder
         $contentBanner->route_name = 'admin.content.banners.index';
         // $contentBanner->icon = 'pg-tablet';
         $contentBanner->order = $contentOrder++;
-        $contentBanner->status = 1;
+        $contentBanner->status = 'active';
         $contentBanner->parent_id = $content->id;
-        $contentBanner->is_crud = 1;
-        $contentBanner->index = 1;
-        $contentBanner->create = 1;
-        $contentBanner->read = 0;
-        $contentBanner->update = 1;
-        $contentBanner->delete = 1;
+        $contentBanner->is_crud = 'yes';
+        $contentBanner->index = 'yes';
+        $contentBanner->create = 'yes';
+        $contentBanner->read = 'no';
+        $contentBanner->update = 'yes';
+        $contentBanner->delete = 'yes';
         $contentBanner->save();
 
         /* menu halaman */
@@ -199,14 +199,14 @@ class MenuTableSeeder extends Seeder
         $contentPage->route_name = 'admin.content.pages.index';
         // $contentPage->icon = 'fa fa-file-text';
         $contentPage->order = $contentOrder++;
-        $contentPage->status = 1;
+        $contentPage->status = 'active';
         $contentPage->parent_id = $content->id;
-        $contentPage->is_crud = 1;
-        $contentPage->index = 1;
-        $contentPage->create = 1;
-        $contentPage->read = 0;
-        $contentPage->update = 1;
-        $contentPage->delete = 1;
+        $contentPage->is_crud = 'yes';
+        $contentPage->index = 'yes';
+        $contentPage->create = 'yes';
+        $contentPage->read = 'no';
+        $contentPage->update = 'yes';
+        $contentPage->delete = 'yes';
         $contentPage->save();
 
         /* menu artikel */
@@ -216,14 +216,14 @@ class MenuTableSeeder extends Seeder
         $contentPost->route_name = 'admin.content.posts.index';
         // $contentPost->icon = 'fa fa-newspaper-o';
         $contentPost->order = $contentOrder++;
-        $contentPost->status = 1;
+        $contentPost->status = 'active';
         $contentPost->parent_id = $content->id;
-        $contentPost->is_crud = 1;
-        $contentPost->index = 1;
-        $contentPost->create = 1;
-        $contentPost->read = 0;
-        $contentPost->update = 1;
-        $contentPost->delete = 1;
+        $contentPost->is_crud = 'yes';
+        $contentPost->index = 'yes';
+        $contentPost->create = 'yes';
+        $contentPost->read = 'no';
+        $contentPost->update = 'yes';
+        $contentPost->delete = 'yes';
         $contentPost->save();
 
         $galOrder = 1;
@@ -234,10 +234,10 @@ class MenuTableSeeder extends Seeder
         $gallery->route_name = 'admin.content.gallery.index';
         // $gallery->icon = 'fa fa-camera';
         $gallery->order = $contentOrder++;
-        $gallery->status = 1;
+        $gallery->status = 'active';
         $gallery->parent_id = $content->id;
-        $gallery->is_crud = 1;
-        $gallery->index = 1;
+        $gallery->is_crud = 'yes';
+        $gallery->index = 'yes';
         $gallery->save();
 
         /* menu foto */
@@ -247,14 +247,14 @@ class MenuTableSeeder extends Seeder
         $galPhoto->route_name = 'admin.content.gallery.photos.index';
         // $galPhoto->icon = 'fa fa-photo';
         $galPhoto->order = $galOrder++;
-        $galPhoto->status = 1;
+        $galPhoto->status = 'active';
         $galPhoto->parent_id = $gallery->id;
-        $galPhoto->is_crud = 1;
-        $galPhoto->index = 1;
-        $galPhoto->create = 1;
-        $galPhoto->read = 0;
-        $galPhoto->update = 1;
-        $galPhoto->delete = 1;
+        $galPhoto->is_crud = 'yes';
+        $galPhoto->index = 'yes';
+        $galPhoto->create = 'yes';
+        $galPhoto->read = 'no';
+        $galPhoto->update = 'yes';
+        $galPhoto->delete = 'yes';
         $galPhoto->save();
 
         /* menu video */
@@ -264,14 +264,14 @@ class MenuTableSeeder extends Seeder
         $galVideo->route_name = 'admin.content.gallery.videos.index';
         // $galVideo->icon = 'pg-video';
         $galVideo->order = $galOrder++;
-        $galVideo->status = 1;
+        $galVideo->status = 'active';
         $galVideo->parent_id = $gallery->id;
-        $galVideo->is_crud = 1;
-        $galVideo->index = 1;
-        $galVideo->create = 1;
-        $galVideo->read = 0;
-        $galVideo->update = 1;
-        $galVideo->delete = 1;
+        $galVideo->is_crud = 'yes';
+        $galVideo->index = 'yes';
+        $galVideo->create = 'yes';
+        $galVideo->read = 'no';
+        $galVideo->update = 'yes';
+        $galVideo->delete = 'yes';
         $galVideo->save();
 
         $repOrder = 1;
@@ -282,9 +282,9 @@ class MenuTableSeeder extends Seeder
         $report->route_name = 'admin.report.index';
         // $report->icon = 'pg-charts';
         $report->order = $mainOrder++;
-        $report->status = 1;
-        $report->is_crud = 1;
-        $report->index = 1;
+        $report->status = 'active';
+        $report->is_crud = 'yes';
+        $report->index = 'yes';
         $report->save();
 
         /* menu kontak masuk */
@@ -294,14 +294,14 @@ class MenuTableSeeder extends Seeder
         $repInbox->route_name = 'admin.report.inbox.index';
         // $repInbox->icon = 'pg-mail';
         $repInbox->order = $repOrder++;
-        $repInbox->status = 1;
+        $repInbox->status = 'active';
         $repInbox->parent_id = $report->id;
-        $repInbox->is_crud = 1;
-        $repInbox->index = 1;
-        $repInbox->create = 0;
-        $repInbox->read = 1;
-        $repInbox->update = 0;
-        $repInbox->delete = 1;
+        $repInbox->is_crud = 'yes';
+        $repInbox->index = 'yes';
+        $repInbox->create = 'no';
+        $repInbox->read = 'yes';
+        $repInbox->update = 'no';
+        $repInbox->delete = 'yes';
         $repInbox->save();
 
         /* menu komentar */
@@ -311,14 +311,14 @@ class MenuTableSeeder extends Seeder
         $repComment->route_name = 'admin.report.comments.index';
         // $repComment->icon = 'fa fa-comments';
         $repComment->order = $repOrder++;
-        $repComment->status = 1;
+        $repComment->status = 'active';
         $repComment->parent_id = $report->id;
-        $repComment->is_crud = 1;
-        $repComment->index = 1;
-        $repComment->create = 1;
-        $repComment->read = 1;
-        $repComment->update = 1;
-        $repComment->delete = 1;
+        $repComment->is_crud = 'yes';
+        $repComment->index = 'yes';
+        $repComment->create = 'yes';
+        $repComment->read = 'yes';
+        $repComment->update = 'yes';
+        $repComment->delete = 'yes';
         $repComment->save();
 
         /* menu kata pencarian */
@@ -328,14 +328,14 @@ class MenuTableSeeder extends Seeder
         $repInterm->route_name = 'admin.report.incoming-terms.index';
         // $repInterm->icon = 'pg-search';
         $repInterm->order = $repOrder++;
-        $repInterm->status = 1;
+        $repInterm->status = 'active';
         $repInterm->parent_id = $report->id;
-        $repInterm->is_crud = 1;
-        $repInterm->index = 1;
-        $repInterm->create = 0;
-        $repInterm->read = 0;
-        $repInterm->update = 0;
-        $repInterm->delete = 0;
+        $repInterm->is_crud = 'yes';
+        $repInterm->index = 'yes';
+        $repInterm->create = 'no';
+        $repInterm->read = 'no';
+        $repInterm->update = 'no';
+        $repInterm->delete = 'no';
         $repInterm->save();
 
         /* menu pelanggan info */
@@ -345,14 +345,14 @@ class MenuTableSeeder extends Seeder
         $repSubscriber->route_name = 'admin.report.subscribers.index';
         // $repSubscriber->icon = 'fa fa-users';
         $repSubscriber->order = $repOrder++;
-        $repSubscriber->status = 1;
+        $repSubscriber->status = 'active';
         $repSubscriber->parent_id = $report->id;
-        $repSubscriber->is_crud = 1;
-        $repSubscriber->index = 1;
-        $repSubscriber->create = 0;
-        $repSubscriber->read = 0;
-        $repSubscriber->update = 1;
-        $repSubscriber->delete = 1;
+        $repSubscriber->is_crud = 'yes';
+        $repSubscriber->index = 'yes';
+        $repSubscriber->create = 'no';
+        $repSubscriber->read = 'no';
+        $repSubscriber->update = 'yes';
+        $repSubscriber->delete = 'yes';
         $repSubscriber->save();
 
         $logOrder = 1;
@@ -363,9 +363,9 @@ class MenuTableSeeder extends Seeder
         $log->route_name = 'admin.log.index';
         // $log->icon = 'pg-note';
         $log->order = $mainOrder++;
-        $log->status = 1;
-        $log->is_crud = 1;
-        $log->index = 1;
+        $log->status = 'active';
+        $log->is_crud = 'yes';
+        $log->index = 'yes';
         $log->save();
 
         /* menu catatan aktifitas */
@@ -375,14 +375,14 @@ class MenuTableSeeder extends Seeder
         $logActivity->route_name = 'admin.log.activities.index';
         // $logActivity->icon = 'fa fa-list';
         $logActivity->order = $logOrder++;
-        $logActivity->status = 1;
+        $logActivity->status = 'active';
         $logActivity->parent_id = $log->id;
-        $logActivity->is_crud = 1;
-        $logActivity->index = 1;
-        $logActivity->create = 0;
-        $logActivity->read = 1;
-        $logActivity->update = 0;
-        $logActivity->delete = 0;
+        $logActivity->is_crud = 'yes';
+        $logActivity->index = 'yes';
+        $logActivity->create = 'no';
+        $logActivity->read = 'yes';
+        $logActivity->update = 'no';
+        $logActivity->delete = 'no';
         $logActivity->save();
 
         /* menu catatan galat */
@@ -392,14 +392,14 @@ class MenuTableSeeder extends Seeder
         $logError->route_name = 'admin.log.errors.index';
         // $logError->icon = 'fa fa-list-ul';
         $logError->order = $logOrder++;
-        $logError->status = 1;
+        $logError->status = 'active';
         $logError->parent_id = $log->id;
-        $logError->is_crud = 1;
-        $logError->index = 1;
-        $logError->create = 0;
-        $logError->read = 1;
-        $logError->update = 0;
-        $logError->delete = 0;
+        $logError->is_crud = 'yes';
+        $logError->index = 'yes';
+        $logError->create = 'no';
+        $logError->read = 'yes';
+        $logError->update = 'no';
+        $logError->delete = 'no';
         $logError->save();
 
         /* menu catatan kunjungan */
@@ -409,14 +409,14 @@ class MenuTableSeeder extends Seeder
         $logVisitor->route_name = 'admin.log.visitors.index';
         // $logVisitor->icon = 'fa fa-list-ul';
         $logVisitor->order = $logOrder++;
-        $logVisitor->status = 1;
+        $logVisitor->status = 'active';
         $logVisitor->parent_id = $log->id;
-        $logVisitor->is_crud = 1;
-        $logVisitor->index = 1;
-        $logVisitor->create = 0;
-        $logVisitor->read = 1;
-        $logVisitor->update = 0;
-        $logVisitor->delete = 0;
+        $logVisitor->is_crud = 'yes';
+        $logVisitor->index = 'yes';
+        $logVisitor->create = 'no';
+        $logVisitor->read = 'yes';
+        $logVisitor->update = 'no';
+        $logVisitor->delete = 'no';
         $logVisitor->save();
     }
 
@@ -429,7 +429,7 @@ class MenuTableSeeder extends Seeder
         $dash->description = 'Halaman utama';
         $dash->url = '/';
         $dash->target = '_self';
-        $dash->status = 1;
+        $dash->status = 'active';
         $dash->group_id = 2;
         $dash->save();
 
@@ -440,7 +440,7 @@ class MenuTableSeeder extends Seeder
         $about->url = '/about';
         $about->target = '_self';
         $about->order = $mainOrder++;
-        $about->status = 1;
+        $about->status = 'active';
         $about->group_id = 2;
         $about->save();
 
@@ -451,7 +451,7 @@ class MenuTableSeeder extends Seeder
         $contact->url = '/contact';
         $contact->target = '_self';
         $contact->order = $mainOrder++;
-        $contact->status = 1;
+        $contact->status = 'active';
         $contact->group_id = 2;
         $contact->save();
     }

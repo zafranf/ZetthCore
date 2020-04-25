@@ -19,7 +19,7 @@ class TemplateSeeder extends Seeder
             'description' => null,
             'author' => 'Porisweb',
             'type' => 'site',
-            'status' => 1,
+            'status' => 'yes',
         ]);
     }
 }

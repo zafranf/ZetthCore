@@ -28,7 +28,7 @@ class LaratrustSeeder extends Seeder
                 'name' => $key,
                 'display_name' => ucwords(str_replace('_', ' ', $key)),
                 'description' => 'Peran sebagai ' . ucwords(str_replace('_', ' ', $key)),
-                'status' => 1,
+                'status' => 'active',
             ]);
             $permissions = [];
 
@@ -67,7 +67,7 @@ class LaratrustSeeder extends Seeder
                 'email' => $key . '@' . env('APP_DOMAIN', 'localhost'),
                 'password' => bcrypt('123123'),
                 // 'language' => 'id',
-                'status' => 1,
+                'status' => 'active',
             ]);
             $user->detail()->create([
                 'user_id' => $user->id,
@@ -88,7 +88,7 @@ class LaratrustSeeder extends Seeder
                         'email' => $key . '@mail.co',
                         'password' => bcrypt('123123'),
                         // 'language' => 'id',
-                        'status' => 1,
+                        'status' => 'active',
                     ]);
                     $permissions = [];
 
