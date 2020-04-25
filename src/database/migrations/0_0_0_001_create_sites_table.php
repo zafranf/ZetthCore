@@ -35,7 +35,7 @@ class CreateSitesTable extends Migration
             $table->boolean('enable_share')->comment('0=no, 1=yes')->default(1);
             $table->boolean('enable_comment')->comment('0=no, 1=yes')->default(1);
             $table->tinyInteger('perpage')->unsigned()->default(10);
-            $table->boolean('status')->comment('0=coming soon, 1=active, 2=maintenance')->unsigned();
+            $table->enum('status', ['active', 'comingsoon', 'maintenance', 'suspend'])->default('comingsoon');
             $table->dateTime('active_at');
             $table->timestamps();
         });

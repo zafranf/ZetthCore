@@ -17,7 +17,7 @@ class LaratrustSetupTables extends Migration
             $table->string('name')->unique();
             $table->string('display_name')->nullable();
             $table->string('description')->nullable();
-            $table->boolean('status')->comment('0=inactive, 1=active')->unsigned();
+            $table->enum('status', ['active', 'inactive'])->default('inactive');
             $table->timestamps();
             $table->softDeletes();
         });

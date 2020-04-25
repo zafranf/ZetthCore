@@ -22,7 +22,7 @@ class CreateCommentsTable extends Migration
             $table->text('content');
             $table->boolean('notify')->comment('0=no, 1=yes')->unsigned();
             $table->boolean('read')->comment('0=unread, 1=read')->unsigned();
-            $table->boolean('status')->comment('0=pending, 1=active')->unsigned();
+            $table->enum('status', ['active', 'inactive'])->default('inactive');
             $table->boolean('is_owner')->comment('0=false, 1=true')->unsigned();
             $table->bigInteger('parent_id')->unsigned()->nullable();
             $table->string('commentable_type');

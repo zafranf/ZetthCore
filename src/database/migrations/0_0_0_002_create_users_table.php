@@ -21,7 +21,7 @@ class CreateUsersTable extends Migration
             $table->string('password');
             $table->string('image')->nullable();
             $table->boolean('is_first_login')->comment('0=no, 1=yes')->unsigned()->default(1);
-            $table->boolean('status')->comment('0=inactive, 1=active, 2=suspend, 3=banned')->unsigned();
+            $table->enum('status', ['active', 'inactive', 'suspend', 'banned'])->default('inactive');
             $table->timestamps();
             $table->softDeletes();
         });

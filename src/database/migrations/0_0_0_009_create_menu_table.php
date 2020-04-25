@@ -23,7 +23,7 @@ class CreateMenuTable extends Migration
             $table->string('icon')->nullable();
             $table->enum('target', ['_self', '_blank'])->default('_self');
             $table->tinyInteger('order')->unsigned()->default(1);
-            $table->boolean('status')->comment('0=inactive, 1=active')->unsigned();
+            $table->enum('status', ['active', 'inactive'])->default('inactive');
             $table->bigInteger('group_id')->unsigned()->default(1);
             $table->bigInteger('parent_id')->unsigned()->nullable();
             $table->boolean('is_crud')->unsigned()->default(0);

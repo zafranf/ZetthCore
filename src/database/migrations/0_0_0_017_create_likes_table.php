@@ -15,7 +15,7 @@ class CreateLikesTable extends Migration
     {
         Schema::create('likes', function (Blueprint $table) {
             $table->bigInteger('user_id')->unsigned();
-            $table->boolean('like')->unsigned();
+            $table->enum('like', ['yes', 'no'])->default('no');
             $table->string('likeable_type');
             $table->bigInteger('likeable_id')->unsigned();
 

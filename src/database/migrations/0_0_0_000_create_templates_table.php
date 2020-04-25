@@ -20,7 +20,7 @@ class CreateTemplatesTable extends Migration
             $table->string('description')->nullable();
             $table->string('author')->nullable();
             $table->enum('type', ['admin', 'site'])->default('site');
-            $table->boolean('status')->comment('0=inactive, 1=active')->unsigned();
+            $table->enum('status', ['active', 'inactive'])->default('inactive');
             $table->timestamps();
             $table->softDeletes();
         });
