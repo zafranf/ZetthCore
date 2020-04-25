@@ -8,7 +8,10 @@
           <h4>Informasi Utama</h4>
           <hr>
           <div class="form-group">
-            <label for="image" class="col-md-4 control-label">Foto</label>
+						<label for="image" class="col-md-4 control-label">
+              Foto
+              <small class="help-block">Maksimal dimensi foto adalah 512px x 512px dengan rasio 1:1 dan ukuran maksimal 384KB</small>
+            </label>
             <div class="col-md-8">
               <div class="fileinput fileinput-new" data-provides="fileinput">
                 <div class="fileinput-new thumbnail">
@@ -22,7 +25,7 @@
                     <input name="image" id="image" type="file" accept="image/*">
                   </span>
                   <a href="#" class="btn btn-default fileinput-exists" data-dismiss="fileinput">Batal</a>
-                  @if ($data->image)
+                  @if (isset($data) && $data->image)
                     <small class="help-inline-table">
                       <label class="pull-right">
                         <input type="checkbox" name="image_remove" id="image_remove"> Hapus
@@ -48,7 +51,7 @@
           <div class="form-group">
             <label for="about" class="col-md-4 control-label">Tentang</label>
             <div class="col-md-8">
-              <textarea id="about" name="about" class="form-control" placeholder="Tentang..">{{ isset($data) ? $data->detail->about : '' }}</textarea>
+              <textarea id="about" name="about" class="form-control" placeholder="Tentang pengguna..">{{ isset($data) ? $data->detail->about : '' }}</textarea>
             </div>
           </div>
         </div>

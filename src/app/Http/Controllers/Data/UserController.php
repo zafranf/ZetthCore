@@ -75,16 +75,16 @@ class UserController extends AdminController
         /* where roles */
         if (app('user')->hasRole('super')) {
             $whrRole = [
-                ['status', 1],
+                ['status', 'active'],
             ];
         } else if (app('user')->hasRole('admin')) {
             $whrRole = [
-                ['status', 1],
+                ['status', 'active'],
                 ['id', '!=', 1],
             ];
         } else {
             $whrRole = [
-                ['status', 1],
+                ['status', 'active'],
                 ['id', '!=', 1],
                 ['id', '!=', 2],
             ];
@@ -97,7 +97,7 @@ class UserController extends AdminController
             'page_title' => $this->page_title,
             'page_subtitle' => 'Tambah Pengguna',
             'roles' => Role::where($whrRole)->get(),
-            'socmeds' => Socmed::where('status', 1)->get(),
+            'socmeds' => Socmed::where('status', 'active')->get(),
         ];
 
         return view('zetthcore::AdminSC.data.users_form', $data);
@@ -127,7 +127,7 @@ class UserController extends AdminController
         $user->fullname = $r->input('fullname');
         $user->email = $r->input('email');
         $user->password = bcrypt($r->input('password'));
-        $user->status = bool($r->input('status')) ? 1 : 0;
+        $user->status = bool($r->input('status')) ? 'active' : 'inactive';
 
         /* upload image */
         if ($r->input('image_remove')) {
@@ -203,16 +203,16 @@ class UserController extends AdminController
         /* where roles */
         if (app('user')->hasRole('super')) {
             $whrRole = [
-                ['status', 1],
+                ['status', 'active'],
             ];
         } else if (app('user')->hasRole('admin')) {
             $whrRole = [
-                ['status', 1],
+                ['status', 'active'],
                 ['id', '!=', 1],
             ];
         } else {
             $whrRole = [
-                ['status', 1],
+                ['status', 'active'],
                 ['id', '!=', 1],
                 ['id', '!=', 2],
             ];
@@ -225,7 +225,7 @@ class UserController extends AdminController
             'page_title' => $this->page_title,
             'page_subtitle' => 'Edit Pengguna',
             'roles' => Role::where($whrRole)->get(),
-            'socmeds' => Socmed::where('status', 1)->get(),
+            'socmeds' => Socmed::where('status', 'active')->get(),
             'data' => $user->load('detail'),
         ];
 
@@ -261,7 +261,7 @@ class UserController extends AdminController
         if ($r->input('password') !== null) {
             $user->password = bcrypt($r->input('password'));
         }
-        $user->status = bool($r->input('status')) ? 1 : 0;
+        $user->status = bool($r->input('status')) ? 'active' : 'inactive';
 
         /* upload image */
         if ($r->input('image_remove')) {
@@ -329,23 +329,23 @@ class UserController extends AdminController
         /* where roles */
         if (app('user')->hasRole('super')) {
             $whrRole = [
-                // ['status', 1],
+                // ['status', 'active'],
             ];
         } else if (app('user')->hasRole('admin')) {
             $whrRole = [
-                // ['status', 1],
+                // ['status', 'active'],
                 ['id', '!=', 1],
             ];
         } else {
             $whrRole = [
-                // ['status', 1],
+                // ['status', 'active'],
                 ['id', '!=', 1],
                 ['id', '!=', 2],
             ];
         }
 
         /* get data */
-        $data = User::select('id', 'name', 'fullname', /* 'image', 'email', */'status')->where($whrRole)->orderBy('fullname');
+        $data = User::select('id', 'name', 'fullname', 'image', 'email', 'status')->where($whrRole)->orderBy('fullname');
 
         /* generate datatable */
         if ($r->ajax()) {

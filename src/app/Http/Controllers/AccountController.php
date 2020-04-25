@@ -42,7 +42,7 @@ class AccountController extends AdminController
             'page_title' => $this->page_title,
             'page_subtitle' => 'Akun',
             'data' => app('user')->load(['socmed', 'detail']),
-            'socmeds' => Socmed::where('status', 1)->get(),
+            'socmeds' => Socmed::where('status', 'active')->get(),
         ];
 
         return view('zetthcore::AdminSC.user_account_form', $data);

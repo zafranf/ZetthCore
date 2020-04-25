@@ -40,11 +40,14 @@
 					<div class="form-group">
 						<label for="about" class="col-md-4 control-label">Tentang</label>
 						<div class="col-md-8">
-							<textarea id="about" name="about" class="form-control" placeholder="Tentang.." rows="4">{{ isset($data) ? $data->detail->about : old('about') }}</textarea>
+							<textarea id="about" name="about" class="form-control" placeholder="Tentang pengguna.." rows="4">{{ isset($data) ? $data->detail->about : old('about') }}</textarea>
 						</div>
 					</div>
 					<div class="form-group">
-						<label for="image" class="col-md-4 control-label">Foto</label>
+						<label for="image" class="col-md-4 control-label">
+              Foto
+              <small class="help-block">Maksimal dimensi foto adalah 512px x 512px dengan rasio 1:1 dan ukuran maksimal 384KB</small>
+            </label>
 						<div class="col-md-8">
 							<div class="fileinput fileinput-new" data-provides="fileinput">
 								<div class="fileinput-new thumbnail">
@@ -58,7 +61,7 @@
 										<input name="image" id="image" type="file" accept="image/*">
 									</span>
 									<a href="#" class="btn btn-default fileinput-exists" data-dismiss="fileinput">Batal</a>
-									@if ($data->image)
+									@if (isset($data) && $data->image)
 										<small class="help-inline-table">
                       <label class="pull-right">
                         <input type="checkbox" name="image_remove" id="image_remove"> Hapus
@@ -85,7 +88,7 @@
 						<div class="col-md-offset-4 col-md-8">
 							<div class="checkbox">
 								<label>
-									<input type="checkbox" name="status" {{ (isset($data) && $data->status == 0 ) ?'' : 'checked' }}> Aktif
+									<input type="checkbox" name="status" {{ (isset($data) && $data->status == 'inactive' ) ?'' : 'checked' }}> Aktif
 								</label>
 							</div>
 						</div>
@@ -109,7 +112,7 @@
                         @if (isset($socmeds))
                           @foreach ($socmeds as $socmed)
                             @php
-                            $sl = ($socmed->id == $val->socmed_id) ? 'selected' : '';
+                              $sl = ($socmed->id == $val->socmed_id) ? 'selected' : '';
                             @endphp
                             <option value="{{ $socmed->id }}" {{ $sl }}>{{ $socmed->name }}</option>
                           @endforeach
@@ -119,10 +122,10 @@
 										<div class="col-md-9 col-xs-6 no-padding">
                       @if ($key > 0)
                         <div class="input-group">
-                        <input type="text" class="form-control" name="socmed_uname[]" placeholder="Nama/ID akun.." value="{{ $val->username }}">
-                        <span class="input-group-btn">
-                          <button type="button" class="btn" style="background:white;border:1px solid #ccc;" onclick="_remove('#div-socmed-{{ $rand }}')"><i class="fa fa-minus"></i></button>
-                        </span>
+                          <input type="text" class="form-control" name="socmed_uname[]" placeholder="Nama/ID akun.." value="{{ $val->username }}">
+                          <span class="input-group-btn">
+                            <button type="button" class="btn" style="background:white;border:1px solid #ccc;" onclick="_remove('#div-socmed-{{ $rand }}')"><i class="fa fa-minus"></i></button>
+                          </span>
                         </div>
                       @else
                         <input type="text" class="form-control" name="socmed_uname[]" placeholder="Nama/ID akun.." value="{{ $val->username }}">
