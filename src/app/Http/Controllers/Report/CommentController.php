@@ -121,18 +121,18 @@ class CommentController extends AdminController
         $comment->name = \Auth::user()->fullname;
         $comment->email = \Auth::user()->email;
         $comment->content = $r->input('content');
-        $comment->status = 1;
+        $comment->status = 'active';
         $comment->parent_id = $parent->id;
         $comment->commentable_type = $parent->commentable_type;
         $comment->commentable_id = $r->input('pid');
         $comment->created_by = \Auth::user()->id;
         $comment->approved_by = \Auth::user()->id;
-        $comment->is_owner = 1;
+        $comment->is_owner = 'yes';
         $comment->save();
 
         /* set approved */
-        if ($r->input('status')) {
-            $parent->status = bool($r->input('status')) ? 1 : 0;
+        if ($r->input('status') == 'active') {
+            $parent->status = 'active';
             $parent->approved_by = bool($r->status) ? \Auth::user()->id : null;
             $parent->save();
         }
@@ -187,7 +187,7 @@ class CommentController extends AdminController
         ];
 
         /* mark as read */
-        $comment->read = 1;
+        $comment->read = 'yes';
         $comment->save();
 
         return view('zetthcore::AdminSC.report.comment_detail', $data);
@@ -208,7 +208,7 @@ class CommentController extends AdminController
         ];
 
         /* mark as read */
-        $comment->read = 1;
+        $comment->read = 'yes';
         $comment->save();
 
         /* set variable for view */
@@ -242,8 +242,8 @@ class CommentController extends AdminController
         $comment->name = $r->input('name');
         $comment->content = $r->input('content');
         $comment->updated_by = \Auth::user()->user_id;
-        if (!$comment->is_owner && bool($r->input('status'))) {
-            $comment->status = 1;
+        if (!bool($comment->is_owner) && $r->input('status') == 'active') {
+            $comment->status = 'active';
             $comment->approved_by = \Auth::user()->user_id;
         }
         $comment->save();

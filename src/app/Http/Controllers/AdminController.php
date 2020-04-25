@@ -48,16 +48,18 @@ class AdminController extends BaseController
         /* get ~30 posts */
         $pages = \ZetthCore\Models\Post::select('type', 'slug', 'title')->where([
             'type' => 'page',
-            'status' => 1,
+            'status' => 'active',
         ])->orderBy('published_at', 'desc')->take(10)->get();
         $articles = \ZetthCore\Models\Post::select('type', 'slug', 'title')->where([
             'type' => 'article',
-            'status' => 1,
+            'status' => 'active',
         ])->orderBy('published_at', 'desc')->take(10)->get();
         $videos = \ZetthCore\Models\Post::select('type', 'slug', 'title')->where([
             'type' => 'video',
-            'status' => 1,
+            'status' => 'active',
         ])->orderBy('published_at', 'desc')->take(10)->get();
+
+        /* merge posts */
         $posts = collect();
         $posts = $posts->merge($pages);
         $posts = $posts->merge($articles);
@@ -117,14 +119,14 @@ class AdminController extends BaseController
             abort(404);
         }
         if ($type == 'approve') {
-            $comment->status = 1;
+            $comment->status = 'active';
             $comment->approved_by = \Auth::user()->id;
 
             /* text */
             $log_text = '[~name] (' . $this->getUserRoles() . ') menyetujui komentar dari ' . $comment->commentator->fullname;
             $success_text = 'Komentar berhasil disetujui!';
         } else if ($type == 'unapprove') {
-            $comment->status = 0;
+            $comment->status = 'inactive';
             $comment->approved_by = null;
 
             /* text */
