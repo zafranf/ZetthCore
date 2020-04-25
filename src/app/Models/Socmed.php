@@ -8,4 +8,9 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Socmed extends Model
 {
     use SoftDeletes;
+
+    public function scopeActive($query)
+    {
+        return $query->where('status', 'active');
+    }
 }
