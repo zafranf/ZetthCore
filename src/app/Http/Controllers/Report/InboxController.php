@@ -100,7 +100,7 @@ class InboxController extends AdminController
         ];
 
         /* mark as read */
-        $inbox->read = 1;
+        $inbox->read = 'yes';
         $inbox->save();
 
         return view('zetthcore::AdminSC.report.inbox_detail', $data);
