@@ -70,7 +70,7 @@
             <label for="info-subscriber">Pelanggan Artikel</label><br>
             <div class="col-sm-12 col-xs-12 no-padding">
               <label>
-                <input name="info_subscriber" type="checkbox" value="1" {{ app('site')->enable_subscribe == 'yes' ? 'checked' : '' }}> Infokan ke Pelanggan
+                <input name="info_subscriber" type="checkbox" value="1" {{ bool(app('site')->enable_subscribe) ? 'checked' : '' }}> Infokan ke Pelanggan
               </label>
             </div>
           </div>
@@ -80,9 +80,9 @@
               <label>
                 @php
                   if (isset($data)) {
-                    $is_comment = $data->comment == 'yes' ? 'checked' : '';
+                    $is_comment = bool($data->comment) ? 'checked' : '';
                   } else {
-                    $is_comment = app('site')->enable_comment == 'yes' ? 'checked' : '';
+                    $is_comment = bool(app('site')->enable_comment) ? 'checked' : '';
                   }
                 @endphp
                 <input name="comment" type="checkbox" value="yes" {{ $is_comment }}> Komentar
@@ -92,9 +92,9 @@
               <label>
                 @php
                   if (isset($data)) {
-                    $is_like = $data->like == 'yes' ? 'checked' : '';
+                    $is_like = bool($data->like) ? 'checked' : '';
                   } else {
-                    $is_like = app('site')->enable_like == 'yes' ? 'checked' : '';
+                    $is_like = bool(app('site')->enable_like) ? 'checked' : '';
                   }
                 @endphp
                 <input name="like" type="checkbox" value="yes" {{ $is_like }}> Suka
@@ -104,9 +104,9 @@
               <label>
                 @php
                   if (isset($data)) {
-                    $is_share = $data->share == 'yes' ? 'checked' : '';
+                    $is_share = bool($data->share) ? 'checked' : '';
                   } else {
-                    $is_share = app('site')->enable_share == 'yes' ? 'checked' : '';
+                    $is_share = bool(app('site')->enable_share) ? 'checked' : '';
                   }
                 @endphp
                 <input name="share" type="checkbox" value="yes" {{ $is_share }}> Sebar

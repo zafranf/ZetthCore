@@ -26,7 +26,7 @@
         <div class="col-sm-4">
           <select id="url" name="url" class="form-control select2">
             <option value="#">[Tidak ada]</option>
-            <option value="external" {{ (isset($data) && $data->url_external == 'yes') ? 'selected' : '' }}>[Tautan Luar]</option>
+            <option value="external" {{ (isset($data) && bool($data->url_external)) ? 'selected' : '' }}>[Tautan Luar]</option>
             <option value="/" {{ (isset($data) && $data->url == "/" ) ? 'selected' : '' }}>Beranda</option>
             <option value="{{ env('POSTS_PATH', 'posts') }}" {{ (isset($data) && $data->url == env('POSTS_PATH', 'posts') ) ? 'selected' : '' }}>Artikel</option>
             {{-- <option value="{{ env('PAGES_PATH', 'pages') }}" {{ (isset($data) && $data->url == env('PAGES_PATH', 'pages') ) ? 'selected' : '' }}>Halaman</option> --}}
@@ -56,7 +56,7 @@
               @endif
             @endforeach
           </select>
-          <input type="text" class="form-control" id="url_external" name="url_external" value="{{ isset($data) ? (($data->url=="#") ? '' : $data->url) : '' }}" placeholder="http://example.com" {!! (isset($data) && $data->url_external == 'yes' ) ? 'style="margin-top:5px;" ' : 'style="margin-top:5px;display:none;" disabled ' !!}>
+          <input type="text" class="form-control" id="url_external" name="url_external" value="{{ isset($data) ? (($data->url=="#") ? '' : $data->url) : '' }}" placeholder="http://example.com" {!! (isset($data) && bool($data->url_external) ) ? 'style="margin-top:5px;" ' : 'style="margin-top:5px;display:none;" disabled ' !!}>
         </div>
       </div>
       <div class="form-group">
@@ -93,12 +93,12 @@
         <div class="col-sm-4">
           <div class="checkbox">
             <label>
-              <input type="checkbox" id="is_crud" name="is_crud" value="yes" {{ (isset($data) && $data->is_crud == 'yes') ? 'checked' : '' }}> Ya
+              <input type="checkbox" id="is_crud" name="is_crud" value="yes" {{ isset($data) && bool($data->is_crud) ? 'checked' : '' }}> Ya
             </label>
           </div>
         </div>
       </div>
-      <div class="form-group {{ Auth::user()->hasRole('super') ? '' : 'hide' }}" id="access-fields" {!! (isset($data) && $data->is_crud == 'yes') ? '' : 'style="display:none;"' !!}>
+      <div class="form-group {{ Auth::user()->hasRole('super') ? '' : 'hide' }}" id="access-fields" {!! isset($data) && bool($data->is_crud) ? '' : 'style="display:none;"' !!}>
         <label for="status" class="col-sm-2 control-label">Akses</label>
         <div class="col-sm-4">
           <div class="checkbox">
@@ -110,22 +110,22 @@
               </div>
               <div class="col-sm-2">
                 <label>
-                  <input type="checkbox" name="create" value="yes" {{ isset($data) && $data->create == 'yes' ? 'checked' : '' }}> Tambah
+                  <input type="checkbox" name="create" value="yes" {{ isset($data) && bool($data->create) ? 'checked' : '' }}> Tambah
                 </label>
               </div>
               <div class="col-sm-2">
                 <label>
-                  <input type="checkbox" name="read" value="yes" {{ isset($data) && $data->read == 'yes' ? 'checked' : '' }}> Detail
+                  <input type="checkbox" name="read" value="yes" {{ isset($data) && bool($data->read) ? 'checked' : '' }}> Detail
                 </label>
               </div>
               <div class="col-sm-2">
                 <label>
-                  <input type="checkbox" name="update" value="yes" {{ isset($data) && $data->update == 'yes' ? 'checked' : '' }}> Edit
+                  <input type="checkbox" name="update" value="yes" {{ isset($data) && bool($data->update) ? 'checked' : '' }}> Edit
                 </label>
               </div>
               <div class="col-sm-2">
                 <label>
-                  <input type="checkbox" name="delete" value="yes" {{ isset($data) && $data->delete == 'yes' ? 'checked' : '' }}> Hapus
+                  <input type="checkbox" name="delete" value="yes" {{ isset($data) && bool($data->delete) ? 'checked' : '' }}> Hapus
                 </label>
               </div>
             </div>

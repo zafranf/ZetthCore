@@ -111,26 +111,22 @@
               <div class="checkbox">
                 <div class="col-xs-6 col-sm-3">
                   <label>
-                    <input type="checkbox" id="enable-subscribe" name="enable_subscribe"
-                      {{ (!bool(app('site')->enable_subscribe)) ? '' : 'checked' }}> Langganan
+                    <input type="checkbox" id="enable-subscribe" name="enable_subscribe" value="yes" {{ (!bool(app('site')->enable_subscribe)) ? '' : 'checked' }}> Langganan
                   </label>
                 </div>
                 <div class="col-xs-6 col-sm-3">
                   <label>
-                    <input type="checkbox" id="enable-comment" name="enable_comment"
-                      {{ (!bool(app('site')->enable_comment)) ? '' : 'checked' }}> Komentar
+                    <input type="checkbox" id="enable-comment" name="enable_comment" value="yes" {{ (!bool(app('site')->enable_comment)) ? '' : 'checked' }}> Komentar
                   </label>
                 </div>
                 <div class="col-xs-6 col-sm-3">
                   <label>
-                    <input type="checkbox" id="enable-like" name="enable_like"
-                      {{ (!bool(app('site')->enable_like)) ? '' : 'checked' }}> Suka
+                    <input type="checkbox" id="enable-like" name="enable_like" value="yes" {{ (!bool(app('site')->enable_like)) ? '' : 'checked' }}> Suka
                   </label>
                 </div>
                 <div class="col-xs-6 col-sm-3">
                   <label>
-                    <input type="checkbox" id="enable-share" name="enable_share"
-                      {{ (!bool(app('site')->enable_share)) ? '' : 'checked' }}> Sebar
+                    <input type="checkbox" id="enable-share" name="enable_share" value="yes" {{ (!bool(app('site')->enable_share)) ? '' : 'checked' }}> Sebar
                   </label>
                 </div>
               </div>

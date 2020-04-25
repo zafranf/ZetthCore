@@ -145,10 +145,10 @@ class SiteController extends AdminController
         $app->phone = $r->input('phone');
         $app->coordinate = $r->input('coordinate');
         $app->perpage = $r->input('perpage');
-        $app->enable_subscribe = bool($r->input('enable_subscribe')) ? 'yes' : 'no';
-        $app->enable_like = bool($r->input('enable_like')) ? 'yes' : 'no';
-        $app->enable_share = bool($r->input('enable_share')) ? 'yes' : 'no';
-        $app->enable_comment = bool($r->input('enable_comment')) ? 'yes' : 'no';
+        $app->enable_subscribe = $r->input('enable_subscribe') ?? 'no';
+        $app->enable_like = $r->input('enable_like') ?? 'no';
+        $app->enable_share = $r->input('enable_share') ?? 'no';
+        $app->enable_comment = $r->input('enable_coment') ?? 'no';
         $app->google_analytics = $r->input('google_analytics');
         $app->status = $r->input('status');
         $app->active_at = $r->input('active_at') ?? date("Y-m-d H:i:s");

@@ -61,7 +61,7 @@
         <div class="col-sm-4">
           <select id="url" name="url" class="form-control select2">
             <option value="#">[Tidak ada]</option>
-            <option value="external" {{ (isset($data) && $data->url_external == 'yes' ) ? 'selected' : '' }}>[Tautan Luar]</option>
+            <option value="external" {{ (isset($data) && bool($data->url_external)) ? 'selected' : '' }}>[Tautan Luar]</option>
             <option value="/" {{ (isset($data) && $data->url == "/" ) ? 'selected' : '' }}>Beranda</option>
             <option value="{{ env('POSTS_PATH', 'posts') }}" {{ (isset($data) && $data->url == env('POSTS_PATH', 'posts') ) ? 'selected' : '' }}>Artikel</option>
             {{-- <option value="{{ env('PAGES_PATH', 'pages') }}" {{ (isset($data) && $data->url == env('PAGES_PATH', 'pages') ) ? 'selected' : '' }}>Halaman</option> --}}
