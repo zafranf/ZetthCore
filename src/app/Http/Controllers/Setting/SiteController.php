@@ -53,7 +53,7 @@ class SiteController extends AdminController
             'breadcrumbs' => $this->breadcrumbs,
             'page_title' => $this->page_title,
             'page_subtitle' => 'Situs',
-            'socmeds' => Socmed::where('status', 1)->get(),
+            'socmeds' => Socmed::where('status', 'active')->get(),
         ];
 
         return view('zetthcore::AdminSC.setting.site', $data);
