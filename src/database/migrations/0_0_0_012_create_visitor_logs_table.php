@@ -25,10 +25,11 @@ class CreateVisitorLogsTable extends Migration
             $table->string('device_name');
             $table->string('os');
             $table->string('os_version');
-            $table->boolean('is_robot');
+            $table->enum('is_robot', ['yes', 'no'])->default('no');
             $table->string('robot_name')->nullable();
-            $table->integer('count')->unsigned()->default(0);
+            $table->bigInteger('count')->unsigned()->default(0);
             $table->timestamps();
+            $table->bigInteger('site_id')->unsigned()->default(1);
         });
     }
 

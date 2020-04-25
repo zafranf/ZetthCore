@@ -30,8 +30,10 @@ class CreateCommentsTable extends Migration
             $table->bigInteger('approved_by')->unsigned()->nullable();
             $table->bigInteger('created_by')->unsigned()->nullable();
             $table->bigInteger('updated_by')->unsigned()->nullable();
+            $table->bigInteger('deleted_by')->unsigned()->nullable();
             $table->timestamps();
             $table->softDeletes();
+            $table->bigInteger('site_id')->unsigned()->default(1);
         });
     }
 

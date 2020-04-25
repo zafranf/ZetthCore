@@ -21,6 +21,7 @@ class CreateIntermDatasTable extends Migration
             $table->bigInteger('post_id')->unsigned()->nullable();
             $table->timestamps();
             $table->softDeletes();
+            $table->bigInteger('site_id')->unsigned()->default(1);
         });
     }
 

@@ -18,6 +18,7 @@ class CreateUserVerificationsTable extends Migration
             $table->string('verify_code')->nullable();
             $table->datetime('verify_code_expire')->nullable();
             $table->timestamp('verified_at')->nullable();
+            $table->bigInteger('site_id')->unsigned()->default(1);
         });
     }
 

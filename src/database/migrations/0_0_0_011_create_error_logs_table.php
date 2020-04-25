@@ -26,8 +26,7 @@ class CreateErrorLogsTable extends Migration
             $table->integer('count')->unsigned()->default(0);
             $table->text('time_history')->nullable();
             $table->timestamps();
-
-            // $table->primary(['code', 'path', 'file', 'line', 'message']);
+            $table->bigInteger('site_id')->unsigned()->default(1);
         });
     }
 

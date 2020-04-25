@@ -20,6 +20,7 @@ class LaratrustSetupTables extends Migration
             $table->enum('status', ['active', 'inactive'])->default('inactive');
             $table->timestamps();
             $table->softDeletes();
+            $table->bigInteger('site_id')->unsigned()->default(1);
         });
 
         // Create table for storing permissions
@@ -30,6 +31,7 @@ class LaratrustSetupTables extends Migration
             $table->string('description')->nullable();
             $table->timestamps();
             $table->softDeletes();
+            $table->bigInteger('site_id')->unsigned()->default(1);
         });
 
         // Create table for associating roles to users and teams (Many To Many Polymorphic)

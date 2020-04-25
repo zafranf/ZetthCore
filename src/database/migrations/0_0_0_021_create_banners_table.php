@@ -26,6 +26,7 @@ class CreateBannersTable extends Migration
             $table->enum('status', ['active', 'inactive'])->default('inactive');
             $table->timestamps();
             $table->softDeletes();
+            $table->bigInteger('site_id')->unsigned()->default(1);
         });
     }
 

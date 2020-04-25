@@ -34,6 +34,7 @@ class CreateMenuTable extends Migration
             $table->enum('delete', ['yes', 'no'])->default('no');
             $table->timestamps();
             $table->softDeletes();
+            $table->bigInteger('site_id')->unsigned()->default(1);
         });
     }
 

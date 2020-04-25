@@ -30,12 +30,13 @@ class CreatePostsTable extends Migration
             $table->integer('disliked')->unsigned()->default(0);
             $table->string('short_url')->nullable();
             $table->enum('status', ['active', 'inactive', 'draft'])->default('inactive');
+            $table->timestamp('published_at')->nullable();
             $table->bigInteger('created_by')->unsigned()->index();
             $table->bigInteger('updated_by')->unsigned()->nullable();
             $table->bigInteger('deleted_by')->unsigned()->nullable();
-            $table->timestamp('published_at')->nullable();
             $table->timestamps();
             $table->softDeletes();
+            $table->bigInteger('site_id')->unsigned()->default(1);
         });
     }
 

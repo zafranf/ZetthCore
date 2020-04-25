@@ -21,6 +21,7 @@ class CreateSocmedDatasTable extends Migration
             $table->bigInteger('socmedable_id')->unsigned();
             $table->timestamps();
             $table->softDeletes();
+            $table->bigInteger('site_id')->unsigned()->default(1);
         });
     }
 
