@@ -218,13 +218,6 @@ class MenuController extends AdminController
             'group' => 'required|exists:menu_groups,id',
         ]);
 
-        /* get order number if null */
-        // if (!$r->input('order')) {
-        //     $parent_id = $r->input('parent') ?? 0;
-        //     $parent = Menu::where('parent_id', (int) $parent_id)->orderBy('order', 'desc')->first();
-        //     $order = $parent->order + 1;
-        // }
-
         /* save data */
         $menu->name = $r->input('name');
         $menu->description = $r->input('description');
@@ -236,7 +229,6 @@ class MenuController extends AdminController
         }
         $menu->route_name = $r->input('route_name');
         $menu->target = $r->input('target');
-        // $menu->order = $order;
         $menu->icon = $r->input('icon');
         $menu->status = $r->input('status') ?? 'inactive';
         $menu->is_crud = $r->input('is_crud') ?? 'no';
