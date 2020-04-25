@@ -280,15 +280,10 @@ trait MainTrait
      * @param  array  $par [description]
      * @return [type]      [description]
      */
-    public function uploadFile($par = [])
+    public function uploadFile($file, $path = null, $name = null)
     {
-        /* set variable */
-        $file = $par['file'];
-        $folder = public_path($par['folder']);
-        $name = $par['name'];
-        $type = $par['type'];
-        $ext = $par['ext'];
-        $size = $par['size'];
+        /* set folder path */
+        $folder = public_path($path ?? '/assets/images/');
 
         /* checking folder */
         if (!is_dir($folder)) {
@@ -302,11 +297,20 @@ trait MainTrait
             }
         }
 
+        /* set variable */
+        $filename = $file->getFileName();
+        $type = $file->getClientMimeType();
+        $ext = $file->getClientOriginalExtension();
+        $size = $file->getClientSize();
+
         /* process upload */
         if (strpos($type, 'image') !== false) {
             return $this->uploadImage($par);
         } else {
-            return $file->move($folder, $name . "." . $ext);
+            /* save file */
+            $file->move($folder, ($name ?? ($filename . "." . $ext)));
+
+            return $folder . '/' . ($name ?? ($filename . "." . $ext));
         }
     }
 
@@ -315,20 +319,15 @@ trait MainTrait
      * @param  [type] $par [description]
      * @return [type]      [description]
      */
-    public function uploadImage($par = [], $optimation = false)
+    public function uploadImage($file, $path = null, $name = null, $optimation = false)
     {
-        /* set variable */
-        $file = $par['file'];
-        $folder = public_path($par['folder']);
-        $name = $par['name'];
-        $type = $par['type'];
-        $ext = $par['ext'];
-        $size = $par['size'];
+        /* set folder path */
+        $folder = public_path($path ?? '/assets/images/');
 
         /* folder check */
-        if (!is_dir($folder)) {
+        if (!is_dir($path)) {
             $folder = storage_path('app/public');
-            $folders = explode('/', trim($par['folder'], '/'));
+            $folders = explode('/', trim($path, '/'));
             foreach ($folders as $foldr) {
                 $folder .= '/' . $foldr;
                 if (!is_dir($folder)) {
@@ -337,18 +336,25 @@ trait MainTrait
             }
         }
 
-        /* preparing image file */
-        $img = \Image::make($par['file']);
+        /* set variable */
+        $filename = $file->getFileName();
+        $type = $file->getClientMimeType();
+        $ext = $file->getClientOriginalExtension();
+        $size = $file->getClientSize();
 
-        /* save original */
-        $img->save($folder . '/' . $par['name'] . '.' . $par['ext']);
+        /* preparing image file */
+        $img = \Image::make($file);
+
+        /* save image */
+        $saveas = $folder . '/' . ($name ?? ($filename . '.' . $ext));
+        $img->save($saveas);
 
         /* image optimation */
         if ($optimation) {
             $this->uploadImageOptimation($par);
         }
 
-        return true;
+        return $saveas;
     }
 
     /**

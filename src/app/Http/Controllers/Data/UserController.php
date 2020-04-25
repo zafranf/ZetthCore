@@ -134,18 +134,11 @@ class UserController extends AdminController
             $user->image = null;
         } else if ($r->hasFile('image')) {
             $file = $r->file('image');
-            $par = [
-                'file' => $file,
-                'folder' => '/assets/images/users/',
-                'name' => str_slug($user->name),
-                'type' => $file->getClientMimeType(),
-                'ext' => $file->getClientOriginalExtension(),
-                'size' => $file->getClientSize(),
-            ];
+            $ext = $file->getClientOriginalExtension();
+            $name = str_slug(app('user')->name) . '.' . $ext;
 
-            if ($this->uploadImage($par)) {
-                $user->image = $par['name'] . '.' . $par['ext'];
-                // $user->save();
+            if ($this->uploadImage($file, '/assets/images/users/', $name)) {
+                $user->image = $name;
             }
         }
 
@@ -268,18 +261,11 @@ class UserController extends AdminController
             $user->image = null;
         } else if ($r->hasFile('image')) {
             $file = $r->file('image');
-            $par = [
-                'file' => $file,
-                'folder' => '/assets/images/users/',
-                'name' => str_slug($user->name),
-                'type' => $file->getClientMimeType(),
-                'ext' => $file->getClientOriginalExtension(),
-                'size' => $file->getClientSize(),
-            ];
+            $ext = $file->getClientOriginalExtension();
+            $name = str_slug(app('user')->name) . '.' . $ext;
 
-            if ($this->uploadImage($par)) {
-                $user->image = $par['name'] . '.' . $par['ext'];
-                // $user->save();
+            if ($this->uploadImage($file, '/assets/images/users/', $name)) {
+                $user->image = $name;
             }
         }
 

@@ -158,17 +158,11 @@ class SiteController extends AdminController
             $app->logo = null;
         } else if ($r->hasFile('logo')) {
             $file = $r->file('logo');
-            $par = [
-                'file' => $file,
-                'folder' => '/assets/images/',
-                'name' => 'logo',
-                'type' => $file->getClientMimeType(),
-                'ext' => $file->getClientOriginalExtension(),
-                'size' => $file->getClientSize(),
-            ];
+            $ext = $file->getClientOriginalExtension();
+            $name = 'logo.' . $ext;
 
-            if ($this->uploadImage($par)) {
-                $app->logo = $par['name'] . '.' . $par['ext'];
+            if ($this->uploadImage($file, '/assets/images/', $name)) {
+                $app->logo = $name;
             }
         }
 
@@ -182,17 +176,11 @@ class SiteController extends AdminController
                 }
             } else if ($r->hasFile('icon')) {
                 $file = $r->file('icon');
-                $par = [
-                    'file' => $file,
-                    'folder' => '/assets/images/',
-                    'name' => 'icon',
-                    'type' => $file->getClientMimeType(),
-                    'ext' => $file->getClientOriginalExtension(),
-                    'size' => $file->getClientSize(),
-                ];
+                $ext = $file->getClientOriginalExtension();
+                $name = 'icon.' . $ext;
 
-                if ($this->uploadImage($par)) {
-                    $app->icon = $par['name'] . '.' . $par['ext'];
+                if ($this->uploadImage($file, '/assets/images/', $name)) {
+                    $app->icon = $name;
                 }
             }
         }

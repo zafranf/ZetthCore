@@ -161,17 +161,11 @@ class BannerController extends AdminController
         /* process image */
         if ($r->hasFile('image')) {
             $file = $r->file('image');
-            $par = [
-                'file' => $file,
-                'folder' => '/assets/images/banners/',
-                'name' => 'banner-' . (md5($banner->id . env('DB_PORT', 3306))),
-                'type' => $file->getClientMimeType(),
-                'ext' => $file->getClientOriginalExtension(),
-                'size' => $file->getClientSize(),
-            ];
+            $ext = $file->getClientOriginalExtension();
+            $name = 'banner-' . (md5($banner->id . env('DB_PORT', 3306))) . '.' . $ext;
 
-            if ($this->uploadImage($par)) {
-                $banner->image = $par['name'] . '.' . $par['ext'];
+            if ($this->uploadImage($file, '/assets/images/banners/', $name)) {
+                $user->image = $name;
             }
         }
         $banner->save();
@@ -279,17 +273,11 @@ class BannerController extends AdminController
         /* process image */
         if ($r->hasFile('image')) {
             $file = $r->file('image');
-            $par = [
-                'file' => $file,
-                'folder' => '/assets/images/banners/',
-                'name' => 'banner-' . (md5($banner->id . env('DB_PORT', 3306))),
-                'type' => $file->getClientMimeType(),
-                'ext' => $file->getClientOriginalExtension(),
-                'size' => $file->getClientSize(),
-            ];
+            $ext = $file->getClientOriginalExtension();
+            $name = 'banner-' . (md5($banner->id . env('DB_PORT', 3306))) . '.' . $ext;
 
-            if ($this->uploadImage($par)) {
-                $banner->image = $par['name'] . '.' . $par['ext'];
+            if ($this->uploadImage($file, '/assets/images/banners/', $name)) {
+                $user->image = $name;
             }
         }
         $banner->save();

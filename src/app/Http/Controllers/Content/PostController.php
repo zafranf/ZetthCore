@@ -162,17 +162,11 @@ class PostController extends AdminController
         /* process image */
         if ($r->hasFile('cover')) {
             $file = $r->file('cover');
-            $par = [
-                'file' => $file,
-                'folder' => '/assets/images/posts/',
-                'name' => 'post-' . (md5($post->id . env('DB_PORT', 3306))),
-                'type' => $file->getClientMimeType(),
-                'ext' => $file->getClientOriginalExtension(),
-                'size' => $file->getClientSize(),
-            ];
+            $ext = $file->getClientOriginalExtension();
+            $name = 'post-' . (md5($post->id . env('DB_PORT', 3306))) . '.' . $ext;
 
-            if ($this->uploadImage($par)) {
-                $post->cover = $par['name'] . '.' . $par['ext'];
+            if ($this->uploadImage($file, '/assets/images/posts/', $name)) {
+                $post->cover = $name;
             }
         }
         $post->save();
@@ -290,17 +284,11 @@ class PostController extends AdminController
             $post->cover = null;
         } else if ($r->hasFile('cover')) {
             $file = $r->file('cover');
-            $par = [
-                'file' => $file,
-                'folder' => '/assets/images/posts/',
-                'name' => 'post-' . (md5($post->id . env('DB_PORT', 3306))),
-                'type' => $file->getClientMimeType(),
-                'ext' => $file->getClientOriginalExtension(),
-                'size' => $file->getClientSize(),
-            ];
+            $ext = $file->getClientOriginalExtension();
+            $name = 'post-' . (md5($post->id . env('DB_PORT', 3306))) . '.' . $ext;
 
-            if ($this->uploadImage($par)) {
-                $post->cover = $par['name'] . '.' . $par['ext'];
+            if ($this->uploadImage($file, '/assets/images/posts/', $name)) {
+                $post->cover = $name;
             }
         }
         $post->save();
