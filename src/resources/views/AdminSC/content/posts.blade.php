@@ -7,11 +7,11 @@
         <tr>
           <td>No.</td>
           @if (app('is_desktop'))
-          <td>Sampul</td>
-          <td>Judul</td>
-          <td>Status</td>
+            <td>Sampul</td>
+            <td>Judul</td>
+            <td>Status</td>
           @else
-          <td>Artikel</td>
+            <td>Artikel</td>
           @endif
           <td>Akses</td>
         </tr>

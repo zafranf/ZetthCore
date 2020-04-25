@@ -39,12 +39,12 @@ class Post extends Model
 
     public function comments()
     {
-        return $this->morphMany('ZetthCore\Models\Comment', 'commentable')->where('status', 1);
+        return $this->morphMany('ZetthCore\Models\Comment', 'commentable')->where('status', 'active');
     }
 
     public function comments_sub()
     {
-        return $this->morphMany('ZetthCore\Models\Comment', 'commentable')->where('status', 1)->whereNull('parent_id')->with(['subcomments', 'commentator']);
+        return $this->morphMany('ZetthCore\Models\Comment', 'commentable')->where('status', 'active')->whereNull('parent_id')->with(['subcomments', 'commentator']);
     }
 
     public function comments_all()
@@ -74,7 +74,7 @@ class Post extends Model
 
     public function scopeActive($query)
     {
-        return $query->where('status', 1);
+        return $query->where('status', 'active');
     }
 
     public function scopePages($query)

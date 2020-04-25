@@ -70,7 +70,7 @@
             <label for="info-subscriber">Pelanggan Artikel</label><br>
             <div class="col-sm-12 col-xs-12 no-padding">
               <label>
-                <input name="info_subscriber" type="checkbox" value="1" {{ app('site')->enable_subscribe ? 'checked' : '' }}> Infokan ke Pelanggan
+                <input name="info_subscriber" type="checkbox" value="1" {{ app('site')->enable_subscribe == 'yes' ? 'checked' : '' }}> Infokan ke Pelanggan
               </label>
             </div>
           </div>
@@ -78,21 +78,38 @@
             <label for="visitor">Pengunjung</label><br>
             <div class="col-sm-4 col-xs-4 no-padding">
               <label>
-                <input name="comment" type="checkbox"
-                  {{ (isset($data) && ($data->comment)) ? 'checked' : ((app('site')->enable_comment) ? 'checked' : '') }}>
-                Komentar
+                @php
+                  if (isset($data)) {
+                    $is_comment = $data->comment == 'yes' ? 'checked' : '';
+                  } else {
+                    $is_comment = app('site')->enable_comment == 'yes' ? 'checked' : '';
+                  }
+                @endphp
+                <input name="comment" type="checkbox" value="yes" {{ $is_comment }}> Komentar
               </label>
             </div>
             <div class="col-sm-4 col-xs-4 no-padding">
               <label>
-                <input name="like" type="checkbox"
-                  {{ (isset($data) && ($data->like)) ? 'checked' : ((app('site')->enable_like) ? 'checked' : '') }}> Suka
+                @php
+                  if (isset($data)) {
+                    $is_like = $data->like == 'yes' ? 'checked' : '';
+                  } else {
+                    $is_like = app('site')->enable_like == 'yes' ? 'checked' : '';
+                  }
+                @endphp
+                <input name="like" type="checkbox" value="yes" {{ $is_like }}> Suka
               </label>
             </div>
             <div class="col-sm-4 col-xs-4 no-padding">
               <label>
-                <input name="share" type="checkbox"
-                  {{ (isset($data) && ($data->share)) ? 'checked' : ((app('site')->enable_share) ? 'checked' : '') }}> Sebar
+                @php
+                  if (isset($data)) {
+                    $is_share = $data->share == 'yes' ? 'checked' : '';
+                  } else {
+                    $is_share = app('site')->enable_share == 'yes' ? 'checked' : '';
+                  }
+                @endphp
+                <input name="share" type="checkbox" value="yes" {{ $is_share }}> Sebar
               </label>
             </div>
           </div>
@@ -100,12 +117,12 @@
             <label for="publish">Terbitkan</label><br>
             <div class="col-sm-6 col-xs-6 no-padding">
               <label>
-                <input name="status" type="radio" value="1" {{ (isset($data) && (!$data->status)) ? '' : 'checked' }}> Ya
+                <input name="status" type="radio" value="active" {{ (isset($data) && $data->status == 'inactive') ? '' : 'checked' }}> Ya
               </label>
             </div>
             <div class="col-sm-6 col-xs-6 no-padding">
               <label>
-                <input name="status" type="radio" value="0" {{ (isset($data) && (!$data->status)) ? 'checked' : '' }}>
+                <input name="status" type="radio" value="inactive" {{ (isset($data) && $data->status == 'inactive') ? 'checked' : '' }}>
                 Tidak
               </label>
             </div>
@@ -306,7 +323,7 @@
       
       $('input').on('keypress', function(e){
         key = e.keyCode;
-        if (key==13) {
+        if (key == 13) {
           e.preventDefault();
         }
       });

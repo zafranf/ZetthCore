@@ -96,8 +96,9 @@ class PostController extends AdminController
 
         /* get categories */
         $categories = Term::where('type', 'category')
+            ->where('group', 'post')
             ->whereNull('parent_id')
-            ->where('status', 1)
+            ->where('status', 'active')
             ->orderBy('name', 'asc')
             ->with('subcategory')
             ->get();
@@ -133,17 +134,14 @@ class PostController extends AdminController
         ]);
 
         /* set variables */
-        // $title = $r->input('title');
-        // $slug = str_slug($r->input('slug'));
         $categories = $r->input('categories');
         $descriptions = $r->input('descriptions');
         $parents = $r->input('parents');
         $tags = explode(",", $r->input('tags'));
-        // $digit = 3;
-        // $uniq = str_random($digit);
-        // $cover = str_replace(url('/'), '', $r->input('cover'));
         $date = $r->input('date') ?? carbon()->format("Y-m-d");
         $time = $r->input('time') ?? carbon()->format("H:i:s");
+        $digit = 3;
+        $uniq = \Str::random($digit);
 
         /* save data */
         $post = new Post;
@@ -152,13 +150,12 @@ class PostController extends AdminController
         $post->content = $r->input('content');
         $post->excerpt = $r->input('excerpt') ?? substr(strip_tags($post->content), 0, 255);
         $post->type = 'article';
-        // $post->cover = $r->input('cover');
         $post->status = $r->input('status');
-        $post->share = ($r->input('share')) ? 1 : 0;
-        $post->like = ($r->input('like')) ? 1 : 0;
-        $post->comment = ($r->input('comment')) ? 1 : 0;
+        $post->share = $r->input('share') ?? 'no';
+        $post->like = $r->input('like') ?? 'no';
+        $post->comment = $r->input('comment') ?? 'no';
         $post->published_at = carbon_query($date . ' ' . $time);
-        // $post->short_url = $uniq;
+        $post->short_url = $uniq;
         $post->created_by = app('user')->id;
         $post->save();
 
@@ -230,8 +227,9 @@ class PostController extends AdminController
 
         /* get active categories */
         $categories = Term::where('type', 'category')
+            ->where('group', 'post')
             ->whereNull('parent_id')
-            ->where('status', 1)
+            ->where('status', 'active')
             ->orderBy('name', 'asc')
             ->with('subcategory')
             ->get();
@@ -261,42 +259,36 @@ class PostController extends AdminController
         /* validation */
         $this->validate($r, [
             'title' => 'required|max:100|unique:posts,title,' . $post->id . ',id,type,article,deleted_at,NULL',
-            // 'slug' => 'unique:posts,slug,' . $post->id . ',id,type,article',
             'content' => 'required',
             'categories' => 'required',
             'tags' => 'required',
         ]);
 
         /* set variables */
-        // $title = $r->input('title');
-        // $slug = str_slug($r->input('slug'));
         $categories = $r->input('categories');
         $descriptions = $r->input('descriptions');
         $parents = $r->input('parents');
         $tags = explode(",", $r->input('tags'));
-        // $digit = 3;
-        // $uniq = str_random($digit);
-        // $cover = str_replace(url('/'), '', $r->input('cover'));
         $date = $r->input('date') ?? carbon()->format("Y-m-d");
         $time = $r->input('time') ?? carbon()->format("H:i:s");
 
         /* save data */
         $post->title = $r->input('title');
-        // $post->slug = $slug;
         $post->content = $r->input('content');
         $post->excerpt = $r->input('excerpt') ?? substr(strip_tags($post->content), 0, 255);
         $post->type = 'article';
         $post->status = $r->input('status');
-        $post->share = ($r->input('share')) ? 1 : 0;
-        $post->like = ($r->input('like')) ? 1 : 0;
-        $post->comment = ($r->input('comment')) ? 1 : 0;
+        $post->share = $r->input('share') ?? 'no';
+        $post->like = $r->input('like') ?? 'no';
+        $post->comment = $r->input('comment') ?? 'no';
         $post->published_at = carbon_query($date . ' ' . $time);
-        // $post->short_url = $uniq;
         $post->updated_by = app('user')->id;
         $post->save();
 
         /* process image */
-        if ($r->hasFile('cover')) {
+        if ($r->input('cover_remove')) {
+            $post->cover = null;
+        } else if ($r->hasFile('cover')) {
             $file = $r->file('cover');
             $par = [
                 'file' => $file,
@@ -310,9 +302,6 @@ class PostController extends AdminController
             if ($this->uploadImage($par)) {
                 $post->cover = $par['name'] . '.' . $par['ext'];
             }
-        }
-        if ($r->input('cover_remove')) {
-            $post->cover = null;
         }
         $post->save();
 
@@ -406,7 +395,7 @@ class PostController extends AdminController
                 }
                 $term->type = 'category';
                 $term->group = 'post';
-                $term->status = 1;
+                $term->status = 'active';
                 $term->save();
 
                 $cid = $term->id;
@@ -440,7 +429,7 @@ class PostController extends AdminController
                 $term->slug = str_slug($term->name);
                 $term->type = 'tag';
                 $term->group = 'post';
-                $term->status = 1;
+                $term->status = 'active';
                 $term->save();
 
                 $tid = $term->id;
@@ -473,5 +462,4 @@ class PostController extends AdminController
     {
         \ZetthCore\Jobs\NotifSubscriber::dispatch($post);
     }
-
 }
