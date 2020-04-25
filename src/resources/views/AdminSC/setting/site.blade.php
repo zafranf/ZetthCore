@@ -112,26 +112,25 @@
                 <div class="col-xs-6 col-sm-3">
                   <label>
                     <input type="checkbox" id="enable-subscribe" name="enable_subscribe"
-                      {{ (!app('site')->enable_subscribe) ? '' : 'checked' }}> Langganan
+                      {{ (!bool(app('site')->enable_subscribe)) ? '' : 'checked' }}> Langganan
                   </label>
                 </div>
                 <div class="col-xs-6 col-sm-3">
                   <label>
                     <input type="checkbox" id="enable-comment" name="enable_comment"
-                      {{ (!app('site')->enable_comment) ? '' : 'checked' }}> Komentar
+                      {{ (!bool(app('site')->enable_comment)) ? '' : 'checked' }}> Komentar
                   </label>
                 </div>
                 <div class="col-xs-6 col-sm-3">
                   <label>
                     <input type="checkbox" id="enable-like" name="enable_like"
-                      {{ (!app('site')->enable_like) ? '' : 'checked' }}>
-                    Suka
+                      {{ (!bool(app('site')->enable_like)) ? '' : 'checked' }}> Suka
                   </label>
                 </div>
                 <div class="col-xs-6 col-sm-3">
                   <label>
                     <input type="checkbox" id="enable-share" name="enable_share"
-                      {{ (!app('site')->enable_share) ? '' : 'checked' }}> Sebar
+                      {{ (!bool(app('site')->enable_share)) ? '' : 'checked' }}> Sebar
                   </label>
                 </div>
               </div>
@@ -141,17 +140,20 @@
             <label for="status" class="col-md-4 control-label">Status</label>
             <div class="col-md-8">
               <select class="form-control custom-select2" id="status" name="status">
-                <option value="1" {{ (app('site')->status == 1) ? 'selected' : '' }}>Aktif</option>
-                <option value="0" {{ (app('site')->status == 0) ? 'selected' : '' }}>Segera Hadir</option>
-                <option value="2" {{ (app('site')->status == 2) ? 'selected' : '' }}>Perbaikan</option>
+                <option value="active" {{ (app('site')->status == 'actice') ? 'selected' : '' }}>Aktif</option>
+                <option value="comingsoon" {{ (app('site')->status == 'comingsoon') ? 'selected' : '' }}>Segera Hadir</option>
+                <option value="maintenance" {{ (app('site')->status == 'maintenance') ? 'selected' : '' }}>Perbaikan</option>
+                @if (app('user')->hasRole('super')) 
+                  <option value="suspend" {{ (app('site')->status == 'suspend') ? 'selected' : '' }}>Ditangguhkan</option>
+                @endif
               </select>
             </div>
           </div>
-          <div class="form-group" {!! (app('site')->status == 1) ? 'style="display:none;"' : '' !!} id="d-active-at">
+          <div class="form-group" {!! (app('site')->status == 'active' || app('site')->status == 'suspend') ? 'style="display:none;"' : '' !!} id="d-active-at">
             <label for="active_at" class="col-md-4 control-label">Aktif pada</label>
             <div class="col-md-8">
               <input type="text" class="form-control" id="active-at" name="active_at" value="{{ isset(app('site')->active_at) ? carbon(app('site')->active_at)->format('Y-m-d') : '' }}" {!!
-                (app('site')->status == 1) ? 'readonly' : '' !!} placeholder="Dibuka pada..">
+                (app('site')->status == 'active') ? 'readonly' : '' !!} placeholder="Dibuka pada..">
             </div>
           </div>
         </div>
@@ -322,7 +324,7 @@
 
       $(document).ready(function() {
         $('#status').on("change", function(){
-          if ($('#status').val()!=1){
+          if ($('#status').val() != 'active' && $('#status').val() != 'suspend'){
             $('#d-active-at').show();
             $('#active-at').attr('readonly', false);
           } else {

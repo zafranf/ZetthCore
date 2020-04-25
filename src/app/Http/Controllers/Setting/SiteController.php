@@ -140,17 +140,17 @@ class SiteController extends AdminController
         $app->description = $r->input('description');
         $app->keywords = $r->input('keywords');
         $app->tagline = $r->input('tagline');
-        $app->status = $r->input('status');
         $app->email = $r->input('email');
         $app->address = $r->input('address');
         $app->phone = $r->input('phone');
-        $app->coordinate = $r->input('coordinate'); //str_replace(" ", "", $r->input('coordinate'));
+        $app->coordinate = $r->input('coordinate');
         $app->perpage = $r->input('perpage');
-        $app->enable_subscribe = bool($r->input('enable_subscribe')) ? 1 : 0;
-        $app->enable_like = bool($r->input('enable_like')) ? 1 : 0;
-        $app->enable_share = bool($r->input('enable_share')) ? 1 : 0;
-        $app->enable_comment = bool($r->input('enable_comment')) ? 1 : 0;
+        $app->enable_subscribe = bool($r->input('enable_subscribe')) ? 'yes' : 'no';
+        $app->enable_like = bool($r->input('enable_like')) ? 'yes' : 'no';
+        $app->enable_share = bool($r->input('enable_share')) ? 'yes' : 'no';
+        $app->enable_comment = bool($r->input('enable_comment')) ? 'yes' : 'no';
         $app->google_analytics = $r->input('google_analytics');
+        $app->status = $r->input('status');
         $app->active_at = $r->input('active_at') ?? date("Y-m-d H:i:s");
 
         /* upload logo */

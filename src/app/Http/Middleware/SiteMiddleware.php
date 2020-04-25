@@ -29,14 +29,16 @@ class SiteMiddleware
         }
 
         /* check status */
-        if ($status == 0) {
+        if ($status == 'comingsoon') {
             if ($uri != "comingsoon") {
                 return redirect(route('web.comingsoon'));
             }
-        } else if ($status == 2) {
+        } else if ($status == 'maintenance') {
             if ($uri != "maintenance") {
                 return redirect(route('web.maintenance'));
             }
+        } else if ($status == 'suspend') {
+            return abort(503);
         } else {
             if ($uri == "maintenance" || $uri == "comingsoon") {
                 return redirect(route('web.root'));
@@ -48,17 +50,17 @@ class SiteMiddleware
 
     public function check_date()
     {
+        if (app('site')->status == 'suspend') {
+            return false;
+        }
+
         $now = time();
         $active_at = app('site')->active_at->getTimestamp();
         if ($now >= $active_at) {
             $setting = app('site');
-            $setting->status = 1;
+            $setting->status = 'active';
             $setting->save();
-
-            return true;
         }
-
-        return false;
     }
 
 }
