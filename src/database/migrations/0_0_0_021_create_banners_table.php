@@ -22,7 +22,7 @@ class CreateBannersTable extends Migration
             $table->enum('url_external', ['yes', 'no'])->default('no');
             $table->enum('target', ['_self', '_blank'])->default('_self');
             $table->tinyInteger('order')->default(1)->unsigned();
-            $table->boolean('only_image')->comment('0=false, 1=true')->unsigned()->default(0);
+            $table->enum('only_image', ['yes', 'no'])->default('no');
             $table->enum('status', ['active', 'inactive'])->default('inactive');
             $table->timestamps();
             $table->softDeletes();

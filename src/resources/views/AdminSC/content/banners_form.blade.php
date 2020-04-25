@@ -61,7 +61,7 @@
         <div class="col-sm-4">
           <select id="url" name="url" class="form-control select2">
             <option value="#">[Tidak ada]</option>
-            <option value="external" {{ (isset($data) && ($data->url_external) ) ? 'selected' : '' }}>[Tautan Luar]</option>
+            <option value="external" {{ (isset($data) && $data->url_external == 'yes' ) ? 'selected' : '' }}>[Tautan Luar]</option>
             <option value="/" {{ (isset($data) && $data->url == "/" ) ? 'selected' : '' }}>Beranda</option>
             <option value="{{ env('POSTS_PATH', 'posts') }}" {{ (isset($data) && $data->url == env('POSTS_PATH', 'posts') ) ? 'selected' : '' }}>Artikel</option>
             {{-- <option value="{{ env('PAGES_PATH', 'pages') }}" {{ (isset($data) && $data->url == env('PAGES_PATH', 'pages') ) ? 'selected' : '' }}>Halaman</option> --}}
@@ -91,16 +91,16 @@
               @endif
             @endforeach
           </select>
-          <input type="text" class="form-control" id="url_external" name="url_external" value="{{ isset($data) ? $data->url : '' }}" placeholder="http://external.link" {!! (isset($data) && ($data->url_external)) ? 'style="margin-top:5px;" ' : 'style="margin-top:5px;display:none;" disabled ' !!}>
+          <input type="text" class="form-control" id="url_external" name="url_external" value="{{ isset($data) ? $data->url : '' }}" placeholder="http://external.link" {!! isset($data) && bool($data->url_external) ? 'style="margin-top:5px;" ' : 'style="margin-top:5px;display:none;" disabled ' !!}>
         </div>
       </div>
       <div class="form-group">
         <label for="target" class="col-sm-2 control-label">Target</label>
         <div class="col-sm-4">
           <select class="form-control custom-select2" name="target" id="target">
-            <option value="_self" {{ isset($data) && ($data->target == "_self") ? 'selected' : '' }}>Jendela Aktif
+            <option value="_self" {{ isset($data) && $data->target == "_self" ? 'selected' : '' }}>Jendela Aktif
             </option>
-            <option value="_blank" {{ isset($data) && ($data->target == "_blank") ? 'selected' : '' }}>Jendela Baru
+            <option value="_blank" {{ isset($data) && $data->target == "_blank" ? 'selected' : '' }}>Jendela Baru
             </option>
           </select>
         </div>
@@ -125,11 +125,11 @@
         <div class="col-sm-offset-2 col-sm-4">
           <div class="checkbox">
             <label>
-              <input type="checkbox" name="status" {{ (isset($data) && $data->status == 0) ? '' : 'checked' }}> Aktif
+              <input type="checkbox" name="status" value="active" {{ (isset($data) && $data->status == 'inactive') ? '' : 'checked' }}> Aktif
             </label>
             {!! spaces() !!}
             <label>
-              <input type="checkbox" name="only_image" {{ (isset($data) && $data->only_image==1) ? 'checked' : '' }}>
+              <input type="checkbox" name="only_image" value="yes" {{ (isset($data) && bool($data->only_image)) ? 'checked' : '' }}>
               Hanya Gambar
             </label>
           </div>
@@ -173,7 +173,7 @@
       });
 
       $('.select2').on('change',function(){
-        if ($('#url').val()=="external"){
+        if ($('#url').val() == "external"){
           $('#url_external').attr("disabled", false).show();
         }else{
           $('#url_external').attr("disabled", true).hide();

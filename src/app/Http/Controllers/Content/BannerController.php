@@ -148,10 +148,14 @@ class BannerController extends AdminController
         $banner->title = $r->input('title');
         $banner->description = $r->input('description');
         $banner->url = $r->input('url');
-        $banner->url_external = bool($r->input('url_external')) ? 1 : 0;
+        $banner->url_external = 'no';
+        if ($r->input('url') == 'external') {
+            $banner->url = $r->input('url_external');
+            $banner->url_external = 'yes';
+        }
         $banner->target = $r->input('target');
-        $banner->only_image = bool($r->input('only_image')) ? 1 : 0;
-        $banner->status = bool($r->input('status')) ? 1 : 0;
+        $banner->only_image = $r->input('only_image') ?? 'no';
+        $banner->status = $r->input('status') ?? 'inactive';
         $banner->save();
 
         /* process image */
@@ -262,10 +266,14 @@ class BannerController extends AdminController
         $banner->title = $r->input('title');
         $banner->description = $r->input('description');
         $banner->url = $r->input('url');
-        $banner->url_external = bool($r->input('url_external')) ? 1 : 0;
+        $banner->url_external = 'no';
+        if ($r->input('url') == 'external') {
+            $banner->url = $r->input('url_external');
+            $banner->url_external = 'yes';
+        }
         $banner->target = $r->input('target');
-        $banner->only_image = bool($r->input('only_image')) ? 1 : 0;
-        $banner->status = bool($r->input('status')) ? 1 : 0;
+        $banner->only_image = $r->input('only_image') ?? 'no';
+        $banner->status = $r->input('status') ?? 'inactive';
         $banner->save();
 
         /* process image */
