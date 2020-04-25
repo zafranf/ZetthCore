@@ -40,7 +40,7 @@ trait MainTrait
                 'device_name' => $device != '' ? $agent->device() : $device,
                 'os' => $os ? $os : '',
                 'os_version' => $os ? $agent->version($os) : '',
-                'is_robot' => $agent->isRobot() ? 1 : 0,
+                'is_robot' => $agent->isRobot() ? 'yes' : 'no',
                 'robot_name' => $agent->isRobot() ? $agent->robot() : null,
                 'count' => \DB::raw('count+1'),
             ]

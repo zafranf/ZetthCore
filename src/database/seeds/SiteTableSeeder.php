@@ -17,7 +17,7 @@ class SiteTableSeeder extends Seeder
             'domain' => env('APP_DOMAIN', 'localhost'),
             'name' => env('APP_NAME', 'localhost'),
             'template_id' => 1,
-            'status' => 'yes',
+            'status' => 'active',
             'active_at' => date("Y-m-d H:i:s"),
         ]);
     }
