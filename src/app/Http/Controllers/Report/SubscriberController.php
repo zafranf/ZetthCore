@@ -130,7 +130,7 @@ class SubscriberController extends AdminController
         /* save data */
         $subscriber->email = str_sanitize($r->input('email'));
         $subscriber->token = str_sanitize($r->input('token'));
-        $subscriber->status = bool($r->input('status')) ? 1 : 0;
+        $subscriber->status = $r->input('status') ?? 'inactive';
         $subscriber->save();
 
         /* save activity */
