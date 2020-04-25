@@ -21,7 +21,7 @@ class RedirectIfAuthenticated
             if (Auth::user()->is_admin && isAdminPanel()) {
                 return redirect(route('admin.dashboard.index'));
             }
-            if (Auth::user()->is_first_login) {
+            if (bool(Auth::user()->is_first_login)) {
                 return redirect(route('web.profile.edit'));
             }
 
