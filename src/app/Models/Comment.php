@@ -26,11 +26,11 @@ class Comment extends Model
 
     public function subcomments()
     {
-        return $this->hasMany('ZetthCore\Models\Comment', 'parent_id', 'id')->where('status', 1)->with(['subcomments', 'commentator']);
+        return $this->hasMany('ZetthCore\Models\Comment', 'parent_id', 'id')->where('status', 'active')->with(['subcomments', 'commentator']);
     }
 
     public function scopeActive($query)
     {
-        return $query->where('status', 1);
+        return $query->where('status', 'active');
     }
 }
