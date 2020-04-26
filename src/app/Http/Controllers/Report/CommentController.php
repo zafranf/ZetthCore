@@ -139,19 +139,16 @@ class CommentController extends AdminController
 
         /* send notif to commentator */
         if ($parent->notify) {
-            /* send email notification */
-            $this->sendMail([
-                'view' => env('COMMENT_REPLIED_VIEW', 'zetthcore::AdminSC.emails.comment_replied'),
-                'data' => [
-                    'site' => getSiteConfig(),
-                    'post' => $post,
-                    'parent' => $parent,
-                    'comment' => $comment,
-                ],
-                'from' => env('MAIL_USERNAME', 'no-reply@' . env('APP_DOMAIN')),
-                'to' => $parent->email,
-                'subject' => '[' . env('APP_NAME') . '] Balasan komentar artikel "' . $post->title . '"',
-            ]);
+            /* set data parameter */
+            $data = [
+                'site' => getSiteConfig(),
+                'post' => $post,
+                'parent' => $parent,
+                'comment' => $comment,
+            ];
+
+            /* send mail */
+            \Mail::to($parent->email)->queue(new \App\Mail\CommentReply($data));
         }
 
         /* save activity */
