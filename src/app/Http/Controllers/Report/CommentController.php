@@ -139,9 +139,11 @@ class CommentController extends AdminController
 
         /* send notif to commentator */
         if (bool($parent->notify)) {
+            $sent_mails = [];
+
             /* set data parameter */
             $data = [
-                'site' => getSiteConfig(),
+                'view' => $this->getTemplate() . '.emails.comment_replied',
                 'post' => $post,
                 'parent' => $parent,
                 'comment' => $comment,
@@ -149,6 +151,29 @@ class CommentController extends AdminController
 
             /* send mail */
             \Mail::to($parent->email)->queue(new \App\Mail\CommentReply($data));
+
+            /* log sent mail */
+            $sent_mails[] = $parent->email;
+
+            /* send notif to subcomments */
+            $subcomments = $parent->subcomments_all;
+            foreach ($subcomments as $subcomment) {
+                if (bool($subcomment->notify) && !bool($subcomment->is_owner) && $subcomment->created_by != $comment->created_by && !in_array($subcomment->email, $sent_mails)) {
+                    /* set data parameter */
+                    $data = [
+                        'view' => $this->getTemplate() . '.emails.comment_replied',
+                        'post' => $post,
+                        'parent' => $parent,
+                        'comment' => $comment,
+                    ];
+
+                    /* send mail */
+                    \Mail::to($subcomment->email)->queue(new \App\Mail\CommentReply($data));
+
+                    /* log sent mail */
+                    $sent_mails[] = $subcomment->email;
+                }
+            }
         }
 
         /* save activity */
@@ -274,7 +299,7 @@ class CommentController extends AdminController
     public function datatable(Request $r)
     {
         /* get data */
-        $data = Comment::select('id', 'name', 'email', \DB::raw('substring(ExtractValue(content, "//text()"), 1, 100) as content'), 'status', 'commentable_id as post_id')->orderBy('created_at', 'desc');
+        $data = Comment::select('id', 'name', 'email', \DB::raw('substring(ExtractValue(content, "//text()"), 1, 100) as content'), 'status', 'commentable_id as post_id', 'parent_id')->orderBy('created_at', 'desc');
 
         /* generate datatable */
         if ($r->ajax()) {

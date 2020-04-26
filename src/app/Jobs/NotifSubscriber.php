@@ -41,7 +41,7 @@ class NotifSubscriber implements ShouldQueue
             foreach ($subscribers as $subscriber) {
                 /* set data parameter */
                 $data = [
-                    'site' => getSiteConfig(),
+                    'view' => $this->getTemplate() . '.emails.new_post',
                     'post' => $this->post,
                 ];
 
