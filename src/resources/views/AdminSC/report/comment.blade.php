@@ -44,7 +44,7 @@
           { "data": "email", "width": "200px" },
           { "data": "content" },
           { "data": "status", "width": "50px" },
-          { "width": "80px" },
+          { "width": "100px" },
         ],
         "columnDefs": [{
           "targets": 0,
@@ -68,6 +68,7 @@
             let actions = '';
             let url = ADMIN_URL + "/report/comments/" + data;
             let del = "_delete('" + url + "')";
+            actions += '<a href="' + ADMIN_URL + '/report/comments/create?cid='+data+'&pid=' + row.post_id + '" class="btn btn-default btn-xs" data-toggle="tooltip" data-original-title="Balas"><i class="fa fa-reply"></i></a>';
             {!! getAccessButtons() !!}
             $('[data-toggle="tooltip"]').tooltip();
 
@@ -80,7 +81,7 @@
         options.columns = [
           { "width": "30px" },
           { },
-          { "width": "30px" },
+          { "width": "40px" },
         ];
         options.columnDefs = [
           {
@@ -94,7 +95,7 @@
             "sortable": false,
             "render": function (data, type, row, meta) {
               let render = row.name+' ('+row.email+')<br>';
-              render += '<small>'+row.comment+'</small><br>';
+              render += '<small>'+row.content+'</small><br>';
               render += _get_status_text(row.status);
 
               return render;
@@ -107,6 +108,7 @@
               let actions = '';
               let url = ADMIN_URL + "/report/comments/" + data;
               let del = "_delete('" + url + "')";
+              actions += '<a href="' + ADMIN_URL + '/report/comments/create?cid='+data+'&pid=' + row.post_id + '" class="btn btn-default btn-xs" data-toggle="tooltip" data-original-title="Balas"><i class="fa fa-reply"></i></a>';
               {!! getAccessButtons() !!}
               $('[data-toggle="tooltip"]').tooltip();
 

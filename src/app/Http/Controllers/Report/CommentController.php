@@ -274,7 +274,7 @@ class CommentController extends AdminController
     public function datatable(Request $r)
     {
         /* get data */
-        $data = Comment::select('id', 'name', 'email', \DB::raw('substring(content, 1, 100) as content'), 'status')->orderBy('created_at', 'desc');
+        $data = Comment::select('id', 'name', 'email', \DB::raw('substring(ExtractValue(content, "//text()"), 1, 100) as content'), 'status', 'commentable_id as post_id')->orderBy('created_at', 'desc');
 
         /* generate datatable */
         if ($r->ajax()) {
