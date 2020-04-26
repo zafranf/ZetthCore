@@ -138,7 +138,7 @@ class CommentController extends AdminController
         }
 
         /* send notif to commentator */
-        if ($parent->notify) {
+        if (bool($parent->notify)) {
             /* set data parameter */
             $data = [
                 'site' => getSiteConfig(),

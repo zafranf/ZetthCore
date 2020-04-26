@@ -24,9 +24,30 @@ class Comment extends Model
         return $this->belongsTo('App\Models\User', 'approved_by');
     }
 
+    public function parent()
+    {
+        return $this->belongsTo('ZetthCore\Models\Comment', 'parent_id', 'id')
+            ->where('status', 'active')
+            ->with('subcomments', 'commentator');
+    }
+
+    public function parent_all()
+    {
+        return $this->belongsTo('ZetthCore\Models\Comment', 'parent_id', 'id')
+            ->with('subcomments', 'commentator');
+    }
+
     public function subcomments()
     {
-        return $this->hasMany('ZetthCore\Models\Comment', 'parent_id', 'id')->where('status', 'active')->with(['subcomments', 'commentator']);
+        return $this->hasMany('ZetthCore\Models\Comment', 'parent_id', 'id')
+            ->where('status', 'active')
+            ->with(['subcomments', 'commentator']);
+    }
+
+    public function subcomments_all()
+    {
+        return $this->hasMany('ZetthCore\Models\Comment', 'parent_id', 'id')
+            ->with(['subcomments_all', 'commentator']);
     }
 
     public function scopeActive($query)
