@@ -148,7 +148,7 @@ class SiteController extends AdminController
         $app->enable_subscribe = $r->input('enable_subscribe') ?? 'no';
         $app->enable_like = $r->input('enable_like') ?? 'no';
         $app->enable_share = $r->input('enable_share') ?? 'no';
-        $app->enable_comment = $r->input('enable_coment') ?? 'no';
+        $app->enable_comment = $r->input('enable_comment') ?? 'no';
         $app->google_analytics = $r->input('google_analytics');
         $app->status = $r->input('status');
         $app->active_at = $r->input('active_at') ?? date("Y-m-d H:i:s");
