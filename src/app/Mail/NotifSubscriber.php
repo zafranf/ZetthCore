@@ -30,7 +30,7 @@ class CommentReply extends Mailable
     public function build()
     {
         /* set variable */
-        $form = env('MAIL_USERNAME', 'no-reply@' . env('APP_DOMAIN'));
+        $from = env('MAIL_USERNAME', 'no-reply@' . env('APP_DOMAIN'));
         $subject = '[' . env('APP_NAME') . '] Artikel baru "' . $data['post']->title . '"';
 
         /* set view file */
