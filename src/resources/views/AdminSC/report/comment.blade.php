@@ -69,7 +69,7 @@
             let actions = '';
             let url = ADMIN_URL + "/report/comments/" + data;
             let del = "_delete('" + url + "')";
-            actions += '<a href="' + ADMIN_URL + '/report/comments/create?cid=' + reply_to + '&pid=' + row.post_id + '" class="btn btn-default btn-xs" data-toggle="tooltip" data-original-title="Balas"><i class="fa fa-reply"></i></a>';
+            actions += '<a href="' + ADMIN_URL + '/report/comments/create?cid=' + data + '&pid=' + row.post_id + '" class="btn btn-default btn-xs" data-toggle="tooltip" data-original-title="Balas"><i class="fa fa-reply"></i></a>';
             {!! getAccessButtons() !!}
             $('[data-toggle="tooltip"]').tooltip();
 
@@ -110,7 +110,7 @@
               let actions = '';
               let url = ADMIN_URL + "/report/comments/" + data;
               let del = "_delete('" + url + "')";
-              actions += '<a href="' + ADMIN_URL + '/report/comments/create?cid=' + reply_to + '&pid=' + row.post_id + '" class="btn btn-default btn-xs" data-toggle="tooltip" data-original-title="Balas"><i class="fa fa-reply"></i></a>';
+              actions += '<a href="' + ADMIN_URL + '/report/comments/create?cid=' + data + '&pid=' + row.post_id + '" class="btn btn-default btn-xs" data-toggle="tooltip" data-original-title="Balas"><i class="fa fa-reply"></i></a>';
               {!! getAccessButtons() !!}
               $('[data-toggle="tooltip"]').tooltip();
 

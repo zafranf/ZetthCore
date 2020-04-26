@@ -122,24 +122,26 @@ class CommentController extends AdminController
         $comment->email = \Auth::user()->email;
         $comment->content = $r->input('content');
         $comment->status = 'active';
-        $comment->parent_id = $parent->id;
+        $comment->parent_id = $parent->parent_id ?? $parent->id;
         $comment->commentable_type = $parent->commentable_type;
         $comment->commentable_id = $r->input('pid');
         $comment->created_by = \Auth::user()->id;
         $comment->approved_by = \Auth::user()->id;
         $comment->is_owner = 'yes';
+        $comment->read = 'yes';
         $comment->save();
 
         /* set approved */
         if ($r->input('status') == 'active') {
-            $parent->status = 'active';
-            if (is_null($parent_approved_by)) {
-                $parent->approved_by = bool($r->status) ? \Auth::user()->id : null;
+            if (is_null($parent->approved_by)) {
+                $parent->status = 'active';
+                $parent->approved_by = $r->input('status') == 'active' ? \Auth::user()->id : null;
             }
             $parent->save();
         }
 
         /* send notif to commentator */
+        $parent = Comment::find($parent->parent_id ?? $parent->id);
         $data = [
             'post' => $post,
             'parent' => $parent,

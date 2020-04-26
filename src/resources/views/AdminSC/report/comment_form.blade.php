@@ -33,7 +33,7 @@
         <div class="col-sm-offset-2 col-sm-10">
           <div class="checkbox">
             <label>
-              <input type="checkbox" name="status" {{ (isset($data) && $data->status == 'inactive') ? '' : 'checked' }}> Setujui{{ isset($reply) && (isset($reply) && $reply->status == 'inactive')  ? ' komentar pengunjung' : '' }}
+              <input type="checkbox" name="status" value="active" {{ (isset($data) && $data->status == 'inactive') ? '' : 'checked' }}> Setujui{{ isset($reply) && (isset($reply) && $reply->status == 'inactive')  ? ' komentar pengunjung' : '' }}
             </label>
           </div>
         </div>
