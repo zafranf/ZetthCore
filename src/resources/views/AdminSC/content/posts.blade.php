@@ -149,7 +149,11 @@
           "data": 'status',
           "sortable": false,
           "render": function (data, type, row, meta) {
-            return _get_status_text(data);
+            return _get_status_text(data, {
+              active: "Aktif",
+              inactive: "Nonaktif",
+              draft: "Draf"
+            });
           }
         }, {
           "targets": 4,
@@ -220,7 +224,11 @@
               render += '<a class="zetth-share-button" onclick="_open_window(\''+sharelink+'/whatsapp'+'\')"><i class="fa fa-whatsapp"></i></a>&nbsp;';
               render += '<a class="zetth-share-button" onclick="_open_window(\''+sharelink+'/telegram'+'\')">T</a>&nbsp;';
               render += '<a id="btn-short-url-'+row.id+'" class="zetth-share-button btn-short-url" data-toggle="modal" data-url="'+posturl+'" data-target="#zetth-modal"><i class="fa fa-link"></i></a><br>';
-              render += _get_status_text(row.status);
+              render += _get_status_text(row.status, {
+                active: "Aktif",
+                inactive: "Nonaktif",
+                draft: "Draf"
+              });
 
               return render;
             }

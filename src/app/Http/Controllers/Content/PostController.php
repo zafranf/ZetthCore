@@ -150,7 +150,7 @@ class PostController extends AdminController
         $post->content = $r->input('content');
         $post->excerpt = $r->input('excerpt') ?? substr(strip_tags($post->content), 0, 255);
         $post->type = 'article';
-        $post->status = $r->input('status');
+        $post->status = $r->input('status') == 'set' ? 'active' : $r->input('status');
         $post->share = $r->input('share') ?? 'no';
         $post->like = $r->input('like') ?? 'no';
         $post->comment = $r->input('comment') ?? 'no';

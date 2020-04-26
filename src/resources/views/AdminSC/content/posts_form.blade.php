@@ -115,7 +115,7 @@
           </div>
           <div class="form-group">
             <label for="publish">Terbitkan</label><br>
-            <div class="col-sm-6 col-xs-6 no-padding">
+            {{-- <div class="col-sm-6 col-xs-6 no-padding">
               <label>
                 <input name="status" type="radio" value="active" {{ (isset($data) && $data->status == 'inactive') ? '' : 'checked' }}> Ya
               </label>
@@ -125,9 +125,16 @@
                 <input name="status" type="radio" value="inactive" {{ (isset($data) && $data->status == 'inactive') ? 'checked' : '' }}>
                 Tidak
               </label>
-            </div>
+            </div> --}}
+
+            <select class="form-control custom-select2" id="status" name="status">
+              <option value="active" {{ (isset($data) && $data->status == 'actice') ? 'selected' : '' }}>Sekarang</option>
+              <option value="set" {{ (isset($data) && $data->status == 'set') ? 'selected' : '' }}>Atur waktu</option>
+              <option value="draft" {{ (isset($data) && $data->status == 'draft') ? 'selected' : '' }}>Draf</option>
+              <option value="inactive" {{ (isset($data) && $data->status == 'inactive') ? 'selected' : '' }}>Sembunyikan</option>
+            </select>
           </div>
-          <div class="form-group">
+          <div class="form-group hide" id="d-publish-time">
             <label for="time">Waktu Terbit</label><br>
             <div class="col-sm-6 col-xs-6 no-padding">
               <input type="text" class="form-control" id="date" name="date" value="{{ isset($data) ? carbon($data->published_at)->format("Y-m-d") : old('date') }}" placeholder="{{ carbon()->format("Y-m-d") }}">
@@ -135,9 +142,9 @@
             <div class="col-sm-6 col-xs-6 no-padding">
               <input type="text" class="form-control" id="time" name="time" value="{{ isset($data) ? carbon($data->published_at)->format("H:i") : old('time') }}" placeholder="{{ carbon()->format("H:i") }}">
             </div>
+            <br><br>
           </div>
           <div class="form-group">
-            <br><br>
             <label for="category">Kategori*</label>
             <a id="btn-add-category" class="btn btn-default btn-xs pull-right" data-toggle="modal" data-target="#zetth-modal" title="Tambah kategori baru"><i class="fa fa-plus"></i></a>
             <ul id="category-list">
@@ -313,6 +320,9 @@
       $('#time').datetimepicker({
         format: 'HH:mm'
       });
+      $(".custom-select2").select2({
+        minimumResultsForSearch: Infinity
+      });
       _resize_tinymce();
     });
 
@@ -325,6 +335,14 @@
         key = e.keyCode;
         if (key == 13) {
           e.preventDefault();
+        }
+      });
+
+      $('#status').on("change", function(){
+        if ($('#status').val() == 'set') {
+          $('#d-publish-time').removeClass('hide');
+        } else {
+          $('#d-publish-time').addClass('hide');
         }
       });
 
