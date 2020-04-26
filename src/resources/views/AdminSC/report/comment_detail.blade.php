@@ -11,11 +11,11 @@
     {!! nl2br(e(strip_tags($data->content))) !!}
     <br>
     <br>
-    @if ($data->status == 0)
+    @if ($data->status == 'inactive')
       <a id="btn-reply" class="share-button"  href="{{ url($current_url . "/approve/" . $data->id) }}">
         <i class="fa fa-check"></i> Setujui
       </a>
-    @elseif ($data->status == 1)
+    @elseif ($data->status == 'active')
       <a id="btn-reply" class="share-button" href="{{ url($current_url . "/unapprove/" . $data->id) }}">
         <i class="fa fa-times"></i> Batal Setuju
       </a>

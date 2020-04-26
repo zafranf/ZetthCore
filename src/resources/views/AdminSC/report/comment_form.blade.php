@@ -29,11 +29,11 @@
           <textarea rows="8" id="content" name="content" class="form-control" placeholder="Type your content here..">{{ $data->content ?? old('content') }}</textarea>
         </div>
       </div>
-      <div class="form-group{{ (isset($reply) && (isset($reply) && $reply->status == 1)) || (isset($data) && $data->status == 1)  ? ' hide' : '' }}">
+      <div class="form-group{{ (isset($reply) && (isset($reply) && $reply->status == 'active')) || (isset($data) && $data->status == 'active')  ? ' hide' : '' }}">
         <div class="col-sm-offset-2 col-sm-10">
           <div class="checkbox">
             <label>
-              <input type="checkbox" name="status" {{ (isset($data) && $data->status == 0) ? '' : 'checked' }}> Setujui{{ isset($reply) && (isset($reply) && $reply->status == 0)  ? ' komentar pengunjung' : '' }}
+              <input type="checkbox" name="status" {{ (isset($data) && $data->status == 'inactive') ? '' : 'checked' }}> Setujui{{ isset($reply) && (isset($reply) && $reply->status == 'inactive')  ? ' komentar pengunjung' : '' }}
             </label>
           </div>
         </div>
