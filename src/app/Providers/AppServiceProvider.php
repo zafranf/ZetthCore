@@ -19,53 +19,53 @@ class AppServiceProvider extends ServiceProvider
     {
         $this->package_path = base_path('vendor/zafranf/zetthcore');
 
-        /* check config */
-        if (!$this->app->runningInConsole()) {
+        if ($this->app->runningInConsole()) {
+            $this->commands([
+                \ZetthCore\Console\Commands\Install::class,
+                \ZetthCore\Console\Commands\Reinstall::class,
+            ]);
+        } else {
+            /* check config */
             if (!$this->checkDBConnection() || ($this->checkDBConnection() && !\Schema::hasTable('sites'))) {
                 /* sementara, nanti redirect ke halaman install */
                 throw new \Exception("You have to install this app first", 1);
                 // redirect(url('/install'))->send();
             }
-
-            /* get application setting */
-            $site = getSiteConfig();
-            if (!$site) {
-                throw new \Exception("Site config not found", 1);
-            }
-
-            /* set application setting to global */
-            $this->app->singleton('site', function () use ($site) {
-                return $site;
-            });
-
-            /* set user to global */
-            $this->app->singleton('user', function () {
-                return \Auth::user();
-            });
-
-            /* set config template */
-            $theme = $this->getTemplate();
-            $themeConfig = resource_path('views/' . $theme . '/config.php');
-            $config_template = file_exists($themeConfig) ? include $themeConfig : [];
-            app('config')->set('site', $config_template);
-
-            /* set device type to global */
-            $agent = new \Jenssegers\Agent\Agent();
-            $this->app->singleton('is_mobile', function () use ($agent) {
-                return $agent->isMobile();
-            });
-            $this->app->singleton('is_tablet', function () use ($agent) {
-                return $agent->isTablet();
-            });
-            $this->app->singleton('is_desktop', function () use ($agent) {
-                return $agent->isDesktop();
-            });
-        } else if ($this->app->runningInConsole()) {
-            $this->commands([
-                \ZetthCore\Console\Commands\Install::class,
-                \ZetthCore\Console\Commands\Reinstall::class,
-            ]);
         }
+
+        /* get application setting */
+        $site = getSiteConfig();
+        if (!$site) {
+            throw new \Exception("Site config not found", 1);
+        }
+
+        /* set application setting to global */
+        $this->app->singleton('site', function () use ($site) {
+            return $site;
+        });
+
+        /* set user to global */
+        $this->app->singleton('user', function () {
+            return \Auth::user();
+        });
+
+        /* set config template */
+        $theme = $this->getTemplate();
+        $themeConfig = resource_path('views/' . $theme . '/config.php');
+        $config_template = file_exists($themeConfig) ? include $themeConfig : [];
+        app('config')->set('site', $config_template);
+
+        /* set device type to global */
+        $agent = new \Jenssegers\Agent\Agent();
+        $this->app->singleton('is_mobile', function () use ($agent) {
+            return $agent->isMobile();
+        });
+        $this->app->singleton('is_tablet', function () use ($agent) {
+            return $agent->isTablet();
+        });
+        $this->app->singleton('is_desktop', function () use ($agent) {
+            return $agent->isDesktop();
+        });
 
         /* share admin panel to global */
         $this->app->singleton('admin_path', function () {
