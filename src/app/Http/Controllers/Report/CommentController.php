@@ -133,48 +133,19 @@ class CommentController extends AdminController
         /* set approved */
         if ($r->input('status') == 'active') {
             $parent->status = 'active';
-            $parent->approved_by = bool($r->status) ? \Auth::user()->id : null;
+            if (is_null($parent_approved_by)) {
+                $parent->approved_by = bool($r->status) ? \Auth::user()->id : null;
+            }
             $parent->save();
         }
 
         /* send notif to commentator */
-        if (bool($parent->notify)) {
-            $sent_mails = [];
-
-            /* set data parameter */
-            $data = [
-                'view' => $this->getTemplate() . '.emails.comment_replied',
-                'post' => $post,
-                'parent' => $parent,
-                'comment' => $comment,
-            ];
-
-            /* send mail */
-            \Mail::to($parent->email)->queue(new \App\Mail\CommentReply($data));
-
-            /* log sent mail */
-            $sent_mails[] = $parent->email;
-
-            /* send notif to subcomments */
-            $subcomments = $parent->subcomments_all;
-            foreach ($subcomments as $subcomment) {
-                if (bool($subcomment->notify) && !bool($subcomment->is_owner) && $subcomment->created_by != $comment->created_by && !in_array($subcomment->email, $sent_mails)) {
-                    /* set data parameter */
-                    $data = [
-                        'view' => $this->getTemplate() . '.emails.comment_replied',
-                        'post' => $post,
-                        'parent' => $parent,
-                        'comment' => $comment,
-                    ];
-
-                    /* send mail */
-                    \Mail::to($subcomment->email)->queue(new \App\Mail\CommentReply($data));
-
-                    /* log sent mail */
-                    $sent_mails[] = $subcomment->email;
-                }
-            }
-        }
+        $data = [
+            'post' => $post,
+            'parent' => $parent,
+            'comment' => $comment,
+        ];
+        \App\Jobs\CommentReply::dispatch($data);
 
         /* save activity */
         $this->activityLog('[~name] (' . $this->getUserRoles() . ') membalas komentar dari "' . $parent->email . '"');
