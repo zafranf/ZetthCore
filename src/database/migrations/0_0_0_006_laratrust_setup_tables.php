@@ -36,9 +36,10 @@ class LaratrustSetupTables extends Migration
 
         // Create table for associating roles to users and teams (Many To Many Polymorphic)
         Schema::create('role_user', function (Blueprint $table) {
-            $table->unsignedBigInteger('role_id');
-            $table->unsignedBigInteger('user_id');
+            $table->bigInteger('role_id')->unsigned();
+            $table->bigInteger('user_id')->unsigned();
             $table->string('user_type');
+            $table->bigInteger('site_id')->unsigned()->default(1);
 
             $table->foreign('role_id')->references('id')->on('roles')
                 ->onUpdate('cascade')->onDelete('cascade');
@@ -48,9 +49,10 @@ class LaratrustSetupTables extends Migration
 
         // Create table for associating permissions to users (Many To Many Polymorphic)
         Schema::create('user_permission', function (Blueprint $table) {
-            $table->unsignedBigInteger('permission_id');
-            $table->unsignedBigInteger('user_id');
+            $table->bigInteger('permission_id')->unsigned();
+            $table->bigInteger('user_id')->unsigned();
             $table->string('user_type');
+            $table->bigInteger('site_id')->unsigned()->default(1);
 
             $table->foreign('permission_id')->references('id')->on('permissions')
                 ->onUpdate('cascade')->onDelete('cascade');
@@ -62,6 +64,7 @@ class LaratrustSetupTables extends Migration
         Schema::create('role_permission', function (Blueprint $table) {
             $table->unsignedBigInteger('permission_id');
             $table->unsignedBigInteger('role_id');
+            $table->bigInteger('site_id')->unsigned()->default(1);
 
             $table->foreign('permission_id')->references('id')->on('permissions')
                 ->onUpdate('cascade')->onDelete('cascade');

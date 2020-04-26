@@ -16,6 +16,7 @@ class CreateRoleMenuTable extends Migration
         Schema::create('role_menu', function (Blueprint $table) {
             $table->bigInteger('role_id')->unsigned();
             $table->bigInteger('menu_group_id')->unsigned();
+            $table->bigInteger('site_id')->unsigned()->default(1);
 
             $table->foreign('role_id')->references('id')->on('roles')
                 ->onUpdate('cascade')->onDelete('cascade');

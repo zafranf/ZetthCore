@@ -34,6 +34,7 @@ class CreateUserDetailsTable extends Migration
             $table->string('company')->nullable();
             $table->string('website')->nullable();
             $table->timestamps();
+            $table->bigInteger('site_id')->unsigned()->default(1);
         });
     }
 

@@ -18,6 +18,7 @@ class CreateLikesTable extends Migration
             $table->enum('like', ['yes', 'no'])->default('no');
             $table->string('likeable_type');
             $table->bigInteger('likeable_id')->unsigned();
+            $table->bigInteger('site_id')->unsigned()->default(1);
 
             $table->primary(['likeable_id', 'user_id']);
         });

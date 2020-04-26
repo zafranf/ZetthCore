@@ -17,6 +17,7 @@ class CreateTermDataTable extends Migration
             $table->bigInteger('term_id')->unsigned();
             $table->string('termable_type');
             $table->bigInteger('termable_id')->unsigned();
+            $table->bigInteger('site_id')->unsigned()->default(1);
 
             $table->primary(['termable_id', 'term_id']);
         });

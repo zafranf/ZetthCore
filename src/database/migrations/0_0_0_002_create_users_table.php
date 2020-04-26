@@ -24,6 +24,7 @@ class CreateUsersTable extends Migration
             $table->enum('status', ['active', 'inactive', 'suspend', 'banned'])->default('inactive');
             $table->timestamps();
             $table->softDeletes();
+            $table->bigInteger('site_id')->unsigned()->default(1);
         });
     }
 
