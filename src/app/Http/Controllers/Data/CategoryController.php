@@ -102,7 +102,7 @@ class CategoryController extends AdminController
         /* save data */
         $category = new Term;
         $category->name = $r->input('name');
-        $category->slug = str_slug($category->name);
+        $category->slug = \Str::slug($category->name);
         $category->description = $r->input('description');
         $category->type = 'category';
         $category->group = 'post';
@@ -180,7 +180,7 @@ class CategoryController extends AdminController
 
         /* save data */
         $category->name = $r->input('name');
-        $category->slug = str_slug($category->name);
+        $category->slug = \Str::slug($category->name);
         $category->description = $r->input('description');
         $category->type = 'category';
         if ($r->input('parent')) {

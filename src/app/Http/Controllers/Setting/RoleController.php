@@ -104,7 +104,7 @@ class RoleController extends AdminController
         /* save data */
         $name = $r->input('name');
         $role = new Role;
-        $role->name = str_slug($name);
+        $role->name = \Str::slug($name);
         $role->display_name = $name;
         $role->description = $r->input('description');
         $role->status = $r->input('status') ?? 'inactive';
@@ -193,7 +193,7 @@ class RoleController extends AdminController
 
         /* save data */
         $name = $r->input('name');
-        $role->name = str_slug($name);
+        $role->name = \Str::slug($name);
         $role->display_name = $name;
         $role->description = $r->input('description');
         $role->status = $r->input('status') ?? 'inactive';

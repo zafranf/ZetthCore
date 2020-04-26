@@ -135,7 +135,7 @@ class UserController extends AdminController
         } else if ($r->hasFile('image')) {
             $file = $r->file('image');
             $ext = $file->getClientOriginalExtension();
-            $name = str_slug(app('user')->name) . '.' . $ext;
+            $name = \Str::slug(app('user')->name) . '.' . $ext;
 
             if ($this->uploadImage($file, '/assets/images/users/', $name)) {
                 $user->image = $name;
@@ -262,7 +262,7 @@ class UserController extends AdminController
         } else if ($r->hasFile('image')) {
             $file = $r->file('image');
             $ext = $file->getClientOriginalExtension();
-            $name = str_slug(app('user')->name) . '.' . $ext;
+            $name = \Str::slug(app('user')->name) . '.' . $ext;
 
             if ($this->uploadImage($file, '/assets/images/users/', $name)) {
                 $user->image = $name;

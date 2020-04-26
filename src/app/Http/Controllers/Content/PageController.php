@@ -99,7 +99,7 @@ class PageController extends AdminController
         /* save data */
         $page = new Post;
         $page->title = $r->input('title');
-        $page->slug = $r->input('slug') ?? str_slug($page->title);
+        $page->slug = $r->input('slug') ?? \Str::slug($page->title);
         $page->content = $r->input('content');
         $page->excerpt = substr(strip_tags($page->content), 0, 255);
         $page->type = 'page';
@@ -173,7 +173,7 @@ class PageController extends AdminController
 
         /* save data */
         $page->title = $r->input('title');
-        // $page->slug = str_slug($r->input('slug'));
+        // $page->slug = \Str::slug($r->input('slug'));
         $page->content = $r->input('content');
         $page->excerpt = substr(strip_tags($page->content), 0, 255);
         $page->type = 'page';

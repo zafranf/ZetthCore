@@ -99,7 +99,7 @@ class VideoController extends AdminController
         /* save data */
         $video = new Post;
         $video->title = $r->input('title');
-        $video->slug = str_slug($video->title);
+        $video->slug = \Str::slug($video->title);
         $video->content = $r->input('content');
         $video->excerpt = substr(strip_tags($video->content), 0, 255);
         $video->type = 'video';

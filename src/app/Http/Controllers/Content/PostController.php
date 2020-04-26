@@ -146,7 +146,7 @@ class PostController extends AdminController
         /* save data */
         $post = new Post;
         $post->title = $r->input('title');
-        $post->slug = $r->input('slug') ?? str_slug($post->title);
+        $post->slug = $r->input('slug') ?? \Str::slug($post->title);
         $post->content = $r->input('content');
         $post->excerpt = $r->input('excerpt') ?? substr(strip_tags($post->content), 0, 255);
         $post->type = 'article';
@@ -368,7 +368,7 @@ class PostController extends AdminController
     public function process_categories($categories, $descriptions, $parents, $pid)
     {
         foreach ($categories as $k => $category) {
-            $chkCategory = Term::where('name', str_slug($category))
+            $chkCategory = Term::where('name', \Str::slug($category))
                 ->where('type', 'category')
                 ->where('group', 'post')
                 ->first();
@@ -376,7 +376,7 @@ class PostController extends AdminController
             if (!$chkCategory) {
                 $term = new Term;
                 $term->name = $category;
-                $term->slug = str_slug($term->name);
+                $term->slug = \Str::slug($term->name);
                 $term->description = $descriptions[$k];
                 if (isset($parents[$k]) && $parents[$k] != 0) {
                     $term->parent_id = $parents[$k];
@@ -406,7 +406,7 @@ class PostController extends AdminController
     public function process_tags($tags, $pid)
     {
         foreach ($tags as $tag) {
-            $chkTag = Term::where('name', str_slug($tag))
+            $chkTag = Term::where('name', \Str::slug($tag))
                 ->where('type', 'tag')
                 ->where('group', 'post')
                 ->first();
@@ -414,7 +414,7 @@ class PostController extends AdminController
             if (!$chkTag) {
                 $term = new Term;
                 $term->name = strtolower($tag);
-                $term->slug = str_slug($term->name);
+                $term->slug = \Str::slug($term->name);
                 $term->type = 'tag';
                 $term->group = 'post';
                 $term->status = 'active';

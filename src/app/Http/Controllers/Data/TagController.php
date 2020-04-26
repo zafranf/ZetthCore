@@ -97,7 +97,7 @@ class TagController extends AdminController
         /* save data */
         $tag = new Term;
         $tag->name = $r->input('name');
-        $tag->slug = str_slug($tag->name);
+        $tag->slug = \Str::slug($tag->name);
         $tag->description = $r->input('description');
         $tag->type = 'tag';
         $tag->group = 'post';
@@ -167,7 +167,7 @@ class TagController extends AdminController
 
         /* save data */
         $tag->name = $r->input('name');
-        $tag->slug = str_slug($tag->name);
+        $tag->slug = \Str::slug($tag->name);
         $tag->description = $r->input('description');
         $tag->type = 'tag';
         $tag->group = 'post';

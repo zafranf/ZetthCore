@@ -97,7 +97,7 @@ class MenuGroupController extends AdminController
         /* save data */
         $menugroup = new MenuGroup;
         $menugroup->name = $r->input('name');
-        $menugroup->slug = str_slug($menugroup->name);
+        $menugroup->slug = \Str::slug($menugroup->name);
         $menugroup->description = $r->input('description');
         $menugroup->status = $r->input('status') ?? 'inactive';
         $menugroup->save();
@@ -173,7 +173,7 @@ class MenuGroupController extends AdminController
         /* save data */
         // $menugroup = MenuGroup::find($id);
         $menugroup->name = $r->input('name');
-        $menugroup->slug = str_slug($menugroup->name);
+        $menugroup->slug = \Str::slug($menugroup->name);
         $menugroup->description = $r->input('description');
         $menugroup->status = $r->input('status') ?? 'inactive';
         $menugroup->save();

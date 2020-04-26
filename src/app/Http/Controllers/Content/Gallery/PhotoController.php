@@ -107,7 +107,7 @@ class PhotoController extends AdminController
         /* save data */
         $album = new Album;
         $album->name = $r->input('name');
-        $album->slug = str_slug($album->name);
+        $album->slug = \Str::slug($album->name);
         $album->description = $r->input('description');
         $album->type = 'photo';
         $album->status = $r->input('status') ?? 'inactive';
@@ -183,7 +183,7 @@ class PhotoController extends AdminController
         /* save data */
         // $album = new Album;
         $album->name = $r->input('name');
-        $album->slug = str_slug($album->name);
+        $album->slug = \Str::slug($album->name);
         $album->description = $r->input('description');
         $album->type = 'photo';
         $album->status = $r->input('status') ?? 'inactive';
