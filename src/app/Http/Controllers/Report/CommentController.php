@@ -121,14 +121,15 @@ class CommentController extends AdminController
         $comment->name = \Auth::user()->fullname;
         $comment->email = \Auth::user()->email;
         $comment->content = $r->input('content');
+        $comment->notify = 'no';
+        $comment->read = 'yes';
         $comment->status = 'active';
+        $comment->is_owner = 'yes';
         $comment->parent_id = $parent->parent_id ?? $parent->id;
         $comment->commentable_type = $parent->commentable_type;
         $comment->commentable_id = $r->input('pid');
-        $comment->created_by = \Auth::user()->id;
         $comment->approved_by = \Auth::user()->id;
-        $comment->is_owner = 'yes';
-        $comment->read = 'yes';
+        $comment->created_by = \Auth::user()->id;
         $comment->save();
 
         /* set approved */
@@ -136,15 +137,15 @@ class CommentController extends AdminController
             if (is_null($parent->approved_by)) {
                 $parent->status = 'active';
                 $parent->approved_by = $r->input('status') == 'active' ? \Auth::user()->id : null;
+                $parent->save();
             }
-            $parent->save();
         }
 
         /* send notif to commentator */
-        $parent = Comment::find($parent->parent_id ?? $parent->id);
+        $topparent = Comment::find($parent->parent_id ?? $parent->id);
         $data = [
             'post' => $post,
-            'parent' => $parent,
+            'parent' => $topparent,
             'comment' => $comment,
         ];
         \App\Jobs\CommentReply::dispatch($data);
