@@ -28,6 +28,7 @@ trait MainTrait
         \ZetthCore\Models\VisitorLog::updateOrCreate(
             [
                 'id' => session()->getId(),
+                'site_id' => app('site')->id,
             ],
             [
                 'ip' => _server('REMOTE_ADDR') ?? '127.0.0.1',
@@ -73,6 +74,7 @@ trait MainTrait
         $act->post = json_encode($_POST);
         $act->files = json_encode($_FILES);
         $act->user_id = app('user')->id ?? null;
+        $act->site_id = app('site')->id;
         $act->save();
     }
 
@@ -96,6 +98,7 @@ trait MainTrait
             $err = \ZetthCore\Models\ErrorLog::updateOrCreate(
                 [
                     'id' => md5($log['code'] . $log['file'] . $log['line'] . $log['path'] . $log['message'] . $date),
+                    'site_id' => app('site')->id,
                 ],
                 [
                     'code' => $log['code'],

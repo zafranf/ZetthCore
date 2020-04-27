@@ -4,9 +4,7 @@ namespace ZetthCore\Models;
 
 class ActivityLog extends Base
 {
-    protected $fillable = [
-        'description', 'method', 'path', 'ip', 'get', 'post', 'files', 'user_id',
-    ];
+    protected $guarded = [];
     public $appends = ['created_at_tz'];
 
     public function user()

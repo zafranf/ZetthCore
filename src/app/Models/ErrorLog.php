@@ -6,15 +6,8 @@ use \Illuminate\Database\Eloquent\Builder;
 
 class ErrorLog extends Base
 {
+    protected $guarded = [];
     public $incrementing = false;
-
-    /* protected $primaryKey = [
-    'id', 'code', 'path', 'file', 'line', 'message',
-    ]; */
-
-    protected $fillable = [
-        'id', 'code', 'path', 'file', 'line', 'message', 'trace', 'data', 'count', 'params',
-    ];
 
     /**
      * Set the keys for a save update query.
