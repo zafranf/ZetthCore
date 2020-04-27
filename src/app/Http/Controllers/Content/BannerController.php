@@ -165,7 +165,7 @@ class BannerController extends AdminController
             $name = 'banner-' . (md5($banner->id . env('DB_PORT', 3306))) . '.' . $ext;
 
             if ($this->uploadImage($file, '/assets/images/banners/', $name)) {
-                $user->image = $name;
+                $banner->image = $name;
             }
         }
         $banner->save();
@@ -250,6 +250,7 @@ class BannerController extends AdminController
             // 'image' => 'required',
         ];
         if (bool($r->input('only_image'))) {
+            unset($this->image_rule['required']);
             $validate = [
                 'image' => $this->image_rule,
             ];
@@ -277,7 +278,7 @@ class BannerController extends AdminController
             $name = 'banner-' . (md5($banner->id . env('DB_PORT', 3306))) . '.' . $ext;
 
             if ($this->uploadImage($file, '/assets/images/banners/', $name)) {
-                $user->image = $name;
+                $banner->image = $name;
             }
         }
         $banner->save();
