@@ -48,8 +48,10 @@ class AppServiceProvider extends ServiceProvider
         });
 
         /* set user to global */
-        $this->app->singleton('user', function () {
-            return \Auth::user();
+        $this->app->singleton('user', function () use ($site) {
+            return \Cache::remember('auth_user.' . ($site->id ?? null), getCacheTime(), function () {
+                return \Auth::user() ? \Auth::user()->load('detail') : null;
+            });
         });
 
         /* set config template */
