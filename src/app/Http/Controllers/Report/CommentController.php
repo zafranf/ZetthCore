@@ -154,7 +154,7 @@ class CommentController extends AdminController
         $this->activityLog('[~name] (' . $this->getUserRoles() . ') membalas komentar dari "' . $parent->email . '"');
 
         /* clear cache */
-        \Cache::forget('_getPostscompletedesc' . $post->slug . '11');
+        \Cache::forget('_getPostscompletedesc' . $post->slug . '11' . app('site')->id);
 
         return redirect($this->current_url)->with('success', 'Komentar berhasil dibalas!');
     }

@@ -239,15 +239,15 @@ if (!function_exists('getImageUser')) {
 if (!function_exists('getSiteConfig')) {
     function getSiteConfig()
     {
-        return \Cache::remember('site_config', getCacheTime(), function () {
-            /* get application setting */
-            $host = parse_url(url('/'))['host'];
-            if (isWWW($host)) {
-                $host = str_replace('www.', '', $host);
-            } else if (adminRoute() == 'subdomain' && isAdminSubdomain()) {
-                $host = str_replace(adminSubdomain() . '.', '', $host);
-            }
+        /* get application setting */
+        $host = parse_url(url('/'))['host'];
+        if (isWWW($host)) {
+            $host = str_replace('www.', '', $host);
+        } else if (adminRoute() == 'subdomain' && isAdminSubdomain()) {
+            $host = str_replace(adminSubdomain() . '.', '', $host);
+        }
 
+        return \Cache::remember('site_config.' . $host, getCacheTime(), function () use ($host) {
             return \App\Models\Site::where('domain', $host)->with('socmed')->first();
         });
     }
@@ -301,7 +301,7 @@ if (!function_exists('getMenu')) {
         /* get role name */
         $roleName = '';
         if (app('user')) {
-            $cacheRoleMenuName = 'cacheRoleMenuGroup' . \Str::studly($group);
+            $cacheRoleMenuName = 'cacheRoleMenuGroup.' . \Str::studly($group) . '.' . app('site')->id;
             $cacheRoleMenu = \Cache::remember($cacheRoleMenuName, getCacheTime(), function () use ($roleName) {
                 $roles = app('user')->roles;
                 foreach ($roles as $role) {
@@ -313,7 +313,7 @@ if (!function_exists('getMenu')) {
         }
 
         /* get menu based on user role */
-        $cacheMenuName = 'cacheMenuGroup' . \Str::studly($group) . $roleName;
+        $cacheMenuName = 'cacheMenuGroup' . \Str::studly($group) . $roleName . '.' . app('site')->id;
         $menus = \Cache::remember($cacheMenuName, getCacheTime(), function () use ($group) {
             $groupmenu = \ZetthCore\Models\MenuGroup::where('slug', $group)->with('menu.submenu')->first();
             if (!$groupmenu) {
@@ -389,6 +389,9 @@ if (!function_exists('generateMenu')) {
     {
         /* get menus */
         $menus = $menus ?? getMenu($group);
+        if (is_null($menus)) {
+            return null;
+        }
 
         /* set index for params */
         $index = 'main';

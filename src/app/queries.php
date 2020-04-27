@@ -6,7 +6,7 @@ function _doGetData($cache_name, $data, $limit = null)
     $limit = $limit ?? app('site')->perpage;
 
     /* set cache */
-    $cache_name .= $limit . $page;
+    $cache_name .= $limit . $page . app('site')->id;
 
     $data = \Cache::remember($cache_name, getCacheTime(), function () use ($data, $limit) {
         /* cek limit */
