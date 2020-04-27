@@ -32,9 +32,7 @@ class User extends Authenticatable implements MustVerifyEmail
      *
      * @var array
      */
-    protected $fillable = [
-        'name', 'fullname', 'email', 'password', 'image', 'is_first_login', 'status',
-    ];
+    protected $guarded = [];
 
     /**
      * The attributes that should be hidden for arrays.
@@ -42,7 +40,7 @@ class User extends Authenticatable implements MustVerifyEmail
      * @var array
      */
     protected $hidden = [
-        'password', 'token', 'token_expire', 'verify_code', 'verify_code_expire', 'verified_at',
+        'password',
     ];
 
     public function role_ids()
