@@ -24,7 +24,7 @@ class CreateSitesTable extends Migration
             $table->string('keywords')->nullable();
             $table->bigInteger('template_id')->unsigned()->nullable();
             $table->string('timezone')->default('Asia/Jakarta');
-            $table->string('language')->default('id');
+            $table->string('language')->default('id_ID');
             $table->string('email')->nullable();
             $table->string('phone')->nullable();
             $table->text('address')->nullable();
