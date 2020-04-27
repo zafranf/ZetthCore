@@ -8,25 +8,20 @@ function _doGetData($cache_name, $data, $limit = null)
     /* set cache */
     $cache_name .= $limit . $page;
 
-    /* cek cache */
-    $cache = Cache::get($cache_name);
-    if ($cache) {
-        return $cache;
-    }
+    $data = \Cache::remember($cache_name, getCacheTime(), function () use ($data, $limit) {
+        /* cek limit */
+        if ($limit > 1) {
+            $data = $data->paginate($limit);
+        } else if ($limit == 1) {
+            $data = $data->first();
+        } else {
+            $data = $data->get();
+        }
 
-    /* cek limit */
-    if ($limit > 1) {
-        $data = $data->paginate($limit);
-    } else if ($limit == 1) {
-        $data = $data->first();
-    } else {
-        $data = $data->get();
-    }
+        return $data ?? '-';
+    });
 
-    /* simpan ke cache */
-    Cache::put($cache_name, $data, getCacheTime());
-
-    return $data;
+    return $data != '-' ? $data : null;
 }
 
 function _getBanners($limit = null)

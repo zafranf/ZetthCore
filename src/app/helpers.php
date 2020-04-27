@@ -239,15 +239,17 @@ if (!function_exists('getImageUser')) {
 if (!function_exists('getSiteConfig')) {
     function getSiteConfig()
     {
-        /* get application setting */
-        $host = parse_url(url('/'))['host'];
-        if (isWWW($host)) {
-            $host = str_replace('www.', '', $host);
-        } else if (adminRoute() == 'subdomain' && isAdminSubdomain()) {
-            $host = str_replace(adminSubdomain() . '.', '', $host);
-        }
+        return \Cache::remember('site_config', getCacheTime(), function () {
+            /* get application setting */
+            $host = parse_url(url('/'))['host'];
+            if (isWWW($host)) {
+                $host = str_replace('www.', '', $host);
+            } else if (adminRoute() == 'subdomain' && isAdminSubdomain()) {
+                $host = str_replace(adminSubdomain() . '.', '', $host);
+            }
 
-        return \App\Models\Site::where('domain', $host)->with('socmed')->first();
+            return \App\Models\Site::where('domain', $host)->with('socmed')->first();
+        });
     }
 }
 
@@ -266,7 +268,7 @@ if (!function_exists('getSiteURL')) {
 if (!function_exists('getCacheTime')) {
     function getCacheTime()
     {
-        $minutes = env('APP_ENV') != 'production' ? 1 : env('CACHE_TIME', 10);
+        $minutes = env('APP_ENV', 'production') == 'production' ? env('CACHE_TIME', 10) : 1;
 
         return now()->addMinutes($minutes);
     }
@@ -296,37 +298,32 @@ if (!function_exists('getEmailFile')) {
 if (!function_exists('getMenu')) {
     function getMenu($group = 'admin', $cache = true)
     {
+        /* get role name */
         $roleName = '';
         if (app('user')) {
             $cacheRoleMenuName = 'cacheRoleMenuGroup' . \Str::studly($group);
-            $cacheRoleMenu = \Cache::get($cacheRoleMenuName);
-            if ($cacheRoleMenu && $cache) {
-                $roleName = $cacheRoleMenu;
-            } else {
+            $cacheRoleMenu = \Cache::remember($cacheRoleMenuName, getCacheTime(), function () use ($roleName) {
                 $roles = app('user')->roles;
                 foreach ($roles as $role) {
-                    $roleName .= ucfirst($role->name);
+                    $roleName .= '.' . ucfirst($role->name);
                 }
 
-                \Cache::put($cacheRoleMenuName, $roleName, getCacheTime());
-            }
+                return $roleName;
+            });
         }
 
+        /* get menu based on user role */
         $cacheMenuName = 'cacheMenuGroup' . \Str::studly($group) . $roleName;
-        $cacheMenu = \Cache::get($cacheMenuName);
-        if ($cacheMenu && $cache) {
-            $menus = $cacheMenu;
-        } else {
+        $menus = \Cache::remember($cacheMenuName, getCacheTime(), function () use ($group) {
             $groupmenu = \ZetthCore\Models\MenuGroup::where('slug', $group)->with('menu.submenu')->first();
             if (!$groupmenu) {
-                return null;
+                return '-';
             }
-            $menus = $group == 'admin' ? menuFilterPermission($groupmenu->menu) : $groupmenu->menu;
 
-            \Cache::put($cacheMenuName, $menus ?? false, getCacheTime());
-        }
+            return $group == 'admin' ? menuFilterPermission($groupmenu->menu) : $groupmenu->menu;
+        });
 
-        return $menus;
+        return $menus != '-' ? $menus : null;
     }
 }
 
