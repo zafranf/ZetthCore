@@ -21,10 +21,11 @@ class AjaxController extends AdminController
             abort(404);
         }
 
-        $data = Term::select('name')->
-            where('type', $type)->
-            where('status', 1)->
-            get();
+        $data = Term::select('name')
+            ->where('type', $type)
+            ->where('group', 'post')
+            ->where('status', 'active')
+            ->get();
 
         foreach ($data as $value) {
             $arr[] = $value->name;

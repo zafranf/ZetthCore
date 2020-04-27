@@ -29,4 +29,9 @@ class Role extends LaratrustRole
 
         return $menus;
     }
+
+    public function scopeActive($query)
+    {
+        return $query->where('status', 'active');
+    }
 }

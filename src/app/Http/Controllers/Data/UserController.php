@@ -96,8 +96,8 @@ class UserController extends AdminController
             'breadcrumbs' => $this->breadcrumbs,
             'page_title' => $this->page_title,
             'page_subtitle' => 'Tambah Pengguna',
-            'roles' => Role::where($whrRole)->get(),
-            'socmeds' => Socmed::where('status', 'active')->get(),
+            'roles' => Role::active()->where($whrRole)->get(),
+            'socmeds' => Socmed::active()->get(),
         ];
 
         return view('zetthcore::AdminSC.data.users_form', $data);
@@ -197,16 +197,16 @@ class UserController extends AdminController
         /* where roles */
         if (app('user')->hasRole('super')) {
             $whrRole = [
-                ['status', 'active'],
+                // ['status', 'active'],
             ];
         } else if (app('user')->hasRole('admin')) {
             $whrRole = [
-                ['status', 'active'],
+                // ['status', 'active'],
                 ['id', '!=', 1],
             ];
         } else {
             $whrRole = [
-                ['status', 'active'],
+                // ['status', 'active'],
                 ['id', '!=', 1],
                 ['id', '!=', 2],
             ];
@@ -218,8 +218,8 @@ class UserController extends AdminController
             'breadcrumbs' => $this->breadcrumbs,
             'page_title' => $this->page_title,
             'page_subtitle' => 'Edit Pengguna',
-            'roles' => Role::where($whrRole)->get(),
-            'socmeds' => Socmed::where('status', 'active')->get(),
+            'roles' => Role::active()->where($whrRole)->get(),
+            'socmeds' => Socmed::active()->get(),
             'data' => $user->load('detail'),
         ];
 
