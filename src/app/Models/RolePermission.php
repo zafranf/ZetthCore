@@ -2,9 +2,7 @@
 
 namespace ZetthCore\Models;
 
-use Illuminate\Database\Eloquent\Model;
-
-class RolePermission extends Model
+class RolePermission extends Base
 {
     protected $table = 'role_permission';
 }

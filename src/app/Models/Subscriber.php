@@ -2,10 +2,9 @@
 
 namespace ZetthCore\Models;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Subscriber extends Model
+class Subscriber extends Base
 {
     use SoftDeletes;
 

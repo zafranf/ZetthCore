@@ -2,9 +2,7 @@
 
 namespace ZetthCore\Models;
 
-use Illuminate\Database\Eloquent\Model;
-
-class UserOauth extends Model
+class UserOauth extends Base
 {
     protected $primaryKey = 'user_id';
     protected $guarded = [];

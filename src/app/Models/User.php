@@ -7,12 +7,25 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laratrust\Traits\LaratrustUserTrait;
+use ZetthCore\Models\Scopes\SiteScope;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
     use LaratrustUserTrait;
     use Notifiable;
     use SoftDeletes;
+
+    /**
+     * The "booting" method of the model.
+     *
+     * @return void
+     */
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::addGlobalScope(new SiteScope);
+    }
 
     /**
      * The attributes that are mass assignable.

@@ -2,9 +2,7 @@
 
 namespace ZetthCore\Models;
 
-use Illuminate\Database\Eloquent\Model;
-
-class UserDetail extends Model
+class UserDetail extends Base
 {
     protected $primaryKey = 'user_id';
     protected $guarded = [];

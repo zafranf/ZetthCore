@@ -2,10 +2,9 @@
 
 namespace ZetthCore\Models;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class MenuGroup extends Model
+class MenuGroup extends Base
 {
     use SoftDeletes;
 

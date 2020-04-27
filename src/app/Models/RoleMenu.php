@@ -2,9 +2,7 @@
 
 namespace ZetthCore\Models;
 
-use Illuminate\Database\Eloquent\Model;
-
-class RoleMenu extends Model
+class RoleMenu extends Base
 {
     protected $table = 'role_menu';
     public $timestamps = false;

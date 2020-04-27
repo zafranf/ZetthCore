@@ -2,9 +2,7 @@
 
 namespace ZetthCore\Models;
 
-use Illuminate\Database\Eloquent\Model;
-
-class UserVerification extends Model
+class UserVerification extends Base
 {
     protected $dates = ['verified_at'];
     protected $primaryKey = 'user_id';

@@ -3,9 +3,8 @@
 namespace ZetthCore\Models;
 
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Model;
 
-class Like extends Model
+class Like extends Base
 {
     protected $primaryKey = ['likeable_id', 'user_id'];
     protected $guarded = [];

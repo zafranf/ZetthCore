@@ -2,10 +2,9 @@
 
 namespace ZetthCore\Models;
 
-use Illuminate\Database\Eloquent\Model;
 use \Illuminate\Database\Eloquent\Builder;
 
-class ErrorLog extends Model
+class ErrorLog extends Base
 {
     public $incrementing = false;
 

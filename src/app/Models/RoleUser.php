@@ -2,9 +2,7 @@
 
 namespace ZetthCore\Models;
 
-use Illuminate\Database\Eloquent\Model;
-
-class RoleUser extends Model
+class RoleUser extends Base
 {
     protected $table = 'role_user';
     public $timestamps = false;

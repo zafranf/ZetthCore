@@ -2,10 +2,9 @@
 
 namespace ZetthCore\Models;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Term extends Model
+class Term extends Base
 {
     use SoftDeletes;
 

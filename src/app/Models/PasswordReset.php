@@ -2,9 +2,7 @@
 
 namespace ZetthCore\Models;
 
-use Illuminate\Database\Eloquent\Model;
-
-class PasswordReset extends Model
+class PasswordReset extends Base
 {
     protected $primaryKey = 'email';
     protected $fillable = [

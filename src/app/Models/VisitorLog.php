@@ -3,9 +3,8 @@
 namespace ZetthCore\Models;
 
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Model;
 
-class VisitorLog extends Model
+class VisitorLog extends Base
 {
     protected $guarded = [];
     public $incrementing = false;
