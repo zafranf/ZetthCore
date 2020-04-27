@@ -156,6 +156,7 @@ class BannerController extends AdminController
         $banner->target = $r->input('target');
         $banner->only_image = $r->input('only_image') ?? 'no';
         $banner->status = $r->input('status') ?? 'inactive';
+        $banner->site_id = app('site')->id;
         $banner->save();
 
         /* process image */

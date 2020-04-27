@@ -108,6 +108,7 @@ class RoleController extends AdminController
         $role->display_name = $name;
         $role->description = $r->input('description');
         $role->status = $r->input('status') ?? 'inactive';
+        $role->site_id = app('site')->id;
         $role->save();
 
         /* set permissions */
@@ -318,6 +319,7 @@ class RoleController extends AdminController
             $rolemenu = new RoleMenu;
             $rolemenu->role_id = $role->id;
             $rolemenu->menu_group_id = $group;
+            $rolemenu->site_id = app('site')->id;
             $rolemenu->save();
         }
     }

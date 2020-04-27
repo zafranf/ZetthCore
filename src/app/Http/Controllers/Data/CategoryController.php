@@ -110,6 +110,7 @@ class CategoryController extends AdminController
             $category->parent_id = (int) $r->input('parent');
         }
         $category->status = $r->input('status') ?? 'inactive';
+        $category->site_id = app('site')->id;
         $category->save();
 
         /* save activity */

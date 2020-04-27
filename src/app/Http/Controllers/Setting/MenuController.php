@@ -144,6 +144,7 @@ class MenuController extends AdminController
             $menu->parent_id = (int) $r->input('parent');
         }
         $menu->group_id = (int) $r->input('group');
+        $menu->site_id = app('site')->id;
         $menu->save();
 
         /* save activity */

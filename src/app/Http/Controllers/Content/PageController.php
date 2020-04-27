@@ -106,6 +106,7 @@ class PageController extends AdminController
         $page->status = bool($r->input('status')) ? 1 : 0;
         $page->created_by = app('user')->id;
         $page->published_at = now();
+        $page->site_id = app('site')->id;
         $page->save();
 
         /* save activity */

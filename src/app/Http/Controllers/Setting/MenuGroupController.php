@@ -100,6 +100,7 @@ class MenuGroupController extends AdminController
         $menugroup->slug = \Str::slug($menugroup->name);
         $menugroup->description = $r->input('description');
         $menugroup->status = $r->input('status') ?? 'inactive';
+        $menugroup->site_id = app('site')->id;
         $menugroup->save();
 
         /* activity log */

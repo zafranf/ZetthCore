@@ -111,6 +111,7 @@ class PhotoController extends AdminController
         $album->description = $r->input('description');
         $album->type = 'photo';
         $album->status = $r->input('status') ?? 'inactive';
+        $album->site_id = app('site')->id;
         $album->save();
 
         /* process photos */
@@ -260,6 +261,7 @@ class PhotoController extends AdminController
                 'created_by' => app('user')->id,
                 'created_at' => now(),
                 'updated_at' => now(),
+                'site_id' => app('site')->id,
             ];
         }
 

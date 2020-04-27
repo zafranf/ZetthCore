@@ -157,6 +157,7 @@ class PostController extends AdminController
         $post->published_at = carbon_query($date . ' ' . $time);
         $post->short_url = $uniq;
         $post->created_by = app('user')->id;
+        $post->site_id = app('site')->id;
         $post->save();
 
         /* process image */
@@ -384,6 +385,7 @@ class PostController extends AdminController
                 $term->type = 'category';
                 $term->group = 'post';
                 $term->status = 'active';
+                $term->site_id = app('site')->id;
                 $term->save();
 
                 $cid = $term->id;
@@ -418,6 +420,7 @@ class PostController extends AdminController
                 $term->type = 'tag';
                 $term->group = 'post';
                 $term->status = 'active';
+                $term->site_id = app('site')->id;
                 $term->save();
 
                 $tid = $term->id;
@@ -443,6 +446,7 @@ class PostController extends AdminController
         $postrel->term_id = $tid;
         $postrel->termable_type = 'App\Models\Post';
         $postrel->termable_id = $pid;
+        $postrel->site_id = app('site')->id;
         $postrel->save();
     }
 

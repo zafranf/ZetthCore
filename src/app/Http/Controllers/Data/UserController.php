@@ -128,6 +128,7 @@ class UserController extends AdminController
         $user->email = $r->input('email');
         $user->password = bcrypt($r->input('password'));
         $user->status = bool($r->input('status')) ? 'active' : 'inactive';
+        $user->site_id = app('site')->id;
 
         /* upload image */
         if ($r->input('image_remove')) {

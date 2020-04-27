@@ -102,6 +102,7 @@ class TagController extends AdminController
         $tag->type = 'tag';
         $tag->group = 'post';
         $tag->status = $r->input('status') ?? 'inactive';
+        $tag->site_id = app('site')->id;
         $tag->save();
 
         /* save activity */

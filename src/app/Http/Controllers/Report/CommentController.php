@@ -130,6 +130,7 @@ class CommentController extends AdminController
         $comment->commentable_id = $r->input('pid');
         $comment->approved_by = \Auth::user()->id;
         $comment->created_by = \Auth::user()->id;
+        $comment->site_id = app('site')->id;
         $comment->save();
 
         /* set approved */
