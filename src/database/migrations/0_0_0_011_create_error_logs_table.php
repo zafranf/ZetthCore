@@ -14,7 +14,7 @@ class CreateErrorLogsTable extends Migration
     public function up()
     {
         Schema::create('error_logs', function (Blueprint $table) {
-            $table->string('id')->primary();
+            $table->string('id');
             $table->string('code');
             $table->string('message');
             $table->string('file');
@@ -27,6 +27,8 @@ class CreateErrorLogsTable extends Migration
             $table->text('time_history')->nullable();
             $table->timestamps();
             $table->bigInteger('site_id')->unsigned()->default(1);
+
+            $table->primary(['id', 'site_id']);
         });
     }
 

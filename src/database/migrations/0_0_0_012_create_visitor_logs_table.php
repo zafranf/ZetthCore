@@ -14,7 +14,7 @@ class CreateVisitorLogsTable extends Migration
     public function up()
     {
         Schema::create('visitor_logs', function (Blueprint $table) {
-            $table->string('id')->primary();
+            $table->string('id');
             $table->ipAddress('ip');
             $table->string('page');
             $table->string('referral')->nullable();
@@ -30,6 +30,8 @@ class CreateVisitorLogsTable extends Migration
             $table->bigInteger('count')->unsigned()->default(0);
             $table->timestamps();
             $table->bigInteger('site_id')->unsigned()->default(1);
+
+            $table->primary(['id', 'site_id']);
         });
     }
 
