@@ -26,7 +26,7 @@ class VisitorLogMiddleware
     public function intermLog(Request $r)
     {
         /* check referrer */
-        $referrer = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : null;
+        $referrer = isset(_server('HTTP_REFERER')) ? _server('HTTP_REFERER') : null;
         if ($referrer) {
             /* get host from referrer */
             $host = parse_url($referrer)['host'];
