@@ -15,16 +15,16 @@ class CreateVisitorLogsTable extends Migration
     {
         Schema::create('visitor_logs', function (Blueprint $table) {
             $table->string('id');
-            $table->ipAddress('ip');
+            $table->ipAddress('ip')->nullable();
             $table->string('page');
             $table->string('referral')->nullable();
-            $table->string('agent');
-            $table->string('browser');
-            $table->string('browser_version');
-            $table->string('device');
-            $table->string('device_name');
-            $table->string('os');
-            $table->string('os_version');
+            $table->string('agent')->nullable();
+            $table->string('browser')->nullable();
+            $table->string('browser_version')->nullable();
+            $table->string('device')->nullable();
+            $table->string('device_name')->nullable();
+            $table->string('os')->nullable();
+            $table->string('os_version')->nullable();
             $table->enum('is_robot', ['yes', 'no'])->default('no');
             $table->string('robot_name')->nullable();
             $table->bigInteger('count')->unsigned()->default(0);

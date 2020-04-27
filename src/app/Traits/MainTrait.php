@@ -11,8 +11,15 @@ trait MainTrait
     public function visitorLog()
     {
         /* set variable */
+        $ip = _server('REMOTE_ADDR') ?? null;
+        $page = _server('REQUEST_URI') ?? '/';
+        $referrer = _server('HTTP_REFERER') ?? null;
+        $referrer = str_replace(url('/'), "", $referrer);
         $agent = new \Jenssegers\Agent\Agent();
-        $device = '';
+        $ua = $agent->getUserAgent() ?? null;
+        $browser = $agent->browser() ?? null;
+        $browser_version = !is_null($browser) ? $agent->version($browser) : null;
+        $device = null;
         if ($agent->isPhone()) {
             $device = 'phone';
         } else if ($agent->isTablet()) {
@@ -20,29 +27,33 @@ trait MainTrait
         } else if ($agent->isDesktop()) {
             $device = 'desktop';
         }
-        $browser = $agent->browser();
-        $os = $agent->platform();
-        $referrer = _server('HTTP_REFERER') ?? null;
+        $device_name = $device != '' ? $agent->device() : null;
+        $os = $agent->platform() ?? null;
+        $os_version = !is_null($os) ? $agent->version($os) : null;
+        $is_robot = $agent->isRobot() ? 'yes' : 'no';
+        $robot_name = bool($is_robot) ? $agent->robot() : null;
+        $site_id = app('site')->id;
 
         /* save log */
+        $id = md5(session()->getId() . $ip . $page . $referrer . $ua . $browser . $browser_version . $device . $device_name . $os . $os_version . $is_robot . $robot_name . $site_id);
         \ZetthCore\Models\VisitorLog::updateOrCreate(
             [
-                'id' => session()->getId(),
-                'site_id' => app('site')->id,
+                'id' => $id,
+                'ip' => $ip,
+                'page' => $page,
+                'referral' => $referrer,
+                'agent' => $ua,
+                'browser' => $browser,
+                'browser_version' => $browser_version,
+                'device' => $device,
+                'device_name' => $device_name,
+                'os' => $os,
+                'os_version' => $os_version,
+                'is_robot' => $is_robot,
+                'robot_name' => $robot_name,
+                'site_id' => $site_id,
             ],
             [
-                'ip' => _server('REMOTE_ADDR') ?? '127.0.0.1',
-                'page' => _server('REQUEST_URI') ?? '/',
-                'referral' => str_replace(url('/'), "", $referrer),
-                'agent' => $agent->getUserAgent(),
-                'browser' => $browser ? $browser : '',
-                'browser_version' => $browser ? $agent->version($browser) : '',
-                'device' => $device,
-                'device_name' => $device != '' ? $agent->device() : $device,
-                'os' => $os ? $os : '',
-                'os_version' => $os ? $agent->version($os) : '',
-                'is_robot' => $agent->isRobot() ? 'yes' : 'no',
-                'robot_name' => $agent->isRobot() ? $agent->robot() : null,
                 'count' => \DB::raw('count+1'),
             ]
         );
