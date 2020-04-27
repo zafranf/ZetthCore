@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Site extends Model
 {
     protected $dates = ['active_at'];
+    public $appends = ['lang'];
 
     public function socmed()
     {
@@ -16,5 +17,10 @@ class Site extends Model
     public function template()
     {
         return $this->belongsTo('ZetthCore\Models\Template');
+    }
+
+    public function getLangAttribute()
+    {
+        return explode("_", $this->language ?? 'id_ID')[0];
     }
 }
