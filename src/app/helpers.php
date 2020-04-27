@@ -331,7 +331,7 @@ if (!function_exists('getTimezone')) {
     function getTimezone($type = null)
     {
         /* get env timezone */
-        $timezone = env('APP_TIMEZONE', 'UTC');
+        $timezone = 'UTC';
         if ($type == 'env') {
             return $timezone;
         }
