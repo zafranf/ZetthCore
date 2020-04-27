@@ -39,6 +39,8 @@ trait MainTrait
         \ZetthCore\Models\VisitorLog::updateOrCreate(
             [
                 'id' => $id,
+            ],
+            [
                 'ip' => $ip,
                 'page' => $page,
                 'referral' => $referrer,
@@ -51,10 +53,8 @@ trait MainTrait
                 'os_version' => $os_version,
                 'is_robot' => $is_robot,
                 'robot_name' => $robot_name,
-                'site_id' => $site_id,
-            ],
-            [
                 'count' => \DB::raw('count+1'),
+                'site_id' => $site_id,
             ]
         );
     }

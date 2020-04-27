@@ -24,6 +24,6 @@ class SiteScope implements Scope
      */
     public function apply(Builder $builder, Model $model)
     {
-        $builder->where('site_id', $this->site->id);
+        $builder->where($model->getTable() . '.site_id', $this->site->id);
     }
 }
