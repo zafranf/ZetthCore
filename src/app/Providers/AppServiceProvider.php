@@ -17,6 +17,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        $site = null;
         $this->package_path = base_path('vendor/zafranf/zetthcore');
 
         if ($this->app->runningInConsole()) {
@@ -34,9 +35,11 @@ class AppServiceProvider extends ServiceProvider
         }
 
         /* get application setting */
-        $site = getSiteConfig();
-        if (!$site) {
-            throw new \Exception("Site config not found", 1);
+        if (\Schema::hasTable('sites')) {
+            $site = getSiteConfig();
+            if (!$site && !$this->app->runningInConsole()) {
+                throw new \Exception("Site config not found", 1);
+            }
         }
 
         /* set application setting to global */

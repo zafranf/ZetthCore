@@ -340,7 +340,7 @@ if (!function_exists('getTimezone')) {
         }
 
         /* get config site timezone */
-        if (app()->bound('site') || class_exists('site')) {
+        if ((app()->bound('site') || class_exists('site')) && isset(app('site')->timezone)) {
             $timezone = app('site')->timezone;
 
             if ($type == 'site') {
@@ -349,8 +349,8 @@ if (!function_exists('getTimezone')) {
         }
 
         /* get user timezone */
-        if (app('user')) {
-            $timezone = app('user')->timezone;
+        if ((app()->bound('user') || class_exists('user')) && isset(app('user')->detail)) {
+            $timezone = app('user')->detail->timezone;
 
             if ($type == 'user') {
                 return $timezone;
