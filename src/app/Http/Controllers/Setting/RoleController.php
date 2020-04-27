@@ -298,6 +298,7 @@ class RoleController extends AdminController
                 // $role->attachPermission($key . '-' . $module);
                 $permissions[] = Permission::firstOrCreate([
                     'name' => $module . '.' . $key,
+                    'site_id' => app('site')->id,
                 ], [
                     'display_name' => ucfirst($key) . ' ' . ucfirst($module),
                     'description' => ucfirst($key) . ' ' . ucfirst($module),
