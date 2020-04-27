@@ -10,7 +10,7 @@ class Menu extends Base
 
     public function submenu()
     {
-        return $this->hasMany('ZetthCore\Models\Menu', 'parent_id', 'id')->where('status', 'active')->orderBy('order')->with('submenu')->orderBy('order');
+        return $this->hasMany('ZetthCore\Models\Menu', 'parent_id', 'id')->active()->orderBy('order')->with('submenu')->orderBy('order');
     }
 
     public function allSubmenu()
@@ -21,5 +21,10 @@ class Menu extends Base
     public function group()
     {
         return $this->belongsTo('ZetthCore\Models\MenuGroup');
+    }
+
+    public function scopeActive($query)
+    {
+        return $query->where('status', 'active');
     }
 }
