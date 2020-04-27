@@ -19,7 +19,9 @@ class LoginController extends AdminController
     |
      */
 
-    use AuthenticatesUsers;
+    use AuthenticatesUsers {
+        login as loginTrait;
+    }
 
     /**
      * Where to redirect users after login.
@@ -51,6 +53,22 @@ class LoginController extends AdminController
         ];
 
         return view('zetthcore::AdminSC.auth.login', $data);
+    }
+
+    /**
+     * Handle a login request to the application.
+     *
+     * @param  \Illuminate\Http\Request  $r
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Http\Response|\Illuminate\Http\JsonResponse
+     *
+     * @throws \Illuminate\Validation\ValidationException
+     */
+    public function login(Request $r)
+    {
+        /* save activity */
+        $this->activityLog('"' . $r->input($this->username()) . '" mencoba masuk halaman admin');
+
+        return $this->loginTrait($r);
     }
 
     /**
