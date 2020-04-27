@@ -7,4 +7,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class IntermData extends Base
 {
     use SoftDeletes;
+
+    protected $guarded = [];
 }

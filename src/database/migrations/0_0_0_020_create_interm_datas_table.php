@@ -16,7 +16,7 @@ class CreateIntermDatasTable extends Migration
         Schema::create('interm_data', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('host')->index();
-            $table->string('text');
+            $table->string('keyword');
             $table->integer('count')->unsigned();
             $table->bigInteger('post_id')->unsigned()->nullable();
             $table->timestamps();
