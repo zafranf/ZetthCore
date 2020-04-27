@@ -85,7 +85,9 @@ class VisitorLogMiddleware
             $host = parse_url($referrer)['host'];
 
             /* get interm host */
-            $interm = \App\Models\Interm::where('host', $host)->first();
+            $interm = \Cache::remember('intermlog.' . app('site')->id, getCacheTime(), function () use ($host) {
+                return \App\Models\Interm::where('host', $host)->first();
+            });
             if ($interm) {
                 /* get host param */
                 $param = $interm->param;
@@ -100,7 +102,9 @@ class VisitorLogMiddleware
                     $url = url()->current();
                     $page = str_replace(url('/'), '', $url);
                     $slug = explode('/', $page);
-                    $post = \App\Models\Post::where('slug', end($slug))->first();
+                    $post = \Cache::remember('intermlogpost.' . app('site')->id, getCacheTime(), function () use ($slug) {
+                        return \App\Models\Post::active()->where('slug', end($slug))->first();
+                    });
 
                     /* save keyword */
                     \App\Models\IntermData::updateOrCreate([
