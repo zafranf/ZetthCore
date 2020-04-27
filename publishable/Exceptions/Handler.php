@@ -54,7 +54,6 @@ class Handler extends ExceptionHandler
     public function render($request, Exception $e)
     {
         if ($this->isHttpException($e)) {
-            $this->visitorLog();
             $theme = $this->getTemplate();
             if (!app()->runningInConsole() && isAdminPanel()) {
                 $theme = 'zetthcore::AdminSC';
