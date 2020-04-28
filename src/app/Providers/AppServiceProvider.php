@@ -153,8 +153,8 @@ class AppServiceProvider extends ServiceProvider
             $publishable_path . '/Middleware/TrimDomains.php' => app_path('Http/Middleware/TrimDomains.php'),
         ], 'zetthmiddleware');
 
-        /* $this->publishes([
-    $publishable_path . '/routes/web.php' => base_path('routes/web.php'),
-    ], 'zetthroutes'); */
+        $this->publishes([
+            $publishable_path . '/routes/web.php' => base_path('routes/web.php'),
+        ], 'zetthroutes');
     }
 }

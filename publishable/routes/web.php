@@ -45,12 +45,6 @@ Route::name('web.')->middleware(['site'])->group(function () {
         Route::get('/share/{slug}/{socmed}', 'Site\ActionController@share')->name('share');
     });
 
-    /* include additional menu site */
-    $siteRoute = base_path('routes') . '/site.php';
-    if (file_exists($siteRoute)) {
-        include $siteRoute;
-    }
-
     /* Log all visits */
     Route::middleware(['visitor_log'])->group(function () {
         /* check login status */
@@ -93,6 +87,17 @@ Route::name('web.')->middleware(['site'])->group(function () {
 
         /* Page Route */
         Route::get('/contact', 'Site\PageController@contact')->name('contact');
+    });
+
+    /* include additional menu site */
+    $siteRoute = base_path('routes') . '/site.php';
+    if (file_exists($siteRoute)) {
+        include $siteRoute;
+    }
+
+    /* Log all visits */
+    Route::middleware(['visitor_log'])->group(function () {
+        /* Page Route */
         Route::get('/{slug}', 'Site\PageController@index')->name('page');
     });
 });

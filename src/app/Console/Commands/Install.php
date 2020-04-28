@@ -82,7 +82,7 @@ class Install extends Command
         // $this->process('php artisan vendor:publish --tag=zetthauth --force');
         $this->process('php artisan vendor:publish --tag=zetthhandler --force');
         $this->process('php artisan vendor:publish --tag=zetthmiddleware --force');
-        // $this->process('php artisan vendor:publish --tag=zetthroutes --force');
+        $this->process('php artisan vendor:publish --tag=zetthroutes --force');
         // $this->process('php artisan vendor:publish --tag=zetthmigrate --force');
         $this->info('Publish files finished!');
         $this->line('');
