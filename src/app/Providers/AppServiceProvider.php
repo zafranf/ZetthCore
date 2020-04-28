@@ -135,6 +135,7 @@ class AppServiceProvider extends ServiceProvider
         $this->publishes([
             $publishable_path . '/config/app.php' => config_path('app.php'),
             $publishable_path . '/config/auth.php' => config_path('auth.php'),
+            $publishable_path . '/config/cache.php' => config_path('cache.php'),
             $publishable_path . '/config/database.php' => config_path('database.php'),
             $publishable_path . '/config/image.php' => config_path('image.php'),
             $publishable_path . '/config/imagecache.php' => config_path('imagecache.php'),

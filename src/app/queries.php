@@ -29,7 +29,7 @@ function _getBanners($limit = null)
     /* inisiasi query */
     $banners = \ZetthCore\Models\Banner::active()->orderBy('order', 'asc');
 
-    return _doGetData('_getBanners', $banners, $limit);
+    return _doGetData('getBanners', $banners, $limit);
 }
 
 function _getPost($slug, $type = 'complete')
@@ -43,7 +43,7 @@ function _getPosts($type = 'simple', $limit = null, $order = "desc", $slug = '')
     $complete = $type == 'complete';
 
     /* cache name */
-    $cache_name = '_getPosts' . $type . $order . $slug;
+    $cache_name = 'getPosts' . $type . $order . $slug;
 
     /* inisiasi query */
     $posts = \App\Models\Post::active()->posts();
@@ -114,7 +114,7 @@ function _getSearchPosts($slug, $limit = null, $order = 'desc')
 function _getTerms($type = 'category', $limit = null, $order = 'desc')
 {
     /* cache name */
-    $cache_name = '_getTerms' . $type . $order;
+    $cache_name = 'getTerms' . $type . $order;
 
     /* inisiasi query */
     $terms = \ZetthCore\Models\Term::active()->where('type', $type)->groupBy('slug');
@@ -157,7 +157,7 @@ function _getPage($slug)
 function _getPages($limit = null, $order = 'desc', $slug = '')
 {
     /* cache name */
-    $cache_name = '_getPages' . $order . $slug;
+    $cache_name = 'getPages' . $order . $slug;
 
     /* inisiasi query */
     $pages = \App\Models\Post::active()->pages();
@@ -183,7 +183,7 @@ function _getAlbum($slug)
 function _getAlbums($limit = null, $order = 'desc', $slug = '')
 {
     /* cache name */
-    $cache_name = '_getAlbums' . $order . $slug;
+    $cache_name = 'getAlbums' . $order . $slug;
 
     /* inisiasi query */
     $albums = \ZetthCore\Models\Album::active();
@@ -212,7 +212,7 @@ function _getAlbums($limit = null, $order = 'desc', $slug = '')
 function _getPhotos($limit = null, $order = 'desc')
 {
     /* cache name */
-    $cache_name = '_getPhotos' . $order;
+    $cache_name = 'getPhotos' . $order;
 
     /* inisiasi query */
     $photos = \ZetthCore\Models\AlbumDetail::with('album');
@@ -235,7 +235,7 @@ function _getVideo($slug = '')
 function _getVideos($limit = null, $order = 'desc', $slug = '')
 {
     /* cache name */
-    $cache_name = '_getVideos' . $order . $slug;
+    $cache_name = 'getVideos' . $order . $slug;
 
     /* inisiasi query */
     $videos = \App\Models\Post::active()->videos();
@@ -253,7 +253,7 @@ function _getVideos($limit = null, $order = 'desc', $slug = '')
 function _getPopularPosts($limit = null, $start_date = null, $end_date = null)
 {
     /* cache name */
-    $cache_name = '_getPopularPosts' . $start_date . $end_date;
+    $cache_name = 'getPopularPosts' . $start_date . $end_date;
 
     /* default start and end date */
     $start_date = $start_date ?? date("Y-m-d", strtotime('-7 days'));
@@ -278,7 +278,7 @@ function _getPopularPosts($limit = null, $start_date = null, $end_date = null)
 function _getComments($limit = null, $order = 'desc')
 {
     /* cache name */
-    $cache_name = '_getComments' . $order;
+    $cache_name = 'getComments' . $order;
 
     /* inisiasi query */
     $comments = \App\Models\Comment::active()->with('post');
