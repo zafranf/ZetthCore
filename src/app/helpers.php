@@ -217,9 +217,11 @@ if (!function_exists('getImageLogo')) {
      * @param  string $image [description]
      * @return [type]        [description]
      */
-    function getImageLogo($image = null)
+    function getImageLogo($image = null, $default = null)
     {
-        return getImage('/assets/images/' . ($image ?? (app('site')->logo ?? '')), 'original', adminPath() . "/themes/admin/AdminSC/images/logo.v2.png");
+        $default = $default ?? adminPath() . "/themes/admin/AdminSC/images/logo.v2.png";
+
+        return getImage('/assets/images/' . ($image ?? (app('site')->logo ?? '')), 'original', $default);
     }
 }
 
@@ -230,9 +232,11 @@ if (!function_exists('getImageUser')) {
      * @param  string $image [description]
      * @return [type]        [description]
      */
-    function getImageUser($image = null)
+    function getImageUser($image = null, $default = null)
     {
-        return getImage('/assets/images/users/' . ($image ?? (\Auth::user()->image ?? '')), 'original', getImage('/assets/images/no-image-profile.jpg'));
+        $default = $default ?? getImage('/assets/images/no-image-profile.jpg');
+
+        return getImage('/assets/images/users/' . ($image ?? (\Auth::user()->image ?? '')), 'original', $default);
     }
 }
 
