@@ -20,7 +20,8 @@ class CreatePostsTable extends Migration
             $table->text('content');
             $table->string('excerpt')->nullable();
             $table->string('cover')->nullable();
-            $table->enum('type', ['article', 'page', 'video'])->default('article');
+            $table->string('caption')->nullable();
+            $table->enum('type', ['article', 'page', 'image', 'video'])->default('article');
             $table->enum('share', ['yes', 'no'])->default('no');
             $table->enum('like', ['yes', 'no'])->default('no');
             $table->enum('comment', ['yes', 'no'])->default('no');

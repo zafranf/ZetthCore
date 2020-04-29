@@ -1,17 +1,16 @@
 @php
-  $categories_ = [];
-  $descriptions_ = [];
-  $parents_ = [];
   $tags_ = [];
+  $categories_ = old('categories') ?? [];
+  $descriptions_ = old('descriptions') ?? [];
+  $parents_ = old('parents') ?? [];
   if (isset($data) ) {
     foreach($data->terms as $k => $term) {
-      if ($term->type == "category"){
+      if ($term->type == "tag") {
+        $tags_[] = $term->name;
+      } else if ($term->type == "category"){
         $categories_[] = $term->name;
         $descriptions_[] = $term->description;
         $parents_[] = $term->parent;
-      }
-      if ($term->type=="tag") {
-        $tags_[] = $term->name;
       }
     }
   }
@@ -35,7 +34,7 @@
           <textarea id="content" name="content" class="form-control no-border-top-right no-border-bottom no-radius input-xlarge" placeholder="Ketikkan tulisan anda di sini...">{{ $data->content ?? old('content') }}</textarea>
         </div>
         <div class="col-sm-4 col-md-3 right-side">
-          <div class="form-group" style="padding-top:10px;">
+          <div class="form-group" style="padding-top:10px;margin-bottom:0;">
             <label for="cover">
               Sampul
               <small class="help-block">Maksimal dimensi sampul adalah
@@ -64,6 +63,15 @@
                   </small>
                 @endif
               </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="tags">Keterangan Sampul</label>
+            <div class="col-sm-12 no-padding">
+              <input type="text" class="form-control" id="caption" name="caption" placeholder="Keterangan sampul.." value="{{ $data->caption ?? old('caption') }}">
+              @if (app('is_desktop')) 
+                <br>
+              @endif
             </div>
           </div>
           <div class="form-group">
@@ -115,18 +123,6 @@
           </div>
           <div class="form-group">
             <label for="publish">Terbitkan</label><br>
-            {{-- <div class="col-sm-6 col-xs-6 no-padding">
-              <label>
-                <input name="status" type="radio" value="active" {{ (isset($data) && $data->status == 'inactive') ? '' : 'checked' }}> Ya
-              </label>
-            </div>
-            <div class="col-sm-6 col-xs-6 no-padding">
-              <label>
-                <input name="status" type="radio" value="inactive" {{ (isset($data) && $data->status == 'inactive') ? 'checked' : '' }}>
-                Tidak
-              </label>
-            </div> --}}
-
             <select class="form-control custom-select2" id="status" name="status">
               <option value="active" {{ (isset($data) && $data->status == 'actice') ? 'selected' : '' }}>Sekarang</option>
               <option value="set" {{ (isset($data) && $data->status == 'set') ? 'selected' : '' }}>Atur waktu</option>
@@ -148,8 +144,7 @@
             <label for="category">Kategori*</label>
             <a id="btn-add-category" class="btn btn-default btn-xs pull-right" data-toggle="modal" data-target="#zetth-modal" title="Tambah kategori baru"><i class="fa fa-plus"></i></a>
             <ul id="category-list">
-              @if (isset($data))
-                @foreach ($categories_ as $key => $value)
+              @foreach ($categories_ as $key => $value)
                 <li>
                   {{ $value }}
                   <span class="pull-right"><i class="fa fa-minus-square-o" style="cursor:pointer;" onclick="_remove_category(this)" title="Hapus {{ $value }}"></i></span>
@@ -157,15 +152,14 @@
                   <input type="hidden" name="descriptions[]" value="{{ $descriptions_[$key] }}">
                   <input type="hidden" name="parents[]" value="{{ $parents_[$key] }}">
                 </li>
-                @endforeach
-              @endif
+              @endforeach
             </ul>
             <input type="text" class="form-control" id="category" name="category" placeholder="Set kategori..">
           </div>
           <div class="form-group">
             <label for="tags">Label*</label>
             <div class="col-sm-12 no-padding">
-              <input type="text" class="form-control" id="tags" name="tags" placeholder="Berikan label.." value="{{ isset($data) ? implode(",", $tags_) : '' }}">
+              <input type="text" class="form-control" id="tags" name="tags" placeholder="Berikan label.." value="{{ isset($data) ? implode(",", $tags_) : old('tags') }}">
             </div>
           </div>
           <div class="form-group btn-post">

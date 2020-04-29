@@ -170,6 +170,7 @@ class PostController extends AdminController
                 $post->cover = $name;
             }
         }
+        $post->caption = $r->input('caption');
         $post->save();
 
         /* delete post relation */
@@ -292,6 +293,7 @@ class PostController extends AdminController
                 $post->cover = $name;
             }
         }
+        $post->caption = $r->input('caption');
         $post->save();
 
         /* delete post relation */
