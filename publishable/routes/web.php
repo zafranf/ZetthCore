@@ -16,8 +16,6 @@ Route::name('web.')->middleware(['site'])->group(function () {
     /* Oauth */
     Route::get('/login/{driver}', 'Auth\LoginController@redirectToProvider')->name('login.driver');
     Route::get('/login/{driver}/callback', 'Auth\LoginController@handleProviderCallback')->name('login.driver.callback');
-    Route::post('/login/email', 'Auth\LoginController@loginByEmail')->name('login.email');
-    Route::get('/login/email/callback', 'Auth\LoginController@loginByEmailCallback')->name('login.email.callback');
 
     /* Auth */
     Route::middleware(['throttle:' . (env('APP_DEBUG') ? 60 : 10) . ',1'])->group(function () {
