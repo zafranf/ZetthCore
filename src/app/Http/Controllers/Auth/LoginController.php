@@ -66,7 +66,7 @@ class LoginController extends AdminController
     public function login(Request $r)
     {
         /* save activity */
-        $this->activityLog('"' . $r->input($this->username()) . '" mencoba masuk halaman admin');
+        $this->activityLog('<b>' . $r->input($this->username()) . '</b> mencoba masuk halaman admin');
 
         return $this->loginTrait($r);
     }
