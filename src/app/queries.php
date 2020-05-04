@@ -63,6 +63,9 @@ function _getPosts($type = 'simple', $limit = null, $order = "desc", $slug = '')
         }
     }
 
+    /* before or equal publish date */
+    $posts->where('published_at', '<=', now());
+
     /* check complete params */
     if ($complete) {
         $posts->with('comments_sub', 'categories', 'tags', 'author', 'editor', 'likes_user');
