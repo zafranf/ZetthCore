@@ -24,8 +24,8 @@ class CreateMenuTable extends Migration
             $table->enum('target', ['_self', '_blank'])->default('_self');
             $table->tinyInteger('order')->unsigned()->default(1);
             $table->enum('status', ['active', 'inactive'])->default('inactive');
-            $table->bigInteger('group_id')->unsigned()->default(1);
-            $table->bigInteger('parent_id')->unsigned()->nullable();
+            $table->bigInteger('group_id')->unsigned()->default(1)->index();
+            $table->bigInteger('parent_id')->unsigned()->nullable()->index();
             $table->enum('is_crud', ['yes', 'no'])->default('no');
             $table->enum('index', ['yes', 'no'])->default('yes');
             $table->enum('create', ['yes', 'no'])->default('no');

@@ -14,7 +14,7 @@ class CreateTermDataTable extends Migration
     public function up()
     {
         Schema::create('term_data', function (Blueprint $table) {
-            $table->bigInteger('term_id')->unsigned();
+            $table->bigInteger('term_id')->unsigned()->index();
             $table->string('termable_type');
             $table->bigInteger('termable_id')->unsigned();
             $table->bigInteger('site_id')->unsigned()->default(1);

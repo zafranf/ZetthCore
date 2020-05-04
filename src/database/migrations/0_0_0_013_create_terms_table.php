@@ -20,7 +20,7 @@ class CreateTermsTable extends Migration
             $table->string('description')->nullable();
             $table->enum('type', ['tag', 'category'])->default('category');
             $table->enum('group', ['post', 'product'])->default('post');
-            $table->bigInteger('parent_id')->unsigned()->nullable();
+            $table->bigInteger('parent_id')->unsigned()->nullable()->index();
             $table->enum('status', ['active', 'inactive'])->default('inactive');
             $table->timestamps();
             $table->softDeletes();

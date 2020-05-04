@@ -29,6 +29,8 @@ class CreateFilesTable extends Migration
             $table->timestamps();
             $table->softDeletes();
             $table->bigInteger('site_id')->unsigned()->default(1);
+
+            $table->index(['fileable_type', 'fileable_id']);
         });
     }
 

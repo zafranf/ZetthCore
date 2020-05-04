@@ -16,7 +16,7 @@ class CreateAlbumsTable extends Migration
         Schema::create('albums', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name');
-            $table->string('slug');
+            $table->string('slug')->index();
             $table->string('description')->nullable();
             $table->enum('type', ['photo', 'video'])->default('photo');
             $table->enum('status', ['active', 'inactive'])->default('inactive');
