@@ -14,7 +14,7 @@ class CreatePostsTable extends Migration
     public function up()
     {
         Schema::create('posts', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->increments('id');
             $table->string('title');
             $table->string('slug')->index();
             $table->text('content');
@@ -22,9 +22,9 @@ class CreatePostsTable extends Migration
             $table->string('cover')->nullable();
             $table->string('caption')->nullable();
             $table->enum('type', ['article', 'page', 'image', 'video'])->default('article');
-            $table->enum('share', ['yes', 'no'])->default('no');
-            $table->enum('like', ['yes', 'no'])->default('no');
-            $table->enum('comment', ['yes', 'no'])->default('no');
+            $table->enum('enable_share', ['yes', 'no'])->default('no');
+            $table->enum('enable_like', ['yes', 'no'])->default('no');
+            $table->enum('enable_comment', ['yes', 'no'])->default('no');
             $table->integer('visited')->unsigned()->default(0);
             $table->integer('shared')->unsigned()->default(0);
             $table->integer('liked')->unsigned()->default(0);
@@ -32,12 +32,12 @@ class CreatePostsTable extends Migration
             $table->string('short_url')->nullable();
             $table->enum('status', ['active', 'inactive', 'draft'])->default('inactive');
             $table->timestamp('published_at')->nullable();
-            $table->bigInteger('created_by')->unsigned()->index();
-            $table->bigInteger('updated_by')->unsigned()->nullable();
-            $table->bigInteger('deleted_by')->unsigned()->nullable();
+            $table->integer('created_by')->unsigned()->index();
+            $table->integer('updated_by')->unsigned()->nullable();
+            $table->integer('deleted_by')->unsigned()->nullable();
             $table->timestamps();
             $table->softDeletes();
-            $table->bigInteger('site_id')->unsigned()->default(1);
+            $table->integer('site_id')->unsigned()->default(1);
         });
     }
 

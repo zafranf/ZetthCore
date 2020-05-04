@@ -14,13 +14,13 @@ class CreateLikesTable extends Migration
     public function up()
     {
         Schema::create('likes', function (Blueprint $table) {
-            $table->bigInteger('user_id')->unsigned();
+            $table->integer('user_id')->unsigned();
             $table->enum('like', ['yes', 'no'])->default('no');
             $table->string('likeable_type');
-            $table->bigInteger('likeable_id')->unsigned();
-            $table->bigInteger('site_id')->unsigned()->default(1);
+            $table->integer('likeable_id')->unsigned();
+            $table->integer('site_id')->unsigned()->default(1);
 
-            $table->primary(['likeable_id', 'user_id']);
+            $table->primary(['user_id', 'likeable_type', 'likeable_id', 'site_id']);
         });
     }
 

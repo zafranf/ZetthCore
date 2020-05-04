@@ -14,21 +14,21 @@ class CreateFilesTable extends Migration
     public function up()
     {
         Schema::create('files', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->increments('id');
             $table->string('name');
             $table->string('description')->nullable();
             $table->string('file');
             $table->enum('type', ['image', 'video', 'audio', 'file']);
             $table->string('mime');
-            $table->bigInteger('size')->unsigned()->comment('in Bytes');
+            $table->integer('size')->unsigned()->comment('in Bytes');
             $table->string('fileable_type');
-            $table->bigInteger('fileable_id')->unsigned();
-            $table->bigInteger('created_by')->unsigned()->index();
-            $table->bigInteger('updated_by')->unsigned()->nullable();
-            $table->bigInteger('deleted_by')->unsigned()->nullable();
+            $table->integer('fileable_id')->unsigned();
+            $table->integer('created_by')->unsigned()->index();
+            $table->integer('updated_by')->unsigned()->nullable();
+            $table->integer('deleted_by')->unsigned()->nullable();
             $table->timestamps();
             $table->softDeletes();
-            $table->bigInteger('site_id')->unsigned()->default(1);
+            $table->integer('site_id')->unsigned()->default(1);
 
             $table->index(['fileable_type', 'fileable_id']);
         });

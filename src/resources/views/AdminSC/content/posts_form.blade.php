@@ -88,36 +88,36 @@
               <label>
                 @php
                   if (isset($data)) {
-                    $is_comment = bool($data->comment) ? 'checked' : '';
+                    $is_comment = bool($data->enable_comment) ? 'checked' : '';
                   } else {
                     $is_comment = bool(app('site')->enable_comment) ? 'checked' : '';
                   }
                 @endphp
-                <input name="comment" type="checkbox" value="yes" {{ $is_comment }}> Komentar
+                <input name="enable_comment" type="checkbox" value="yes" {{ $is_comment }}> Komentar
               </label>
             </div>
             <div class="col-sm-4 col-xs-4 no-padding">
               <label>
                 @php
                   if (isset($data)) {
-                    $is_like = bool($data->like) ? 'checked' : '';
+                    $is_like = bool($data->enable_like) ? 'checked' : '';
                   } else {
                     $is_like = bool(app('site')->enable_like) ? 'checked' : '';
                   }
                 @endphp
-                <input name="like" type="checkbox" value="yes" {{ $is_like }}> Suka
+                <input name="enable_like" type="checkbox" value="yes" {{ $is_like }}> Suka
               </label>
             </div>
             <div class="col-sm-4 col-xs-4 no-padding">
               <label>
                 @php
                   if (isset($data)) {
-                    $is_share = bool($data->share) ? 'checked' : '';
+                    $is_share = bool($data->enable_share) ? 'checked' : '';
                   } else {
                     $is_share = bool(app('site')->enable_share) ? 'checked' : '';
                   }
                 @endphp
-                <input name="share" type="checkbox" value="yes" {{ $is_share }}> Sebar
+                <input name="enable_share" type="checkbox" value="yes" {{ $is_share }}> Sebar
               </label>
             </div>
           </div>

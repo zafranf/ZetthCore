@@ -14,13 +14,13 @@ class CreateIntermsTable extends Migration
     public function up()
     {
         Schema::create('interms', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->increments('id');
             $table->string('host')->index();
             $table->string('param');
             $table->enum('status', ['active', 'inactive'])->default('inactive');
             $table->timestamps();
             $table->softDeletes();
-            $table->bigInteger('site_id')->unsigned()->default(1);
+            $table->integer('site_id')->unsigned()->default(1);
         });
     }
 

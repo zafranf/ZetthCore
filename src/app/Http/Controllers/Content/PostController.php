@@ -151,9 +151,9 @@ class PostController extends AdminController
         $post->excerpt = $r->input('excerpt') ?? substr(strip_tags($post->content), 0, 255);
         $post->type = 'article';
         $post->status = $r->input('status') == 'set' ? 'active' : $r->input('status');
-        $post->share = $r->input('share') ?? 'no';
-        $post->like = $r->input('like') ?? 'no';
-        $post->comment = $r->input('comment') ?? 'no';
+        $post->enable_like = $r->input('enable_like') ?? 'no';
+        $post->enable_share = $r->input('enable_share') ?? 'no';
+        $post->enable_comment = $r->input('enable_comment') ?? 'no';
         $post->published_at = carbon_query($date . ' ' . $time);
         $post->short_url = $uniq;
         $post->created_by = app('user')->id;
@@ -273,10 +273,10 @@ class PostController extends AdminController
         $post->content = $r->input('content');
         $post->excerpt = $r->input('excerpt') ?? substr(strip_tags($post->content), 0, 255);
         $post->type = 'article';
-        $post->status = $r->input('status');
-        $post->share = $r->input('share') ?? 'no';
-        $post->like = $r->input('like') ?? 'no';
-        $post->comment = $r->input('comment') ?? 'no';
+        $post->status = $r->input('status') == 'set' ? 'active' : $r->input('status');
+        $post->enable_like = $r->input('enable_like') ?? 'no';
+        $post->enable_share = $r->input('enable_share') ?? 'no';
+        $post->enable_comment = $r->input('enable_comment') ?? 'no';
         $post->published_at = carbon_query($date . ' ' . $time);
         $post->updated_by = app('user')->id;
         $post->save();

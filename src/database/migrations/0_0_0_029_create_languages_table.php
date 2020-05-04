@@ -13,10 +13,11 @@ class CreateLanguagesTable extends Migration
     public function up()
     {
         Schema::create('languages', function ($table) {
-            $table->string('name')->index();
+            $table->increments('id');
+            $table->string('name');
             $table->string('description')->nullable();
             $table->timestamps();
-            $table->bigInteger('site_id')->unsigned()->default(1);
+            $table->integer('site_id')->unsigned()->default(1);
         });
     }
 

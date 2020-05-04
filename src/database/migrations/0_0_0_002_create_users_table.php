@@ -14,7 +14,7 @@ class CreateUsersTable extends Migration
     public function up()
     {
         Schema::create('users', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->increments('id');
             $table->string('email')->unique();
             $table->string('name')->unique();
             $table->string('fullname');
@@ -24,7 +24,7 @@ class CreateUsersTable extends Migration
             $table->enum('status', ['active', 'inactive', 'suspend', 'banned'])->default('inactive');
             $table->timestamps();
             $table->softDeletes();
-            $table->bigInteger('site_id')->unsigned()->default(1);
+            $table->integer('site_id')->unsigned()->default(1);
         });
     }
 

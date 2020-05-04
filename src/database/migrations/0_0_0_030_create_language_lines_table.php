@@ -13,12 +13,12 @@ class CreateLanguageLinesTable extends Migration
     public function up()
     {
         Schema::create('language_lines', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->increments('id');
             $table->string('group')->index();
             $table->string('key');
             $table->text('text');
             $table->timestamps();
-            $table->bigInteger('site_id')->unsigned()->default(1);
+            $table->integer('site_id')->unsigned()->default(1);
         });
     }
 

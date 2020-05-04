@@ -14,14 +14,14 @@ class CreateIntermDatasTable extends Migration
     public function up()
     {
         Schema::create('interm_data', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->increments('id');
             $table->string('host');
             $table->string('keyword');
             $table->integer('count')->unsigned();
-            $table->bigInteger('post_id')->unsigned()->nullable()->index();
+            $table->integer('post_id')->unsigned()->nullable()->index();
             $table->timestamps();
             $table->softDeletes();
-            $table->bigInteger('site_id')->unsigned()->default(1);
+            $table->integer('site_id')->unsigned()->default(1);
         });
     }
 

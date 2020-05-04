@@ -14,12 +14,12 @@ class CreateTermDataTable extends Migration
     public function up()
     {
         Schema::create('term_data', function (Blueprint $table) {
-            $table->bigInteger('term_id')->unsigned()->index();
+            $table->integer('term_id')->unsigned();
             $table->string('termable_type');
-            $table->bigInteger('termable_id')->unsigned();
-            $table->bigInteger('site_id')->unsigned()->default(1);
+            $table->integer('termable_id')->unsigned();
+            $table->integer('site_id')->unsigned()->default(1);
 
-            $table->primary(['termable_id', 'term_id']);
+            $table->primary(['term_id', 'termable_type', 'termable_id', 'site_id']);
         });
     }
 

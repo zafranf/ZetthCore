@@ -14,16 +14,16 @@ class CreateSocmedDatasTable extends Migration
     public function up()
     {
         Schema::create('socmed_data', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->increments('id');
             $table->string('username');
-            $table->bigInteger('socmed_id')->unsigned()->index();
+            $table->integer('socmed_id')->unsigned()->index();
             $table->string('socmedable_type');
-            $table->bigInteger('socmedable_id')->unsigned();
+            $table->integer('socmedable_id')->unsigned();
             $table->timestamps();
             $table->softDeletes();
-            $table->bigInteger('site_id')->unsigned()->default(1);
+            $table->integer('site_id')->unsigned()->default(1);
 
-            $table->index(['socmedable_type', 'socmedable_id']);
+            $table->index(['socmed_id', 'socmedable_type', 'socmedable_id', 'site_id']);
         });
     }
 

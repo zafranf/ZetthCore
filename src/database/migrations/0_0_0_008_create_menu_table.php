@@ -14,7 +14,7 @@ class CreateMenuTable extends Migration
     public function up()
     {
         Schema::create('menus', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->increments('id');
             $table->string('name');
             $table->string('description')->nullable();
             $table->string('url')->nullable();
@@ -24,8 +24,8 @@ class CreateMenuTable extends Migration
             $table->enum('target', ['_self', '_blank'])->default('_self');
             $table->tinyInteger('order')->unsigned()->default(1);
             $table->enum('status', ['active', 'inactive'])->default('inactive');
-            $table->bigInteger('group_id')->unsigned()->default(1)->index();
-            $table->bigInteger('parent_id')->unsigned()->nullable()->index();
+            $table->integer('group_id')->unsigned()->default(1)->index();
+            $table->integer('parent_id')->unsigned()->nullable()->index();
             $table->enum('is_crud', ['yes', 'no'])->default('no');
             $table->enum('index', ['yes', 'no'])->default('yes');
             $table->enum('create', ['yes', 'no'])->default('no');
@@ -34,7 +34,7 @@ class CreateMenuTable extends Migration
             $table->enum('delete', ['yes', 'no'])->default('no');
             $table->timestamps();
             $table->softDeletes();
-            $table->bigInteger('site_id')->unsigned()->default(1);
+            $table->integer('site_id')->unsigned()->default(1);
         });
     }
 

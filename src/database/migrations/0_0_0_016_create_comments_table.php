@@ -14,7 +14,7 @@ class CreateCommentsTable extends Migration
     public function up()
     {
         Schema::create('comments', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->increments('id');
             $table->string('name');
             $table->string('email');
             $table->string('site')->nullable();
@@ -24,16 +24,16 @@ class CreateCommentsTable extends Migration
             $table->enum('read', ['yes', 'no'])->default('no');
             $table->enum('status', ['active', 'inactive'])->default('inactive');
             $table->enum('is_owner', ['yes', 'no'])->default('no');
-            $table->bigInteger('parent_id')->unsigned()->nullable()->index();
+            $table->integer('parent_id')->unsigned()->nullable()->index();
             $table->string('commentable_type');
-            $table->bigInteger('commentable_id')->unsigned();
-            $table->bigInteger('approved_by')->unsigned()->nullable();
-            $table->bigInteger('created_by')->unsigned()->nullable();
-            $table->bigInteger('updated_by')->unsigned()->nullable();
-            $table->bigInteger('deleted_by')->unsigned()->nullable();
+            $table->integer('commentable_id')->unsigned();
+            $table->integer('approved_by')->unsigned()->nullable();
+            $table->integer('created_by')->unsigned()->nullable();
+            $table->integer('updated_by')->unsigned()->nullable();
+            $table->integer('deleted_by')->unsigned()->nullable();
             $table->timestamps();
             $table->softDeletes();
-            $table->bigInteger('site_id')->unsigned()->default(1);
+            $table->integer('site_id')->unsigned()->default(1);
 
             $table->index(['commentable_type', 'commentable_id']);
         });

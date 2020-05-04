@@ -14,7 +14,7 @@ class CreateSitesTable extends Migration
     public function up()
     {
         Schema::create('sites', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->increments('id');
             $table->string('domain');
             $table->string('name');
             $table->string('tagline')->nullable();
@@ -22,7 +22,7 @@ class CreateSitesTable extends Migration
             $table->string('icon')->nullable();
             $table->string('description')->nullable();
             $table->string('keywords')->nullable();
-            $table->bigInteger('template_id')->unsigned()->nullable();
+            $table->integer('template_id')->unsigned()->nullable();
             $table->string('timezone')->default('Asia/Jakarta');
             $table->string('language')->default('id_ID');
             $table->string('email')->nullable();

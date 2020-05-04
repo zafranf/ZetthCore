@@ -14,16 +14,16 @@ class CreateRoleMenuTable extends Migration
     public function up()
     {
         Schema::create('role_menu', function (Blueprint $table) {
-            $table->bigInteger('role_id')->unsigned();
-            $table->bigInteger('menu_group_id')->unsigned();
-            $table->bigInteger('site_id')->unsigned()->default(1);
+            $table->integer('role_id')->unsigned();
+            $table->integer('menu_group_id')->unsigned();
+            $table->integer('site_id')->unsigned()->default(1);
 
             $table->foreign('role_id')->references('id')->on('roles')
                 ->onUpdate('cascade')->onDelete('cascade');
             $table->foreign('menu_group_id')->references('id')->on('menu_groups')
                 ->onUpdate('cascade')->onDelete('cascade');
 
-            $table->primary(['role_id', 'menu_group_id']);
+            $table->primary(['role_id', 'menu_group_id', 'site_id']);
         });
     }
 
