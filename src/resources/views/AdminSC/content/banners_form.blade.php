@@ -63,11 +63,10 @@
             <option value="#">[Tidak ada]</option>
             <option value="external" {{ (isset($data) && bool($data->url_external)) ? 'selected' : '' }}>[Tautan Luar]</option>
             <option value="/" {{ (isset($data) && $data->url == "/" ) ? 'selected' : '' }}>Beranda</option>
-            <option value="{{ env('POSTS_PATH', 'posts') }}" {{ (isset($data) && $data->url == env('POSTS_PATH', 'posts') ) ? 'selected' : '' }}>Artikel</option>
-            {{-- <option value="{{ env('PAGES_PATH', 'pages') }}" {{ (isset($data) && $data->url == env('PAGES_PATH', 'pages') ) ? 'selected' : '' }}>Halaman</option> --}}
-            <option value="{{ env('ALBUMS_PATH', 'albums') }}" {{ (isset($data) && $data->url == env('ALBUMS_PATH', 'albums') ) ? 'selected' : '' }}>Galeri Foto</option>
-            <option value="{{ env('VIDEOS_PATH', 'videos') }}" {{ (isset($data) && $data->url == env('VIDEOS_PATH', 'videos') ) ? 'selected' : '' }}>Galeri Video</option>
-            <option value="{{ env('CONTACT_PATH', 'contact') }}" {{ (isset($data) && $data->url == env('CONTACT_PATH', 'contact') ) ? 'selected' : '' }}>Kontak</option>
+            <option value="{{ config('path.posts', 'posts') }}" {{ (isset($data) && $data->url == config('path.posts', 'posts') ) ? 'selected' : '' }}>Artikel</option>
+            <option value="{{ config('path.albums', 'albums') }}" {{ (isset($data) && $data->url == config('path.albums', 'albums') ) ? 'selected' : '' }}>Galeri Foto</option>
+            <option value="{{ config('path.videos', 'videos') }}" {{ (isset($data) && $data->url == config('path.videos', 'videos') ) ? 'selected' : '' }}>Galeri Video</option>
+            <option value="{{ config('path.contact', 'contact') }}" {{ (isset($data) && $data->url == config('path.contact', 'contact') ) ? 'selected' : '' }}>Kontak</option>
             @php 
               $types = [
                 'page' => 'Halaman',
@@ -87,7 +86,7 @@
               @if ($post->type == "page" || $post->type == "video")
                 <option value="{{ $post->slug }}" {{ $post->slug == "#" ? 'disabled' : '' }} {{ (isset($data) && $post->slug == $data->url) ? 'selected' : '' }}>{{ $post->title }}</option>
               @elseif ($post->type == "article")
-                <option value="{{ env('POST_PATH', 'post') . '/' . $post->slug }}" {{ $post->slug == "#" ? 'disabled' : '' }} {{ (isset($data) && env('POST_PATH', 'post') . '/' . $post->slug == $data->url) ? 'selected' : '' }}>{{ $post->title }}</option>
+                <option value="{{ config('path.post', 'post') . '/' . $post->slug }}" {{ $post->slug == "#" ? 'disabled' : '' }} {{ (isset($data) && config('path.post', 'post') . '/' . $post->slug == $data->url) ? 'selected' : '' }}>{{ $post->title }}</option>
               @endif
             @endforeach
           </select>
