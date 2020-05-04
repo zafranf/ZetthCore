@@ -35,6 +35,19 @@ class CreateCommentsTable extends Migration
             $table->softDeletes();
             $table->integer('site_id')->unsigned()->default(1);
 
+            $table->foreign('parent_id')->references('id')->on('comments')
+                ->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('approved_by')->references('id')->on('users')
+                ->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('created_by')->references('id')->on('users')
+                ->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('updated_by')->references('id')->on('users')
+                ->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('deleted_by')->references('id')->on('users')
+                ->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('site_id')->references('id')->on('sites')
+                ->onUpdate('cascade')->onDelete('cascade');
+
             $table->index(['commentable_type', 'commentable_id']);
         });
     }

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateAlbumsTable extends Migration
+class CreateSubscribersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,16 +13,17 @@ class CreateAlbumsTable extends Migration
      */
     public function up()
     {
-        Schema::create('albums', function (Blueprint $table) {
+        Schema::create('subscribers', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name');
-            $table->string('slug')->index();
-            $table->string('description')->nullable();
-            $table->enum('type', ['photo', 'video'])->default('photo');
+            $table->string('email')->index();
+            $table->string('token');
             $table->enum('status', ['active', 'inactive'])->default('inactive');
             $table->timestamps();
             $table->softDeletes();
             $table->integer('site_id')->unsigned()->default(1);
+
+            $table->foreign('site_id')->references('id')->on('sites')
+                ->onUpdate('cascade')->onDelete('cascade');
         });
     }
 
@@ -33,6 +34,6 @@ class CreateAlbumsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('albums');
+        Schema::dropIfExists('subscribers');
     }
 }

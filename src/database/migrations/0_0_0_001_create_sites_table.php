@@ -22,7 +22,6 @@ class CreateSitesTable extends Migration
             $table->string('icon')->nullable();
             $table->string('description')->nullable();
             $table->string('keywords')->nullable();
-            $table->integer('template_id')->unsigned()->nullable();
             $table->string('timezone')->default('Asia/Jakarta');
             $table->string('language')->default('id_ID');
             $table->string('email')->nullable();

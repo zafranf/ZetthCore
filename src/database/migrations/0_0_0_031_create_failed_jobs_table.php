@@ -21,6 +21,9 @@ class CreateFailedJobsTable extends Migration
             $table->longText('exception');
             $table->timestamp('failed_at')->useCurrent();
             $table->integer('site_id')->unsigned()->default(1);
+
+            $table->foreign('site_id')->references('id')->on('sites')
+                ->onUpdate('cascade')->onDelete('cascade');
         });
     }
 

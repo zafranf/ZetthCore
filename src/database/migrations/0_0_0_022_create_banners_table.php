@@ -27,6 +27,9 @@ class CreateBannersTable extends Migration
             $table->timestamps();
             $table->softDeletes();
             $table->integer('site_id')->unsigned()->default(1);
+
+            $table->foreign('site_id')->references('id')->on('sites')
+                ->onUpdate('cascade')->onDelete('cascade');
         });
     }
 

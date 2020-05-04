@@ -18,8 +18,9 @@ class TemplateSeeder extends Seeder
             'slug' => 'WebSC',
             'description' => null,
             'author' => 'Porisweb',
-            'type' => 'site',
             'status' => 'active',
+            'templateable_type' => 'App\Models\Site',
+            'templateable_id' => 1,
         ]);
     }
 }

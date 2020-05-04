@@ -20,6 +20,11 @@ class CreateUserVerificationsTable extends Migration
             $table->timestamp('verified_at')->nullable();
             $table->integer('site_id')->unsigned()->default(1);
 
+            $table->foreign('user_id')->references('id')->on('users')
+                ->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('site_id')->references('id')->on('sites')
+                ->onUpdate('cascade')->onDelete('cascade');
+
             $table->unique(['user_id', 'code']);
         });
     }

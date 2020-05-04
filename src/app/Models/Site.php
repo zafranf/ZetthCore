@@ -16,7 +16,7 @@ class Site extends Model
 
     public function template()
     {
-        return $this->belongsTo('ZetthCore\Models\Template');
+        return $this->belongsTo('ZetthCore\Models\Template', 'templateable');
     }
 
     public function getLangAttribute()

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateIntermsTable extends Migration
+class CreateTemplatesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,22 @@ class CreateIntermsTable extends Migration
      */
     public function up()
     {
-        Schema::create('interms', function (Blueprint $table) {
+        Schema::create('templates', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('host')->index();
-            $table->string('param');
+            $table->string('cover')->nullable();
+            $table->string('name');
+            $table->string('slug');
+            $table->string('description')->nullable();
+            $table->string('author')->nullable();
             $table->enum('status', ['active', 'inactive'])->default('inactive');
+            $table->string('templateable_type');
+            $table->integer('templateable_id')->unsigned();
             $table->timestamps();
             $table->softDeletes();
             $table->integer('site_id')->unsigned()->default(1);
+
+            $table->foreign('site_id')->references('id')->on('sites')
+                ->onUpdate('cascade')->onDelete('cascade');
         });
     }
 
@@ -31,6 +39,6 @@ class CreateIntermsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('interms');
+        Schema::dropIfExists('templates');
     }
 }

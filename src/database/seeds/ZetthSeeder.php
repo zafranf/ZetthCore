@@ -13,11 +13,11 @@ class ZetthSeeder extends Seeder
      */
     public function run()
     {
-        $this->call(TemplateSeeder::class);
         $this->call(SiteTableSeeder::class);
+        $this->call(TemplateSeeder::class);
         $this->call(LaratrustSeeder::class);
-        $this->call(MenuTableSeeder::class);
         $this->call(MenuGroupSeeder::class);
+        $this->call(MenuTableSeeder::class);
         $this->call(RoleMenuSeeder::class);
         $this->call(UsersTableSeeder::class);
         $this->call(IntermdataSeeder::class);

@@ -19,6 +19,11 @@ class CreateTermDataTable extends Migration
             $table->integer('termable_id')->unsigned();
             $table->integer('site_id')->unsigned()->default(1);
 
+            $table->foreign('term_id')->references('id')->on('terms')
+                ->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('site_id')->references('id')->on('sites')
+                ->onUpdate('cascade')->onDelete('cascade');
+
             $table->primary(['term_id', 'termable_type', 'termable_id', 'site_id']);
         });
     }

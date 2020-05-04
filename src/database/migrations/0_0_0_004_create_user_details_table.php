@@ -35,6 +35,11 @@ class CreateUserDetailsTable extends Migration
             $table->string('website')->nullable();
             $table->timestamps();
             $table->integer('site_id')->unsigned()->default(1);
+
+            $table->foreign('user_id')->references('id')->on('users')
+                ->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('site_id')->references('id')->on('sites')
+                ->onUpdate('cascade')->onDelete('cascade');
         });
     }
 

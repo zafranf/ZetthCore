@@ -22,6 +22,13 @@ class CreateIntermDatasTable extends Migration
             $table->timestamps();
             $table->softDeletes();
             $table->integer('site_id')->unsigned()->default(1);
+
+            $table->foreign('host')->references('host')->on('interms')
+                ->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('post_id')->references('id')->on('posts')
+                ->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('site_id')->references('id')->on('sites')
+                ->onUpdate('cascade')->onDelete('cascade');
         });
     }
 

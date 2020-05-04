@@ -22,6 +22,9 @@ class CreateJobsTable extends Migration
             $table->unsignedInteger('available_at');
             $table->unsignedInteger('created_at');
             $table->integer('site_id')->unsigned()->default(1);
+
+            $table->foreign('site_id')->references('id')->on('sites')
+                ->onUpdate('cascade')->onDelete('cascade');
         });
     }
 

@@ -28,6 +28,9 @@ class CreateErrorLogsTable extends Migration
             $table->timestamps();
             $table->integer('site_id')->unsigned()->default(1);
 
+            $table->foreign('site_id')->references('id')->on('sites')
+                ->onUpdate('cascade')->onDelete('cascade');
+
             $table->primary(['id', 'site_id']);
         });
     }

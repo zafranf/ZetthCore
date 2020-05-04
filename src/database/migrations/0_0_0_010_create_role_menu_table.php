@@ -22,6 +22,8 @@ class CreateRoleMenuTable extends Migration
                 ->onUpdate('cascade')->onDelete('cascade');
             $table->foreign('menu_group_id')->references('id')->on('menu_groups')
                 ->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('site_id')->references('id')->on('sites')
+                ->onUpdate('cascade')->onDelete('cascade');
 
             $table->primary(['role_id', 'menu_group_id', 'site_id']);
         });

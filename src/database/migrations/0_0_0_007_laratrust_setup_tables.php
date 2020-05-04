@@ -21,6 +21,9 @@ class LaratrustSetupTables extends Migration
             $table->timestamps();
             $table->softDeletes();
             $table->integer('site_id')->unsigned()->default(1);
+
+            $table->foreign('site_id')->references('id')->on('sites')
+                ->onUpdate('cascade')->onDelete('cascade');
         });
 
         // Create table for storing permissions
@@ -32,16 +35,23 @@ class LaratrustSetupTables extends Migration
             $table->timestamps();
             $table->softDeletes();
             $table->integer('site_id')->unsigned()->default(1);
+
+            $table->foreign('site_id')->references('id')->on('sites')
+                ->onUpdate('cascade')->onDelete('cascade');
         });
 
         // Create table for associating roles to users and teams (Many To Many Polymorphic)
         Schema::create('role_user', function (Blueprint $table) {
             $table->integer('role_id')->unsigned();
-            $table->integer('user_id')->unsigned();
             $table->string('user_type');
+            $table->integer('user_id')->unsigned();
             $table->integer('site_id')->unsigned()->default(1);
 
             $table->foreign('role_id')->references('id')->on('roles')
+                ->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('user_id')->references('id')->on('users')
+                ->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('site_id')->references('id')->on('sites')
                 ->onUpdate('cascade')->onDelete('cascade');
 
             $table->primary(['role_id', 'user_id', 'user_type', 'site_id']);
@@ -50,11 +60,15 @@ class LaratrustSetupTables extends Migration
         // Create table for associating permissions to users (Many To Many Polymorphic)
         Schema::create('user_permission', function (Blueprint $table) {
             $table->integer('permission_id')->unsigned();
-            $table->integer('user_id')->unsigned();
             $table->string('user_type');
+            $table->integer('user_id')->unsigned();
             $table->integer('site_id')->unsigned()->default(1);
 
             $table->foreign('permission_id')->references('id')->on('permissions')
+                ->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('user_id')->references('id')->on('users')
+                ->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('site_id')->references('id')->on('sites')
                 ->onUpdate('cascade')->onDelete('cascade');
 
             $table->primary(['permission_id', 'user_id', 'user_type', 'site_id']);
@@ -69,6 +83,8 @@ class LaratrustSetupTables extends Migration
             $table->foreign('permission_id')->references('id')->on('permissions')
                 ->onUpdate('cascade')->onDelete('cascade');
             $table->foreign('role_id')->references('id')->on('roles')
+                ->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('site_id')->references('id')->on('sites')
                 ->onUpdate('cascade')->onDelete('cascade');
 
             $table->primary(['permission_id', 'role_id', 'site_id']);
