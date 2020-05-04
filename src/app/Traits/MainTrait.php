@@ -58,7 +58,7 @@ trait MainTrait
             $err = \ZetthCore\Models\ErrorLog::updateOrCreate(
                 [
                     'id' => md5($log['code'] . $log['file'] . $log['line'] . $log['path'] . $log['message'] . $date),
-                    'site_id' => app('site')->id,
+                    'site_id' => app('site')->id ?? null,
                 ],
                 [
                     'code' => $log['code'],

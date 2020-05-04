@@ -23,7 +23,7 @@ class CreateSocmedDatasTable extends Migration
             $table->softDeletes();
             $table->integer('site_id')->unsigned()->default(1);
 
-            $table->index(['socmed_id', 'socmedable_type', 'socmedable_id', 'site_id']);
+            $table->index(['socmedable_type', 'socmedable_id', 'site_id']);
         });
     }
 

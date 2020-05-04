@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Builder;
 
 class Like extends Base
 {
-    protected $primaryKey = ['likeable_id', 'user_id'];
+    protected $primaryKey = ['user_id', 'likeable_type', 'likeable_id', 'site_id'];
     protected $guarded = [];
     public $timestamps = false;
     public $incrementing = false;
