@@ -26,8 +26,8 @@ class VisitorLogMiddleware
     public function visitorLog()
     {
         /* set variable */
-        $ip = \Request::server('REMOTE_ADDR') ?? null;
-        $page = \Request::path() ?? '/';
+        $ip = \Request::server('REMOTE_ADDR');
+        $page = \Request::path() ?? '-';
         $referrer = \Request::server('HTTP_REFERER') ?? null;
         $referrer = str_replace(url('/'), "", $referrer);
         $agent = new \Jenssegers\Agent\Agent();

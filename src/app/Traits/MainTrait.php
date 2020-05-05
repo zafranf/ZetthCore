@@ -28,8 +28,8 @@ trait MainTrait
         $act = new \ZetthCore\Models\ActivityLog;
         $act->description = $description;
         $act->method = \Request::method();
-        $act->path = \Request::path() ?? '/';
-        $act->ip = \Request::server('REMOTE_ADDR') ?? null;
+        $act->path = \Request::path() ?? '-';
+        $act->ip = \Request::server('REMOTE_ADDR');
         $act->get = json_encode($_GET);
         $act->post = json_encode($_POST);
         $act->files = json_encode($_FILES);
