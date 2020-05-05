@@ -24,7 +24,7 @@ class SiteMiddleware
         $status = app('site')->status;
 
         /* next on subscribe */
-        if ($request->isMethod('post') && $uri == "subscribe") {
+        if ($request->isMethod('post') && url()->current() == route('web.action.subscribe')) {
             return $next($request);
         }
 
