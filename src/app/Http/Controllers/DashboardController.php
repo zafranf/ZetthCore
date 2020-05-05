@@ -37,10 +37,10 @@ class DashboardController extends AdminController
             'page_subtitle' => 'Beranda',
             'breadcrumbs' => $this->breadcrumbs,
             'message' => \ZetthCore\Models\Inbox::select(\DB::raw('count(*) as unread'))
-                ->where('read', 'yes')
+                ->where('read', 'no')
                 ->first(),
             'comment' => \ZetthCore\Models\Comment::select(\DB::raw('count(*) as unread'))
-                ->where('read', 'yes')
+                ->where('read', 'no')
                 ->first(),
         ];
 
