@@ -10,7 +10,7 @@ use Illuminate\Queue\SerializesModels;
 use ZetthCore\Models\Post;
 use ZetthCore\Traits\MainTrait;
 
-class NotifSubscriber implements ShouldQueue
+class NewPost implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels, MainTrait;
 
@@ -39,14 +39,8 @@ class NotifSubscriber implements ShouldQueue
         /* check subscribers */
         if (count($subscribers)) {
             foreach ($subscribers as $subscriber) {
-                /* set data parameter */
-                $data = [
-                    'view' => $this->getTemplate() . '.emails.new_post',
-                    'post' => $this->post,
-                ];
-
                 /* send mail */
-                \Mail::to($subscriber->email)->queue(new \App\Mail\NotifSubscriber($data));
+                \Mail::to($subscriber->email)->queue(new \App\Mail\NewPost($this->post));
 
                 /* delay */
                 sleep(1 / 60);

@@ -124,7 +124,7 @@
           <div class="form-group">
             <label for="publish">Terbitkan</label><br>
             <select class="form-control custom-select2" id="status" name="status">
-              <option value="active" {{ (isset($data) && $data->status == 'actice') ? 'selected' : '' }}>Sekarang</option>
+              <option value="active" {{ (isset($data) && $data->status == 'actice') ? 'selected' : '' }}>Langsung</option>
               <option value="set" {{ (isset($data) && $data->status == 'set') ? 'selected' : '' }}>Atur waktu</option>
               <option value="draft" {{ (isset($data) && $data->status == 'draft') ? 'selected' : '' }}>Draf</option>
               <option value="inactive" {{ (isset($data) && $data->status == 'inactive') ? 'selected' : '' }}>Sembunyikan</option>

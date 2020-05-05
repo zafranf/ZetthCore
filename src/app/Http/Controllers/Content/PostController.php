@@ -187,7 +187,7 @@ class PostController extends AdminController
 
         /* notif to subscriber */
         if (app('site')->enable_subscribe && $r->input('info_subscriber')) {
-            $this->sendToSubscriber($post);
+            \ZetthCore\Jobs\NewPost::dispatch($post);
         }
 
         /* clear cache */
@@ -450,10 +450,5 @@ class PostController extends AdminController
         $postrel->termable_id = $pid;
         $postrel->site_id = app('site')->id;
         $postrel->save();
-    }
-
-    public function sendToSubscriber(Post $post)
-    {
-        \ZetthCore\Jobs\NotifSubscriber::dispatch($post);
     }
 }
