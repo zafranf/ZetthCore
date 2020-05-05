@@ -2,10 +2,10 @@
 
 namespace ZetthCore\Http\Controllers\Report;
 
+use App\Models\Comment;
+use App\Models\Post;
 use Illuminate\Http\Request;
 use ZetthCore\Http\Controllers\AdminController;
-use ZetthCore\Models\Comment;
-use ZetthCore\Models\Post;
 
 class CommentController extends AdminController
 {
@@ -149,7 +149,7 @@ class CommentController extends AdminController
             'parent' => $topparent,
             'comment' => $comment,
         ];
-        \App\Jobs\CommentReply::dispatch($data);
+        \ZetthCore\Jobs\CommentReply::dispatch($data);
 
         /* save activity */
         $this->activityLog('[~name] (' . $this->getUserRoles() . ') membalas komentar dari "' . $parent->email . '"');

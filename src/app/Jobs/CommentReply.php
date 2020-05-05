@@ -37,18 +37,8 @@ class CommentReply implements ShouldQueue
         $comment = $this->data['comment'];
 
         if (bool($parent->notify) && !bool($parent->is_owner)) {
-            $sent_mails = [];
-
-            /* set data parameter */
-            $data = [
-                'view' => $this->getTemplate() . '.emails.comment_replied',
-                'post' => $post,
-                'parent' => $parent,
-                'comment' => $comment,
-            ];
-
             /* send mail */
-            \Mail::to($parent->email)->queue(new \App\Mail\CommentReply($data));
+            \Mail::to($parent->email)->queue(new \App\Mail\CommentReply($post, $comment));
 
             /* log sent mail */
             $sent_mails[] = $parent->email;
@@ -57,16 +47,8 @@ class CommentReply implements ShouldQueue
             $subcomments = $parent->subcomments_all;
             foreach ($subcomments as $subcomment) {
                 if (bool($subcomment->notify) && !bool($subcomment->is_owner) && $subcomment->created_by != $comment->created_by && !in_array($subcomment->email, $sent_mails)) {
-                    /* set data parameter */
-                    $data = [
-                        'view' => $this->getTemplate() . '.emails.comment_replied',
-                        'post' => $post,
-                        'parent' => $parent,
-                        'comment' => $comment,
-                    ];
-
                     /* send mail */
-                    \Mail::to($subcomment->email)->queue(new \App\Mail\CommentReply($data));
+                    \Mail::to($subcomment->email)->queue(new \App\Mail\CommentReply($post, $comment));
 
                     /* log sent mail */
                     $sent_mails[] = $subcomment->email;
