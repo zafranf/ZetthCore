@@ -50,16 +50,23 @@ class SiteMiddleware
 
     public function check_date()
     {
-        if (app('site')->status == 'suspend') {
+        if (app('site')->status == 'suspend' || app('site')->status == 'active') {
             return false;
         }
 
-        $now = time();
-        $active_at = app('site')->active_at->getTimestamp();
-        if ($now >= $active_at) {
+        /* compare time */
+        $active_at = app('site')->active_at;
+        if (now()->greaterThanOrEqualTo($active_at)) {
+            /* set active */
             $setting = app('site');
             $setting->status = 'active';
             $setting->save();
+
+            /* clear cache */
+            \Cache::flush();
+
+            /* send notif to subscriber */
+            \ZetthCore\Jobs\Launch::dispatch();
         }
     }
 
