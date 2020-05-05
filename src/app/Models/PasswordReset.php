@@ -14,6 +14,6 @@ class PasswordReset extends Base
 
     public function user()
     {
-        return $this->belongsTo('ZetthCore\Models\User', 'email', 'email');
+        return $this->belongsTo('App\Models\User', 'email', 'email');
     }
 }
