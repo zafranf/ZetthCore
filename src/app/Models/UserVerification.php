@@ -12,6 +12,6 @@ class UserVerification extends Base
 
     public function user()
     {
-        return $this->belongsTo('ZetthCore\Models\User');
+        return $this->belongsTo('App\Models\User');
     }
 }
