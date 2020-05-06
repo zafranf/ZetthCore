@@ -21,10 +21,11 @@ class SiteMiddleware
 
         /* set uri */
         $uri = $request->route()->uri();
+        $current = url()->current();
         $status = app('site')->status;
 
         /* next on subscribe */
-        if ($request->isMethod('post') && url()->current() == route('web.action.subscribe')) {
+        if (($request->isMethod('post') && $current == route('web.action.subscribe')) || (env('APP_ENV') != 'production' && $uri == 'test')) {
             return $next($request);
         }
 
