@@ -73,4 +73,9 @@ class User extends Authenticatable implements MustVerifyEmail
         return $query->where('status', 'active');
     }
 
+    public function setPasswordAttribute($value)
+    {
+        $this->attributes['password'] = bcrypt($value . \Str::slug(env('APP_KEY')));
+    }
+
 }

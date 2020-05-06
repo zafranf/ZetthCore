@@ -74,11 +74,10 @@ class AccountController extends AdminController
 
         /* save data */
         $user = app('user');
-        // $user->name = $r->input('name');
         $user->fullname = $r->input('fullname');
         $user->email = $r->input('email');
         if ($r->input('password') !== null) {
-            $user->password = bcrypt($r->input('password') . \Str::slug(env('APP_KEY')));
+            $user->password = $r->input('password');
         }
 
         /* upload image */

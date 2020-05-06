@@ -126,7 +126,7 @@ class UserController extends AdminController
         $user->name = $r->input('name');
         $user->fullname = $r->input('fullname');
         $user->email = $r->input('email');
-        $user->password = bcrypt($r->input('password') . \Str::slug(env('APP_KEY')));
+        $user->password = $r->input('password');
         $user->status = bool($r->input('status')) ? 'active' : 'inactive';
         $user->site_id = app('site')->id;
 
@@ -253,7 +253,7 @@ class UserController extends AdminController
         $user->fullname = $r->input('fullname');
         $user->email = $r->input('email');
         if ($r->input('password') !== null) {
-            $user->password = bcrypt($r->input('password') . \Str::slug(env('APP_KEY')));
+            $user->password = $r->input('password');
         }
         $user->status = bool($r->input('status')) ? 'active' : 'inactive';
 
