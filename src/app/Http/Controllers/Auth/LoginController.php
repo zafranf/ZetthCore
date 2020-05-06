@@ -68,6 +68,11 @@ class LoginController extends AdminController
         /* save activity */
         $this->activityLog('<b>' . $r->input($this->username()) . '</b> mencoba masuk halaman admin');
 
+        /* merge password */
+        $r->merge([
+            'password' => $r->input('password') . \Str::slug(env('APP_KEY')),
+        ]);
+
         return $this->loginTrait($r);
     }
 
@@ -79,18 +84,19 @@ class LoginController extends AdminController
     public function username()
     {
         /* set variable */
-        $field = 'name';
-        $name = request()->get($field);
+        $r = request();
+        $key = 'name';
+        $value = $r->input($key);
 
         /* check input email */
-        if (filter_var($name, FILTER_VALIDATE_EMAIL)) {
-            $field = 'email';
+        if (filter_var($value, FILTER_VALIDATE_EMAIL)) {
+            $key = 'email';
         }
 
         /* merge request */
-        request()->merge([$field => $name]);
+        $r->merge([$key => $value]);
 
-        return $field;
+        return $key;
     }
 
     /**

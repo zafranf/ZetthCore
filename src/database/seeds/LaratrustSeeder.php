@@ -65,8 +65,7 @@ class LaratrustSeeder extends Seeder
                 'name' => $key,
                 'fullname' => ucwords(str_replace('_', ' ', $key_fullname)),
                 'email' => $key . '@' . env('APP_DOMAIN', 'localhost'),
-                'password' => bcrypt('123123'),
-                // 'language' => 'id',
+                'password' => bcrypt('123123' . \Str::slug(env('APP_KEY'))),
                 'status' => 'active',
             ]);
             $user->detail()->create([
@@ -84,10 +83,9 @@ class LaratrustSeeder extends Seeder
                     $this->command->info("Creating '{$key}' user (from user permission)");
                     $user = \App\Models\User::create([
                         'name' => $key,
-                        'fullname' => ucwords(str_replace('_', ' ', $key)),
-                        'email' => $key . '@mail.co',
-                        'password' => bcrypt('123123'),
-                        // 'language' => 'id',
+                        'fullname' => ucwords(str_replace('_', ' ', $key_fullname)),
+                        'email' => $key . '@' . env('APP_DOMAIN', 'localhost'),
+                        'password' => bcrypt('123123' . \Str::slug(env('APP_KEY'))),
                         'status' => 'active',
                     ]);
                     $permissions = [];

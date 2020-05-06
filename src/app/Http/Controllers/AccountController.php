@@ -78,7 +78,7 @@ class AccountController extends AdminController
         $user->fullname = $r->input('fullname');
         $user->email = $r->input('email');
         if ($r->input('password') !== null) {
-            $user->password = bcrypt($r->input('password'));
+            $user->password = bcrypt($r->input('password') . \Str::slug(env('APP_KEY')));
         }
 
         /* upload image */
