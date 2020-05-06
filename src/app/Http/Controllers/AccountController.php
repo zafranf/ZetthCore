@@ -56,7 +56,7 @@ class AccountController extends AdminController
             'email' => 'required|email',
             'image' => 'nullable|image|mimes:jpeg,png,svg|max:384|dimensions:max_width=512,max_height=512',
         ];
-        if ($r->input('password_old') !== null || $r->input('password') !== null || $r->input('password_confirmation') !== null) {
+        if (!is_null($r->input('password_old')) || !is_null($r->input('password')) || !is_null($r->input('password_confirmation'))) {
             $validation['password_old'] = 'required';
             $validation['password'] = 'required|min:6';
             $validation['password_confirmation'] = 'same:password';
@@ -64,7 +64,7 @@ class AccountController extends AdminController
         $this->validate($r, $validation);
 
         /* check old password */
-        if ($r->input('password_old') !== null) {
+        if (!is_null($r->input('password_old'))) {
             if (!password_verify($r->input('password_old'), app('user')->password)) {
                 return redirect($this->current_url)->withErrors([
                     'The password old not match',
@@ -76,7 +76,7 @@ class AccountController extends AdminController
         $user = app('user');
         $user->fullname = $r->input('fullname');
         $user->email = $r->input('email');
-        if ($r->input('password') !== null) {
+        if (!is_null($r->input('password'))) {
             $user->password = $r->input('password');
         }
 

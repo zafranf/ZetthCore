@@ -242,7 +242,7 @@ class UserController extends AdminController
             'email' => 'required|email',
             'image' => 'nullable|image|mimes:jpg,jpeg,png,svg|max:384|dimensions:max_width=512,max_height=512',
         ];
-        if ($r->input('password') !== null || $r->input('password_confirmation') !== null) {
+        if (!is_null($r->input('password')) || !is_null($r->input('password_confirmation'))) {
             $validation['password'] = 'required|min:6';
             $validation['password_confirmation'] = 'same:password';
         }
@@ -252,7 +252,7 @@ class UserController extends AdminController
         $user->name = $r->input('name');
         $user->fullname = $r->input('fullname');
         $user->email = $r->input('email');
-        if ($r->input('password') !== null) {
+        if (!is_null($r->input('password'))) {
             $user->password = $r->input('password');
         }
         $user->status = bool($r->input('status')) ? 'active' : 'inactive';
