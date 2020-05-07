@@ -127,7 +127,7 @@ class UserController extends AdminController
         $user->fullname = $r->input('fullname');
         $user->email = $r->input('email');
         $user->password = $r->input('password');
-        $user->status = bool($r->input('status')) ? 'active' : 'inactive';
+        $user->status = $r->input('status') ?? 'inactive';
         $user->site_id = app('site')->id;
 
         /* upload image */
@@ -255,7 +255,7 @@ class UserController extends AdminController
         if (!is_null($r->input('password'))) {
             $user->password = $r->input('password');
         }
-        $user->status = bool($r->input('status')) ? 'active' : 'inactive';
+        $user->status = $r->input('status') ?? 'inactive';
 
         /* upload image */
         if ($r->input('image_remove')) {

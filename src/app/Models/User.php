@@ -73,6 +73,26 @@ class User extends Authenticatable implements MustVerifyEmail
         return $query->where('status', 'active');
     }
 
+    public function getEmailAttribute($value)
+    {
+        return _decrypt($value);
+    }
+
+    public function getNameAttribute($value)
+    {
+        return _decrypt($value);
+    }
+
+    public function setEmailAttribute($value)
+    {
+        $this->attributes['email'] = _encrypt($value);
+    }
+
+    public function setNameAttribute($value)
+    {
+        $this->attributes['name'] = _encrypt($value);
+    }
+
     public function setPasswordAttribute($value)
     {
         $this->attributes['password'] = bcrypt($value . \Str::slug(env('APP_KEY')));

@@ -758,3 +758,17 @@ if (!function_exists('carbon_query')) {
         return carbon($carbon, null, 'store');
     }
 }
+
+if (!function_exists('_encrypt')) {
+    function _encrypt($string, $salt = null)
+    {
+        return openssl_encrypt($string, "AES-128-ECB", env('APP_NAME') . $salt);
+    }
+}
+
+if (!function_exists('_decrypt')) {
+    function _decrypt($string, $salt = null)
+    {
+        return openssl_decrypt($string, "AES-128-ECB", env('APP_NAME') . $salt);
+    }
+}

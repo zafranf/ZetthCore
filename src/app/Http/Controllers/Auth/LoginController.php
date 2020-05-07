@@ -4,6 +4,7 @@ namespace ZetthCore\Http\Controllers\Auth;
 
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
+use Illuminate\Validation\ValidationException;
 use ZetthCore\Http\Controllers\AdminController;
 
 class LoginController extends AdminController
@@ -68,12 +69,33 @@ class LoginController extends AdminController
         /* save activity */
         $this->activityLog('<b>' . $r->input($this->username()) . '</b> mencoba masuk halaman admin');
 
-        /* merge password */
+        /* merge encrypted username and password */
         $r->merge([
+            $this->username() => _encrypt($r->input($this->username())),
             'password' => $r->input('password') . \Str::slug(env('APP_KEY')),
         ]);
 
         return $this->loginTrait($r);
+    }
+
+    /**
+     * Get the failed login response instance.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Symfony\Component\HttpFoundation\Response
+     *
+     * @throws \Illuminate\Validation\ValidationException
+     */
+    protected function sendFailedLoginResponse(Request $r)
+    {
+        /* merge decrypted username */
+        $r->merge([
+            $this->username() => _decrypt($r->input($this->username())),
+        ]);
+
+        throw ValidationException::withMessages([
+            $this->username() => [trans('auth.failed')],
+        ]);
     }
 
     /**
@@ -84,17 +106,13 @@ class LoginController extends AdminController
     public function username()
     {
         /* set variable */
-        $r = request();
         $key = 'name';
-        $value = $r->input($key);
+        $value = request()->input($key);
 
         /* check input email */
         if (filter_var($value, FILTER_VALIDATE_EMAIL)) {
             $key = 'email';
         }
-
-        /* merge request */
-        $r->merge([$key => $value]);
 
         return $key;
     }

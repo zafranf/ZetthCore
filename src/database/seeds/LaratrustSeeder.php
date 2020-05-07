@@ -68,6 +68,8 @@ class LaratrustSeeder extends Seeder
                 'password' => '123123',
                 'status' => 'active',
             ]);
+
+            /* save user detail */
             $user->detail()->create([
                 'user_id' => $user->id,
             ]);
