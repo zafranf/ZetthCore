@@ -25,12 +25,20 @@ Route::name('web.')->middleware(['site'])->group(function () {
         Route::post('/verification/resend', 'Auth\VerificationController@resend')->name('verify.resend.post');
         Route::post('/forgot-password', 'Auth\ForgotPasswordController@send')->name('forgot.post');
         Route::post('/reset-password', 'Auth\ResetPasswordController@store')->name('reset.post');
-        Route::post('/logout', 'Auth\LoginController@logout')->name('logout.post');
     });
     if (env('APP_DEBUG')) {
-        Route::get('/logout', 'Auth\LoginController@logout')->name('logout');
         Route::get('/test', 'TestController@index')->name('test');
     }
+
+    Route::middleware(['auth'])->group(function () {
+        Route::post('/logout', 'Auth\LoginController@logout')->name('logout.post');
+        if (env('APP_DEBUG')) {
+            Route::get('/logout', 'Auth\LoginController@logout')->name('logout');
+        }
+
+        /* POST */
+        Route::put('/profile', 'Site\UserController@update')->name('profile.put');
+    });
 
     /* Action Routes */
     Route::prefix('/action')->name('action.')->group(function () {
@@ -43,16 +51,13 @@ Route::name('web.')->middleware(['site'])->group(function () {
         Route::get('/share/{slug}/{socmed}', 'Site\ActionController@share')->name('share');
     });
 
-    /* POST */
-    Route::post('/profile', 'Site\UserController@update')->name('profile.post');
-
     /* Log all visits */
     Route::middleware(['visitor_log'])->group(function () {
         /* check login status */
         Route::middleware(['guest'])->group(function () {
             Route::get('/' . config('path.register', 'register'), 'Auth\LoginController@showRegistrationForm')->name('register');
-            Route::get('/' . config('path.login', 'login'), 'Auth\LoginController@showLoginForm')->name('login');
             Route::get('/' . config('path.verification', 'verification') . '/{type}', 'Auth\VerificationController@index')->name('verify');
+            Route::get('/' . config('path.login', 'login'), 'Auth\LoginController@showLoginForm')->name('login');
             Route::get('/' . config('path.forgotpass', 'forgot-password'), 'Auth\ForgotPasswordController@index')->name('forgot.password');
             Route::get('/' . config('path.resetpass', 'reset-password'), 'Auth\ResetPasswordController@index')->name('reset.password');
         });
