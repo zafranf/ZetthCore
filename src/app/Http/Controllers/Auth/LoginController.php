@@ -71,7 +71,7 @@ class LoginController extends AdminController
 
         /* merge encrypted username and password */
         $r->merge([
-            $this->username() => _encrypt($r->input($this->username())),
+            $this->username() => _encrypt($r->input($this->username(true))),
             'password' => $r->input('password') . \Str::slug(env('APP_KEY')),
         ]);
 
@@ -103,7 +103,7 @@ class LoginController extends AdminController
      *
      * @return string
      */
-    public function username()
+    public function username($merge = false)
     {
         /* set variable */
         $key = 'name';
@@ -112,6 +112,11 @@ class LoginController extends AdminController
         /* check input email */
         if (filter_var($value, FILTER_VALIDATE_EMAIL)) {
             $key = 'email';
+        }
+
+        /* merge request */
+        if ($merge) {
+            request()->merge([$key => $value]);
         }
 
         return $key;
