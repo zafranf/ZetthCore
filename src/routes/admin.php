@@ -11,16 +11,29 @@ Route::get('/webmail', function () {
 
     abort(404);
 })->name('webmail');
+
 Route::middleware(['throttle:' . (env('APP_DEBUG') ? 60 : 10) . ',1'])->group(function () use ($prefix) {
-    Route::get('/login', $prefix . '\Auth\LoginController@showLoginForm')->name('login.form');
     Route::post('/login', $prefix . '\Auth\LoginController@login')->name('login.post');
 });
+
 Route::get('/test/connection', function () {
     return response()->json(['status' => true]);
 })->name('test.connection');
 
 /* template admin route */
 Route::get('/themes/admin/{path}', $prefix . '\AdminController@themes')->where('path', '.*')->name('themes.admin');
+
+Route::middleware('guest')->group(function () use ($prefix) {
+    Route::get('/login', $prefix . '\Auth\LoginController@showLoginForm')->name('login.form');
+    Route::get('/forgot-password', function () {
+        $route = route('web.forgot.password');
+        if (url()->current() == route('web.forgot.password')) {
+            $route = getSiteURL(adminPath() . str_replace(url('/'), '', $route));
+        }
+
+        return redirect($route);
+    });
+});
 
 Route::middleware('auth')->group(function () use ($prefix) {
     Route::post('/logout', $prefix . '\Auth\LoginController@logout')->name('logout.post');
