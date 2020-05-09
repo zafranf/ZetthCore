@@ -26,6 +26,7 @@ return [
     'register' => 'register',
     'login' => 'login',
     'verification' => 'verification',
+    'verification_resend' => 'resend',
     'forgotpass' => 'forgot-password',
     'resetpass' => 'reset-password',
     'comingsoon' => 'comingsoon',
