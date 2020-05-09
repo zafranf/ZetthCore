@@ -40,7 +40,7 @@
         "columns": [
           { "width": "30px" },
           { "data": "host", "width": "250px" },
-          { "data": "text" },
+          { "data": "keyword" },
           { "data": "count", "width": "50px" },
           /* { "width": "40px" }, */
         ],
@@ -71,7 +71,6 @@
         options.columns = [
           { "width": "30px" },
           { },
-          { "width": "40px" },
         ];
         options.columnDefs = [
           {
@@ -84,23 +83,11 @@
             "targets": 1,
             "sortable": false,
             "render": function (data, type, row, meta) {
-              let render = row.email+'<br>';
-              render += _get_status_text(row.status);
+              let render = '<i>'+row.host+'</i><br>';
+              render += row.keyword+'<br>';
+              render += row.count+'<br>';
 
               return render;
-            }
-          }, {
-            "targets": 2,
-            "data": 'id',
-            "sortable": false,
-            "render": function (data, type, row, meta) {
-              let actions = '';
-              let url = ADMIN_URL + "/report/incoming-terms/" + data;
-              let del = "_delete('" + url + "')";
-              {!! getAccessButtons() !!}
-              $('[data-toggle="tooltip"]').tooltip();
-
-              return actions;
             }
           }
         ];

@@ -18,14 +18,14 @@ class IntermController extends AdminController
     {
         parent::__construct();
         $this->current_url = url(app('admin_path') . '/report/inbox');
-        $this->page_title = 'Kelola Pencarian';
+        $this->page_title = 'Kelola Kata Pencarian';
         $this->breadcrumbs[] = [
             'page' => 'Laporan',
             'icon' => '',
             'url' => url(app('admin_path') . '/report/inbox'),
         ];
         $this->breadcrumbs[] = [
-            'page' => 'Pencarian',
+            'page' => 'Kata Pencarian',
             'icon' => '',
             'url' => $this->current_url,
         ];
@@ -49,7 +49,7 @@ class IntermController extends AdminController
             'current_url' => $this->current_url,
             'breadcrumbs' => $this->breadcrumbs,
             'page_title' => $this->page_title,
-            'page_subtitle' => 'Daftar Pencarian',
+            'page_subtitle' => 'Daftar Kata Pencarian',
         ];
 
         return view('zetthcore::AdminSC.report.interm', $data);
@@ -84,26 +84,7 @@ class IntermController extends AdminController
      */
     public function show(IntermData $interm)
     {
-        $this->breadcrumbs[] = [
-            'page' => 'Detail',
-            'icon' => '',
-            'url' => '',
-        ];
-
-        /* set variable for view */
-        $data = [
-            'current_url' => $this->current_url,
-            'breadcrumbs' => $this->breadcrumbs,
-            'page_title' => $this->page_title,
-            'page_subtitle' => 'Detail Pencarian',
-            'data' => $interm,
-        ];
-
-        /* mark as read */
-        // $interm->read = 'yes';
-        // $interm->save();
-
-        return view('zetthcore::AdminSC.report.interm_detail', $data);
+        abort(403);
     }
 
     /**
@@ -137,13 +118,7 @@ class IntermController extends AdminController
      */
     public function destroy(IntermData $interm)
     {
-        /* save activity */
-        $this->activityLog('[~name] (' . $this->getUserRoles() . ') menghapus Pencarian "' . $interm->email . '"');
-
-        /* soft delete */
-        $interm->delete();
-
-        return redirect($this->current_url)->with('success', 'Pencarian berhasil dihapus!');
+        abort(403);
     }
 
     /**
@@ -152,7 +127,7 @@ class IntermController extends AdminController
     public function datatable(Request $r)
     {
         /* get data */
-        $data = IntermData::select('id', 'host', 'text', 'count')->orderBy('created_at', 'desc');
+        $data = IntermData::select('id', 'host', 'keyword', 'count')->orderBy('count', 'desc');
 
         /* generate datatable */
         if ($r->ajax()) {
