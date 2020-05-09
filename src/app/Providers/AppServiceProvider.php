@@ -28,17 +28,17 @@ class AppServiceProvider extends ServiceProvider
         } else {
             /* check config */
             if (!$this->checkDBConnection() || ($this->checkDBConnection() && !\Schema::hasTable('sites'))) {
-                /* sementara, nanti redirect ke halaman install */
                 throw new \Exception("You have to install this app first", 1);
-                // redirect(url('/install'))->send();
             }
         }
 
         /* get application setting */
-        if (\Schema::hasTable('sites')) {
-            $site = getSiteConfig();
-            if (!$site && !$this->app->runningInConsole()) {
-                throw new \Exception("Site config not found", 1);
+        if ($this->checkDBConnection()) {
+            if (\Schema::hasTable('sites')) {
+                $site = getSiteConfig();
+                if (!$site && !$this->app->runningInConsole()) {
+                    throw new \Exception("Site config not found", 1);
+                }
             }
         }
 
@@ -72,34 +72,12 @@ class AppServiceProvider extends ServiceProvider
             return $agent->isDesktop();
         });
 
-        /* share admin panel to global */
-        $this->app->singleton('admin_path', function () {
-            return adminPath();
-        });
-        $this->app->singleton('is_admin_subdomain', function () {
-            return isAdminSubdomain();
-        });
-        $this->app->singleton('is_admin_panel', function () {
-            return isAdminPanel();
-        });
-
-        /* set middleware */
-        // $this->loadMiddleware();
-
         /* load zetthcore */
         $this->loadRoutesFrom($this->package_path . '/src/routes/routes.php');
         $this->loadViewsFrom($this->package_path . '/src/resources/views', 'zetthcore');
         $this->loadMigrationsFrom($this->package_path . '/src/database/migrations');
-        // $this->loadSeedsFrom($this->package_path . '/src/database/seeds');
 
         $this->publishAll();
-
-        /* set default varchar */
-        // Schema::defaultStringLength(255);
-
-        /* set default timezone */
-        // date_default_timezone_set(app('site')->timezone);
-        // config(['app.timezone' => app('site')->timezone]);
     }
 
     /**
