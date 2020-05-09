@@ -85,12 +85,12 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function setEmailAttribute($value)
     {
-        $this->attributes['email'] = _encrypt($value);
+        $this->attributes['email'] = _decrypt($value) ? $value : _encrypt($value);
     }
 
     public function setNameAttribute($value)
     {
-        $this->attributes['name'] = _encrypt($value);
+        $this->attributes['name'] = _decrypt($value) ? $value : _encrypt($value);
     }
 
     public function setPasswordAttribute($value)
