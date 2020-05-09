@@ -95,22 +95,7 @@ class SubscriberController extends AdminController
      */
     public function edit(Subscriber $subscriber)
     {
-        $this->breadcrumbs[] = [
-            'page' => 'Edit',
-            'icon' => '',
-            'url' => '',
-        ];
-
-        /* set variable for view */
-        $data = [
-            'current_url' => $this->current_url,
-            'breadcrumbs' => $this->breadcrumbs,
-            'page_title' => $this->page_title,
-            'page_subtitle' => 'Edit Langganan Info',
-            'data' => $subscriber,
-        ];
-
-        return view('zetthcore::AdminSC.report.subscriber_form', $data);
+        abort(403);
     }
 
     /**
@@ -122,21 +107,7 @@ class SubscriberController extends AdminController
      */
     public function update(Request $r, Subscriber $subscriber)
     {
-        /* validation */
-        $this->validate($r, [
-            'email' => 'required|email|unique:subscribers,email,' . $subscriber->id . ',id',
-        ]);
-
-        /* save data */
-        $subscriber->email = str_sanitize($r->input('email'));
-        $subscriber->token = str_sanitize($r->input('token'));
-        $subscriber->status = $r->input('status') ?? 'inactive';
-        $subscriber->save();
-
-        /* save activity */
-        $this->activityLog('[~name] (' . $this->getUserRoles() . ') memperbarui Pelanggan "' . $subscriber->email . '"');
-
-        return redirect($this->current_url)->with('success', 'Pelanggan berhasil disimpan!');
+        abort(403);
     }
 
     /**
