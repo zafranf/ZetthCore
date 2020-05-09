@@ -8,11 +8,11 @@
 					<td>No.</td>
 					@if (app('is_desktop'))
 						<td>Surel</td>
+						<td>Tgl. Daftar</td>
 						<td>Status</td>
 					@else
-						<td>Langganan</td>
+						<td>Pelanggan</td>
 					@endif
-					<td>Akses</td>
 				</tr>
 			</thead>
 		</table>
@@ -39,8 +39,8 @@
         "columns": [
           { "width": "30px" },
           { "data": "email" },
+          { "data": "created_at_tz", "width": "100px" },
           { "data": "status", "width": "50px" },
-          { "width": "40px" },
         ],
         "columnDefs": [{
           "targets": 0,
@@ -50,24 +50,11 @@
             return meta.row + meta.settings._iDisplayStart + 1;
           }
         }, {
-          "targets": 2,
+          "targets": 3,
           "data": 'status',
           "sortable": false,
           "render": function (data, type, row, meta) {
             return _get_status_text(data);
-          }
-        }, {
-          "targets": 3,
-          "data": 'id',
-          "sortable": false,
-          "render": function (data, type, row, meta) {
-            let actions = '';
-            let url = ADMIN_URL + "/report/subscribers/" + data;
-            let del = "_delete('" + url + "')";
-            {!! getAccessButtons() !!}
-            $('[data-toggle="tooltip"]').tooltip();
-
-            return actions;
           }
         }],
       };
@@ -76,7 +63,6 @@
         options.columns = [
           { "width": "30px" },
           { },
-          { "width": "40px" },
         ];
         options.columnDefs = [
           {
@@ -90,22 +76,10 @@
             "sortable": false,
             "render": function (data, type, row, meta) {
               let render = row.email+'<br>';
+              render += row.created_at_tz+'<br>';
               render += _get_status_text(row.status);
 
               return render;
-            }
-          }, {
-            "targets": 2,
-            "data": 'id',
-            "sortable": false,
-            "render": function (data, type, row, meta) {
-              let actions = '';
-              let url = ADMIN_URL + "/report/subscribers/" + data;
-              let del = "_delete('" + url + "')";
-              {!! getAccessButtons() !!}
-              $('[data-toggle="tooltip"]').tooltip();
-
-              return actions;
             }
           }
         ];

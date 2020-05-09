@@ -24,7 +24,7 @@ return [
             'admin.report.inbox' => 'i,r,d',
             'admin.report.comments' => 'i,c,r,u,d',
             'admin.report.incoming-terms' => 'i',
-            'admin.report.subscribers' => 'i,u,d',
+            'admin.report.subscribers' => 'i',
             'admin.log' => 'i',
             'admin.log.activities' => 'i,r',
             'admin.log.errors' => 'i,r',
@@ -52,7 +52,7 @@ return [
             'admin.report.inbox' => 'i,r,d',
             'admin.report.comments' => 'i,c,r,u,d',
             'admin.report.incoming-terms' => 'i',
-            'admin.report.subscribers' => 'i,u,d',
+            'admin.report.subscribers' => 'i',
         ],
         'author' => [
             'admin.dashboard' => 'i',
