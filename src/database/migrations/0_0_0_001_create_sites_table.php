@@ -26,7 +26,7 @@ class CreateSitesTable extends Migration
             $table->string('language')->default('id_ID');
             $table->string('email')->nullable();
             $table->string('phone')->nullable();
-            $table->text('address')->nullable();
+            $table->string('address')->nullable();
             $table->string('coordinate')->comment('latitude, longitude')->nullable();
             $table->string('google_analytics')->nullable();
             $table->enum('enable_subscribe', ['yes', 'no'])->default('yes');

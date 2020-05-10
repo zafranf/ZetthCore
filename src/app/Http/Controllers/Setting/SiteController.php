@@ -125,12 +125,12 @@ class SiteController extends AdminController
             'socmed_uname.*' => 'max:50',
 
             /* seo */
-            'keywords' => 'nullable|max:191',
-            'description' => 'nullable|max:191',
+            'keywords' => 'nullable|max:255',
+            'description' => 'nullable|max:255',
             'google_analytics' => 'nullable|max:20',
 
             /* location */
-            'address' => 'nullable|max:280',
+            'address' => 'nullable|max:255',
             'coordinate' => 'nullable|max:30',
         ]);
 
