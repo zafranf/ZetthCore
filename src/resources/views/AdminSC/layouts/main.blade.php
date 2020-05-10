@@ -12,7 +12,7 @@
         </button>
 
         {{-- Branding Image --}}
-        <a class="navbar-brand" href="{{ url(app('admin_path') . '/dashboard') }}">
+        <a class="navbar-brand" href="{{ url(adminPath() . '/dashboard') }}">
           <img src="{{ getImageLogo() }}">
         </a>
       </div>

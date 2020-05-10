@@ -1,6 +1,6 @@
 @php
   function sortMenu($data, $level = 0) {
-    $adminPath = app('admin_path');
+    $adminPath = adminPath();
     echo ($level == 0) && count($data) > 0 ? 'Geser untuk atur posisi' : '';
     echo ($level == 0) ? '<ol class="default vertical">' : '<ol>';
     echo count($data) == 0 ? '<span style="color:grey">Belum ada menu yang terdaftar..</span>' : '';
@@ -65,7 +65,7 @@
         <div class="col-md-6">
           @if (isset($data))
           <h4>Daftar Menu
-            <a href="{{ url(app('admin_path').'/setting/menus/create?group='.$data->id) }}"
+            <a href="{{ url(adminPath().'/setting/menus/create?group='.$data->id) }}"
               class="btn btn-default btn-xs pull-right" data-toggle="tooltip" title="Tambah">
               <i class="fa fa-plus"></i>
             </a>

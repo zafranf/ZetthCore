@@ -270,7 +270,7 @@
         <div class="col-md-offset-2 col-md-10">
           {{ isset(app('site')->id) ? method_field('PUT') : '' }}
           {{ csrf_field() }}
-          {{ getButtonPost(url(app('admin_path') . '/dashboard')) }}
+          {{ getButtonPost(url(adminPath() . '/dashboard')) }}
         </div>
       </div>
     </form>
