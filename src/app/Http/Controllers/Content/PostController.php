@@ -186,7 +186,7 @@ class PostController extends AdminController
         $this->activityLog('[~name] (' . $this->getUserRoles() . ') membuat artikel "' . $post->slug . '"');
 
         /* notif to subscriber */
-        if (app('site')->enable_subscribe && $r->input('info_subscriber')) {
+        if (app('site')->status == 'active' && bool(app('site')->enable_subscribe) && bool($r->input('info_subscriber'))) {
             \ZetthCore\Jobs\NewPost::dispatch($post);
         }
 
