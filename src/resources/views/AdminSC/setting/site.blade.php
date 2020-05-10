@@ -75,31 +75,31 @@
           <div class="form-group">
             <label for="name" class="col-md-4 control-label">Nama Situs</label>
             <div class="col-md-8">
-              <input type="text" class="form-control autofocus" id="name" name="name" value="{{ app('site')->name ?? '' }}" placeholder="Nama situs.." maxlength="50">
+              <input type="text" class="form-control autofocus" id="name" name="name" value="{{ app('site')->name ?? old('name') }}" placeholder="Nama situs.." maxlength="50">
             </div>
           </div>
           <div class="form-group">
             <label for="slogan" class="col-md-4 control-label">Slogan</label>
             <div class="col-md-8">
-              <input type="text" class="form-control" id="tagline" name="tagline" value="{{ app('site')->tagline ?? '' }}" placeholder="Slogan situs.." maxlength="100">
+              <input type="text" class="form-control" id="tagline" name="tagline" value="{{ app('site')->tagline ?? old('tagline') }}" placeholder="Slogan situs.." maxlength="100">
             </div>
           </div>
           <div class="form-group">
             <label for="email" class="col-md-4 control-label">Surel</label>
             <div class="col-md-8">
-              <input type="text" class="form-control" id="email" name="email" value="{{ app('site')->email ?? '' }}" placeholder="Alamat surel.." maxlength="100">
+              <input type="text" class="form-control" id="email" name="email" value="{{ app('site')->email ?? old('email') }}" placeholder="Alamat surel.." maxlength="100">
             </div>
           </div>
           <div class="form-group">
             <label for="phone" class="col-md-4 control-label">Telepon</label>
             <div class="col-md-8">
-              <input type="text" class="form-control" id="phone" name="phone" value="{{ app('site')->phone ?? '' }}" placeholder="Nomor telepon.." maxlength="16">
+              <input type="text" class="form-control" id="phone" name="phone" value="{{ app('site')->phone ?? old('phone') }}" placeholder="Nomor telepon.." maxlength="16">
             </div>
           </div>
           <div class="form-group" {!! (Auth::user()->id != 1)?'style="display:none;"':'' !!}>
             <label for="perpage" class="col-md-4 control-label">Data Perhalaman</label>
             <div class="col-md-8">
-              <input type="number" class="form-control" id="perpage" name="perpage" value="{{ app('site')->perpage ?? 0 }}" placeholder="Jumlah data perhalaman.." min="3" max="100">
+              <input type="number" class="form-control" id="perpage" name="perpage" value="{{ app('site')->perpage ?? old('perpage') }}" placeholder="Jumlah data perhalaman.." min="3" max="100">
             </div>
           </div>
           <div class="form-group">
@@ -136,7 +136,7 @@
             <label for="status" class="col-md-4 control-label">Status</label>
             <div class="col-md-8">
               <select class="form-control custom-select2" id="status" name="status">
-                <option value="active" {{ (app('site')->status == 'actice') ? 'selected' : '' }}>Aktif</option>
+                <option value="active" {{ (app('site')->status == 'active') ? 'selected' : '' }}>Aktif</option>
                 <option value="comingsoon" {{ (app('site')->status == 'comingsoon') ? 'selected' : '' }}>Segera Hadir</option>
                 <option value="maintenance" {{ (app('site')->status == 'maintenance') ? 'selected' : '' }}>Perbaikan</option>
                 @if (app('user')->hasRole('super')) 
@@ -226,13 +226,13 @@
               <small class="help-block">Ketik kata kunci lalu tekan enter untuk menambahkan</small>
             </label>
             <div class="col-md-8">
-              <input type="text" class="form-control" id="keywords" name="keywords" value="{{ app('site')->keywords ?? '' }}" placeholder="Kata kunci situs.." maxlength="50">
+              <input type="text" class="form-control" id="keywords" name="keywords" value="{{ app('site')->keywords ?? old('keywords') }}" placeholder="Kata kunci situs.." maxlength="50">
             </div>
           </div>
           <div class="form-group">
             <label for="description" class="col-md-4 control-label">Deskripsi</label>
             <div class="col-md-8">
-              <textarea class="form-control" id="description" name="description" rows="4" placeholder="Penjelasan singkat mengenai situs..">{{ app('site')->description ?? '' }}</textarea>
+              <textarea class="form-control" id="description" name="description" rows="4" placeholder="Penjelasan singkat mengenai situs..">{{ app('site')->description ?? old('description') }}</textarea>
             </div>
           </div>
           <div class="form-group">
@@ -241,7 +241,7 @@
               <small class="help-block">Kode untuk analitik website dari Google</small>
             </label>
             <div class="col-md-8">
-              <input type="text" class="form-control" id="google-analytics" name="google_analytics" value="{{ app('site')->google_analytics ?? '' }}" placeholder="Kode Google Analytics.." maxlength="20">
+              <input type="text" class="form-control" id="google-analytics" name="google_analytics" value="{{ app('site')->google_analytics ?? old('google_analytics') }}" placeholder="Kode Google Analytics.." maxlength="20">
             </div>
           </div>
           <h4>Lokasi</h4>
@@ -249,7 +249,7 @@
           <div class="form-group">
             <label for="address" class="col-md-4 control-label">Alamat</label>
             <div class="col-md-8">
-              <textarea class="form-control" id="address" name="address" rows="4" placeholder="Alamat lengkap.." maxlength="280">{{ app('site')->address ?? '' }}</textarea>
+              <textarea class="form-control" id="address" name="address" rows="4" placeholder="Alamat lengkap.." maxlength="280">{{ app('site')->address ?? old('address') }}</textarea>
             </div>
           </div>
           <div class="form-group">
@@ -261,7 +261,7 @@
               </small>
             </label>
             <div class="col-md-8">
-              <input type="text" class="form-control" id="coordinate" name="coordinate" value="{{ app('site')->coordinate ?? '' }}" placeholder="Titik koordinat.." maxlength="30">
+              <input type="text" class="form-control" id="coordinate" name="coordinate" value="{{ app('site')->coordinate ?? old('coordinate') }}" placeholder="Titik koordinat.." maxlength="30">
             </div>
           </div>
         </div>
