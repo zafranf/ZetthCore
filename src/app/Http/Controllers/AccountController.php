@@ -54,7 +54,7 @@ class AccountController extends AdminController
         $validation = [
             'fullname' => 'required|max:100',
             'email' => 'required|email',
-            'image' => 'nullable|image|mimes:jpeg,png,svg|max:384|dimensions:max_width=512,max_height=512',
+            'image' => 'nullable|image|mimes:jpg,jpeg,png,svg|max:384|dimensions:min_width=128,min_height=128,max_width=512,max_height=512,ratio=1/1',
         ];
         if (!is_null($r->input('password_old')) || !is_null($r->input('password')) || !is_null($r->input('password_confirmation'))) {
             $validation['password_old'] = 'required';
