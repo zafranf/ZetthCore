@@ -296,6 +296,13 @@ class UserController extends AdminController
      */
     public function destroy(Request $r, User $user)
     {
+        /* prevent delete self */
+        if ($user->id == app('user')->id) {
+            return redirect($this->current_url)->withErrors([
+                'You can not delete your self!',
+            ]);
+        }
+
         /* save activity */
         $this->activityLog('[~name] (' . $this->getUserRoles() . ') menghapus pengguna "' . $user->name . '"');
 
