@@ -65,7 +65,7 @@
         <div class="col-md-6">
           @if (isset($data))
           <h4>Daftar Menu
-            <a href="{{ url(adminPath().'/setting/menus/create?group='.$data->id) }}"
+            <a href="{{ url(adminPath() . '/setting/menus/create?group='.$data->id) }}"
               class="btn btn-default btn-xs pull-right" data-toggle="tooltip" title="Tambah">
               <i class="fa fa-plus"></i>
             </a>
