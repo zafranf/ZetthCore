@@ -17,12 +17,12 @@ class AccountController extends AdminController
     public function __construct()
     {
         parent::__construct();
-        $this->current_url = url(app('admin_path') . '/account');
+        $this->current_url = url(adminPath() . '/account');
         $this->page_title = 'Pengaturan Akun';
         $this->breadcrumbs[] = [
             'page' => 'Pengaturan',
             'icon' => '',
-            'url' => url(app('admin_path') . '/setting/site'),
+            'url' => url(adminPath() . '/setting/site'),
         ];
     }
 

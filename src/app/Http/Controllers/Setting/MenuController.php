@@ -17,21 +17,21 @@ class MenuController extends AdminController
     public function __construct()
     {
         parent::__construct();
-        $this->current_url = url(app('admin_path') . '/setting/menus');
+        $this->current_url = url(adminPath() . '/setting/menus');
         $this->page_title = 'Kelola Menu';
         $this->breadcrumbs[] = [
             'page' => 'Pengaturan',
             'icon' => '',
-            'url' => url(app('admin_path') . '/setting/application'),
+            'url' => url(adminPath() . '/setting/application'),
         ];
         $this->breadcrumbs[] = [
             'page' => 'Menu',
             'icon' => '',
-            'url' => url(app('admin_path') . '/setting/menu-groups'),
+            'url' => url(adminPath() . '/setting/menu-groups'),
         ];
 
         if (!request()->input('group') && !\App::runningInConsole()) {
-            return redirect(app('admin_path') . '/setting/menu-groups')->send();
+            return redirect(adminPath() . '/setting/menu-groups')->send();
         }
     }
 
@@ -153,7 +153,7 @@ class MenuController extends AdminController
         /* clear cache */
         \Cache::flush();
 
-        return redirect(app('admin_path') . '/setting/menu-groups/' . $menu->group_id . '/edit')->with('success', 'Menu "' . $menu->name . '" berhasil ditambah!');
+        return redirect(adminPath() . '/setting/menu-groups/' . $menu->group_id . '/edit')->with('success', 'Menu "' . $menu->name . '" berhasil ditambah!');
     }
 
     /**
@@ -250,7 +250,7 @@ class MenuController extends AdminController
         /* clear cache */
         \Cache::flush();
 
-        return redirect(app('admin_path') . '/setting/menu-groups/' . $menu->group_id . '/edit')->with('success', 'Menu "' . $menu->name . '" berhasil disimpan!');
+        return redirect(adminPath() . '/setting/menu-groups/' . $menu->group_id . '/edit')->with('success', 'Menu "' . $menu->name . '" berhasil disimpan!');
     }
 
     /**
@@ -275,7 +275,7 @@ class MenuController extends AdminController
         /* clear cache */
         \Cache::flush();
 
-        return redirect(app('admin_path') . '/setting/menu-groups/' . $menu->group_id . '/edit')->with('success', 'Menu "' . $menu->name . '" berhasil dihapus!');
+        return redirect(adminPath() . '/setting/menu-groups/' . $menu->group_id . '/edit')->with('success', 'Menu "' . $menu->name . '" berhasil dihapus!');
     }
 
     /**

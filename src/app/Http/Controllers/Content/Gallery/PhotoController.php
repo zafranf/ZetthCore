@@ -18,17 +18,17 @@ class PhotoController extends AdminController
     public function __construct()
     {
         parent::__construct();
-        $this->current_url = url(app('admin_path') . '/content/gallery/photos');
+        $this->current_url = url(adminPath() . '/content/gallery/photos');
         $this->page_title = 'Kelola Foto';
         $this->breadcrumbs[] = [
             'page' => 'Konten',
             'icon' => '',
-            'url' => url(app('admin_path') . '/content/banners'),
+            'url' => url(adminPath() . '/content/banners'),
         ];
         $this->breadcrumbs[] = [
             'page' => 'Galeri',
             'icon' => '',
-            'url' => url(app('admin_path') . '/content/gallery/photos'),
+            'url' => url(adminPath() . '/content/gallery/photos'),
         ];
         $this->breadcrumbs[] = [
             'page' => 'Foto',

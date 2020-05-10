@@ -17,12 +17,12 @@ class IntermController extends AdminController
     public function __construct()
     {
         parent::__construct();
-        $this->current_url = url(app('admin_path') . '/report/inbox');
+        $this->current_url = url(adminPath() . '/report/inbox');
         $this->page_title = 'Kelola Kata Pencarian';
         $this->breadcrumbs[] = [
             'page' => 'Laporan',
             'icon' => '',
-            'url' => url(app('admin_path') . '/report/inbox'),
+            'url' => url(adminPath() . '/report/inbox'),
         ];
         $this->breadcrumbs[] = [
             'page' => 'Kata Pencarian',

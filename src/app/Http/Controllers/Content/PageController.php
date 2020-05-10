@@ -17,12 +17,12 @@ class PageController extends AdminController
     public function __construct()
     {
         parent::__construct();
-        $this->current_url = url(app('admin_path') . '/content/pages');
+        $this->current_url = url(adminPath() . '/content/pages');
         $this->page_title = 'Kelola Halaman';
         $this->breadcrumbs[] = [
             'page' => 'Konten',
             'icon' => '',
-            'url' => url(app('admin_path') . '/content/pages'),
+            'url' => url(adminPath() . '/content/pages'),
         ];
         $this->breadcrumbs[] = [
             'page' => 'Halaman',

@@ -17,12 +17,12 @@ class TagController extends AdminController
     public function __construct()
     {
         parent::__construct();
-        $this->current_url = url(app('admin_path') . '/data/tags');
+        $this->current_url = url(adminPath() . '/data/tags');
         $this->page_title = 'Kelola Label';
         $this->breadcrumbs[] = [
             'page' => 'Data',
             'icon' => '',
-            'url' => url(app('admin_path') . '/data/users'),
+            'url' => url(adminPath() . '/data/users'),
         ];
         $this->breadcrumbs[] = [
             'page' => 'Label',
