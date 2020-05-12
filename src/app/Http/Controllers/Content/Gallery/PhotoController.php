@@ -249,29 +249,24 @@ class PhotoController extends AdminController
             $info = pathinfo($file);
             $file = str_replace(url('/'), '', $file);
             $fgc = $this->fgc($file);
-            $data[] = [
-                'name' => $info['filename'],
+            $data[] = File::firstOrCreate([
                 'file' => $file,
+            ], [
+                'name' => $info['filename'],
                 'description' => $photos['descriptions'][$n],
                 'type' => 'image',
                 'mime' => $fgc['mime'],
                 'size' => $fgc['size'],
-                'fileable_type' => 'App\Models\Album',
-                'fileable_id' => $album_id,
                 'created_by' => app('user')->id,
-                'created_at' => now(),
-                'updated_at' => now(),
                 'site_id' => app('site')->id,
-            ];
+            ])->id;
         }
 
-        /* delete existings */
-        $del = File::where('fileable_type', 'App\Models\Album')->where('fileable_id', $album_id)->forceDelete();
-
         /* save all photos */
-        $save = File::insert($data);
+        $album = Album::find($album_id);
+        $album->photos()->sync($data);
 
-        return $save;
+        return true;
     }
 
     private function fgc($path)

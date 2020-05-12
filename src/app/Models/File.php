@@ -9,4 +9,9 @@ class File extends Base
     use SoftDeletes;
 
     protected $guarded = [];
+
+    public function albums()
+    {
+        return $this->morphedByMany('ZetthCore\Models\Album', 'fileable');
+    }
 }

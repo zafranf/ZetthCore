@@ -19,10 +19,8 @@ class CreateFilesTable extends Migration
             $table->string('description')->nullable();
             $table->string('file');
             $table->enum('type', ['image', 'video', 'audio', 'file']);
-            $table->string('mime');
-            $table->integer('size')->unsigned()->comment('in Bytes');
-            $table->string('fileable_type');
-            $table->integer('fileable_id')->unsigned();
+            $table->string('mime')->default('application/octet-stream');
+            $table->integer('size')->unsigned()->comment('in bytes');
             $table->integer('created_by')->unsigned()->index();
             $table->integer('updated_by')->unsigned()->nullable();
             $table->integer('deleted_by')->unsigned()->nullable();
@@ -32,8 +30,6 @@ class CreateFilesTable extends Migration
 
             $table->foreign('site_id')->references('id')->on('sites')
                 ->onUpdate('cascade')->onDelete('cascade');
-
-            $table->index(['fileable_type', 'fileable_id']);
         });
     }
 

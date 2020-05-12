@@ -10,17 +10,17 @@ class Album extends Base
 
     public function cover()
     {
-        return $this->morphOne('ZetthCore\Models\File', 'fileable');
+        return $this->morphOne('ZetthCore\Models\Fileable', 'fileable');
     }
 
     public function photo()
     {
-        return $this->morphOne('ZetthCore\Models\File', 'fileable');
+        return $this->morphOne('ZetthCore\Models\Fileable', 'fileable');
     }
 
     public function photos()
     {
-        return $this->morphMany('ZetthCore\Models\File', 'fileable');
+        return $this->morphToMany('ZetthCore\Models\File', 'fileable');
     }
 
     public function scopeActive($query)
