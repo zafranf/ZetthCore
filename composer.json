@@ -4,6 +4,7 @@
     "type": "library",
     "require": {
         "php": "^7.2",
+        "ext-imagick": "^3.4",
         "doctrine/dbal": "^2.10",
         "intervention/image": "^2.4",
         "intervention/imagecache": "^2.4",
