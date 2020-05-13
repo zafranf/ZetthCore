@@ -10,12 +10,19 @@ class Album extends Base
 
     public function cover()
     {
-        return $this->morphOne('ZetthCore\Models\Fileable', 'fileable');
+        return $this->photo();
     }
 
     public function photo()
     {
-        return $this->morphOne('ZetthCore\Models\Fileable', 'fileable');
+        return $this->hasOneThrough(
+            'ZetthCore\Models\File',
+            'ZetthCore\Models\Fileable',
+            'fileable_id',
+            'id',
+            'id',
+            'file_id',
+        );
     }
 
     public function photos()
