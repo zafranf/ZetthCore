@@ -8,6 +8,8 @@ class Term extends Base
 {
     use SoftDeletes;
 
+    protected $guarded = [];
+
     public function scopeActive($query)
     {
         return $query->where('status', 'active');

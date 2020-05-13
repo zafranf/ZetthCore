@@ -6,7 +6,6 @@ use App\Models\Post;
 use Illuminate\Http\Request;
 use ZetthCore\Http\Controllers\AdminController;
 use ZetthCore\Models\Term;
-use ZetthCore\Models\TermData;
 
 class PostController extends AdminController
 {
@@ -134,10 +133,6 @@ class PostController extends AdminController
         ]);
 
         /* set variables */
-        $categories = $r->input('categories');
-        $descriptions = $r->input('descriptions');
-        $parents = $r->input('parents');
-        $tags = explode(",", $r->input('tags'));
         $date = $r->input('date') ?? carbon()->format("Y-m-d");
         $time = $r->input('time') ?? carbon()->format("H:i:s");
         $digit = 3;
@@ -173,14 +168,8 @@ class PostController extends AdminController
         $post->caption = $r->input('caption');
         $post->save();
 
-        /* delete post relation */
-        TermData::where('termable_id', $post->id)->delete();
-
         /* processing categories */
-        $this->process_categories($categories, $descriptions, $parents, $post->id);
-
-        /* processing tags */
-        $this->process_tags($tags, $post->id);
+        $this->process_terms($r, $post->id);
 
         /* save activity */
         $this->activityLog('[~name] (' . $this->getUserRoles() . ') membuat artikel "' . $post->slug . '"');
@@ -261,10 +250,6 @@ class PostController extends AdminController
         ]);
 
         /* set variables */
-        $categories = $r->input('categories');
-        $descriptions = $r->input('descriptions');
-        $parents = $r->input('parents');
-        $tags = explode(",", $r->input('tags'));
         $date = $r->input('date') ?? carbon()->format("Y-m-d");
         $time = $r->input('time') ?? carbon()->format("H:i:s");
 
@@ -296,14 +281,8 @@ class PostController extends AdminController
         $post->caption = $r->input('caption');
         $post->save();
 
-        /* delete post relation */
-        TermData::where('termable_id', $post->id)->delete();
-
         /* processing categories */
-        $this->process_categories($categories, $descriptions, $parents, $post->id);
-
-        /* processing tags */
-        $this->process_tags($tags, $post->id);
+        $this->process_terms($r, $post->id);
 
         /* save activity */
         $this->activityLog('[~name] (' . $this->getUserRoles() . ') memperbarui artikel "' . $post->title . '"');
@@ -360,95 +339,50 @@ class PostController extends AdminController
     }
 
     /**
-     * Undocumented function
+     * Processing terms (tags and categories)
      *
-     * @param [type] $categories
-     * @param [type] $descriptions
-     * @param [type] $parents
-     * @param [type] $pid
+     * @param [type] $r
      * @return void
      */
-    public function process_categories($categories, $descriptions, $parents, $pid)
+    public function process_terms(Request $r, $post_id)
     {
-        foreach ($categories as $k => $category) {
-            $chkCategory = Term::where('name', \Str::slug($category))
-                ->where('type', 'category')
-                ->where('group', 'post')
-                ->first();
+        /* set variables */
+        $data = [];
+        $categories = $r->input('categories');
+        $descriptions = $r->input('descriptions');
+        $parents = $r->input('parents');
+        $tags = explode(",", $r->input('tags'));
 
-            if (!$chkCategory) {
-                $term = new Term;
-                $term->name = $category;
-                $term->slug = \Str::slug($term->name);
-                $term->description = $descriptions[$k];
-                if (isset($parents[$k]) && $parents[$k] != 0) {
-                    $term->parent_id = $parents[$k];
-                }
-                $term->type = 'category';
-                $term->group = 'post';
-                $term->status = 'active';
-                $term->site_id = app('site')->id;
-                $term->save();
-
-                $cid = $term->id;
-            } else {
-                $cid = $chkCategory->id;
-            }
-
-            /* process relations */
-            $this->process_postrels($pid, $cid);
+        /* find or create all categories */
+        foreach ($categories as $n => $category) {
+            $data[] = Term::firstOrCreate([
+                'slug' => \Str::slug($category),
+                'type' => 'category',
+                'group' => 'post',
+            ], [
+                'name' => $category,
+                'description' => $descriptions[$n],
+                'parent_id' => $parent[$n] ?? null,
+                'status' => 'active',
+                'site_id' => app('site')->id,
+            ])->id;
         }
-    }
 
-    /**
-     * Undocumented function
-     *
-     * @param [type] $tags
-     * @param [type] $pid
-     * @return void
-     */
-    public function process_tags($tags, $pid)
-    {
+        /* find or create all tags */
         foreach ($tags as $tag) {
-            $chkTag = Term::where('name', \Str::slug($tag))
-                ->where('type', 'tag')
-                ->where('group', 'post')
-                ->first();
-
-            if (!$chkTag) {
-                $term = new Term;
-                $term->name = strtolower($tag);
-                $term->slug = \Str::slug($term->name);
-                $term->type = 'tag';
-                $term->group = 'post';
-                $term->status = 'active';
-                $term->site_id = app('site')->id;
-                $term->save();
-
-                $tid = $term->id;
-            } else {
-                $tid = $chkTag->id;
-            }
-
-            /* process relations */
-            $this->process_postrels($pid, $tid);
+            $data[] = Term::firstOrCreate([
+                'slug' => \Str::slug($tag),
+                'type' => 'tag',
+                'group' => 'post',
+            ], [
+                'name' => $tag,
+                'status' => 'active',
+                'site_id' => app('site')->id,
+            ])->id;
         }
-    }
 
-    /**
-     * Undocumented function
-     *
-     * @param [type] $pid
-     * @param [type] $tid
-     * @return void
-     */
-    public function process_postrels($pid, $tid)
-    {
-        $postrel = new TermData;
-        $postrel->term_id = $tid;
-        $postrel->termable_type = 'App\Models\Post';
-        $postrel->termable_id = $pid;
-        $postrel->site_id = app('site')->id;
-        $postrel->save();
+        /* save all terms */
+        $post = Post::find($post_id);
+        $post->terms()->sync($data);
     }
 }
