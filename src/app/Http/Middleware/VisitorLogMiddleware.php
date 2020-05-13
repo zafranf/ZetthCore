@@ -47,8 +47,8 @@ class VisitorLogMiddleware
         $os_version = !is_null($os) ? $agent->version($os) : null;
         $is_robot = $agent->isRobot() ? 'yes' : 'no';
         $robot_name = bool($is_robot) ? $agent->robot() : null;
-        $site_id = app('site')->id;
         $time = carbon()->format('Y-m-d H');
+        $site_id = app('site')->id;
 
         /* generate id */
         $id = md5(session()->getId() . $ip . $page . $referrer . $ua . $browser . $browser_version . $device . $device_name . $os . $os_version . $is_robot . $robot_name . $time . $site_id);
