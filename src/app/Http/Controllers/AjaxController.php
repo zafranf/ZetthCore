@@ -87,7 +87,7 @@ class AjaxController extends AdminController
 
         /* query */
         $visits = VisitorLog::select('created_at', 'ip', DB::raw('date_format(created_at, \'' . $df . '\') as created'), DB::raw('sum(count) as count'))
-            ->where('is_robot', 0)
+            ->where('is_robot', 'no')
             ->whereBetween('created_at', [$start, $end])
             ->orderBy('created_at', 'ASC')
             ->groupBy(DB::raw('date_format(created_at, \'' . $df . '\')'), 'ip')
