@@ -10,7 +10,7 @@ class Album extends Base
 
     public function cover()
     {
-        return $this->photo();
+        return ($this->cover_id ? $this->belongsTo('ZetthCore\Models\File', 'cover_id') : $this->photo())->select('file');
     }
 
     public function photo()

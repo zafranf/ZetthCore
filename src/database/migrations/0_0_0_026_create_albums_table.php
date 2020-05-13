@@ -20,6 +20,7 @@ class CreateAlbumsTable extends Migration
             $table->string('description')->nullable();
             $table->enum('type', ['photo', 'video'])->default('photo');
             $table->enum('status', ['active', 'inactive'])->default('inactive');
+            $table->integer('cover_id')->unsigned()->nullable();
             $table->timestamps();
             $table->softDeletes();
             $table->integer('site_id')->unsigned()->default(1);

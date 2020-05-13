@@ -231,7 +231,7 @@ class PhotoController extends AdminController
     public function datatable(Request $r)
     {
         /* get data */
-        $data = Album::select('id', 'name', 'slug', 'status')->with('photo')->withCount('photos')->orderBy('created_at', 'desc');
+        $data = Album::select('id', 'name', 'slug', 'status', 'cover_id')->with('cover')->withCount('photos')->orderBy('created_at', 'desc');
 
         /* generate datatable */
         if ($r->ajax()) {
