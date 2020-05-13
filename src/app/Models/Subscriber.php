@@ -20,4 +20,14 @@ class Subscriber extends Base
     {
         return carbon($this->created_at)->format('Y-m-d H:i:s');
     }
+
+    public function getEmailAttribute($value)
+    {
+        return _decrypt($value);
+    }
+
+    public function setEmailAttribute($value)
+    {
+        $this->attributes['email'] = _decrypt($value) ? $value : _encrypt($value);
+    }
 }

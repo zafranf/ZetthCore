@@ -16,4 +16,14 @@ class PasswordReset extends Base
     {
         return $this->belongsTo('App\Models\User', 'email', 'email');
     }
+
+    public function getEmailAttribute($value)
+    {
+        return _decrypt($value);
+    }
+
+    public function setEmailAttribute($value)
+    {
+        $this->attributes['email'] = _decrypt($value) ? $value : _encrypt($value);
+    }
 }

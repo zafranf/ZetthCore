@@ -17,8 +17,8 @@ class CreateCommentsTable extends Migration
             $table->increments('id');
             $table->string('name');
             $table->string('email');
-            $table->string('site')->nullable();
             $table->string('phone')->nullable();
+            $table->string('site')->nullable();
             $table->text('content');
             $table->enum('notify', ['yes', 'no'])->default('no');
             $table->enum('read', ['yes', 'no'])->default('no');

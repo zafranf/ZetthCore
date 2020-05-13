@@ -53,4 +53,24 @@ class Comment extends Base
     {
         return $query->where('status', 'active');
     }
+
+    public function getEmailAttribute($value)
+    {
+        return _decrypt($value);
+    }
+
+    public function getPhoneAttribute($value)
+    {
+        return _decrypt($value);
+    }
+
+    public function setEmailAttribute($value)
+    {
+        $this->attributes['email'] = _decrypt($value) ? $value : _encrypt($value);
+    }
+
+    public function setPhoneAttribute($value)
+    {
+        $this->attributes['phone'] = _decrypt($value) ? $value : _encrypt($value);
+    }
 }
