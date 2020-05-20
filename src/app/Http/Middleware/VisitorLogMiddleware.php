@@ -17,7 +17,7 @@ class VisitorLogMiddleware
      */
     public function handle(Request $request, Closure $next)
     {
-        if (in_array($request->method(), ['get', 'head'])) {
+        if ($request->isMethod('get')) {
             $this->visitorLog();
             $this->intermLog($request);
         }
