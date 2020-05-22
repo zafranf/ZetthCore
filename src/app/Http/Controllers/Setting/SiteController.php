@@ -151,7 +151,7 @@ class SiteController extends AdminController
         $app->enable_comment = $r->input('enable_comment') ?? 'no';
         $app->google_analytics = $r->input('google_analytics');
         $app->status = $r->input('status');
-        $app->active_at = carbon_query($r->input('active_at') ?? date("Y-m-d H:i:s"));
+        $app->active_at = carbon_query($r->input('active_at') ?? now());
 
         /* upload logo */
         if ($r->input('logo_remove')) {
