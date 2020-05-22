@@ -34,11 +34,11 @@
         image_advtab: true,
         image_caption: true,
         menubar: false,
-        external_filemanager_path:"{{ asset(adminPath() . '/larafile/') }}/",
+        external_filemanager_path:"{{ _url(adminPath() . '/larafile/') }}/",
         filemanager_title:"Filemanager",
         filemanager_folder: '/',
         filemanager_language: 'id',
-        external_plugins: { "filemanager" : "{{ asset(adminPath() . '/larafile/plugin.min.js') }}" },
+        external_plugins: { "filemanager" : "{{ _url(adminPath() . '/larafile/plugin.min.js') }}" },
         setup : function(ed) {
           ed.on('init', function() 
           {
