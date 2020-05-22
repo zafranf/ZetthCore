@@ -91,24 +91,29 @@ class Install extends Command
     public function migratingTable()
     {
         if ($this->option('fresh')) {
-            $this->info('Freshing migration tables');
 
             $colname = 'Tables_in_' . env('DB_DATABASE');
             $tables = \DB::select('SHOW TABLES');
+            $droplist = [];
             foreach ($tables as $table) {
                 $droplist[] = $table->{$colname};
             }
             $droplist = implode(',', $droplist);
 
-            \DB::beginTransaction();
-            //turn off referential integrity
-            \DB::statement('SET FOREIGN_KEY_CHECKS = 0');
-            \DB::statement("DROP TABLE $droplist");
-            //turn referential integrity back on
-            \DB::statement('SET FOREIGN_KEY_CHECKS = 1');
-            \DB::commit();
-            $this->info('Tables cleared');
-            $this->info('');
+            if (!empty($droplist)) {
+                $this->info('Freshing migration tables');
+
+                \DB::beginTransaction();
+                //turn off referential integrity
+                \DB::statement('SET FOREIGN_KEY_CHECKS = 0');
+                \DB::statement("DROP TABLE $droplist");
+                //turn referential integrity back on
+                \DB::statement('SET FOREIGN_KEY_CHECKS = 1');
+                \DB::commit();
+
+                $this->info('Tables cleared');
+                $this->info('');
+            }
         }
 
         $defaultMigrationPath = dirname(__DIR__) . '/../../database/migrations';

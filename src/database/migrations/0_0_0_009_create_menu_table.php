@@ -32,8 +32,8 @@ class CreateMenuTable extends Migration
             $table->enum('read', ['yes', 'no'])->default('no');
             $table->enum('update', ['yes', 'no'])->default('no');
             $table->enum('delete', ['yes', 'no'])->default('no');
-            $table->timestamps();
-            $table->softDeletes();
+            $table->timestamps(6);
+            $table->softDeletes('deleted_at', 6);
             $table->integer('site_id')->unsigned()->default(1);
 
             $table->foreign('group_id')->references('id')->on('menu_groups')

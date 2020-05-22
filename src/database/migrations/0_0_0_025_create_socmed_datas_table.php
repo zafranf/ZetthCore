@@ -19,8 +19,8 @@ class CreateSocmedDatasTable extends Migration
             $table->integer('socmed_id')->unsigned()->index();
             $table->string('socmedable_type');
             $table->integer('socmedable_id')->unsigned();
-            $table->timestamps();
-            $table->softDeletes();
+            $table->timestamps(6);
+            $table->softDeletes('deleted_at', 6);
             $table->integer('site_id')->unsigned()->default(1);
 
             $table->foreign('socmed_id')->references('id')->on('socmeds')

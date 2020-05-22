@@ -9,6 +9,8 @@ class Role extends LaratrustRole
 {
     use SoftDeletes;
 
+    protected $dateFormat = 'Y-m-d H:i:s.u';
+
     public function menu_groups()
     {
         return $this->belongsToMany('ZetthCore\Models\MenuGroup', 'role_menu', 'role_id', 'menu_group_id')->with('menu.submenu', 'menu.group');

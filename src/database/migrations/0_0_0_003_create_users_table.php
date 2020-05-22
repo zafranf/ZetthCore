@@ -22,8 +22,8 @@ class CreateUsersTable extends Migration
             $table->string('image')->nullable();
             $table->enum('is_first_login', ['yes', 'no'])->default('yes');
             $table->enum('status', ['active', 'inactive', 'suspend', 'banned'])->default('inactive');
-            $table->timestamps();
-            $table->softDeletes();
+            $table->timestamps(6);
+            $table->softDeletes('deleted_at', 6);
             $table->integer('site_id')->unsigned()->default(1);
 
             $table->foreign('site_id')->references('id')->on('sites')

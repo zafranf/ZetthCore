@@ -25,7 +25,7 @@ class CreateErrorLogsTable extends Migration
             $table->json('data')->nullable();
             $table->integer('count')->unsigned()->default(0);
             $table->text('time_history')->nullable();
-            $table->timestamps();
+            $table->timestamps(6);
             $table->integer('site_id')->unsigned()->default(1);
 
             $table->foreign('site_id')->references('id')->on('sites')

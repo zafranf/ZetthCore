@@ -33,7 +33,7 @@ class CreateUserDetailsTable extends Migration
             $table->string('phone')->nullable();
             $table->string('company')->nullable();
             $table->string('website')->nullable();
-            $table->timestamps();
+            $table->timestamps(6);
             $table->integer('site_id')->unsigned()->default(1);
 
             $table->foreign('user_id')->references('id')->on('users')

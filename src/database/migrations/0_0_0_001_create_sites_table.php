@@ -35,8 +35,8 @@ class CreateSitesTable extends Migration
             $table->enum('enable_comment', ['yes', 'no'])->default('yes');
             $table->tinyInteger('perpage')->unsigned()->default(10);
             $table->enum('status', ['active', 'comingsoon', 'maintenance', 'suspend'])->default('comingsoon');
-            $table->dateTime('active_at');
-            $table->timestamps();
+            $table->dateTime('active_at', 6);
+            $table->timestamps(6);
         });
     }
 

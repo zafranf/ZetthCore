@@ -22,8 +22,8 @@ class CreateTermsTable extends Migration
             $table->enum('group', ['post', 'product'])->default('post');
             $table->integer('parent_id')->unsigned()->nullable()->index();
             $table->enum('status', ['active', 'inactive'])->default('inactive');
-            $table->timestamps();
-            $table->softDeletes();
+            $table->timestamps(6);
+            $table->softDeletes('deleted_at', 6);
             $table->integer('site_id')->unsigned()->default(1);
 
             $table->foreign('parent_id')->references('id')->on('terms')

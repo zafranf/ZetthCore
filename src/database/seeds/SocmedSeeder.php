@@ -20,7 +20,7 @@ class SocmedSeeder extends Seeder
             'icon' => "fa fa-facebook",
             'color' => '',
             'status' => 'active',
-            'created_at' => date("Y-m-d H:i:s"),
+            'created_at' => now(),
         ]);
         \ZetthCore\Models\Socmed::create([
             'name' => "Twitter",
@@ -28,7 +28,7 @@ class SocmedSeeder extends Seeder
             'icon' => "fa fa-twitter",
             'color' => '',
             'status' => 'active',
-            'created_at' => date("Y-m-d H:i:s"),
+            'created_at' => now(),
         ]);
         \ZetthCore\Models\Socmed::create([
             'name' => "Instagram",
@@ -36,7 +36,7 @@ class SocmedSeeder extends Seeder
             'icon' => "fa fa-instagram",
             'color' => '',
             'status' => 'active',
-            'created_at' => date("Y-m-d H:i:s"),
+            'created_at' => now(),
         ]);
         \ZetthCore\Models\Socmed::create([
             'name' => "Youtube",
@@ -44,7 +44,7 @@ class SocmedSeeder extends Seeder
             'icon' => "fa fa-youtube",
             'color' => '',
             'status' => 'active',
-            'created_at' => date("Y-m-d H:i:s"),
+            'created_at' => now(),
         ]);
     }
 }

@@ -22,7 +22,7 @@ class CreateActivityLogsTable extends Migration
             $table->json('post');
             $table->json('files');
             $table->integer('user_id')->unsigned()->nullable();
-            $table->timestamps();
+            $table->timestamps(6);
             $table->integer('site_id')->unsigned()->default(1);
 
             $table->foreign('user_id')->references('id')->on('users')

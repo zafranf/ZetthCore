@@ -17,7 +17,7 @@ class CreateLanguageLinesTable extends Migration
             $table->string('group')->index();
             $table->string('key');
             $table->text('text');
-            $table->timestamps();
+            $table->timestamps(6);
             $table->integer('site_id')->unsigned()->default(1);
 
             $table->foreign('site_id')->references('id')->on('sites')

@@ -19,8 +19,8 @@ class CreateIntermDatasTable extends Migration
             $table->string('keyword');
             $table->integer('count')->unsigned();
             $table->integer('post_id')->unsigned()->nullable()->index();
-            $table->timestamps();
-            $table->softDeletes();
+            $table->timestamps(6);
+            $table->softDeletes('deleted_at', 6);
             $table->integer('site_id')->unsigned()->default(1);
 
             $table->foreign('host')->references('host')->on('interms')

@@ -24,8 +24,8 @@ class CreateBannersTable extends Migration
             $table->tinyInteger('order')->default(1)->unsigned();
             $table->enum('only_image', ['yes', 'no'])->default('no');
             $table->enum('status', ['active', 'inactive'])->default('inactive');
-            $table->timestamps();
-            $table->softDeletes();
+            $table->timestamps(6);
+            $table->softDeletes('deleted_at', 6);
             $table->integer('site_id')->unsigned()->default(1);
 
             $table->foreign('site_id')->references('id')->on('sites')

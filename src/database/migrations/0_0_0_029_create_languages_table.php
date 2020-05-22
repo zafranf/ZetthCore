@@ -16,7 +16,7 @@ class CreateLanguagesTable extends Migration
             $table->increments('id');
             $table->string('name');
             $table->string('description')->nullable();
-            $table->timestamps();
+            $table->timestamps(6);
             $table->integer('site_id')->unsigned()->default(1);
 
             $table->foreign('site_id')->references('id')->on('sites')

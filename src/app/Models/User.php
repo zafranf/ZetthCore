@@ -43,6 +43,8 @@ class User extends Authenticatable implements MustVerifyEmail
         'password',
     ];
 
+    protected $dateFormat = 'Y-m-d H:i:s.u';
+
     public function role_ids()
     {
         return $this->hasMany('ZetthCore\Models\RoleUser');

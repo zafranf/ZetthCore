@@ -28,7 +28,7 @@ class CreateVisitorLogsTable extends Migration
             $table->enum('is_robot', ['yes', 'no'])->default('no');
             $table->string('robot_name')->nullable();
             $table->integer('count')->unsigned()->default(0);
-            $table->timestamps();
+            $table->timestamps(6);
             $table->integer('site_id')->unsigned()->default(1);
 
             $table->foreign('site_id')->references('id')->on('sites')

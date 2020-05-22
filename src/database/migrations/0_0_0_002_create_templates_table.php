@@ -23,8 +23,8 @@ class CreateTemplatesTable extends Migration
             $table->enum('status', ['active', 'inactive'])->default('inactive');
             $table->string('templateable_type');
             $table->integer('templateable_id')->unsigned();
-            $table->timestamps();
-            $table->softDeletes();
+            $table->timestamps(6);
+            $table->softDeletes('deleted_at', 6);
             $table->integer('site_id')->unsigned()->default(1);
 
             $table->foreign('site_id')->references('id')->on('sites')

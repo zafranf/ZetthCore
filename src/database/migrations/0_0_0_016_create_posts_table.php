@@ -35,8 +35,8 @@ class CreatePostsTable extends Migration
             $table->integer('created_by')->unsigned()->index();
             $table->integer('updated_by')->unsigned()->nullable();
             $table->integer('deleted_by')->unsigned()->nullable();
-            $table->timestamps();
-            $table->softDeletes();
+            $table->timestamps(6);
+            $table->softDeletes('deleted_at', 6);
             $table->integer('site_id')->unsigned()->default(1);
 
             $table->foreign('created_by')->references('id')->on('users')

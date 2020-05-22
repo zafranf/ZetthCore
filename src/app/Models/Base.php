@@ -7,6 +7,8 @@ use ZetthCore\Models\Scopes\SiteScope;
 
 class Base extends Model
 {
+    protected $dateFormat = 'Y-m-d H:i:s.u';
+
     /**
      * The "booting" method of the model.
      *
@@ -18,4 +20,5 @@ class Base extends Model
 
         static::addGlobalScope(new SiteScope);
     }
+
 }

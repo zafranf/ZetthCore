@@ -18,14 +18,14 @@ class MenuGroupSeeder extends Seeder
             'slug' => "admin",
             'description' => "Grup menu untuk admin",
             'status' => 'active',
-            'created_at' => date("Y-m-d H:i:s"),
+            'created_at' => now(),
         ]);
         \ZetthCore\Models\MenuGroup::create([
             'name' => "Website",
             'slug' => "website",
             'description' => "Grup menu untuk web",
             'status' => 'active',
-            'created_at' => date("Y-m-d H:i:s"),
+            'created_at' => now(),
         ]);
     }
 }

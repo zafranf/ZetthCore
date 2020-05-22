@@ -67,6 +67,8 @@ class LaratrustSeeder extends Seeder
                 'email' => $key . '@' . env('APP_DOMAIN', 'localhost'),
                 'password' => '123123',
                 'status' => 'active',
+                'created_at' => now(),
+                'updated_at' => now(),
             ]);
 
             /* save user detail */
@@ -89,6 +91,8 @@ class LaratrustSeeder extends Seeder
                         'email' => $key . '@' . env('APP_DOMAIN', 'localhost'),
                         'password' => '123123',
                         'status' => 'active',
+                        'created_at' => now(),
+                        'updated_at' => now(),
                     ]);
                     $permissions = [];
 
