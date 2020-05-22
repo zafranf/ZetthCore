@@ -14,7 +14,7 @@
             <center>
               <img src="{{ getImageLogo() }}" alt="{{ app('site')->name }} Logo" style="margin-bottom: 20px; width: {{ $w }}px;">
             </center>
-            <form class="form-horizontal" role="form" method="POST" action="{{ url(adminPath() . '/login') }}">
+            <form class="form-horizontal" role="form" method="POST" action="{{ _url(adminPath() . '/login') }}">
               
               <div class="form-group{{ isset($errors) && ($errors->has('name') || $errors->has('email')) ? ' has-error' : '' }}">
                 <label class="col-md-4 control-label">Pengguna</label>

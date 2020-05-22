@@ -2,7 +2,7 @@
 
 @section('content')
   <div class="panel-body">
-    <form class="form-horizontal" action="{{ url($current_url) }}{{ isset($data) ? '/' . $data->id : '' }}" method="post">
+    <form class="form-horizontal" action="{{ _url($current_url) }}{{ isset($data) ? '/' . $data->id : '' }}" method="post">
       <div class="form-group">
         <label for="title" class="col-sm-2 control-label">Judul</label>
         <div class="col-sm-10">

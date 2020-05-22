@@ -31,6 +31,6 @@
                 <td>{{ _print_json($act->activity_file) }}</td>
             </tr>
         </table>
-        <a id="btn-back" class="btn btn-default" href="{{ url($current_url) }}"><i class="fa fa-caret-left"></i> Back</a> 
+        <a id="btn-back" class="btn btn-default" href="{{ _url($current_url) }}"><i class="fa fa-caret-left"></i> Back</a> 
     </div>
 @endsection

@@ -17,12 +17,12 @@ class ActivityController extends AdminController
     public function __construct()
     {
         parent::__construct();
-        $this->current_url = url(adminPath() . '/log/activities');
+        $this->current_url = _url(adminPath() . '/log/activities');
         $this->page_title = 'Catatan Aktifitas';
         $this->breadcrumbs[] = [
             'page' => 'Catatan',
             'icon' => '',
-            'url' => url(adminPath() . '/log/activities'),
+            'url' => _url(adminPath() . '/log/activities'),
         ];
         $this->breadcrumbs[] = [
             'page' => 'Aktifitas',

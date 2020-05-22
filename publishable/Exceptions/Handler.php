@@ -64,7 +64,7 @@ class Handler extends ExceptionHandler
                         [
                             'page' => 'Beranda',
                             'icon' => '',
-                            'url' => url('/'),
+                            'url' => _url('/'),
                         ], [
                             'page' => $e->getStatusCode(),
                             'icon' => '',

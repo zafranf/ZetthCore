@@ -14,7 +14,7 @@
 
 @section('content')
   <div class="panel-body">
-    <form class="form-horizontal" action="{{ url($current_url) }}{{ isset($data) ? '/' . $data->id : '' }}"
+    <form class="form-horizontal" action="{{ _url($current_url) }}{{ isset($data) ? '/' . $data->id : '' }}"
       method="post" enctype="multipart/form-data">
       <div class="form-group">
         <label for="image" class="col-sm-2 control-label">

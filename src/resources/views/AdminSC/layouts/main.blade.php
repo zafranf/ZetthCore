@@ -12,7 +12,7 @@
         </button>
 
         {{-- Branding Image --}}
-        <a class="navbar-brand" href="{{ url(adminPath() . '/dashboard') }}">
+        <a class="navbar-brand" href="{{ _url(adminPath() . '/dashboard') }}">
           <img src="{{ getImageLogo() }}">
         </a>
       </div>
@@ -85,7 +85,7 @@
               {!! app('is_mobile') ? 'Kunjungi situs&nbsp;<span class="pull-right"><i class="fa fa-external-link"></i></span>' : '<i class="fa fa-globe"></i>' !!}
             </a>
           </li>
-          {{-- <li><a href="{{ url('admin/help') }}" title="Help"><i class="fa fa-question-circle-o"></i></a></li> --}}
+          {{-- <li><a href="{{ _url('admin/help') }}" title="Help"><i class="fa fa-question-circle-o"></i></a></li> --}}
           {{-- <li><a href="#" title="Notifications"><i class="fa fa-bell-o"></i></a></li> --}}
           {{-- Authentication Links --}}
           @if (Auth::guest())
@@ -106,7 +106,7 @@
                   </a>
                 </li>
                 <li>
-                  <a href="{{ url(adminPath() . '/webmail') }}" target="_blank">
+                  <a href="{{ _url(adminPath() . '/webmail') }}" target="_blank">
                     <i class="fa fa-btn fa-envelope"></i> Email
                   </a>
                 </li>

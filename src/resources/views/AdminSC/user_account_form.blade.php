@@ -2,7 +2,7 @@
 
 @section('content')
   <div class="panel-body">
-    <form class="form-horizontal" action="{{ url($current_url) }}" method="post" enctype="multipart/form-data">
+    <form class="form-horizontal" action="{{ _url($current_url) }}" method="post" enctype="multipart/form-data">
       <div class="row">
         <div class="col-md-6">
           <h4>Informasi Utama</h4>

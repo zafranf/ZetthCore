@@ -23,12 +23,12 @@ class PostController extends AdminController
     public function __construct()
     {
         parent::__construct();
-        $this->current_url = url(adminPath() . '/content/posts');
+        $this->current_url = _url(adminPath() . '/content/posts');
         $this->page_title = 'Kelola Artikel';
         $this->breadcrumbs[] = [
             'page' => 'Konten',
             'icon' => '',
-            'url' => url(adminPath() . '/content/banners'),
+            'url' => _url(adminPath() . '/content/banners'),
         ];
         $this->breadcrumbs[] = [
             'page' => 'Artikel',

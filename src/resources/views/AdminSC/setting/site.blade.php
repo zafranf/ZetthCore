@@ -2,7 +2,7 @@
 
 @section('content')
   <div class="panel-body">
-    <form class="form-horizontal" action="{{ url($current_url) }}/{{ app('site')->id ?? '' }}" method="post"
+    <form class="form-horizontal" action="{{ _url($current_url) }}/{{ app('site')->id ?? '' }}" method="post"
       enctype="multipart/form-data">
       <div class="row">
         <div class="col-md-6">
@@ -270,7 +270,7 @@
         <div class="col-md-offset-2 col-md-10">
           {{ isset(app('site')->id) ? method_field('PUT') : '' }}
           {{ csrf_field() }}
-          {{ getButtonPost(url(adminPath() . '/dashboard')) }}
+          {{ getButtonPost(_url(adminPath() . '/dashboard')) }}
         </div>
       </div>
     </form>

@@ -17,12 +17,12 @@ class ErrorController extends AdminController
     public function __construct()
     {
         parent::__construct();
-        $this->current_url = url(adminPath() . '/log/errors');
+        $this->current_url = _url(adminPath() . '/log/errors');
         $this->page_title = 'Catatan Galat';
         $this->breadcrumbs[] = [
             'page' => 'Catatan',
             'icon' => '',
-            'url' => url(adminPath() . '/log/activities'),
+            'url' => _url(adminPath() . '/log/activities'),
         ];
         $this->breadcrumbs[] = [
             'page' => 'Galat',

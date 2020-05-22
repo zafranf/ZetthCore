@@ -12,20 +12,20 @@
     <br>
     <br>
     @if ($data->status == 'inactive')
-      <a id="btn-reply" class="share-button"  href="{{ url($current_url . "/approve/" . $data->id) }}">
+      <a id="btn-reply" class="share-button"  href="{{ _url($current_url . "/approve/" . $data->id) }}">
         <i class="fa fa-check"></i> Setujui
       </a>
     @elseif ($data->status == 'active')
-      <a id="btn-reply" class="share-button" href="{{ url($current_url . "/unapprove/" . $data->id) }}">
+      <a id="btn-reply" class="share-button" href="{{ _url($current_url . "/unapprove/" . $data->id) }}">
         <i class="fa fa-times"></i> Batal Setuju
       </a>
     @endif
     &nbsp;
-    <a id="btn-reply" class="share-button" href="{{ url($current_url . "/create?cid=" . ($data->parent_id ?? $data->id) . "&pid=" . $data->commentable_id) }}">
+    <a id="btn-reply" class="share-button" href="{{ _url($current_url . "/create?cid=" . ($data->parent_id ?? $data->id) . "&pid=" . $data->commentable_id) }}">
       <i class="fa fa-reply"></i> Balas
     </a>
     &nbsp;
-    <a id="btn-edit" class="share-button" href="{{ url($current_url . '/' . $data->id . '/edit') }}">
+    <a id="btn-edit" class="share-button" href="{{ _url($current_url . '/' . $data->id . '/edit') }}">
       <i class="fa fa-edit"></i> Edit
     </a> 
     &nbsp;
@@ -33,7 +33,7 @@
       <i class="fa fa-trash-o"></i> Hapus
     </a>
     &nbsp;
-    <a id="btn-back" class="share-button" href="{{ url($current_url) }}">
+    <a id="btn-back" class="share-button" href="{{ _url($current_url) }}">
       <i class="fa fa-caret-left"></i> Kembali
     </a> 
   </div>

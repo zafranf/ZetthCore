@@ -18,7 +18,7 @@
     {{ $data->message }}
     <hr>
     <!-- <a id="btn-delete" class="zetth-share-button" onclick="_delete('{{ $data->id }}', '{{ $current_url }}');"><i class="fa fa-envelope"></i> Mark as Unread</a> --> 
-    <a id="btn-back" class="zetth-share-button" href="{{ url($current_url) }}"><i class="fa fa-caret-left"></i> Kembali</a> 
+    <a id="btn-back" class="zetth-share-button" href="{{ _url($current_url) }}"><i class="fa fa-caret-left"></i> Kembali</a> 
     <a id="btn-delete" class="zetth-share-button" onclick="_delete('{{ $current_url . '/' . $data->id }}');"><i class="fa fa-trash-o"></i> Hapus</a>
   </div>
 @endsection

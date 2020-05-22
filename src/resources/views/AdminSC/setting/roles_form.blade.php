@@ -9,7 +9,7 @@
 @extends('zetthcore::AdminSC.layouts.main')
 
 @section('content')
-  <form class="form-horizontal" action="{{ url($current_url) }}{{ isset($data) ? '/' . $data->id : '' }}" method="post">
+  <form class="form-horizontal" action="{{ _url($current_url) }}{{ isset($data) ? '/' . $data->id : '' }}" method="post">
     <div class="panel-body">
       <div class="form-group">
         <label for="name" class="col-sm-2 control-label">Nama Peran</label>

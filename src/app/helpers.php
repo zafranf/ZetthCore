@@ -27,7 +27,7 @@ if (!function_exists('adminPath')) {
 if (!function_exists('isAdminSubdomain')) {
     function isAdminSubdomain()
     {
-        $host = parse_url(url('/'))['host'];
+        $host = parse_url(_url('/'))['host'];
 
         return in_array(env('ADMIN_SUBDOMAIN', 'manager'), explode(".", $host));
     }
@@ -58,7 +58,7 @@ if (!function_exists('isWWW')) {
     function isWWW($host = null)
     {
         if (is_null($host)) {
-            $host = parse_url(url('/'))['host'];
+            $host = parse_url(_url('/'))['host'];
         }
 
         return in_array('www', explode(".", $host));
@@ -151,7 +151,7 @@ if (!function_exists('getAccessButtons')) {
 
         if ($btn == 'add') {
             if ($user->can($newname . '.create')) {
-                echo '<a href="' . url($url . '/create') . '" class="btn btn-default pull-right" data-toggle="tooltip" data-original-title="Tambah Data"><i class="fa fa-plus"></i>&nbsp;' . $add . '</a>';
+                echo '<a href="' . _url($url . '/create') . '" class="btn btn-default pull-right" data-toggle="tooltip" data-original-title="Tambah Data"><i class="fa fa-plus"></i>&nbsp;' . $add . '</a>';
             }
         } else {
             if ($user->can($newname . '.read')) {
@@ -177,9 +177,9 @@ if (!function_exists('getButtonPost')) {
     {
         echo '<div class="box-footer">';
         echo '<button type="submit" class="btn btn-warning">Simpan</button>';
-        echo ' &nbsp;<a class="btn btn-default" href="' . url($page) . '">Batal</a>';
+        echo ' &nbsp;<a class="btn btn-default" href="' . _url($page) . '">Batal</a>';
         if ($delete && $id != '') {
-            echo '<a class="btn btn-danger pull-right" onclick="_delete(\'' . url($page . '/' . $id) . '\')">Hapus</a>';
+            echo '<a class="btn btn-danger pull-right" onclick="_delete(\'' . _url($page . '/' . $id) . '\')">Hapus</a>';
         }
         echo '</div>';
     }
@@ -201,9 +201,9 @@ if (!function_exists('getImage')) {
             $image = str_replace('assets/images/', '', $image);
             $mtime = filemtime($file) / env('DB_PORT', 3306);
 
-            return url('imache/' . $template . '/' . $image) . '?v=' . $mtime;
+            return _url('imache/' . $template . '/' . $image) . '?v=' . $mtime;
         } else {
-            return url($default ?? adminPath() . '/themes/admin/AdminSC/images/no-image.png');
+            return _url($default ?? adminPath() . '/themes/admin/AdminSC/images/no-image.png');
         }
 
         return null;
@@ -244,7 +244,7 @@ if (!function_exists('getSiteConfig')) {
     function getSiteConfig()
     {
         /* get application setting */
-        $host = parse_url(url('/'))['host'];
+        $host = parse_url(_url('/'))['host'];
         if (isWWW($host)) {
             $host = str_replace('www.', '', $host);
         } else if (adminRoute() == 'subdomain' && isAdminSubdomain()) {
@@ -260,9 +260,9 @@ if (!function_exists('getSiteConfig')) {
 if (!function_exists('getSiteURL')) {
     function getSiteURL($path = null)
     {
-        $url = url($path ?? '/');
+        $url = _url($path ?? '/');
         if (adminRoute() == 'subdomain') {
-            $url = url(env('APP_URL') . '/' . ltrim($path, '/'));
+            $url = _url(env('APP_URL') . '/' . ltrim($path, '/'));
         }
 
         return $url;
@@ -458,7 +458,7 @@ if (!function_exists('generateMenu')) {
             $link_additional = $params[$index]['link']['additional'] ?? null;
 
             /* set href */
-            $href = (!is_null($menu->route_name) ? route($menu->route_name) : url($menu->url));
+            $href = (!is_null($menu->route_name) ? route($menu->route_name) : _url($menu->url));
 
             /* set active */
             $active = $href == url()->current();
@@ -581,7 +581,7 @@ if (!function_exists('generateBreadcrumb')) {
             if (!is_null($bread['url']) && empty($bread['url'])) {
                 echo '<li class="active">' . $bread['page'] . '</li>';
             } else {
-                echo '<li><a href="' . url($bread['url'] ?? '/') . '">';
+                echo '<li><a href="' . _url($bread['url'] ?? '/') . '">';
                 if (isset($bread['icon'])) {
                     echo '<i class="' . $bread['icon'] . '"></i> ';
                 }
@@ -614,6 +614,17 @@ if (!function_exists('generateDate')) {
         }
 
         return carbon(($date ?? date("Y-m-d")))->isoFormat($format);
+    }
+}
+
+if (!function_exists('_url')) {
+    function _url($url = null, $secure = false)
+    {
+        if ($secure || bool(env('FORCE_HTTPS'))) {
+            return secure_url($url);
+        }
+
+        return url($url);
     }
 }
 
@@ -695,7 +706,7 @@ if (!function_exists('_site_css')) {
                 }
             }
 
-            return '<link href="' . url($file) . '?v=' . $mtime . '"' . $attr . '>';
+            return '<link href="' . _url($file) . '?v=' . $mtime . '"' . $attr . '>';
         }
 
         return null;
@@ -723,10 +734,24 @@ if (!function_exists('_site_js')) {
                 }
             }
 
-            return '<script src="' . url($file) . '?v=' . $mtime . '"' . $attr . '></script>';
+            return '<script src="' . _url($file) . '?v=' . $mtime . '"' . $attr . '></script>';
         }
 
         return null;
+    }
+}
+
+if (!function_exists('_encrypt')) {
+    function _encrypt($string, $salt = null)
+    {
+        return openssl_encrypt($string, "AES-128-ECB", env('APP_NAME') . $salt);
+    }
+}
+
+if (!function_exists('_decrypt')) {
+    function _decrypt($string, $salt = null)
+    {
+        return openssl_decrypt($string, "AES-128-ECB", env('APP_NAME') . $salt);
     }
 }
 
@@ -756,19 +781,5 @@ if (!function_exists('carbon_query')) {
     function carbon_query($carbon = null)
     {
         return carbon($carbon, null, 'store');
-    }
-}
-
-if (!function_exists('_encrypt')) {
-    function _encrypt($string, $salt = null)
-    {
-        return openssl_encrypt($string, "AES-128-ECB", env('APP_NAME') . $salt);
-    }
-}
-
-if (!function_exists('_decrypt')) {
-    function _decrypt($string, $salt = null)
-    {
-        return openssl_decrypt($string, "AES-128-ECB", env('APP_NAME') . $salt);
     }
 }

@@ -18,9 +18,9 @@
     <span id="status-server" class="bg-success" data-toggle="tooltip" title="Status Koneksi">Terhubung</span> Didukung oleh <a href="https://porisweb.id" target="_blank">Porisweb</a>
   </div>
   <script>
-    var SITE_URL = '{{ url(env('APP_URL', '/')) }}';
-    var ADMIN_URL = '{{ url(adminPath() ?? '/') }}';
-    var CURRENT_URL = '{{ url($current_url) }}';
+    var SITE_URL = '{{ _url('/') }}';
+    var ADMIN_URL = '{{ _url(adminPath() ?? '/') }}';
+    var CURRENT_URL = '{{ _url($current_url) }}';
     var TOKEN = '{{ csrf_token() }}';
     var CONNECT = true;
     var IS_MOBILE = {{ app('is_mobile') ? 'true' : 'false' }};

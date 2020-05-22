@@ -15,7 +15,7 @@ class DashboardController extends AdminController
     public function __construct()
     {
         parent::__construct();
-        $this->current_url = url(adminPath() . '/dashboard');
+        $this->current_url = _url(adminPath() . '/dashboard');
         $this->page_title = 'Dasbor';
         $this->breadcrumbs[] = [
             'page' => 'Dasbor',

@@ -18,12 +18,12 @@ class CommentController extends AdminController
     public function __construct()
     {
         parent::__construct();
-        $this->current_url = url(adminPath() . '/report/comments');
+        $this->current_url = _url(adminPath() . '/report/comments');
         $this->page_title = 'Kelola Komentar';
         $this->breadcrumbs[] = [
             'page' => 'Laporan',
             'icon' => '',
-            'url' => url(adminPath() . '/report/comments'),
+            'url' => _url(adminPath() . '/report/comments'),
         ];
         $this->breadcrumbs[] = [
             'page' => 'Komentar',

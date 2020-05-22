@@ -19,12 +19,12 @@ class UserController extends AdminController
     public function __construct()
     {
         parent::__construct();
-        $this->current_url = url(adminPath() . '/data/users');
+        $this->current_url = _url(adminPath() . '/data/users');
         $this->page_title = 'Kelola Pengguna';
         $this->breadcrumbs[] = [
             'page' => 'Data',
             'icon' => '',
-            'url' => url(adminPath() . '/data/users'),
+            'url' => _url(adminPath() . '/data/users'),
         ];
         $this->breadcrumbs[] = [
             'page' => 'Pengguna',

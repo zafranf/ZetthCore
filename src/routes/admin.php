@@ -6,7 +6,7 @@ Route::get('/', function () {
 })->name('index');
 Route::get('/webmail', function () {
     if (env('APP_WEBMAIL_URL')) {
-        return redirect(url(env('APP_WEBMAIL_URL')));
+        return redirect(_url(env('APP_WEBMAIL_URL')));
     }
 
     abort(404);
@@ -28,7 +28,7 @@ Route::middleware(['guest', 'visitor_log'])->group(function () use ($prefix) {
     Route::get('/forgot-password', function () {
         $route = route('web.forgot.password');
         if (url()->current() == route('web.forgot.password')) {
-            $route = getSiteURL(adminPath() . str_replace(url('/'), '', $route));
+            $route = getSiteURL(adminPath() . str_replace(_url('/'), '', $route));
         }
 
         return redirect($route);

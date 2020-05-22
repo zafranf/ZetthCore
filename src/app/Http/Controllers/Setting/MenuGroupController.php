@@ -18,12 +18,12 @@ class MenuGroupController extends AdminController
     public function __construct()
     {
         parent::__construct();
-        $this->current_url = url(adminPath() . '/setting/menu-groups');
+        $this->current_url = _url(adminPath() . '/setting/menu-groups');
         $this->page_title = 'Kelola Grup Menu';
         $this->breadcrumbs[] = [
             'page' => 'Pengaturan',
             'icon' => '',
-            'url' => url(adminPath() . '/setting/application'),
+            'url' => _url(adminPath() . '/setting/application'),
         ];
         $this->breadcrumbs[] = [
             'page' => 'Menu',

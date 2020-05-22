@@ -15,7 +15,7 @@
     }
   }
 
-  $urlFilemanager = url(adminPath() . '/larafile/dialog.php?type=1&multiple=0&field_id=cover&lang=id');
+  $urlFilemanager = _url(adminPath() . '/larafile/dialog.php?type=1&multiple=0&field_id=cover&lang=id');
 @endphp
 
 @extends('zetthcore::AdminSC.layouts.main')
@@ -23,7 +23,7 @@
 @section('content')
   <div class="panel-body no-padding-bottom">
     <div class="row" style="margin-top:-15px;">
-      <form id="form-post" action="{{ url($current_url) }}{{ isset($data) ? '/' . $data->id : '' }}" method="post" enctype="multipart/form-data">
+      <form id="form-post" action="{{ _url($current_url) }}{{ isset($data) ? '/' . $data->id : '' }}" method="post" enctype="multipart/form-data">
         <div class="col-sm-8 col-md-9 left-side no-padding">
           <input type="text" id="title" class="form-control {{ isset($data) ? '' : 'autofocus' }} no-border-top-right no-border-left no-radius input-lg" name="title" placeholder="Judul.." maxlength="100" value="{{ $data->title ?? old('title') }}">
           <div class="input-group">
@@ -166,7 +166,7 @@
             <br><br>
             <div class="btn-group btn-group-justified" role="group">
               <a onclick="$('#form-post').submit();" class="btn btn-warning"><i class="fa fa-edit"></i> Simpan</a>
-              <a href="{{ url($current_url) }}" class="btn btn-default"><i class="fa fa-times"></i> Batal</a>
+              <a href="{{ _url($current_url) }}" class="btn btn-default"><i class="fa fa-times"></i> Batal</a>
             </div>
           </div>
         </div>
@@ -425,7 +425,7 @@
         datumTokenizer: Bloodhound.tokenizers.obj.whitespace('name'),
         queryTokenizer: Bloodhound.tokenizers.whitespace,
         prefetch: {
-          url: "{{ url(adminPath() . '/ajax/term/categories') }}",
+          url: "{{ _url(adminPath() . '/ajax/term/categories') }}",
           cache: false,
           filter: function(list) {
             return $.map(list, function(category) {
@@ -464,7 +464,7 @@
         datumTokenizer: Bloodhound.tokenizers.obj.whitespace('name'),
         queryTokenizer: Bloodhound.tokenizers.whitespace,
         prefetch: {
-          url: "{{ url(adminPath() . '/ajax/term/tags') }}",
+          url: "{{ _url(adminPath() . '/ajax/term/tags') }}",
           cache: false,
           filter: function(list) {
           return $.map(list, function(tag) {

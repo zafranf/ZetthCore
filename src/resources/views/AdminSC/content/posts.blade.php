@@ -123,7 +123,7 @@
           "data": 'cover',
           "sortable": false,
           "render": function (data, type, row, meta) {
-            return '<img src="'+(data ? data : '{!! url(adminPath() . "/themes/admin/AdminSC/images/no-image.png") !!}')+'" width="80px">';
+            return '<img src="'+(data ? data : '{!! _url(adminPath() . "/themes/admin/AdminSC/images/no-image.png") !!}')+'" width="80px">';
           }
         }, {
           "targets": 2,

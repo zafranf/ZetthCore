@@ -31,7 +31,7 @@ class VisitorLogMiddleware
         $ip = \Request::server('REMOTE_ADDR');
         $page = \Request::path() ?? '-';
         $referrer = \Request::server('HTTP_REFERER') ?? null;
-        $referrer = str_replace(url('/'), "", $referrer);
+        $referrer = str_replace(_url('/'), "", $referrer);
         $agent = new \Jenssegers\Agent\Agent();
         $ua = $agent->getUserAgent() ?? null;
         $browser = $agent->browser() ?? null;
@@ -103,7 +103,7 @@ class VisitorLogMiddleware
 
                     /* get post id */
                     $url = url()->current();
-                    $page = str_replace(url('/'), '', $url);
+                    $page = str_replace(_url('/'), '', $url);
                     $slug = explode('/', $page);
                     $post = \Cache::remember('intermlogpost.' . app('site')->id, getCacheTime(), function () use ($slug) {
                         return \App\Models\Post::active()->where('slug', end($slug))->first();

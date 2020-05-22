@@ -22,12 +22,12 @@ class BannerController extends AdminController
     public function __construct()
     {
         parent::__construct();
-        $this->current_url = url(adminPath() . '/content/banners');
+        $this->current_url = _url(adminPath() . '/content/banners');
         $this->page_title = 'Kelola Spanduk';
         $this->breadcrumbs[] = [
             'page' => 'Konten',
             'icon' => '',
-            'url' => url(adminPath() . '/content/banners'),
+            'url' => _url(adminPath() . '/content/banners'),
         ];
         $this->breadcrumbs[] = [
             'page' => 'Spanduk',
