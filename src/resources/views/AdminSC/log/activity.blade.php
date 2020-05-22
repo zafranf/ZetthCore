@@ -50,7 +50,7 @@
           "data": 'description',
           "sortable": false,
           "render": function (data, type, row, meta) {
-            return data.replace('[~name]', '<b>'+row.user.fullname+'</b>');
+            return data.replace('[~name]', '<b>'+ (row.user != null ? row.user.fullname : '-' )+'</b>');
           }
         }],
       });

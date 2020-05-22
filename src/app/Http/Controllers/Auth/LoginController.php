@@ -67,11 +67,11 @@ class LoginController extends AdminController
     public function login(Request $r)
     {
         /* save activity */
-        $this->activityLog('<b>' . $r->input($this->username()) . '</b> mencoba masuk halaman admin');
+        $this->activityLog('<b>' . $r->input($this->username(true)) . '</b> mencobaa masuk halaman admin');
 
         /* merge encrypted username and password */
         $r->merge([
-            $this->username() => _encrypt($r->input($this->username(true))),
+            $this->username() => _encrypt($r->input($this->username())),
             'password' => $r->input('password') . \Str::slug(env('APP_KEY')),
         ]);
 
