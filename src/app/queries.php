@@ -218,7 +218,7 @@ function _getPhotos($limit = null, $order = 'desc')
     $cache_name = 'getPhotos' . $order;
 
     /* inisiasi query */
-    $photos = \ZetthCore\Models\AlbumDetail::with('album');
+    $photos = \ZetthCore\Models\File::with('albums');
 
     /* check order */
     if (in_array($order, ['rand', 'random'])) {

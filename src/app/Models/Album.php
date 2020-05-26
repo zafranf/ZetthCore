@@ -27,7 +27,7 @@ class Album extends Base
 
     public function photos()
     {
-        return $this->morphToMany('ZetthCore\Models\File', 'fileable');
+        return $this->morphToMany('App\Models\File', 'fileable');
     }
 
     public function scopeActive($query)
