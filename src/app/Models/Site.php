@@ -17,7 +17,7 @@ class Site extends Model
 
     public function template()
     {
-        return $this->belongsTo('ZetthCore\Models\Template', 'templateable');
+        return $this->morphOne('ZetthCore\Models\Template', 'templateable')->where('status', 'active');
     }
 
     public function getLangAttribute()

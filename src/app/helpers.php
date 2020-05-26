@@ -252,7 +252,7 @@ if (!function_exists('getSiteConfig')) {
         }
 
         return \Cache::remember('site_config.' . $host, getCacheTime(), function () use ($host) {
-            return \App\Models\Site::where('domain', $host)->with('socmed')->first();
+            return \App\Models\Site::where('domain', $host)->with('socmed', 'template')->first();
         });
     }
 }
