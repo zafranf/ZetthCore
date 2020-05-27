@@ -31,7 +31,7 @@ class CreatePostsTable extends Migration
             $table->integer('disliked')->unsigned()->default(0);
             $table->string('short_url')->nullable();
             $table->enum('status', ['active', 'inactive', 'draft'])->default('inactive');
-            $table->timestamp('published_at')->nullable();
+            $table->timestamp('published_at', 6)->nullable();
             $table->integer('created_by')->unsigned()->index();
             $table->integer('updated_by')->unsigned()->nullable();
             $table->integer('deleted_by')->unsigned()->nullable();
