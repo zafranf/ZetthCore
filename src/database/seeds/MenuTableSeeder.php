@@ -192,23 +192,6 @@ class MenuTableSeeder extends Seeder
         $contentBanner->delete = 'yes';
         $contentBanner->save();
 
-        /* menu halaman */
-        $contentPage = new Menu;
-        $contentPage->name = 'Halaman';
-        $contentPage->description = 'Menu pengaturan halaman';
-        $contentPage->route_name = 'admin.content.pages.index';
-        // $contentPage->icon = 'fa fa-file-text';
-        $contentPage->order = $contentOrder++;
-        $contentPage->status = 'active';
-        $contentPage->parent_id = $content->id;
-        $contentPage->is_crud = 'yes';
-        $contentPage->index = 'yes';
-        $contentPage->create = 'yes';
-        $contentPage->read = 'no';
-        $contentPage->update = 'yes';
-        $contentPage->delete = 'yes';
-        $contentPage->save();
-
         /* menu artikel */
         $contentPost = new Menu;
         $contentPost->name = 'Artikel';
@@ -225,6 +208,23 @@ class MenuTableSeeder extends Seeder
         $contentPost->update = 'yes';
         $contentPost->delete = 'yes';
         $contentPost->save();
+
+        /* menu halaman */
+        $contentPage = new Menu;
+        $contentPage->name = 'Halaman';
+        $contentPage->description = 'Menu pengaturan halaman';
+        $contentPage->route_name = 'admin.content.pages.index';
+        // $contentPage->icon = 'fa fa-file-text';
+        $contentPage->order = $contentOrder++;
+        $contentPage->status = 'active';
+        $contentPage->parent_id = $content->id;
+        $contentPage->is_crud = 'yes';
+        $contentPage->index = 'yes';
+        $contentPage->create = 'yes';
+        $contentPage->read = 'no';
+        $contentPage->update = 'yes';
+        $contentPage->delete = 'yes';
+        $contentPage->save();
 
         $galOrder = 1;
         /* menu galeri (grup) */
@@ -427,8 +427,9 @@ class MenuTableSeeder extends Seeder
         $dash = new Menu;
         $dash->name = 'Beranda';
         $dash->description = 'Halaman utama';
-        $dash->url = '/';
+        $dash->url = route('web.root');
         $dash->target = '_self';
+        $dash->order = $mainOrder++;
         $dash->status = 'active';
         $dash->group_id = 2;
         $dash->save();
@@ -444,11 +445,11 @@ class MenuTableSeeder extends Seeder
         $about->group_id = 2;
         $about->save();
 
-        /* menu about */
+        /* menu contact */
         $contact = new Menu;
         $contact->name = 'Hubungi Kami';
         $contact->description = 'Halaman hubungi kami';
-        $contact->url = '/contact';
+        $contact->url = route('web.contact');
         $contact->target = '_self';
         $contact->order = $mainOrder++;
         $contact->status = 'active';

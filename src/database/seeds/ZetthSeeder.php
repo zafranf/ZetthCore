@@ -20,6 +20,7 @@ class ZetthSeeder extends Seeder
         $this->call(MenuTableSeeder::class);
         $this->call(RoleMenuSeeder::class);
         $this->call(UsersTableSeeder::class);
+        $this->call(CategorySeeder::class);
         $this->call(IntermdataSeeder::class);
         $this->call(SocmedSeeder::class);
         $this->call(PageSeeder::class);
