@@ -261,7 +261,7 @@
               </small>
             </label>
             <div class="col-md-8">
-              <input type="text" class="form-control" id="coordinate" name="coordinate" value="{{ app('site')->coordinate ?? old('coordinate') }}" placeholder="Titik koordinat.." maxlength="30">
+              <input type="text" class="form-control" id="coordinate" name="coordinate" value="{{ app('site')->coordinate ?? old('coordinate') }}" placeholder="Nama lokasi atau titik koordinat.." maxlength="30">
             </div>
           </div>
         </div>
