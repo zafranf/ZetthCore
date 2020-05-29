@@ -11,15 +11,15 @@
         echo '<i class="' . $menu->icon . '"></i> ';
         }
         echo $menu->name;
-        echo '<a onclick="_delete(\'' . _url($adminPath . '/setting/menus/'.$menu->id. '?group='.$menu->group_id).'\')"
+        echo '<a onclick="_delete(\'' . _url($adminPath . '/setting/menus/' . $menu->id. '?group=' . $menu->group_id).'\')"
           class="btn btn-default btn-xs pull-right" data-toggle="tooltip" title="Hapus"><i
             class="fa fa-trash"></i></a>';
         echo '<a href="' . _url($adminPath . '/setting/menus/' . $menu->id . '/edit?group=' . $menu->group_id) . '"
           class="btn btn-default btn-xs pull-right" data-toggle="tooltip" title="Edit"><i class="fa fa-edit"></i></a>';
         echo '</span>';
-      if (count($menu->submenu) > 0) {
-      sortMenu($menu->submenu, $level + 1);
-      }
+        if (count($menu->submenu) > 0) {
+          sortMenu($menu->submenu, $level + 1);
+        }
       echo '<ol></ol>';
       echo '</li>';
     }
@@ -34,13 +34,13 @@
       method="post" enctype="multipart/form-data">
       <div class="row">
         <div class="col-md-6">
-          <h4>Info Utama</h4>
+          <h4>Informasi Utama</h4>
           <hr>
           <div class="form-group">
-            <label for="name" class="col-sm-4 control-label">Nama Grup Menu</label>
+            <label for="name" class="col-sm-4 control-label">Nama</label>
             <div class="col-sm-8">
               <input type="text" class="form-control autofocus" id="name" name="name"
-                value="{{ isset($data) ? $data->name : old('name') }}" maxlength="100" placeholder="Nama grup menu..">
+                value="{{ $data->name ?? old('name') }}" maxlength="100" placeholder="Nama grup menu..">
             </div>
           </div>
           <div class="form-group">
@@ -48,7 +48,7 @@
             <div class="col-sm-8">
               <textarea id="description" name="description" class="form-control"
                 placeholder="Penjelasan singkat grup menu.."
-                rows="4">{{ isset($data) ? $data->description : old('description') }}</textarea>
+                rows="4">{{ $data->description ?? old('description') }}</textarea>
             </div>
           </div>
           <div class="form-group">
@@ -65,13 +65,13 @@
         <div class="col-md-6">
           @if (isset($data))
           <h4>Daftar Menu
-            <a href="{{ _url(adminPath() . '/setting/menus/create?group='.$data->id) }}"
+            <a href="{{ _url(adminPath() . '/setting/menus/create?group=' . $data->id) }}"
               class="btn btn-default btn-xs pull-right" data-toggle="tooltip" title="Tambah">
               <i class="fa fa-plus"></i>
             </a>
           </h4>
           <hr>
-          {!! sortMenu($data->allMenu, 0) !!}
+          {!! sortMenu($data->allMenu) !!}
           @endif
         </div>
       </div>
