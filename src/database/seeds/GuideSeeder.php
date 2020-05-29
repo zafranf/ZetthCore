@@ -73,7 +73,7 @@ class GuideSeeder extends Seeder
         ]);
 
         /* Dasbor - Artikel Populer */
-        $content = '<p>Kolom ini menampilkan artikel terpopuler berdasarkan tanggal yang dipilih. Data yang tampil di kolom ini adalah <code>Judul Artikel</code>, <code>Kategori</code> dan <code>Jumlah Kunjungan</code>.';
+        $content = '<p>Kolom ini menampilkan artikel terpopuler berdasarkan tanggal yang dipilih. Data yang tampil di kolom ini adalah <code>Judul Artikel</code>, <code>Kategori</code> dan <code>Jumlah Kunjungan</code>. Anda dapat melihat semua artikel dengan menekan tombol <a class="btn btn-default btn-xs"><span class="fa fa-eye"></span> Semua</a>.';
         $dashTanggal = Guide::create([
             'title' => 'Artikel Populer',
             'slug' => 'dasbor-artikelpopuler',
@@ -85,7 +85,7 @@ class GuideSeeder extends Seeder
         ]);
 
         /* Dasbor - Komentar Terbaru */
-        $content = '<p>Pada kolom ini Anda akan diperlihatkan dengan komentar terbaru. Data yang tampil di kolom ini adalah <code>Isi Komentar</code>, <code>Judul Artikel</code>, <code>Waktu</code> dan <code>Pengirim</code>.';
+        $content = '<p>Pada kolom ini Anda akan diperlihatkan dengan komentar terbaru. Data yang tampil di kolom ini adalah <code>Isi Komentar</code>, <code>Judul Artikel</code>, <code>Waktu</code> dan <code>Pengirim</code>. Anda dapat melihat semua komentar dengan menekan tombol <a class="btn btn-default btn-xs"><span class="fa fa-eye"></span> Semua</a>.';
         $dashTanggal = Guide::create([
             'title' => 'Komentar Terbaru',
             'slug' => 'dasbor-komentarterbaru',
