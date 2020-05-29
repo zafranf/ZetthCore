@@ -444,7 +444,7 @@
         cancelLabel: 'Batal',
         fromLabel: 'Dari',
         toLabel: 'Sampai',
-        customRangeLabel: 'Atur Tanggal',
+        customRangeLabel: 'Atur tanggal',
         daysOfWeek: ['Mi', 'Se', 'Sl', 'Ra', 'Ka', 'Ju', 'Sa'],
         monthNames: ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'],
         format: 'YYYY-MM-DD'
