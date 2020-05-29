@@ -427,7 +427,7 @@ class MenuTableSeeder extends Seeder
         $dash = new Menu;
         $dash->name = 'Beranda';
         $dash->description = 'Halaman utama';
-        $dash->url = route('web.root');
+        $dash->url = '/';
         $dash->target = '_self';
         $dash->order = $mainOrder++;
         $dash->status = 'active';
@@ -436,9 +436,21 @@ class MenuTableSeeder extends Seeder
 
         /* menu about */
         $about = new Menu;
+        $about->name = 'Artikel';
+        $about->description = 'Halaman daftar artikel';
+        $about->url = config('path.posts');
+        $about->target = '_self';
+        $about->order = $mainOrder++;
+        $about->status = 'active';
+        $about->group_id = 2;
+        $about->save();
+
+        /* menu about */
+        $about = new Menu;
         $about->name = 'Tentang';
         $about->description = 'Halaman tentang situs';
         $about->url = '/about';
+        $about->url_external = 'yes';
         $about->target = '_self';
         $about->order = $mainOrder++;
         $about->status = 'active';
@@ -449,7 +461,7 @@ class MenuTableSeeder extends Seeder
         $contact = new Menu;
         $contact->name = 'Hubungi Kami';
         $contact->description = 'Halaman hubungi kami';
-        $contact->url = route('web.contact');
+        $contact->url = config('path.contact');
         $contact->target = '_self';
         $contact->order = $mainOrder++;
         $contact->status = 'active';
