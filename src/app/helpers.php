@@ -629,6 +629,10 @@ if (!function_exists('generateHelpMenu')) {
                 $ico .= '-o';
             } else if ($level == 2) {
                 $ico .= '-thin';
+            } else if ($level == 3) {
+                $ico = 'angle-double-right';
+            } else if ($level == 4) {
+                $ico = 'angle-right';
             }
 
             /* get user roles */
@@ -661,8 +665,9 @@ if (!function_exists('generateHelpContent')) {
 
             /* print content */
             if ($val->roles_array[0] == 'all' || !empty(array_intersect($userRoles, $val->roles_array))) {
+                $h = 'h' . ($level < 6 ? $level + 1 : 6);
                 echo '<div id="' . $val->slug . '" class="section">';
-                echo '<h1>' . $val->title . '</h1>';
+                echo '<' . $h . '>' . $val->title . '</' . $h . '>';
                 if ($val->cover) {
                     echo '<p><center><a href="' . adminPath() . $val->cover . '" target="_blank"><img src="' . adminPath() . $val->cover . '" width="100%"></a></center></p>';
                 }
