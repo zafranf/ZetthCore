@@ -664,7 +664,7 @@ if (!function_exists('generateHelpContent')) {
                 echo '<div id="' . $val->slug . '" class="section">';
                 echo '<h1>' . $val->title . '</h1>';
                 if ($val->cover) {
-                    echo '<p><center><a href="' . $val->cover . '" target="_blank"><img src="' . $val->cover . '" width="100%"></a></center></p>';
+                    echo '<p><center><a href="' . adminPath() . $val->cover . '" target="_blank"><img src="' . adminPath() . $val->cover . '" width="100%"></a></center></p>';
                 }
                 echo $val->content;
                 echo '</div>';
