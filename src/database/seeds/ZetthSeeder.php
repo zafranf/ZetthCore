@@ -18,6 +18,7 @@ class ZetthSeeder extends Seeder
         $this->call(LaratrustSeeder::class);
         $this->call(MenuGroupSeeder::class);
         $this->call(MenuTableSeeder::class);
+        $this->call(GuideSeeder::class);
         $this->call(RoleMenuSeeder::class);
         $this->call(UsersTableSeeder::class);
         $this->call(CategorySeeder::class);
