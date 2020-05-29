@@ -665,13 +665,14 @@ if (!function_exists('generateHelpContent')) {
 
             /* print content */
             if ($val->roles_array[0] == 'all' || !empty(array_intersect($userRoles, $val->roles_array))) {
+                $dates = carbon()->isoFormat('Do MMMM YYYY') . ' - ' . carbon()->isoFormat('Do MMMM YYYY');
                 $h = 'h' . ($level < 6 ? $level + 1 : 6);
                 echo '<div id="' . $val->slug . '" class="section">';
                 echo '<' . $h . '>' . $val->title . '</' . $h . '>';
                 if ($val->cover) {
                     echo '<center><a href="' . adminPath() . $val->cover . '" target="_blank"><img src="' . adminPath() . $val->cover . '" width="100%"></a></center>';
                 }
-                echo $val->content;
+                echo str_replace('[~dates]', $dates, $val->content);
                 echo '</div>';
                 if (isset($val->subguide)) {
                     generateHelpContent($val->subguide, $level + 1);
