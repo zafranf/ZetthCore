@@ -145,7 +145,7 @@
           <input type="hidden" name="group" value="{{ _get('group') }}">
           {{ isset($data) ? method_field('PUT') : '' }}
           {{ csrf_field() }}
-          {{ getButtonPost($current_url, true, $data->id ?? '') }}
+          {{ getButtonPost($current_url, true, $data->id ?? '', isset($data) ? 'menu \\\'' . $data->name . '\\\'' : null) }}
         </div>
       </div>
     </form>

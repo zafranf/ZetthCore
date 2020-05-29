@@ -112,7 +112,7 @@ function _get_status_text(status = "inactive", par = []) {
     );
 }
 
-function _delete(URL = "") {
+function _delete(URL = "", text = null) {
     if (!CONNECT) {
         return false;
     }
@@ -127,7 +127,7 @@ function _delete(URL = "") {
     formDel += "</form>";
 
     swal({
-        title: "Hapus data?",
+        title: "Hapus data" + (text ? ' ' + text : '') + "?",
         html: formDel,
         type: "warning",
         showCancelButton: true,

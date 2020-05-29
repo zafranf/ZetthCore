@@ -11,7 +11,7 @@
         echo '<i class="' . $menu->icon . '"></i> ';
         }
         echo $menu->name;
-        echo '<a onclick="_delete(\'' . _url($adminPath . '/setting/menus/' . $menu->id. '?group=' . $menu->group_id).'\')"
+        echo '<a onclick="_delete(\'' . _url($adminPath . '/setting/menus/' . $menu->id. '?group=' . $menu->group_id).'\', \'' . 'menu \\\'' . $menu->name . '\\\'' . '\')"
           class="btn btn-default btn-xs pull-right" data-toggle="tooltip" title="Hapus"><i
             class="fa fa-trash"></i></a>';
         echo '<a href="' . _url($adminPath . '/setting/menus/' . $menu->id . '/edit?group=' . $menu->group_id) . '"
@@ -80,7 +80,7 @@
           <input type="hidden" id="serialize_output" name="sort">
           {{ isset($data) ? method_field('PUT') : '' }}
           {{ csrf_field() }}
-          {{ getButtonPost($current_url, true, $data->id ?? '') }}
+          {{ getButtonPost($current_url, true, $data->id ?? '', isset($data) ? 'menu grup \\\'' . $data->name . '\\\'' : null) }}
         </div>
       </div>
     </form>

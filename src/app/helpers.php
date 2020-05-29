@@ -173,13 +173,13 @@ if (!function_exists('getButtonPost')) {
      * @param  string $page [description]
      * @return [type]       [description]
      */
-    function getButtonPost($page = '', $delete = false, $id = '')
+    function getButtonPost($page = '', $delete = false, $id = '', $text = null)
     {
         echo '<div class="box-footer">';
         echo '<button type="submit" class="btn btn-warning">Simpan</button>';
         echo ' &nbsp;<a class="btn btn-default" href="' . _url($page) . '">Batal</a>';
         if ($delete && $id != '') {
-            echo '<a class="btn btn-danger pull-right" onclick="_delete(\'' . _url($page . '/' . $id) . '\')">Hapus</a>';
+            echo '<a class="btn btn-danger pull-right" onclick="_delete(\'' . _url($page . '/' . $id) . '\', \'' . $text . '\')">Hapus</a>';
         }
         echo '</div>';
     }
