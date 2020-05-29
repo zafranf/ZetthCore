@@ -28,10 +28,10 @@
             <option value="#">[Tidak ada]</option>
             <option value="external" {{ (isset($data) && bool($data->url_external)) ? 'selected' : '' }}>[Tautan Luar]</option>
             <option value="/" {{ (isset($data) && $data->url == "/" ) ? 'selected' : '' }}>Beranda</option>
-            <option value="{{ config('path.posts', 'posts') }}" {{ (isset($data) && $data->url == config('path.posts', 'posts') ) ? 'selected' : '' }}>Artikel</option>
-            <option value="{{ config('path.albums', 'albums') }}" {{ (isset($data) && $data->url == config('path.albums', 'albums') ) ? 'selected' : '' }}>Galeri Foto</option>
-            <option value="{{ config('path.videos', 'videos') }}" {{ (isset($data) && $data->url == config('path.videos', 'videos') ) ? 'selected' : '' }}>Galeri Video</option>
-            <option value="{{ config('path.contact', 'contact') }}" {{ (isset($data) && $data->url == config('path.contact', 'contact') ) ? 'selected' : '' }}>Kontak</option>
+            <option value="{{ config('path.posts') }}" {{ (isset($data) && $data->url == config('path.posts') ) ? 'selected' : '' }}>Artikel</option>
+            <option value="{{ config('path.albums') }}" {{ (isset($data) && $data->url == config('path.albums') ) ? 'selected' : '' }}>Galeri Foto</option>
+            <option value="{{ config('path.videos') }}" {{ (isset($data) && $data->url == config('path.videos') ) ? 'selected' : '' }}>Galeri Video</option>
+            <option value="{{ config('path.contact') }}" {{ (isset($data) && $data->url == config('path.contact') ) ? 'selected' : '' }}>Kontak</option>
             @php 
               $types = [
                 'page' => 'Halaman',
@@ -51,11 +51,11 @@
               @if ($post->type == "page" || $post->type == "video")
                 <option value="{{ $post->slug }}" {{ $post->slug == "#" ? 'disabled' : '' }} {{ (isset($data) && $post->slug == $data->url) ? 'selected' : '' }}>{{ $post->title }}</option>
               @elseif ($post->type == "article")
-                <option value="{{ config('path.post', 'post') . '/' . $post->slug }}" {{ $post->slug == "#" ? 'disabled' : '' }} {{ (isset($data) && config('path.post', 'post') . '/' . $post->slug == $data->url) ? 'selected' : '' }}>{{ $post->title }}</option>
+                <option value="{{ config('path.post') . '/' . $post->slug }}" {{ $post->slug == "#" ? 'disabled' : '' }} {{ (isset($data) && config('path.post') . '/' . $post->slug == $data->url) ? 'selected' : '' }}>{{ $post->title }}</option>
               @endif
             @endforeach
           </select>
-          <input type="text" class="form-control" id="url_external" name="url_external" value="{{ isset($data) ? (($data->url=="#") ? '' : $data->url) : '' }}" placeholder="http://example.com" {!! (isset($data) && bool($data->url_external) ) ? 'style="margin-top:5px;" ' : 'style="margin-top:5px;display:none;" disabled ' !!}>
+          <input type="text" class="form-control" id="url_external" name="url_external" value="{{ isset($data) ? ($data->url == "#" ? '' : $data->url) : '' }}" placeholder="http://example.com" {!! (isset($data) && bool($data->url_external) ) ? 'style="margin-top:5px;" ' : 'style="margin-top:5px;display:none;" disabled ' !!}>
         </div>
       </div>
       <div class="form-group">
@@ -154,6 +154,11 @@
 
 @push('styles')
   {!! _admin_css(adminPath() . '/themes/admin/AdminSC/plugins/select2/4.0.0/css/select2.min.css') !!}
+  <style>
+    .panel>.panel-heading>.btn {
+      display: none;
+    }
+  </style>
 @endpush
 
 @push('scripts')
