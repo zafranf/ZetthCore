@@ -91,7 +91,7 @@
             </div>
           </div>
           <div class="form-group">
-            <label for="phone" class="col-md-4 control-label">Telepon</label>
+            <label for="phone" class="col-md-4 control-label">No. Telepon</label>
             <div class="col-md-8">
               <input type="text" class="form-control" id="phone" name="phone" value="{{ app('site')->phone ?? old('phone') }}" placeholder="Nomor telepon.." maxlength="16">
             </div>
