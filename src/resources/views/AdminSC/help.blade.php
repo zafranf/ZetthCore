@@ -63,6 +63,7 @@
         border-left: 3px solid coral;
     }
     /* hide inactive nested list */
+    /* https://codepen.io/mhadaily/pen/dpdvwp */
     #myScrollspy .nav ul.nav {
         display: none;           
     }
