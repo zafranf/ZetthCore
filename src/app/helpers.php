@@ -613,7 +613,7 @@ if (!function_exists('generateDate')) {
             $format = ($lang == 'id') ? 'dddd, Do MMMM YYYY' : 'dddd, MMMM Do YYYY';
         }
 
-        return carbon(($date ?? date("Y-m-d")))->isoFormat($format);
+        return carbon(($date ?? null))->isoFormat($format);
     }
 }
 
