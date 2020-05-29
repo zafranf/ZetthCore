@@ -65,7 +65,7 @@
           "render": function (data, type, row, meta) {
             let actions = '';
             let url = ADMIN_URL + "/setting/menu-groups/" + data;
-            let del = "_delete('" + url + "')";
+            let del = "_delete('" + url + "', 'menu grup \\'"+ row.name +"\\'')";
             {!! getAccessButtons() !!}
             $('[data-toggle="tooltip"]').tooltip();
 
