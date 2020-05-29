@@ -110,7 +110,7 @@
               <thead>
                 <tr>
                   <td><b>Komentar</b></td>
-                  <td width="120"><b>Dari</b></td>
+                  <td width="120"><b>Pengirim</b></td>
                 </tr>
               </thead>
               <tbody id="recent-comment">
