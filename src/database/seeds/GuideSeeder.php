@@ -15,25 +15,10 @@ class GuideSeeder extends Seeder
     public function run()
     {
         $mainOrder = 1;
+
+        $dashOrder = 1;
         /* Dasbor */
         $content = '<p>Ini adalah halaman utama panel admin. Fungsi halaman ini adalah untuk memonitor lalu lintas situs Anda. Anda dapat mengakses beberapa halaman dengan cepat melalui tombol pintas yang tersedia, melihat grafik kunjungan, melihat artikel populer dan juga komentar terbaru dari pengunjung Anda.</p>';
-        $content .= '<h3 id="dasbor-aturtanggal">1) Atur Tanggal</h3>';
-        $content .= '<p>Posisi tombol ini berada di sebelah kanan atas tepat di bawah nama pengguna. Tombol atur tanggal ini dapat digunakan untuk melihat grafik, artikel favorit serta komentar terbaru berdasarkan tanggal. Anda dapat mengaturnya menjadi <code>Hari ini</code> untuk melihat grafik hari ini, <code>Kemarin</code> untuk melihat grafik kemarin, <code>Minggu</code> untuk melihat grafik minggu ini (bukan 7 hari sebelumnya), <code>Bulan ini</code> untuk melihat grafik bulan ini dan <code>Semua</code> untuk melihat grafik situs Anda dari pertama kali pasang atau Anda dapat menyesuaikan tanggal sesuai dengan keinginan Anda melalui pilihan <code>Atur tanggal</code>.</p>';
-        $content .= '<p>Untuk menyegarkan data, Anda dapat menekan tombol <a class="btn btn-default btn-xs">Segarkan</a> yang posisinya tepat berada di sebelah tombol tanggal.</p>';
-        $content .= '<h3 id="dasbor-tombolpintas">2) Tombol Pintas</h3>';
-        $content .= '<p>Tombol ini berfungsi sebagai akses pintas langsung ke halaman yang dituju.</p>';
-        $content .= '<ul>';
-        $content .= '<li><a class="btn btn-default btn-xs"><i class="fa fa-edit"></i> Buat Artikel</a>, tombol pintas untuk langsung masuk ke halaman tambah artikel.</li>';
-        $content .= '<li><a class="btn btn-default btn-xs"><i class="fa fa-file-o"></i> Buat Halaman</a>, tombol pintas untuk langsung masuk ke halaman tambah halaman (konten statis).</li>';
-        $content .= '<li><a class="btn btn-default btn-xs"><i class="fa fa-comment-o"></i> Komentar</a>, tombol pintas untuk langsung masuk ke halaman daftar komentar. Terdapat angka sebagai penunjuk komentar yang belum dibaca.</li>';
-        $content .= '<li><a class="btn btn-default btn-xs"><i class="fa fa-envelope-o"></i> Pesan Masuk</a>, tombol pintas untuk langsung masuk ke halaman daftar pesan. Terdapat angka sebagai petunjuk pesan yang belum dibaca.</li>';
-        $content .= '</ul>';
-        $content .= '<h3 id="dasbor-grafik">3) Grafik Pengunjung</h3>';
-        $content .= '<p>Grafik yang memperlihatkan seberapa banyak pengunjung Anda. Garis yang berwarna <span style="background:coral;color:white;padding:0 3px;">jingga</span> menandakan data kunjungan, sedangkan garis yang berwarna <span style="background:grey;color:white;padding:0 3px;">abu-abu</span> adalah menandakan data pengunjung yang unik (berdasarkan alamat IP Pengunjung). Arahkan kursor Anda ke titik/waktu yang ada di grafik untuk melihat detail kunjungan.</p>';
-        $content .= '<h3 id="dasbor-artikelpopuler">4) Artikel Populer</h3>';
-        $content .= '<p>Kolom ini menampilkan artikel terpopuler berdasarkan tanggal yang dipilih. Data yang tampil di kolom ini adalah <code>Judul Artikel</code>, <code>Kategori</code> dan <code>Kunjungan</code>.';
-        $content .= '<h3 id="dasbor-komentarterbaru">5) Komentar Terbaru</h3>';
-        $content .= '<p>Pada kolom ini Anda akan diperlihatkan dengan komentar terbaru. Data yang tampil di kolom ini adalah <code>Isi Komentar</code>, <code>Judul Artikel</code>, <code>Waktu</code> dan <code>Pengirim</code>.';
         $dash = Guide::create([
             'cover' => '/themes/admin/AdminSC/images/help/dasbor.png',
             'title' => 'Dasbor',
@@ -41,6 +26,73 @@ class GuideSeeder extends Seeder
             'content' => $content,
             'roles' => 'all',
             'order' => $mainOrder++,
+            'status' => 'active',
+        ]);
+
+        /* Dasbor - Atur Tanggal */
+        $content = '<p>Posisi tombol ini berada di sebelah kanan atas tepat di bawah nama pengguna. Tombol atur tanggal ini dapat digunakan untuk melihat grafik, artikel favorit serta komentar terbaru berdasarkan tanggal. Anda dapat mengaturnya menjadi <code>Hari ini</code> untuk melihat grafik hari ini di mulai dari pukul 00:00 hingga saat diakses, <code>Kemarin</code> untuk melihat grafik kemarin, <code>Minggu ini</code> untuk melihat grafik minggu ini (bukan 7 hari sebelumnya) dimulai dari Senin - Minggu pada minggu ini, <code>Bulan ini</code> untuk melihat grafik bulan ini mulai dari tanggal 1 sampai saat diakses dan <code>Semua</code> untuk melihat grafik situs Anda dari pertama kali pasang atau Anda dapat menyesuaikan tanggal sesuai dengan keinginan Anda melalui pilihan <code>Atur tanggal</code>.</p>';
+        $content .= '<p>Untuk menyegarkan data, Anda dapat menekan tombol <a class="btn btn-default btn-xs"><span class="fa fa-refresh"></span></a> yang posisinya tepat berada di sebelah tombol tanggal.</p>';
+        $dashTanggal = Guide::create([
+            'title' => 'Atur Tanggal',
+            'slug' => 'dasbor-aturtanggal',
+            'content' => $content,
+            'roles' => 'all',
+            'order' => $dashOrder++,
+            'parent_id' => $dash->id,
+            'status' => 'active',
+        ]);
+
+        /* Dasbor - Tombol Pintas */
+        $content = '<p>Tombol ini berfungsi sebagai akses langsung ke halaman yang dituju.</p>';
+        $content .= '<ul>';
+        $content .= '<li><a class="btn btn-default btn-xs"><i class="fa fa-edit"></i> Buat Artikel</a>, tombol pintas untuk langsung masuk ke halaman tambah artikel.</li>';
+        $content .= '<li><a class="btn btn-default btn-xs"><i class="fa fa-file-o"></i> Buat Halaman</a>, tombol pintas untuk langsung masuk ke halaman tambah halaman (konten statis).</li>';
+        $content .= '<li><a class="btn btn-default btn-xs"><i class="fa fa-comment-o"></i> Komentar</a>, tombol pintas untuk langsung masuk ke halaman daftar komentar. Terdapat angka sebagai penunjuk komentar yang belum dibaca.</li>';
+        $content .= '<li><a class="btn btn-default btn-xs"><i class="fa fa-envelope-o"></i> Pesan Masuk</a>, tombol pintas untuk langsung masuk ke halaman daftar pesan. Terdapat angka sebagai petunjuk pesan yang belum dibaca.</li>';
+        $content .= '</ul>';
+        $dashTanggal = Guide::create([
+            'title' => 'Tombol Pintas',
+            'slug' => 'dasbor-tombolpintas',
+            'content' => $content,
+            'roles' => 'all',
+            'order' => $dashOrder++,
+            'parent_id' => $dash->id,
+            'status' => 'active',
+        ]);
+
+        /* Dasbor - Kunjungan */
+        $content = '<p>Grafik yang memperlihatkan seberapa banyak pengunjung Anda dalam rentang waktu yang terdapat pada yang telah ditentukan sebelumnya. Garis yang berwarna <span style="background:coral;color:white;padding:0 3px;">jingga</span> menandakan data banyaknya kunjungan, sedangkan garis yang berwarna <span style="background:grey;color:white;padding:0 3px;">abu-abu</span> adalah menandakan data banyaknya pengunjung yang unik (berdasarkan alamat IP Pengunjung). Arahkan kursor Anda ke titik/waktu yang ada di grafik untuk melihat detail kunjungan.</p>';
+        $dashTanggal = Guide::create([
+            'title' => 'Kunjungan',
+            'slug' => 'dasbor-kunjungan',
+            'content' => $content,
+            'roles' => 'all',
+            'order' => $dashOrder++,
+            'parent_id' => $dash->id,
+            'status' => 'active',
+        ]);
+
+        /* Dasbor - Artikel Populer */
+        $content = '<p>Kolom ini menampilkan artikel terpopuler berdasarkan tanggal yang dipilih. Data yang tampil di kolom ini adalah <code>Judul Artikel</code>, <code>Kategori</code> dan <code>Kunjungan</code>.';
+        $dashTanggal = Guide::create([
+            'title' => 'Artikel Populer',
+            'slug' => 'dasbor-artikelpopuler',
+            'content' => $content,
+            'roles' => 'all',
+            'order' => $dashOrder++,
+            'parent_id' => $dash->id,
+            'status' => 'active',
+        ]);
+
+        /* Dasbor - Komentar Terbaru */
+        $content = '<p>Pada kolom ini Anda akan diperlihatkan dengan komentar terbaru. Data yang tampil di kolom ini adalah <code>Isi Komentar</code>, <code>Judul Artikel</code>, <code>Waktu</code> dan <code>Pengirim</code>.';
+        $dashTanggal = Guide::create([
+            'title' => 'Komentar Terbaru',
+            'slug' => 'dasbor-komentarterbaru',
+            'content' => $content,
+            'roles' => 'all',
+            'order' => $dashOrder++,
+            'parent_id' => $dash->id,
             'status' => 'active',
         ]);
 
