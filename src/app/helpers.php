@@ -617,6 +617,62 @@ if (!function_exists('generateDate')) {
     }
 }
 
+if (!function_exists('generateHelpMenu')) {
+    function generateHelpMenu($data, $level = 0)
+    {
+        foreach ($data as $key => $val) {
+            $act = '';
+            $pad = ($level + 1) * 10;
+
+            $ico = 'circle';
+            if ($level == 1) {
+                $ico .= '-o';
+            } else if ($level == 2) {
+                $ico .= '-thin';
+            }
+
+            /* get user roles */
+            $userRoles = app('user')->roles->map(function ($arr) {
+                return $arr->name;
+            })->toArray();
+
+            /* print menu */
+            if ($val->roles_array[0] == 'all' || !empty(array_intersect($userRoles, $val->roles_array))) {
+                echo '<li class="' . $act . '"><a href="#' . $val->slug . '" style="padding-left: ' . $pad . 'px"><i class="fa fa-' . $ico . '"></i> ' . $val->title . '</a>';
+                if (isset($val->subguide)) {
+                    echo '<ul class="nav">';
+                    generateHelpMenu($val->subguide, $level + 1);
+                    echo '</ul>';
+                }
+                echo "</li>";
+            }
+        }
+    }
+}
+
+if (!function_exists('generateHelpContent')) {
+    function generateHelpContent($data, $level = 0)
+    {
+        foreach ($data as $key => $val) {
+            /* get user roles */
+            $userRoles = app('user')->roles->map(function ($arr) {
+                return $arr->name;
+            })->toArray();
+
+            /* print content */
+            if ($val->roles_array[0] == 'all' || !empty(array_intersect($userRoles, $val->roles_array))) {
+                echo '<div id="' . $val->slug . '" class="section">';
+                echo '<h1>' . $val->title . '</h1>';
+                echo $val->content;
+                echo '</div>';
+                if (isset($val->subguide)) {
+                    generateHelpContent($val->subguide, $level + 1);
+                }
+            }
+        }
+    }
+}
+
 if (!function_exists('_url')) {
     function _url($url = null, $secure = false)
     {

@@ -42,7 +42,7 @@ Route::middleware('auth')->group(function () use ($prefix) {
     }
 
     /* help */
-    Route::get('/help', $prefix . '\AccountController@index')->name('help');
+    Route::get('/help', $prefix . '\HelpController@index')->name('help');
 
     /* file manager */
     Route::any('/larafile/{path}', $prefix . '\AdminController@getLarafile')->where('path', '.*')->name('larafile');
