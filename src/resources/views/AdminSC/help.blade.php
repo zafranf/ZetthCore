@@ -24,6 +24,21 @@
 @push('styles')
   {!! _admin_css(adminPath() . '/themes/admin/AdminSC/plugins/bootstrap/daterangepicker/2.1.24/daterangepicker.css') !!}
   <style>
+    h2, .h2 {
+      font-size: 32px;
+    }
+    h3, .h3 {
+      font-size: 28px;
+    }
+    h4, .h4 {
+      font-size: 24px;
+    }
+    h5, .h5 {
+      font-size: 20px;
+    }
+    h6, .h6 {
+      font-size: 16px;
+    }
     #content-div {
       display:none;
     }
