@@ -12,7 +12,7 @@
       </div>
       <div class="col-sm-9" id="help-content">
         <div class="col-sm-10">
-          <p>Di sini anda akan dijelaskan bagaimana cara mengoperasikan website ini melalui panel admin. Penjelasan pada setiap halaman akan dijabarkan secara mendetail untuk setiap fitur dan bagian-bagian yang ada di halaman tersebut sehingga kami harap anda dapat mengoperasikan website ini secara mandiri.</p>
+          <p>Di sini anda akan dijelaskan bagaimana cara mengelola situs ini melalui panel admin. Penjelasan pada setiap halaman akan dijabarkan secara mendetail untuk setiap fitur dan bagian-bagian yang ada di halaman tersebut sehingga diharapkan Anda dapat mengelola situs ini secara mandiri.</p>
 
           {!! generateHelpContent($data) !!}
         </div>

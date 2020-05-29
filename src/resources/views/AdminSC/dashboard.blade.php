@@ -8,7 +8,7 @@
         <div class="btn btn-default btn-quick">
           <a href="{{ _url(adminPath() . '/content/posts/create') }}">
             <div class="row">
-              <div class="col-sm-12" title="Create a new Post">
+              <div class="col-sm-12" title="Buat artikel baru">
                 <i class="fa fa-edit"></i>
                 <div class="text">
                   Buat Artikel
@@ -22,7 +22,7 @@
         <div class="btn btn-default btn-quick">
           <a href="{{ _url(adminPath() . '/content/pages/create') }}">
             <div class="row">
-              <div class="col-sm-12" title="Create a new Page">
+              <div class="col-sm-12" title="Buat halaman baru">
                 <i class="fa fa-file-o"></i>
                 <div class="text">
                   Buat Halaman
@@ -36,7 +36,7 @@
         <div class="btn btn-default btn-quick">
           <a href="{{ _url(adminPath() . '/report/comments') }}">
             <div class="row">
-              <div class="col-sm-12" title="Check for new comments">
+              <div class="col-sm-12" title="Lihat komentar terbaru">
                 <i class="fa fa-comment-o"></i>
                 <div class="text">
                   Komentar
@@ -51,7 +51,7 @@
         <div class="btn btn-default btn-quick">
           <a href="{{ _url(adminPath() . '/report/inbox') }}">
             <div class="row">
-              <div class="col-sm-12" title="Get inbox">
+              <div class="col-sm-12" title="Lihat pesan masuk">
                 <i class="fa fa-envelope-o"></i>
                 <div class="text">
                   Pesan Masuk
@@ -220,7 +220,7 @@
               '<span></span> '+
               '<b class="caret"></b>'+
           '</div>'+
-              '<div id="btn-refresh" title="Refresh" class="pull-right" style="background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #ccc; margin-top: -40px; margin-right: 15px;">'+
+              '<div id="btn-refresh" title="Segarkan" class="pull-right" style="background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #ccc; margin-top: -40px; margin-right: 15px;">'+
                   '<i class="fa fa-refresh"></i>'+
               '</div>&nbsp;';
     $('#page-header').append(html);
