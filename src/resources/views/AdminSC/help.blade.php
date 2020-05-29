@@ -45,6 +45,10 @@
     #help-content {
         font-size: 16px;
     }
+    #help-content .section img {
+      border: 1px solid #e5e5e5;
+      border-radius: 5px;
+    }
     #myScrollspy .nav>li.active>a, #myScrollspy .nav>li.active>a:focus, #myScrollspy .nav>li.active>a:hover {
         border-left: 3px solid coral;
     }
@@ -69,9 +73,8 @@
 @endpush
 
 @push('scripts')
-
-<script>
-  $(function(){
+  <script>
+    $(function(){
       $('body').scrollspy({ 
         target: "#myScrollspy",
         offset: 80
