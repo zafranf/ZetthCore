@@ -73,7 +73,7 @@ class GuideSeeder extends Seeder
         ]);
 
         /* Dasbor - Artikel Populer */
-        $content = '<p>Kolom ini menampilkan artikel terpopuler berdasarkan tanggal yang dipilih. Data yang tampil di kolom ini adalah <code>Judul Artikel</code>, <code>Kategori</code> dan <code>Kunjungan</code>.';
+        $content = '<p>Kolom ini menampilkan artikel terpopuler berdasarkan tanggal yang dipilih. Data yang tampil di kolom ini adalah <code>Judul Artikel</code>, <code>Kategori</code> dan <code>Jumlah Kunjungan</code>.';
         $dashTanggal = Guide::create([
             'title' => 'Artikel Populer',
             'slug' => 'dasbor-artikelpopuler',
