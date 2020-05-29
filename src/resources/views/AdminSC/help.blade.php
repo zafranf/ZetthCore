@@ -5,7 +5,7 @@
     <div class="col-sm-10 col-sm-offset-2">
       <div class="col-sm-3 no-padding">
         <nav id="myScrollspy">
-          <ul class="nav">
+          <ul id="affixs" class="nav">
             {!! generateHelpMenu($data) !!}
           </ul>
         </nav>
@@ -62,10 +62,18 @@
     #myScrollspy .nav>li>a:focus, #myScrollspy .nav>li>a:hover {
         border-left: 3px solid coral;
     }
+    /* hide inactive nested list */
+    #myScrollspy .nav ul.nav {
+        display: none;           
+    }
+    /* show active nested list */
+    #myScrollspy .nav>.active>ul.nav {
+        display: block;           
+    }
     .section {
         min-height: 100px;
     }
-    .affix {
+    #affixs {
         top: 80px;
         min-width: 292.5px;
     }
@@ -74,14 +82,16 @@
 
 @push('scripts')
   <script>
-    $(function(){
-      $('body').scrollspy({ 
+    $(document).ready(function() {
+      $('body').scrollspy({
         target: "#myScrollspy",
         offset: 80
       });
-
-      $('window').on("load", function() { 
-        $('body').scrollspy("refresh") 
+      
+      $("#affixs").affix({
+          offset: {
+            top: 60
+          }
       });
 
       $('#myScrollspy ul li a').on('click', function() {
@@ -91,23 +101,6 @@
         }, 0);
 
         return false;
-      });
-
-      var stickyNavTop = $('#myScrollspy').offset().top; 
-      var stickyNav = function(){
-        var scrollTop = $(window).scrollTop();         
-        if (scrollTop > stickyNavTop) { 
-          $('#myScrollspy').addClass('affix');
-          $('#myScrollspy .nav .nav').hide();
-          /*$('#myScrollspy li.active').closest('ul').show();*/
-          $('#myScrollspy li.active').find('ul').show();
-        } else {
-          $('#myScrollspy').removeClass('affix');
-        }
-      };
-      stickyNav();
-      $(window).scroll(function() {
-        stickyNav();
       });
     });
   </script>
