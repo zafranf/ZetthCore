@@ -172,7 +172,6 @@ class GuideSeeder extends Seeder
         $content .= '<li><b>Aktif</b>, centang untuk mengaktifkan grup menu.</li>';
         $content .= '</ul>';
         $setMenuAddInfo = Guide::create([
-            // 'cover' => '/themes/admin/AdminSC/images/help/pengaturan-grupmenu-tambah.png',
             'title' => 'Informasi Utama',
             'slug' => 'pengaturan-grupmenu-tambah-infoutama',
             'content' => $content,
@@ -183,7 +182,7 @@ class GuideSeeder extends Seeder
         ]);
 
         /* Pengaturan - (Grup) Menu - Edit */
-        $content = 'Halaman untuk mengedit data grup menu.';
+        $content = 'Halaman untuk mengedit data grup menu. Anda juga dapat menghapusnya di sini dengan menekan tombol <a class="btn btn-danger btn-xs">Hapus</a>.';
         $setMenuEdit = Guide::create([
             'cover' => '/themes/admin/AdminSC/images/help/pengaturan-grupmenu-edit.png',
             'title' => 'Edit',
@@ -203,7 +202,6 @@ class GuideSeeder extends Seeder
         $content .= '<li><b>Aktif</b>, centang untuk mengaktifkan grup menu.</li>';
         $content .= '</ul>';
         $setMenuEditInfo = Guide::create([
-            // 'cover' => '/themes/admin/AdminSC/images/help/pengaturan-grupmenu-tambah.png',
             'title' => 'Informasi Utama',
             'slug' => 'pengaturan-grupmenu-edit-infoutama',
             'content' => $content,
@@ -214,15 +212,62 @@ class GuideSeeder extends Seeder
         ]);
 
         /* Pengaturan - (Grup) Menu - Edit - Daftar Menu */
-        $content = '<p>Rincian daftar menu dari grup menu. Anda dapat menambahkannya dengan menekan tombol <a class="btn btn-default btn-xs"><span class="fa fa-plus"></span></a> dan juga mengubah urutan posisi dengan menekan baris menunya (kursor berbentuk <span class="fa fa-arrows" style="font-size:small;"></span>) lalu geser sesuai posisi yang diinginkan.</p>';
-        $setMenuEditInfo = Guide::create([
-            // 'cover' => '/themes/admin/AdminSC/images/help/pengaturan-grupmenu-tambah.png',
+        $content = '<p>Rincian daftar menu dari grup menu. Tombol <a class="btn btn-default btn-xs"><span class="fa fa-edit"><span></a> <code>Edit</code> untuk mengedit menu dan tombol <a class="btn btn-default btn-xs"><span class="fa fa-trash"><span></a> <code>Hapus</code> untuk menghapus menu. Anda dapat menambahkannya dengan menekan tombol <a class="btn btn-default btn-xs"><span class="fa fa-plus"></span></a> dan juga mengubah urutan posisi dengan menekan baris menunya (kursor berbentuk <span class="fa fa-arrows" style="font-size:small;"></span>) lalu geser sesuai posisi yang diinginkan.</p>';
+        $setMenuEditDaftar = Guide::create([
             'title' => 'Daftar Menu',
             'slug' => 'pengaturan-grupmenu-edit-daftarmenu',
             'content' => $content,
             'roles' => 'super,admin',
             'order' => $setMenuEditOrder++,
             'parent_id' => $setMenuEdit->id,
+            'status' => 'active',
+        ]);
+
+        $setMenuEditMenuOrder = 1;
+        /* Pengaturan - (Grup) Menu - Edit - Tambah & Edit */
+        $content = '<p>Halaman untuk menambahkan atau mengedit data menu dalam grup. Anda juga dapat menghapus data dari halaman ini jika dalam mode edit.</p>';
+        $content .= '<ul>';
+        $content .= '<li><b>Nama</b>, nama menu yang akan tampil di situs.</li>';
+        $content .= '<li><b>Deskripsi</b>, berikan sedikit penjelasan mengenai menu tersebut.</li>';
+        $content .= '<li><b>Tautan</b>, sebagai penghubung menu tersebut. Terdapat pilihan dari daftar <code>Halaman</code> dan <code>Artikel</code>. Anda juga dapat menggunakan tautan luar dengan memilih <code>Tautan Luar</code>, pastikan selalu menggunakan <code>http://</code> atau <code>http://</code> di awal tautan.</li>';
+        $content .= '<li><b>Ikon</b>, Anda dapat menggunakan ikon dari <a href="https://fontawesome.com/icons" target="_blank">sini</a>.</li>';
+        $content .= '<li><b>Target</b>, untuk membuka tautan pada jendela yang sedang aktif atau buka jendela baru.</li>';
+        $content .= '<li><b>Aktif</b>, centang untuk mengaktifkan menu.</li>';
+        $content .= '</ul>';
+        $setMenuEditMenuAdd = Guide::create([
+            'cover' => '/themes/admin/AdminSC/images/help/pengaturan-grupmenu-edit-tambah.png',
+            'title' => 'Tambah & Edit',
+            'slug' => 'pengaturan-grupmenu-edit-daftarmenu-tambahedit',
+            'content' => $content,
+            'roles' => 'super,admin',
+            'order' => $setMenuEditMenuOrder++,
+            'parent_id' => $setMenuEditDaftar->id,
+            'status' => 'active',
+        ]);
+
+        /* Pengaturan - (Grup) Menu - Edit - Hapus */
+        $content = '<p>Saat Anda menekan tombol hapus pada salah satu daftar menu, akan muncul konfirmasi sebelum data dihapus untuk mencegah terjadinya kesalahan hapus data.</p>';
+        $setMenuEditMenuDel = Guide::create([
+            'cover' => '/themes/admin/AdminSC/images/help/pengaturan-grupmenu-edit-hapus.png',
+            'title' => 'Hapus',
+            'slug' => 'pengaturan-grupmenu-edit-daftarmenu-hapus',
+            'content' => $content,
+            'roles' => 'super,admin',
+            'order' => $setMenuEditMenuOrder++,
+            'parent_id' => $setMenuEditDaftar->id,
+            'status' => 'active',
+        ]);
+
+        /* Pengaturan - (Grup) Menu - Hapus */
+        $content = '<p>Saat Anda menekan tombol hapus pada salah satu daftar grup menu, akan muncul konfirmasi sebelum data dihapus untuk mencegah terjadinya kesalahan hapus data.</p>';
+        $setMenuDel = Guide::create([
+            'cover' => '/themes/admin/AdminSC/images/help/pengaturan-grupmenu-hapus.png',
+            'title' => 'Hapus',
+            'slug' => 'pengaturan-grupmenu-hapus',
+            'content' => $content,
+            'roles' => 'super,admin',
+            'order' => $setMenuOrder++,
+            'parent_id' => $setMenu->id,
             'status' => 'active',
         ]);
 
