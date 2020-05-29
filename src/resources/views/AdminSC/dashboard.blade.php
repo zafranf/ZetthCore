@@ -215,12 +215,12 @@
     var label = (typeof label != "undefined") ? label : 'Hari ini';
 
     /* generate date range box */
-    var html = '<div id="z-date-range" class="pull-right" style="background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #ccc; margin-top: -40px; margin-right: 45px;">'+
+    var html = '<div id="z-date-range" class="pull-right" style="background:#fff;cursor:pointer; padding:5px 10px;border:1px solid coral;margin-top:-40px;margin-right:45px;border-top-left-radius:5px;border-bottom-left-radius:5px;color:coral;">'+
               '<i class="fa fa-calendar"></i>&nbsp;'+
               '<span></span> '+
               '<b class="caret"></b>'+
           '</div>'+
-              '<div id="btn-refresh" title="Segarkan" class="pull-right" style="background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #ccc; margin-top: -40px; margin-right: 15px;">'+
+              '<div id="btn-refresh" title="Segarkan" class="pull-right" style="background:#fff;cursor:pointer;padding:5px 10px;border:1px solid coral;margin-top:-40px;margin-right:15px;border-top-right-radius:5px;border-bottom-right-radius:5px;color:coral;">'+
                   '<i class="fa fa-refresh"></i>'+
               '</div>&nbsp;';
     $('#page-header').append(html);
@@ -434,12 +434,9 @@
       ranges: {
         'Hari ini': [start, end],
         'Kemarin': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
-        /*'Last 7 Days': [moment().subtract(6, 'days'), moment()],
-        'Last 30 Days': [moment().subtract(29, 'days'), moment()],*/
         'Minggu ini': [moment().startOf('week'), moment().endOf('week')],
         'Bulan ini': [moment().startOf('month'), moment().endOf('month')],
         'Semua': [min, max],
-        /* 'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')] */
       },
       locale: {
         firstDay: 1,
