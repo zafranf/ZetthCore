@@ -96,7 +96,7 @@
               <input type="text" class="form-control" id="phone" name="phone" value="{{ app('site')->phone ?? old('phone') }}" placeholder="Nomor telepon.." maxlength="16">
             </div>
           </div>
-          <div class="form-group" {!! (Auth::user()->id != 1)?'style="display:none;"':'' !!}>
+          <div class="form-group" {!! (Auth::user()->id != 1) ? 'style="display:none;"' : '' !!}>
             <label for="perpage" class="col-md-4 control-label">Data Perhalaman</label>
             <div class="col-md-8">
               <input type="number" class="form-control" id="perpage" name="perpage" value="{{ app('site')->perpage ?? old('perpage') }}" placeholder="Jumlah data perhalaman.." min="3" max="100">
@@ -218,7 +218,7 @@
               <div id="div-socmed"></div>
             </div>
           </div>
-          <h4>Pengaturan SEO</h4>
+          <h4>SEO</h4>
           <hr>
           <div class="form-group">
             <label for="keywords" class="col-md-4 control-label">
