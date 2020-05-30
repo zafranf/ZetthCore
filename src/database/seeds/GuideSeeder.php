@@ -136,7 +136,7 @@ class GuideSeeder extends Seeder
         $content .= '</ul>';
         $setSiteInfo = Guide::create([
             'title' => 'Informasi Utama',
-            'slug' => 'pengaturan-infoutama',
+            'slug' => 'pengaturan-situs-infoutama',
             'content' => $content,
             'roles' => 'super,admin',
             'order' => $setSiteOrder++,
@@ -148,7 +148,7 @@ class GuideSeeder extends Seeder
         $content = '<p>Sebagai daftar akun media sosial Anda atau perusahaan Anda. Klik tombol <a class="btn btn-default btn-xs"><span class="fa fa-plus"></span></a> untuk menambahkan akun media sosial lainnya.</p>';
         $setSiteMedsos = Guide::create([
             'title' => 'Media Sosial',
-            'slug' => 'pengaturan-mediasosial',
+            'slug' => 'pengaturan-situs-mediasosial',
             'content' => $content,
             'roles' => 'super,admin',
             'order' => $setSiteOrder++,
@@ -164,7 +164,7 @@ class GuideSeeder extends Seeder
         $content .= '</ul>';
         $setSiteMedsos = Guide::create([
             'title' => 'SEO (Search Engine Optimization)',
-            'slug' => 'pengaturan-seo',
+            'slug' => 'pengaturan-situs-seo',
             'content' => $content,
             'roles' => 'super,admin',
             'order' => $setSiteOrder++,
@@ -179,7 +179,7 @@ class GuideSeeder extends Seeder
         $content .= '</ul>';
         $setSiteMedsos = Guide::create([
             'title' => 'Lokasi',
-            'slug' => 'pengaturan-lokasi',
+            'slug' => 'pengaturan-situs-lokasi',
             'content' => $content,
             'roles' => 'super,admin',
             'order' => $setSiteOrder++,
@@ -322,7 +322,7 @@ class GuideSeeder extends Seeder
         ]);
 
         /* Pengaturan - Peran & Akses */
-        $content = '<p>Daftar peran untuk pengelompokan akses pengguna. Kolom <code>Peran</code> sebagai nama peram, kolom <code>Deskripsi</code> merupakan penjelasan singkat mengenai peran tersebut, kolom <code>Status</code> memperlihatkan apakah peran aktif atau tidak, serta kolom <code>Akses</code> yang merupakan tombol untuk mengatur peran dan akses tersebut. Tombol <a class="btn btn-default btn-xs"><span class="fa fa-edit"><span></a> <code>Edit</code> untuk mengedit peran dan tombol <a class="btn btn-default btn-xs"><span class="fa fa-trash"><span></a> <code>Hapus</code> untuk menghapus peran. Anda dapat menambahkan peran dengan menekan tombol <a class="btn btn-default btn-sm"><span class="fa fa-plus"></span> TAMBAH</a>.</p>';
+        $content = '<p>Daftar peran untuk pengelompokan akses pengguna. Kolom <code>Peran</code> sebagai nama peram, kolom <code>Deskripsi</code> merupakan penjelasan singkat mengenai peran tersebut, kolom <code>Status</code> memperlihatkan apakah peran aktif atau tidak, serta kolom <code>Akses</code> yang merupakan tombol untuk mengatur peran dan akses tersebut. Tombol <a class="btn btn-default btn-xs"><span class="fa fa-edit"><span></a> <code>Edit</code> untuk mengedit peran dan tombol <a class="btn btn-default btn-xs"><span class="fa fa-trash"><span></a> <code>Hapus</code> untuk menghapus peran. Anda dapat menambahkan peran dengan menekan tombol <a class="btn btn-default btn-xs"><span class="fa fa-plus"></span> TAMBAH</a>.</p>';
         $setRole = Guide::create([
             'cover' => '/themes/admin/AdminSC/images/guide/pengaturan-peran.png',
             'title' => 'Peran dan Akses',
@@ -400,34 +400,91 @@ class GuideSeeder extends Seeder
         ]);
 
         /* Data - Pengguna*/
-        $content = '<p>Daftar user situs baik pengurus maupun member. Rinciannya adalah kolom <code>Photo</code> untuk menampilkan foto user, <code>Username</code> menampilkan nama login user, kolom <code>Fullname</code> merupakan nama lengkap user, kolom <code>Email</code> merupakan alamat email user untuk kepentingan komunikasi melalui email, kolom <code>Status</code> memperlihatkan apakah user aktif atau tidak, serta kolom <code>Action</code> yang merupakan tombol untuk mengatur user-user tersebut. Tombol <a class="btn btn-default btn-xs"><span class="fa fa-edit"><span></a> <code>Edit</code> untuk mengedit user dan tombol <a class="btn btn-default btn-xs"><span class="fa fa-trash"><span></a> <code>Delete</code> untuk menghapus user. Anda dapat menambahkannya dengan menekan tombol <a class="btn btn-default btn-sm">+ ADD</a>.</p>';
-        $content .= '<h3 id="user-add-edit">Add & Edit</h3>';
-        $content .= '<p><center><a href="/themes/admin/AdminSC/images/guide/005 User - 02 Overview Edit.png" target="_blank"><img src="/themes/admin/AdminSC/images/guide/005 User - 02 Overview Edit.png" width="100%"></a></center></p>';
-        $content .= '<h4 id="user-main-info">Main Info</h4>';
-        $content .= '<ul>';
-        $content .= '<li><b>Username</b>, nama yang akan digunakan untuk login. Maksimal 20 karakter dan tidak dapat diubah apabila data sudah disimpan.</li>';
-        $content .= '<li><b>Email</b>, alamat email user untuk kepentingan komunikasi melalui email. Input dengan alamat email yang valid.</li>';
-        $content .= '<li><b>Password</b>, digunakan untuk validasi login. Minimal 6 karakter.</li>';
-        $content .= '<li><b>Retype Password</b>, untuk konfirmasi password login.</li>';
-        $content .= '<li><b>Fullname</b>, nama lengkap yang akan tampil di situs. Maksimal 50 karakter.</li>';
-        $content .= '<li><b>Biography</b>, sedikit ulasan tentang user.</li>';
-        $content .= '<li><b>Photo</b>, ukuran foto maksimal lebar 500px dan tinggi 500px.</li>';
-        $content .= '<li><b>Group</b>, tentukan grup user untuk mengakses situs.</li>';
-        $content .= '<li><b>Active</b>, centang untuk mengaktifkan user.</li>';
-        $content .= '</ul>';
-        $content .= '<h4 id="user-social-media">Social Media</h4>';
-        $content .= 'Sebagai daftar akun social media user. Klik tombol <a class="btn btn-default btn-xs">+ Add</a> untuk menambahkan akun social media lainnya.';
+        $content = '<p>Daftar pengguna situs baik pengelola maupun anggota. Kolom <code>Nama Akses</code> menampilkan nama akses pengguna, kolom <code>Nama Lengkap</code> merupakan nama lengkap pengguna, kolom <code>Status</code> memperlihatkan apakah pengguna aktif atau tidak, serta kolom <code>Akses</code> yang merupakan tombol untuk mengatur data pengguna tersebut. Tombol <a class="btn btn-default btn-xs"><span class="fa fa-eye"><span></a> <code>Detail</code> untuk melihat data pengguna secara lengkap, tombol <a class="btn btn-default btn-xs"><span class="fa fa-edit"><span></a> <code>Edit</code> untuk mengedit data pengguna dan tombol <a class="btn btn-default btn-xs"><span class="fa fa-trash"><span></a> <code>Hapus</code> untuk menghapus data pengguna. Anda dapat menambahkan pengguna dengan menekan tombol <a class="btn btn-default btn-xs"><span class="fa fa-plus"></span> TAMBAH</a>.</p>';
         $content .= '<h3 id="user-delete">Delete</h3>';
-        $content .= '<p><center><a href="/themes/admin/AdminSC/images/guide/005 User - 03 Overview Delete.png" target="_blank"><img src="/themes/admin/AdminSC/images/guide/005 User - 03 Overview Delete.png" width="100%"></a></center></p>';
         $content .= '<p>Saat Anda menekan tombol hapus pada salah satu daftar user, akan ada pop-up konfirmasi sebelum data dihapus. Di dalam konfirmasi terdapat fitur <code>Delete Permanently</code> yang fungsinya adalah untuk benar-benar menghapus data dari database. Jika Anda mencentang fitur ini, maka data tidak dapat dikembalikan sama sekali jika suatu saat dibutuhkan.</p>';
         $dataUser = Guide::create([
-            'cover' => '/themes/admin/AdminSC/images/guide/005-User-00-Overview.png',
+            'cover' => '/themes/admin/AdminSC/images/guide/data-pengguna.png',
             'title' => 'Pengguna',
             'slug' => 'data-pengguna',
             'content' => $content,
             'roles' => 'super,admin',
             'order' => $dataOrder++,
             'parent_id' => $data->id,
+            'status' => 'active',
+        ]);
+
+        $dataUserOrder = 1;
+        /* Data - Pengguna - Detail*/
+        $content = '<p><i>Sedang dalam pengembangan..</i></p>';
+        $dataUserDetail = Guide::create([
+            'title' => 'Detail',
+            'slug' => 'data-pengguna-tambahedit-detail',
+            'content' => $content,
+            'roles' => 'super,admin',
+            'order' => $dataUserOrder++,
+            'parent_id' => $dataUser->id,
+            'status' => 'active',
+        ]);
+
+        /* Data - Pengguna - Tambah & Edit */
+        $content = 'Halaman untuk menambahkan data pengguna. Anda juga dapat menghapus data dari halaman ini jika dalam mode edit.';
+        $dataUserAdd = Guide::create([
+            'cover' => '/themes/admin/AdminSC/images/guide/data-pengguna-tambah.png',
+            'title' => 'Tambah & Edit',
+            'slug' => 'data-pengguna-tambahedit',
+            'content' => $content,
+            'roles' => 'super,admin',
+            'order' => $dataUserOrder++,
+            'parent_id' => $dataUser->id,
+            'status' => 'active',
+        ]);
+
+        $dataUserAddOrder = 1;
+        /* Data - Pengguna - Tambah - Informasi Utama*/
+        $content = '<ul>';
+        $content .= '<li><b>Nama Akses</b>, nama yang akan digunakan untuk akses masuk.</li>';
+        $content .= '<li><b>Email</b>, alamat surel pengguna untuk kepentingan komunikasi melalui surel. Dapat juga digunakan sebagak akses masuk.</li>';
+        $content .= '<li><b>Sandi</b>, digunakan untuk sandi akses amsuk. Minimal 6 karakter.</li>';
+        $content .= '<li><b>Ulangi Sandi</b>, untuk konfirmasi sandi.</li>';
+        $content .= '<li><b>Nama Lengkap</b>, nama lengkap pengguna yang akan tampil di situs.</li>';
+        $content .= '<li><b>Tentang</b>, sedikit ulasan tentang pengguna.</li>';
+        $content .= '<li><b>Foto</b>, maksimal dimensi foto adalah lebar 512px dan tinggi 512px dengan rasio 1:1 dan ukuran maksimal 384KB.</li>';
+        $content .= '<li><b>Peran</b>, tentukan peran pengguna untuk mengakses situs.</li>';
+        $content .= '<li><b>Aktif</b>, centang untuk mengaktifkan pengguna.</li>';
+        $content .= '</ul>';
+        $dataUserAddInfo = Guide::create([
+            'title' => 'Informasi Utama',
+            'slug' => 'data-pengguna-tambahedit-infoutama',
+            'content' => $content,
+            'roles' => 'super,admin',
+            'order' => $dataUserAddOrder++,
+            'parent_id' => $dataUserAdd->id,
+            'status' => 'active',
+        ]);
+
+        /* Data - Pengguna - Tambah - Media Sosial*/
+        $content = '<p>Sebagai daftar akun media sosial pengguna. Klik tombol <a class="btn btn-default btn-xs"><span class="fa fa-plus"></span></a> untuk menambahkan akun media sosial lainnya.</p>';
+        $dataUserAddInfo = Guide::create([
+            'title' => 'Media Sosial',
+            'slug' => 'data-pengguna-tambahedit-mediasosial',
+            'content' => $content,
+            'roles' => 'super,admin',
+            'order' => $dataUserAddOrder++,
+            'parent_id' => $dataUserAdd->id,
+            'status' => 'active',
+        ]);
+
+        /* Data - Pengguna - Hapus */
+        $content = '<p>Saat Anda menekan tombol hapus pada salah satu daftar pengguna, akan muncul konfirmasi sebelum data dihapus untuk mencegah terjadinya kesalahan hapus data.</p>';
+        $dataUserAdd = Guide::create([
+            'cover' => '/themes/admin/AdminSC/images/guide/data-pengguna-hapus.png',
+            'title' => 'Hapus',
+            'slug' => 'data-pengguna-hapus',
+            'content' => $content,
+            'roles' => 'super,admin',
+            'order' => $dataUserOrder++,
+            'parent_id' => $dataUser->id,
             'status' => 'active',
         ]);
 
