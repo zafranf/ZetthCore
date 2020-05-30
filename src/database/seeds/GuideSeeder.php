@@ -321,6 +321,7 @@ class GuideSeeder extends Seeder
             'status' => 'active',
         ]);
 
+        $setRoleOrder = 1;
         /* Pengaturan - Peran & Akses */
         $content = '<p>Daftar peran untuk pengelompokan akses pengguna. Kolom <code>Peran</code> sebagai nama peram, kolom <code>Deskripsi</code> merupakan penjelasan singkat mengenai peran tersebut, kolom <code>Status</code> memperlihatkan apakah peran aktif atau tidak, serta kolom <code>Akses</code> yang merupakan tombol untuk mengatur peran dan akses tersebut. Tombol <a class="btn btn-default btn-xs"><span class="fa fa-edit"><span></a> <code>Edit</code> untuk mengedit peran dan tombol <a class="btn btn-default btn-xs"><span class="fa fa-trash"><span></a> <code>Hapus</code> untuk menghapus peran. Anda dapat menambahkan peran dengan menekan tombol <a class="btn btn-default btn-xs"><span class="fa fa-plus"></span> TAMBAH</a>.</p>';
         $setRole = Guide::create([
@@ -334,7 +335,6 @@ class GuideSeeder extends Seeder
             'status' => 'active',
         ]);
 
-        $setRoleOrder = 1;
         /* Pengaturan - Peran & Akses - Tambah */
         $content = '<p>Halaman untuk menambahkan data peran. Ketika data berhasil tersimpan, Anda dapat langsung menambahkan akses pada peran tersebut. Lihat bagian <a onclick="$(\'a[href=\\\'#pengaturan-peran-edit\\\']\').click()" style="cursor:pointer;">Edit Peran</a>.</p>';
         $content .= '<ul>';
@@ -399,6 +399,7 @@ class GuideSeeder extends Seeder
             'status' => 'active',
         ]);
 
+        $dataUserOrder = 1;
         /* Data - Pengguna*/
         $content = '<p>Daftar pengguna situs baik pengelola maupun anggota. Kolom <code>Nama Akses</code> menampilkan nama akses pengguna, kolom <code>Nama Lengkap</code> merupakan nama lengkap pengguna, kolom <code>Status</code> memperlihatkan apakah pengguna aktif atau tidak, serta kolom <code>Akses</code> yang merupakan tombol untuk mengatur data pengguna tersebut. Tombol <a class="btn btn-default btn-xs"><span class="fa fa-eye"><span></a> <code>Detail</code> untuk melihat data pengguna secara lengkap, tombol <a class="btn btn-default btn-xs"><span class="fa fa-edit"><span></a> <code>Edit</code> untuk mengedit data pengguna dan tombol <a class="btn btn-default btn-xs"><span class="fa fa-trash"><span></a> <code>Hapus</code> untuk menghapus data pengguna. Anda dapat menambahkan pengguna dengan menekan tombol <a class="btn btn-default btn-xs"><span class="fa fa-plus"></span> TAMBAH</a>.</p>';
         $dataUser = Guide::create([
@@ -412,7 +413,6 @@ class GuideSeeder extends Seeder
             'status' => 'active',
         ]);
 
-        $dataUserOrder = 1;
         /* Data - Pengguna - Detail*/
         $content = '<p><i>Sedang dalam pengembangan..</i></p>';
         $dataUserDetail = Guide::create([
@@ -425,8 +425,9 @@ class GuideSeeder extends Seeder
             'status' => 'active',
         ]);
 
+        $dataUserAddOrder = 1;
         /* Data - Pengguna - Tambah & Edit */
-        $content = 'Halaman untuk menambahkan data pengguna. Anda juga dapat menghapus data dari halaman ini jika dalam mode edit.';
+        $content = 'Halaman untuk menambahkan atau mengedit data pengguna. Anda juga dapat menghapus data dari halaman ini jika dalam mode edit.';
         $dataUserAdd = Guide::create([
             'cover' => '/themes/admin/AdminSC/images/guide/data-pengguna-tambah.png',
             'title' => 'Tambah & Edit',
@@ -438,7 +439,6 @@ class GuideSeeder extends Seeder
             'status' => 'active',
         ]);
 
-        $dataUserAddOrder = 1;
         /* Data - Pengguna - Tambah - Informasi Utama*/
         $content = '<ul>';
         $content .= '<li><b>Nama Akses</b>, nama yang akan digunakan untuk akses masuk.</li>';
@@ -475,7 +475,7 @@ class GuideSeeder extends Seeder
 
         /* Data - Pengguna - Hapus */
         $content = '<p>Saat Anda menekan tombol hapus pada salah satu daftar pengguna, akan muncul konfirmasi sebelum data dihapus untuk mencegah terjadinya kesalahan hapus data.</p>';
-        $dataUserAdd = Guide::create([
+        $dataUserDel = Guide::create([
             'cover' => '/themes/admin/AdminSC/images/guide/data-pengguna-hapus.png',
             'title' => 'Hapus',
             'slug' => 'data-pengguna-hapus',
@@ -486,21 +486,11 @@ class GuideSeeder extends Seeder
             'status' => 'active',
         ]);
 
+        $dataCategoryOrder = 1;
         /* Data - Kategori */
-        $content = '<p>Daftar kategori artikel. Rinciannya adalah kolom <code>Category</code> sebagai nama tampilan kategori (<code>Uncategorized</code> merupakan kategori default), kolom <code>Description</code> merupakan penjelasan singkat mengenai kategori tersebut, kolom <code>Parent</code> merupakan atasan dari (sub)kategori, kolom <code>Status</code> memperlihatkan apakah kategori aktif atau tidak, serta kolom <code>Action</code> yang merupakan tombol untuk mengatur kategori-kategori tersebut. Tombol <a class="btn btn-default btn-xs"><span class="fa fa-edit"><span></a> <code>Edit</code> untuk mengedit kategori dan tombol <a class="btn btn-default btn-xs"><span class="fa fa-trash"><span></a> <code>Delete</code> untuk menghapus kategori. Anda dapat menambahkannya dengan menekan tombol <a class="btn btn-default btn-sm">+ ADD</a>.</p>';
-        $content .= '<h3 id="categories-add-edit">Add & Edit</h3>';
-        $content .= '<p><center><a href="/themes/admin/AdminSC/images/guide/006 Category - 02 Overview Edit.png" target="_blank"><img src="/themes/admin/AdminSC/images/guide/006 Category - 02 Overview Edit.png" width="100%"></a></center></p>';
-        $content .= '<ul>';
-        $content .= '<li><b>Category Name</b>, nama kategori yang akan tampil di situs.</li>';
-        $content .= '<li><b>Description</b>, berikan sedikit penjelasan mengenai kategori tersebut.</li>';
-        $content .= '<li><b>Parent</b>, tentukan parent apabila kategori yang sedang dibuat merupakan sub-kategori.</li>';
-        $content .= '<li><b>Active</b>, centang untuk mengaktifkan kategori.</li>';
-        $content .= '</ul>';
-        $content .= '<h3 id="categories-delete">Delete</h3>';
-        $content .= '<p><center><a href="/themes/admin/AdminSC/images/guide/006 Category - 03 Overview Delete.png" target="_blank"><img src="/themes/admin/AdminSC/images/guide/006 Category - 03 Overview Delete.png" width="100%"></a></center></p>';
-        $content .= '<p>Saat Anda menekan tombol hapus pada salah satu daftar kategori, akan ada pop-up konfirmasi sebelum data dihapus. Di dalam konfirmasi terdapat fitur <code>Delete Permanently</code> yang fungsinya adalah untuk benar-benar menghapus data dari database. Jika Anda mencentang fitur ini, maka data tidak dapat dikembalikan sama sekali jika suatu saat dibutuhkan.</p>';
+        $content = '<p>Daftar kategori untuk dipakai di artikel. Kolom <code>Kategori</code> sebagai nama tampilan kategori, kolom <code>Deskripsi</code> merupakan penjelasan singkat mengenai kategori tersebut, kolom <code>Status</code> memperlihatkan apakah kategori aktif atau tidak, serta kolom <code>Akses</code> yang merupakan tombol untuk mengatur kategori tersebut. Tombol <a class="btn btn-default btn-xs"><span class="fa fa-edit"><span></a> <code>Edit</code> untuk mengedit kategori dan tombol <a class="btn btn-default btn-xs"><span class="fa fa-trash"><span></a> <code>Hapus</code> untuk menghapus kategori. Anda dapat menambahkan kategori dengan menekan tombol <a class="btn btn-default btn-xs"><span class="fa fa-plus"></span> TAMBAH</a>.</p>';
         $dataCategory = Guide::create([
-            'cover' => '/themes/admin/AdminSC/images/guide/006-Category-00-Overview.png',
+            'cover' => '/themes/admin/AdminSC/images/guide/data-kategori.png',
             'title' => 'Kategori',
             'slug' => 'data-kategori',
             'content' => $content,
@@ -510,26 +500,80 @@ class GuideSeeder extends Seeder
             'status' => 'active',
         ]);
 
-        /* Data - Label */
-        $content = '<p>Daftar tag artikel. Rinciannya adalah kolom <code>Tag</code> sebagai nama tampilan tag, kolom <code>Description</code> merupakan penjelasan singkat mengenai tag tersebut, kolom <code>Status</code> memperlihatkan apakah tag aktif atau tidak, serta kolom <code>Action</code> yang merupakan tombol untuk mengatur tag-tag tersebut. Tombol <a class="btn btn-default btn-xs"><span class="fa fa-edit"><span></a> <code>Edit</code> untuk mengedit tag dan tombol <a class="btn btn-default btn-xs"><span class="fa fa-trash"><span></a> <code>Delete</code> untuk menghapus tag. Anda dapat menambahkannya dengan menekan tombol <a class="btn btn-default btn-sm">+ ADD</a>.</p>';
-        $content .= '<h3 id="tags-add-edit">Add & Edit</h3>';
-        $content .= '<p><center><a href="/themes/admin/AdminSC/images/guide/007 Tag - 02 Overview Edit.png" target="_blank"><img src="/themes/admin/AdminSC/images/guide/007 Tag - 02 Overview Edit.png" width="100%"></a></center></p>';
+        /* Data - Kategori - Tambah & Edit */
+        $content = 'Halaman untuk menambahkan atau mengedit data kategori. Anda juga dapat menghapus data dari halaman ini jika dalam mode edit.';
         $content .= '<ul>';
-        $content .= '<li><b>Tag Name</b>, nama tag yang akan tampil di situs.</li>';
-        $content .= '<li><b>Description</b>, berikan sedikit penjelasan mengenai tag tersebut.</li>';
-        $content .= '<li><b>Active</b>, centang untuk mengaktifkan tag.</li>';
+        $content .= '<li><b>Kategori</b>, nama kategori yang akan tampil di situs.</li>';
+        $content .= '<li><b>Deskripsi</b>, berikan sedikit penjelasan mengenai kategori tersebut.</li>';
+        $content .= '<li><b>Induk</b>, tentukan induk apabila kategori yang sedang dibuat merupakan subkategori.</li>';
+        $content .= '<li><b>Aktif</b>, centang untuk mengaktifkan kategori.</li>';
         $content .= '</ul>';
-        $content .= '<h3 id="tags-delete">Delete</h3>';
-        $content .= '<p><center><a href="/themes/admin/AdminSC/images/guide/007 Tag - 03 Overview Delete.png" target="_blank"><img src="/themes/admin/AdminSC/images/guide/007 Tag - 03 Overview Delete.png" width="100%"></a></center></p>';
-        $content .= '<p>Saat Anda menekan tombol hapus pada salah satu daftar tag, akan ada pop-up konfirmasi sebelum data dihapus. Di dalam konfirmasi terdapat fitur <code>Delete Permanently</code> yang fungsinya adalah untuk benar-benar menghapus data dari database. Jika Anda mencentang fitur ini, maka data tidak dapat dikembalikan sama sekali jika suatu saat dibutuhkan.</p>';
-        $dataTag = Guide::create([
-            'cover' => '/themes/admin/AdminSC/images/guide/007-Tag-00-Overview.png',
+        $dataCategoryAdd = Guide::create([
+            'cover' => '/themes/admin/AdminSC/images/guide/data-kategori-tambah.png',
+            'title' => 'Tambah & Edit',
+            'slug' => 'data-kategori-tambahedit',
+            'content' => $content,
+            'roles' => 'all',
+            'order' => $dataCategoryOrder++,
+            'parent_id' => $dataCategory->id,
+            'status' => 'active',
+        ]);
+
+        /* Data - Kategori - Hapus */
+        $content = '<p>Saat Anda menekan tombol hapus pada salah satu daftar kategori, akan muncul konfirmasi sebelum data dihapus untuk mencegah terjadinya kesalahan hapus data.</p>';
+        $dataCategoryDel = Guide::create([
+            'cover' => '/themes/admin/AdminSC/images/guide/data-kategori-hapus.png',
+            'title' => 'Hapus',
+            'slug' => 'data-kategori-hapus',
+            'content' => $content,
+            'roles' => 'all',
+            'order' => $dataCategoryOrder++,
+            'parent_id' => $dataCategory->id,
+            'status' => 'active',
+        ]);
+
+        $dataLabelOrder = 1;
+        /* Data - Label */
+        $content = '<p>Daftar label untuk dipakai di artikel. Kolom <code>Kategori</code> sebagai nama tampilan label, kolom <code>Deskripsi</code> merupakan penjelasan singkat mengenai label tersebut, kolom <code>Status</code> memperlihatkan apakah label aktif atau tidak, serta kolom <code>Akses</code> yang merupakan tombol untuk mengatur label tersebut. Tombol <a class="btn btn-default btn-xs"><span class="fa fa-edit"><span></a> <code>Edit</code> untuk mengedit label dan tombol <a class="btn btn-default btn-xs"><span class="fa fa-trash"><span></a> <code>Hapus</code> untuk menghapus label. Anda dapat menambahkan label dengan menekan tombol <a class="btn btn-default btn-xs"><span class="fa fa-plus"></span> TAMBAH</a>.</p>';
+        $dataLabel = Guide::create([
+            'cover' => '/themes/admin/AdminSC/images/guide/data-label.png',
             'title' => 'Label',
             'slug' => 'data-label',
             'content' => $content,
             'roles' => 'all',
             'order' => $dataOrder++,
             'parent_id' => $data->id,
+            'status' => 'active',
+        ]);
+
+        /* Data - Label - Tambah & Edit */
+        $content = 'Halaman untuk menambahkan atau mengedit data label. Anda juga dapat menghapus data dari halaman ini jika dalam mode edit.';
+        $content .= '<ul>';
+        $content .= '<li><b>Label</b>, nama label yang akan tampil di situs.</li>';
+        $content .= '<li><b>Deskripsi</b>, berikan sedikit penjelasan mengenai label tersebut.</li>';
+        $content .= '<li><b>Aktif</b>, centang untuk mengaktifkan label.</li>';
+        $content .= '</ul>';
+        $dataLabelAdd = Guide::create([
+            'cover' => '/themes/admin/AdminSC/images/guide/data-label-tambah.png',
+            'title' => 'Tambah & Edit',
+            'slug' => 'data-label-tambahedit',
+            'content' => $content,
+            'roles' => 'all',
+            'order' => $dataLabelOrder++,
+            'parent_id' => $dataLabel->id,
+            'status' => 'active',
+        ]);
+
+        /* Data - Label - Hapus */
+        $content = '<p>Saat Anda menekan tombol hapus pada salah satu daftar label, akan muncul konfirmasi sebelum data dihapus untuk mencegah terjadinya kesalahan hapus data.</p>';
+        $dataLabelDel = Guide::create([
+            'cover' => '/themes/admin/AdminSC/images/guide/data-label-hapus.png',
+            'title' => 'Hapus',
+            'slug' => 'data-label-hapus',
+            'content' => $content,
+            'roles' => 'all',
+            'order' => $dataLabelOrder++,
+            'parent_id' => $dataLabel->id,
             'status' => 'active',
         ]);
 

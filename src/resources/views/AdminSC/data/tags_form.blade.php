@@ -28,7 +28,7 @@
           <div class="col-sm-offset-2 col-sm-4">
             {{ isset($data) ? method_field('PUT') : '' }}
             {{ csrf_field() }}
-            {{ getButtonPost($current_url, true, $data->id ?? '') }}
+            {{ getButtonPost($current_url, true, $data->id ?? '', isset($data) ? 'label \\\'' . $data->name . '\\\'' : null) }}
           </div>
         </div>
     </form>
