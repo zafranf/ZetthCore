@@ -401,8 +401,6 @@ class GuideSeeder extends Seeder
 
         /* Data - Pengguna*/
         $content = '<p>Daftar pengguna situs baik pengelola maupun anggota. Kolom <code>Nama Akses</code> menampilkan nama akses pengguna, kolom <code>Nama Lengkap</code> merupakan nama lengkap pengguna, kolom <code>Status</code> memperlihatkan apakah pengguna aktif atau tidak, serta kolom <code>Akses</code> yang merupakan tombol untuk mengatur data pengguna tersebut. Tombol <a class="btn btn-default btn-xs"><span class="fa fa-eye"><span></a> <code>Detail</code> untuk melihat data pengguna secara lengkap, tombol <a class="btn btn-default btn-xs"><span class="fa fa-edit"><span></a> <code>Edit</code> untuk mengedit data pengguna dan tombol <a class="btn btn-default btn-xs"><span class="fa fa-trash"><span></a> <code>Hapus</code> untuk menghapus data pengguna. Anda dapat menambahkan pengguna dengan menekan tombol <a class="btn btn-default btn-xs"><span class="fa fa-plus"></span> TAMBAH</a>.</p>';
-        $content .= '<h3 id="user-delete">Delete</h3>';
-        $content .= '<p>Saat Anda menekan tombol hapus pada salah satu daftar user, akan ada pop-up konfirmasi sebelum data dihapus. Di dalam konfirmasi terdapat fitur <code>Delete Permanently</code> yang fungsinya adalah untuk benar-benar menghapus data dari database. Jika Anda mencentang fitur ini, maka data tidak dapat dikembalikan sama sekali jika suatu saat dibutuhkan.</p>';
         $dataUser = Guide::create([
             'cover' => '/themes/admin/AdminSC/images/guide/data-pengguna.png',
             'title' => 'Pengguna',
@@ -419,7 +417,7 @@ class GuideSeeder extends Seeder
         $content = '<p><i>Sedang dalam pengembangan..</i></p>';
         $dataUserDetail = Guide::create([
             'title' => 'Detail',
-            'slug' => 'data-pengguna-tambahedit-detail',
+            'slug' => 'data-pengguna-detail',
             'content' => $content,
             'roles' => 'super,admin',
             'order' => $dataUserOrder++,
