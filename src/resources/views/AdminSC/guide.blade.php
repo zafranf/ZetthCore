@@ -1,29 +1,33 @@
 @extends('zetthcore::AdminSC.layouts.main')
 
 @section('content2')
-  <div class="container-fluid" id="help-section">
-    <div class="col-sm-10 col-sm-offset-2">
-      <div class="col-sm-3 no-padding">
+  <div class="container-fluid" id="guide-section">
+    <div class="col-xs-12 col-xs-offset-0 col-sm-8 col-sm-offset-2 no-padding">
+      <div class="col-xs-4 col-sm-3 no-padding">
         <nav id="myScrollspy">
           <ul id="affixs" class="nav">
             {!! generateHelpMenu($data) !!}
           </ul>
         </nav>
       </div>
-      <div class="col-sm-9" id="help-content">
-        <div class="col-sm-10">
-          <p>Di sini anda akan dijelaskan bagaimana cara mengelola situs ini melalui panel admin. Penjelasan pada setiap halaman akan dijabarkan secara mendetail untuk setiap fitur dan bagian-bagian yang ada di halaman tersebut sehingga diharapkan Anda dapat mengelola situs ini secara mandiri.</p>
+      <div class="col-xs-8 col-sm-9" id="guide-content">
+        <p>Di sini anda akan dijelaskan bagaimana cara mengelola situs ini melalui panel admin. Penjelasan pada setiap halaman akan dijabarkan secara mendetail untuk setiap fitur dan bagian-bagian yang ada di halaman tersebut sehingga diharapkan Anda dapat mengelola situs ini secara mandiri.</p>
 
-          {!! generateHelpContent($data) !!}
-        </div>
+        {!! generateHelpContent($data) !!}
       </div>
     </div>
   </div>
 @endsection
 
 @push('styles')
-  {!! _admin_css(adminPath() . '/themes/admin/AdminSC/plugins/bootstrap/daterangepicker/2.1.24/daterangepicker.css') !!}
   <style>
+    html ,body {
+      /* width: 100%;
+      height: 100%;
+      margin: 0px;
+      padding: 0px; */
+      overflow-x: hidden; 
+  }
     h2, .h2 {
       font-size: 32px;
     }
@@ -42,10 +46,10 @@
     #content-div {
       display:none;
     }
-    #help-content {
+    #guide-content {
         font-size: 16px;
     }
-    #help-content .section img {
+    #guide-content .section img {
       border: 1px solid #e5e5e5;
       border-radius: 5px;
     }
@@ -76,7 +80,48 @@
     }
     #affixs {
         top: 80px;
-        min-width: 292.5px;
+    }
+
+    #date-range-guide, #btn-refresh-guide {
+      background: #fff;
+      cursor: pointer;
+      padding: 5px 10px;
+      border: 1px solid coral;
+      color: coral;
+      font-size: 12px;
+      margin-top:-40px;
+    }
+
+    #date-range-guide {
+      margin-right: 45px;
+      border-top-left-radius: 5px;
+      border-bottom-left-radius: 5px;
+    }
+
+    #btn-refresh-guide {
+      margin-right: 15px;
+      border-top-right-radius: 5px;
+      border-bottom-right-radius: 5px;
+    }
+
+    @media screen and (max-width: 767px) {
+      #myScrollspy ul {
+        max-width: 100px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+      #date-range-guide {
+        float: unset!important;
+        margin-top: 0;
+      }
+      #date-range-guide b.caret {
+        float: right;
+        margin-top: 8px;
+      }
+      #btn-refresh-guide {
+        margin-top: -29px;
+      }
     }
   </style>
 @endpush
@@ -91,12 +136,12 @@
       
       $("#affixs").affix({
           offset: {
-            top: 60
+            top: 80
           }
       });
 
       $('#myScrollspy ul li a').on('click', function() {
-        var scrollPos = $('body>#help-section').find($(this).attr('href')).offset().top;
+        var scrollPos = $('body>#guide-section').find($(this).attr('href')).offset().top;
         $('body,html').animate({
           scrollTop: scrollPos - 70
         }, 0);

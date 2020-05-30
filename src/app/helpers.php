@@ -666,6 +666,9 @@ if (!function_exists('generateHelpContent')) {
             /* print content */
             if ($val->roles_array[0] == 'all' || !empty(array_intersect($userRoles, $val->roles_array))) {
                 $dates = carbon()->isoFormat('Do MMMM YYYY') . ' - ' . carbon()->isoFormat('Do MMMM YYYY');
+                if (app('is_mobile')) {
+                    $dates = 'Hari ini';
+                }
                 $h = 'h' . ($level < 6 ? $level + 1 : 6);
                 echo '<div id="' . $val->slug . '" class="section">';
                 echo '<' . $h . '>' . $val->title . '</' . $h . '>';

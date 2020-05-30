@@ -41,8 +41,8 @@ Route::middleware('auth')->group(function () use ($prefix) {
         Route::get('/logout', $prefix . '\Auth\LoginController@logout')->name('logout.get');
     }
 
-    /* help */
-    Route::get('/help', $prefix . '\HelpController@index')->name('help');
+    /* guide */
+    Route::get('/guide', $prefix . '\GuideController@index')->name('guide');
 
     /* file manager */
     Route::any('/larafile/{path}', $prefix . '\AdminController@getLarafile')->where('path', '.*')->name('larafile');

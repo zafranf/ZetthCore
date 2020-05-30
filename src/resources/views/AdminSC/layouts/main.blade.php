@@ -81,8 +81,8 @@
         {{-- Right Side Of Navbar --}}
         <ul class="nav navbar-nav navbar-right">
           <li data-toggle="tooltip" title="Panduan" data-placement="bottom">
-            <a href="{{ route('admin.help') }}">
-              <i class="fa fa-question-circle-o"></i>
+            <a href="{{ route('admin.guide') }}">
+              {!! app('is_mobile') ? 'Panduan&nbsp;<span class="pull-right"><i class="fa fa-question-circle-o"></i></span>' : '<i class="fa fa-question-circle-o"></i>' !!}
             </a>
           </li>
           <li data-toggle="tooltip" title="Kunjungi situs" data-placement="bottom">

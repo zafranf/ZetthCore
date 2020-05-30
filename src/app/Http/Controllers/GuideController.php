@@ -4,7 +4,7 @@ namespace ZetthCore\Http\Controllers;
 
 use ZetthCore\Http\Controllers\AdminController;
 
-class HelpController extends AdminController
+class GuideController extends AdminController
 {
     private $current_url;
     private $page_title;
@@ -15,7 +15,7 @@ class HelpController extends AdminController
     public function __construct()
     {
         parent::__construct();
-        $this->current_url = _url(adminPath() . '/help');
+        $this->current_url = _url(adminPath() . '/guide');
         $this->page_title = 'Panduan Pengguna';
         $this->breadcrumbs[] = [
             'page' => 'Panduan Pengguna',
@@ -38,6 +38,6 @@ class HelpController extends AdminController
                 ->get(),
         ];
 
-        return view('zetthcore::AdminSC.help', $data);
+        return view('zetthcore::AdminSC.guide', $data);
     }
 }
