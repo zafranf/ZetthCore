@@ -657,9 +657,9 @@ class GuideSeeder extends Seeder
         $content = 'Halaman untuk menambahkan atau mengedit data artikel. Anda juga dapat menghapus data dari halaman ini jika dalam mode edit.';
         $content .= '<ul>';
         $content .= '<li><b>Judul</b>, judul dari artikel.</li>';
-        $content .= '<li><b>Tautan otomatis</b>, tautan untuk artikel akan otomatis muncul ketika Anda mengetik judul. Anda juga dapat mengubahnya dengan menekan kolom tautan 2 (dua) kali. Tidak dapat diubah ketika mode edit.</li>';
+        $content .= '<li><b>Tautan otomatis</b>, tautan untuk artikel akan otomatis terisi ketika Anda mengetik judul. Anda juga dapat mengubahnya dengan menekan kolom tautan 2 (dua) kali. Tidak dapat diubah ketika mode edit.</li>';
         $content .= '<li><b>Kutipan/deskripsi</b>, sebagai kalimat atau paragraf cuplikan untuk muncul di halaman daftar artikel atau ketika disebar ke media sosial. Jika tidak diisi maka kutipan akan mengambil data dari konten.</li>';
-        $content .= '<li><b>Konten/tulisan</b>, ketikkan tulisan artikel Anda di sini. Anda dapat menformatnya sesuai kebutuhan dengan menggunakan bilah alat yang terdapat di atas kolom konten.</li>';
+        $content .= '<li><b>Konten/tulisan</b>, ketikkan tulisan artikel Anda di sini. Anda dapat menformatnya sesuai kebutuhan untuk membuat konten lebih menarik dengan menggunakan bilah alat yang terdapat di atas kolom konten.</li>';
         $content .= '<li><b>Sampul</b>, gambar yang akan ditampilkan di situs. Ukuran tergantung pada templat situs yang digunakan.</li>';
         $content .= '<li><b>Keterangan Sampul</b>, keterangan untuk menjelaskan sampul secara singkat.</li>';
         $content .= '<li><b>Pelanggan Artikel</b>, untuk memberikan notifikasi kepada pelanggan info/artikel yang sudah terdaftar dan aktif.</li>';
@@ -692,27 +692,49 @@ class GuideSeeder extends Seeder
             'status' => 'active',
         ]);
 
+        $contPageOrder = 1;
         /* Konten - Halaman */
-        $content = '<p>Page merupakan halaman tambahan untuk pendukung situs. Rinciannya adalah kolom <code>Page Title</code> sebagai nama tampilan page (<code>About</code> merupakan page default), kolom <code>URL</code> merupakan URL yang mengarahkan page tersebut, kolom <code>Status</code> memperlihatkan apakah page aktif atau tidak, serta kolom <code>Action</code> yang merupakan tombol untuk mengatur page-page tersebut. Tombol <a class="btn btn-default btn-xs"><span class="fa fa-edit"><span></a> <code>Edit</code> untuk mengedit page dan tombol <a class="btn btn-default btn-xs"><span class="fa fa-trash"><span></a> <code>Delete</code> untuk menghapus page. Anda dapat menambahkannya dengan menekan tombol <a class="btn btn-default btn-sm">+ ADD</a>.</p>';
-        $content .= '<h3 id="page-add-edit">Add & Edit</h3>';
-        $content .= '<p><center><a href="/themes/admin/AdminSC/images/guide/010 Page - 02 Overview Edit.png" target="_blank"><img src="/themes/admin/AdminSC/images/guide/010 Page - 02 Overview Edit.png" width="100%"></a></center></p>';
-        $content .= '<ul>';
-        $content .= '<li><b>Page Title</b>, judul halaman yang dibuat.</li>';
-        $content .= '<li><b>URL Name</b>, sebagai penghubung page tersebut. Ini akan muncul di daftar URL menu bagian Page.</li>';
-        $content .= '<li><b>Content</b>, berikan isi mengenai page tersebut.</li>';
-        $content .= '<li><b>Active</b>, centang untuk mengaktifkan page.</li>';
-        $content .= '</ul>';
-        $content .= '<h3 id="page-delete">Delete</h3>';
-        $content .= '<p><center><a href="/themes/admin/AdminSC/images/guide/010 Page - 03 Overview Delete.png" target="_blank"><img src="/themes/admin/AdminSC/images/guide/010 Page - 03 Overview Delete.png" width="100%"></a></center></p>';
-        $content .= '<p>Saat Anda menekan tombol hapus pada salah satu daftar page, akan ada pop-up konfirmasi sebelum data dihapus. Di dalam konfirmasi terdapat fitur <code>Delete Permanently</code> yang fungsinya adalah untuk benar-benar menghapus data dari database. Jika Anda mencentang fitur ini, maka data tidak dapat dikembalikan sama sekali jika suatu saat dibutuhkan.</p>';
+        $content = '<p>Daftar halaman (konten statis) situs. Kolom <code>Judul</code> sebagai judul halaman, kolom <code>Status</code> memperlihatkan apakah halaman aktif atau tidak, serta kolom <code>Akses</code> yang merupakan tombol untuk mengatur data halaman tersebut. Tombol <a class="btn btn-default btn-xs"><span class="fa fa-edit"><span></a> <code>Edit</code> untuk mengedit halaman dan tombol <a class="btn btn-default btn-xs"><span class="fa fa-trash"><span></a> <code>Hapus</code> untuk menghapus halaman. Anda dapat menambahkan halaman dengan menekan tombol <a class="btn btn-default btn-xs"><span class="fa fa-plus"></span> TAMBAH</a>.</p>';
         $contPage = Guide::create([
-            'cover' => '/themes/admin/AdminSC/images/guide/010-Page-00-Overview.png',
+            'cover' => '/themes/admin/AdminSC/images/guide/konten-halaman.png',
             'title' => 'Halaman',
             'slug' => 'konten-halaman',
             'content' => $content,
             'roles' => 'super,admin',
-            'order' => $dataOrder++,
+            'order' => $contOrder++,
             'parent_id' => $cont->id,
+            'status' => 'active',
+        ]);
+
+        /* Konten - Halaman - Tambah & Edit */
+        $content = 'Halaman untuk menambahkan atau mengedit data halaman. Anda juga dapat menghapus data dari halaman ini jika dalam mode edit.';
+        $content .= '<ul>';
+        $content .= '<li><b>Judul</b>, judul dari halaman.</li>';
+        $content .= '<li><b>Tautan</b>, tautan untuk halaman akan otomatis terisi ketika Anda mengetik judul tetapi Anda juga dapat langsung mengubahnya. Tidak dapat diubah ketika mode edit.</li>';
+        $content .= '<li><b>Konten</b>, ketikkan konten halaman Anda di sini. Anda dapat menformatnya sesuai kebutuhan untuk membuat konten lebih menarik dengan menggunakan bilah alat yang terdapat di atas kolom konten.</li>';
+        $content .= '<li><b>Aktif</b>, centang untuk mengaktifkan halaman.</li>';
+        $content .= '</ul>';
+        $contPageAdd = Guide::create([
+            'cover' => '/themes/admin/AdminSC/images/guide/konten-halaman-tambah.png',
+            'title' => 'Tambah & Edit',
+            'slug' => 'konten-halaman-tambahedit',
+            'content' => $content,
+            'roles' => 'super,admin',
+            'order' => $contPageOrder++,
+            'parent_id' => $contPage->id,
+            'status' => 'active',
+        ]);
+
+        /* Konten - Halaman - Hapus */
+        $content = '<p>Saat Anda menekan tombol hapus pada salah satu daftar halaman, akan muncul konfirmasi sebelum data dihapus untuk mencegah terjadinya kesalahan hapus data.</p>';
+        $contPageDel = Guide::create([
+            'cover' => '/themes/admin/AdminSC/images/guide/konten-halaman-hapus.png',
+            'title' => 'Hapus',
+            'slug' => 'konten-halaman-hapus',
+            'content' => $content,
+            'roles' => 'super,admin',
+            'order' => $contPageOrder++,
+            'parent_id' => $contPage->id,
             'status' => 'active',
         ]);
 
