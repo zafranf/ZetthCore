@@ -79,10 +79,7 @@
                 @endphp
                 @foreach (generateArrayLevel($menus) as $menu)
                   @php
-                    $routename = str_replace(".index", "", $menu->route_name);//explode('.', $menu->route_name);
-                    /* if (isset($routename)) {
-                      dd($routename, $menu->index, $menu);
-                    } */
+                    $routename = str_replace(".index", "", $menu->route_name);
                   @endphp
                   @if ($group != $menu->group->slug)
                       <tr>
@@ -92,39 +89,42 @@
                        $group = $menu->group->slug;  
                       @endphp
                   @endif
-                  <tr>
-                    <td style="padding-left:20px;">{!! $menu->name !!}</td>
-                    <td>
-                      <label class="custom-control custom-checkbox">
-                        <input type="checkbox" class="custom-control-input" name="access[{{ $routename }}][index]" {{ !$menu->index ? 'disabled' : '' }} {{ isset($routename) && isset($data) && $data->hasPermission($routename.'.index') ? 'checked' : '' }}>
-                        <span class="custom-control-label"></span>
-                      </label>
-                    </td>
-                    <td>
-                      <label class="custom-control custom-checkbox">
-                        <input type="checkbox" class="custom-control-input" name="access[{{ $routename }}][create]" {{ !$menu->create ? 'disabled' : '' }} {{ isset($routename) && isset($data) && $data->hasPermission($routename.'.create') ? 'checked' : '' }}>
-                        <span class="custom-control-label"></span>
-                      </label>
-                    </td>
-                    <td>
-                      <label class="custom-control custom-checkbox">
-                        <input type="checkbox" class="custom-control-input" name="access[{{ $routename }}][read]" {{ !$menu->read ? 'disabled' : '' }} {{ isset($routename) && isset($data) && $data->hasPermission($routename.'.read') ? 'checked' : '' }}>
-                        <span class="custom-control-label"></span>
-                      </label>
-                    </td>
-                    <td>
-                      <label class="custom-control custom-checkbox">
-                        <input type="checkbox" class="custom-control-input" name="access[{{ $routename }}][update]" {{ !$menu->update ? 'disabled' : '' }} {{ isset($routename) && isset($data) && $data->hasPermission($routename.'.update') ? 'checked' : '' }}>
-                        <span class="custom-control-label"></span>
-                      </label>
-                    </td>
-                    <td>
-                      <label class="custom-control custom-checkbox">
-                        <input type="checkbox" class="custom-control-input" name="access[{{ $routename }}][delete]" {{ !$menu->delete ? 'disabled' : '' }} {{ isset($routename) && isset($data) && $data->hasPermission($routename.'.delete') ? 'checked' : '' }}>
-                        <span class="custom-control-label"></span>
-                      </label>
-                    </td>
-                  </tr>
+                  @if (($menu->id == 22 || $menu->parent_id == 22) && !app('user')->hasRole('super'))
+                  @else
+                    <tr>
+                      <td style="padding-left:20px;">{!! $menu->name !!}</td>
+                      <td>
+                        <label class="custom-control custom-checkbox">
+                          <input type="checkbox" class="custom-control-input" name="access[{{ $routename }}][index]" {{ !bool($menu->index) ? 'disabled' : '' }} {{ isset($routename) && isset($data) && $data->hasPermission($routename.'.index') ? 'checked' : '' }}>
+                          <span class="custom-control-label"></span>
+                        </label>
+                      </td>
+                      <td>
+                        <label class="custom-control custom-checkbox">
+                          <input type="checkbox" class="custom-control-input" name="access[{{ $routename }}][create]" {{ !bool($menu->create) ? 'disabled' : '' }} {{ isset($routename) && isset($data) && $data->hasPermission($routename.'.create') ? 'checked' : '' }}>
+                          <span class="custom-control-label"></span>
+                        </label>
+                      </td>
+                      <td>
+                        <label class="custom-control custom-checkbox">
+                          <input type="checkbox" class="custom-control-input" name="access[{{ $routename }}][read]" {{ !bool($menu->read) ? 'disabled' : '' }} {{ isset($routename) && isset($data) && $data->hasPermission($routename.'.read') ? 'checked' : '' }}>
+                          <span class="custom-control-label"></span>
+                        </label>
+                      </td>
+                      <td>
+                        <label class="custom-control custom-checkbox">
+                          <input type="checkbox" class="custom-control-input" name="access[{{ $routename }}][update]" {{ !bool($menu->update) ? 'disabled' : '' }} {{ isset($routename) && isset($data) && $data->hasPermission($routename.'.update') ? 'checked' : '' }}>
+                          <span class="custom-control-label"></span>
+                        </label>
+                      </td>
+                      <td>
+                        <label class="custom-control custom-checkbox">
+                          <input type="checkbox" class="custom-control-input" name="access[{{ $routename }}][delete]" {{ !bool($menu->delete) ? 'disabled' : '' }} {{ isset($routename) && isset($data) && $data->hasPermission($routename.'.delete') ? 'checked' : '' }}>
+                          <span class="custom-control-label"></span>
+                        </label>
+                      </td>
+                    </tr>
+                  @endif
                 @endforeach
               </tbody>
             </table>
