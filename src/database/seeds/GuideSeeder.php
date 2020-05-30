@@ -654,7 +654,7 @@ class GuideSeeder extends Seeder
         ]);
 
         /* Konten - Artikel - Tambah & Edit */
-        $content = 'Halaman untuk menambahkan atau mengedit data artikel. Anda juga dapat menghapus data dari halaman ini jika dalam mode edit.';
+        $content = 'Halaman untuk menambahkan atau mengedit data artikel.';
         $content .= '<ul>';
         $content .= '<li><b>Judul</b>, judul dari artikel.</li>';
         $content .= '<li><b>Tautan otomatis</b>, tautan untuk artikel akan otomatis terisi ketika Anda mengetik judul. Anda juga dapat mengubahnya dengan menekan kolom tautan 2 (dua) kali. Tidak dapat diubah ketika mode edit.</li>';
