@@ -595,7 +595,7 @@ class GuideSeeder extends Seeder
         $content .= '<p>Jika templat hanya membutuhkan 1 (satu) spanduk saja, maka otomatis akan menampilkan halaman <a onclick="$(\'a[href=\\\'#konten-spanduk-tambahedit\\\']\').click()" style="cursor:pointer;">Tambah & Edit Spanduk</a></p>';
         $contBanner = Guide::create([
             'cover' => '/themes/admin/AdminSC/images/guide/konten-spanduk.png',
-            'title' => 'Spaduk',
+            'title' => 'Spanduk',
             'slug' => 'konten-spanduk',
             'content' => $content,
             'roles' => 'all',
