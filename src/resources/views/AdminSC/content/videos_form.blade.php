@@ -2,26 +2,40 @@
 
 @section('content')
 	<div class="panel-body">
-		<form class="form-horizontal" action="{{ _url($current_url) }}{{ isset($data) ? '/' . $data->id : '' }}" method="post">
+    <form class="form-horizontal" action="{{ _url($current_url) }}{{ isset($data) ? '/' . $data->id : '' }}" method="post">
+      @if (isset($data))
+        <div class="form-group">
+          <label for="cover" class="col-sm-2 control-label">Sampul</label>
+          <div class="col-sm-10">
+            <div class="col-sm-3 no-padding">
+              <div class="fileinput fileinput-new" data-provides="fileinput">
+                <div class="fileinput-new thumbnail">
+                  <img src="https://img.youtube.com/vi/{{ $data->cover }}/mqdefault.jpg">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      @endif
 			<div class="form-group">
-				<label for="cover" class="col-sm-2 control-label">Kode Youtube</label>
+				<label for="cover" class="col-sm-2 control-label">Kode YouTube</label>
 				<div class="col-sm-10">
 					<div class="input-group">
 						<span class="input-group-addon" id="slug_span">{{ url("https://youtube.com/watch?v=") }}</span>
-						<input type="text" id="cover" class="form-control autofocus" name="cover" placeholder="Kode video youtube.." value="{{ isset($data) ? $data->cover : old('cover') }}">
+						<input type="text" id="cover" class="form-control autofocus" name="cover" placeholder="Kode video youtube.." value="{{ $data->cover ?? old('cover') }}">
 					</div>
 				</div>
 			</div>
 			<div class="form-group">
 				<label for="title" class="col-sm-2 control-label">Judul</label>
 				<div class="col-sm-10">
-					<input type="text" class="form-control" id="title" name="title" value="{{ isset($data) ? $data->title : old('title') }}" maxlength="100" placeholder="Judul video..">
+					<input type="text" class="form-control" id="title" name="title" value="{{ $data->title ?? old('title') }}" maxlength="100" placeholder="Judul video..">
 				</div>
 			</div>
 			<div class="form-group">
 				<label for="content" class="col-sm-2 control-label">Deskripsi</label>
 				<div class="col-sm-10">
-					<textarea id="content" name="content" class="form-control" placeholder="Deskripsi tentang video..">{{ isset($data) ? $data->content : old('content') }}</textarea>
+					<textarea id="content" name="content" class="form-control" placeholder="Deskripsi tentang video..">{{ $data->content ?? old('content') }}</textarea>
 				</div>
 			</div>
 			<div class="form-group">

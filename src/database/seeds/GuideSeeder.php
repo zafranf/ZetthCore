@@ -766,11 +766,11 @@ class GuideSeeder extends Seeder
         ]);
 
         /* Konten - Galeri - Foto - Tambah & Edit */
-        $content = 'Halaman untuk menambahkan atau mengedit data album foto. Anda juga dapat menghapus data dari album foto ini jika dalam mode edit.';
+        $content = 'Halaman untuk menambahkan atau mengedit data album beserta foto. Anda juga dapat menghapus data dari album foto ini jika dalam mode edit.';
         $content .= '<ul>';
-        $content .= '<li><b>Judul</b>, judul dari album foto.</li>';
-        $content .= '<li><b>Tautan</b>, tautan untuk album foto akan otomatis terisi ketika Anda mengetik judul tetapi Anda juga dapat langsung mengubahnya. Tidak dapat diubah ketika mode edit.</li>';
-        $content .= '<li><b>Konten</b>, ketikkan konten album foto Anda di sini. Anda dapat menformatnya sesuai kebutuhan untuk membuat konten lebih menarik dengan menggunakan bilah alat yang terdapat di atas kolom konten.</li>';
+        $content .= '<li><b>Nama album</b>, berikan nama album sesuai dengan momen.</li>';
+        $content .= '<li><b>Deskripsi</b>, penjelasan singkat mengenai album.</li>';
+        $content .= '<li><b>Tambah Foto</b>, tekan tombol untuk menambahkan foto-foto. Anda dapat menambahkannya terlebih dahulu pada jendela yang muncul kemudian pilih foto yang ingin ditambahkan di album.</li>';
         $content .= '<li><b>Aktif</b>, centang untuk mengaktifkan album foto.</li>';
         $content .= '</ul>';
         $contGalPhotoAdd = Guide::create([
@@ -797,27 +797,49 @@ class GuideSeeder extends Seeder
             'status' => 'active',
         ]);
 
+        $contGalVideoOrder = 1;
         /* Konten - Galeri - Video */
-        $content = '<p>Daftar video. Rinciannya adalah kolom <code>Photo</code> preview dari video, kolom <code>Video Title</code> adalah nama video, kolom <code>Views</code> merupakan jumlah kunjungan ke halaman video, kolom <code>Status</code> memperlihatkan apakah video aktif atau tidak, serta kolom <code>Action</code> yang merupakan tombol untuk mengatur video-video tersebut. Tombol <a class="btn btn-default btn-xs"><span class="fa fa-edit"><span></a> <code>Edit</code> untuk mengedit video dan tombol <a class="btn btn-default btn-xs"><span class="fa fa-trash"><span></a> <code>Delete</code> untuk menghapus video. Anda dapat menambahkannya dengan menekan tombol <a class="btn btn-default btn-sm">+ ADD</a>.</p>';
-        $content .= '<h3 id="video-add-edit">Add & Edit</h3>';
-        $content .= '<p><center><a href="/themes/admin/AdminSC/images/guide/012 Video - 02 Overview Edit.png" target="_blank"><img src="/themes/admin/AdminSC/images/guide/012 Video - 02 Overview Edit.png" width="100%"></a></center></p>';
-        $content .= '<ul>';
-        $content .= '<li><b>Youtube ID</b>, kode unik video youtube yang diambil dari URL Video Youtube. Contoh: <code>https://www.youtube.com/watch?v=<b>BUiEQyEtVmw</b></code>, copy kode unik yang bercetak tebal tersebut ke dalam kolom Youtube ID.</li>';
-        $content .= '<li><b>Video Title</b>, berikan judul untuk video tersebut.</li>';
-        $content .= '<li><b>Description</b>, berikan penjelasan singkat mengenai video tersebut.</li>';
-        $content .= '<li><b>Active</b>, centang untuk mengaktifkan video.</li>';
-        $content .= '</ul>';
-        $content .= '<h3 id="video-delete">Delete</h3>';
-        $content .= '<p><center><a href="/themes/admin/AdminSC/images/guide/012 Video - 03 Overview Delete.png" target="_blank"><img src="/themes/admin/AdminSC/images/guide/012 Video - 03 Overview Delete.png" width="100%"></a></center></p>';
-        $content .= '<p>Saat Anda menekan tombol hapus pada salah satu daftar video, akan ada pop-up konfirmasi sebelum data dihapus. Di dalam konfirmasi terdapat fitur <code>Delete Permanently</code> yang fungsinya adalah untuk benar-benar menghapus data dari database. Jika Anda mencentang fitur ini, maka data tidak dapat dikembalikan sama sekali jika suatu saat dibutuhkan.</p>';
+        $content = '<p>Daftar video. Kolom <code>Sampul</code> merupakan cuplikan gambar dari video, kolom <code>Judul</code> sebagai judul video, kolom <code>Status</code> memperlihatkan apakah video aktif atau tidak, serta kolom <code>Akses</code> yang merupakan tombol untuk mengatur data video tersebut. Tombol <a class="btn btn-default btn-xs"><span class="fa fa-edit"><span></a> <code>Edit</code> untuk mengedit video dan tombol <a class="btn btn-default btn-xs"><span class="fa fa-trash"><span></a> <code>Hapus</code> untuk menghapus video. Anda dapat menambahkan video dengan menekan tombol <a class="btn btn-default btn-xs"><span class="fa fa-plus"></span> TAMBAH</a>.</p>';
         $contGalVideo = Guide::create([
-            'cover' => '/themes/admin/AdminSC/images/guide/012-Video-00-Overview.png',
+            'cover' => '/themes/admin/AdminSC/images/guide/konten-galeri-video.png',
             'title' => 'Video',
             'slug' => 'konten-galeri-video',
             'content' => $content,
             'roles' => 'super,admin',
-            'order' => $contGalOrder++,
+            'order' => $contOrder++,
             'parent_id' => $contGal->id,
+            'status' => 'active',
+        ]);
+
+        /* Konten - Galeri - Video - Tambah & Edit */
+        $content = 'Halaman untuk menambahkan atau mengedit data video. Anda juga dapat menghapus data dari video ini jika dalam mode edit.';
+        $content .= '<ul>';
+        $content .= '<li><b>Kode YouTube</b>, unggah video di YouTube kemudian ambil kodenya dan salin di kolom ini. <span class="fa fa-question-circle-o" data-toggle="tooltip" title="Video diunggah di YouTube agar menghemat kapasitas penyimpanan dan juga <i>bandwidth</i>" data-placement="bottom" data-html="true"></span></li>';
+        $content .= '<li><b>Judul</b>, judul dari video.</li>';
+        $content .= '<li><b>Deskripsi</b>, konten atau penjelasan tentang video.</li>';
+        $content .= '<li><b>Aktif</b>, centang untuk mengaktifkan video.</li>';
+        $content .= '</ul>';
+        $contGalVideoAdd = Guide::create([
+            'cover' => '/themes/admin/AdminSC/images/guide/konten-galeri-video-tambah.png',
+            'title' => 'Tambah & Edit',
+            'slug' => 'konten-galeri-video-tambahedit',
+            'content' => $content,
+            'roles' => 'super,admin',
+            'order' => $contGalVideoOrder++,
+            'parent_id' => $contGalVideo->id,
+            'status' => 'active',
+        ]);
+
+        /* Konten - Galeri - Video - Hapus */
+        $content = '<p>Saat Anda menekan tombol hapus pada salah satu daftar video, akan muncul konfirmasi sebelum data dihapus untuk mencegah terjadinya kesalahan hapus data.</p>';
+        $contGalVideoDel = Guide::create([
+            'cover' => '/themes/admin/AdminSC/images/guide/konten-galeri-video-hapus.png',
+            'title' => 'Hapus',
+            'slug' => 'konten-galeri-video-hapus',
+            'content' => $content,
+            'roles' => 'super,admin',
+            'order' => $contGalVideoOrder++,
+            'parent_id' => $contGalVideo->id,
             'status' => 'active',
         ]);
 

@@ -221,7 +221,7 @@ class VideoController extends AdminController
     public function datatable(Request $r)
     {
         /* get data */
-        $data = Post::select('id', 'title', 'slug', 'status')->where('type', 'video')->orderBy('created_at', 'desc');
+        $data = Post::select('id', 'cover', 'title', 'slug', 'status')->where('type', 'video')->orderBy('created_at', 'desc');
 
         /* generate datatable */
         if ($r->ajax()) {
