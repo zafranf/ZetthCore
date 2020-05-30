@@ -666,7 +666,7 @@ class GuideSeeder extends Seeder
         $content .= '<li><b>Pengunjung</b>, pilihan fitur untuk mendapatkan interaksi dari pengunjung situs terutama pembaca artikel. Fitur ini berhubungan juga dengan <a onclick="$(\'a[href=\\\'#pengaturan-situs-infoutama\\\']\').click()" style="cursor:pointer;">Pengaturan -> Situs -> Akses Pengunjung</a>.</li>';
         $content .= '<li><b>Terbitkan</b>, Anda dapat langsung menerbitkan tulisan artikel Anda atau menyesuaikan waktu untuk menampilkan artikel. Anda juga bisa menyimpannya sebagai draf atau bahkan hanya sekedar catatan tanpa ada tujuan untuk ditampilkan.</li>';
         $content .= '<li><b>Kategori</b>, ketikkan nama kategori untuk mencarinya atau Anda dapat menambahkan kategori baru dengan menekan tombol <a class="btn btn-default btn-xs"><span class="fa fa-plus"></span></a> kemudian isi data di jendela yang muncul.</li>';
-        $content .= '<li><b>Label</b>, Anda dapat langsung mencari dan menambahkannya jika label tidak tersedia sebelumnya hanya dengan menekan tombol <i>enter</i>.</li>';
+        $content .= '<li><b>Label</b>, Anda dapat langsung ketik untuk mencari atau menambahkannya jika label tidak tersedia sebelumnya hanya dengan menekan tombol <i>enter</i>.</li>';
         $content .= '</ul>';
         $contPostAdd = Guide::create([
             'cover' => '/themes/admin/AdminSC/images/guide/konten-artikel-tambah.png',
