@@ -42,7 +42,7 @@
           { "data": "name", "width": "250px" },
           { "data": "fullname" },
           { "data": "status", "width": "50px" },
-          { "width": "40px" },
+          { "width": "70px" },
         ],
         "columnDefs": [{
           "targets": 0,
