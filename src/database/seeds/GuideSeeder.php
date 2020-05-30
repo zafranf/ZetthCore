@@ -160,7 +160,7 @@ class GuideSeeder extends Seeder
         $content = '<ul>';
         $content .= '<li><b>Kata Kunci</b>, gunakan kata kunci yang berfungsi untuk memudahkan web Anda ditemukan oleh pengunjung di mesin pencari seperti Google, Yahoo dan lain sebagainya. Berikan setidaknya minimal 3 kata kunci.</li>';
         $content .= '<li><b>Deskripsi</b>, berikan deskripsi singkat mengenai situs Anda.</li>';
-        $content .= '<li><b>Google Analytics</b>, sebuah alat milik Google untuk menganalisis situs Anda. Anda dapat menaruh kode unik dari Google untuk memakai layanan tersebut. Anda dapat merujuk ke halaman ini <a href="https://www.google.com/analytics/" target="_blank">Google Analytics</a> atau serahkan kepada administrator situs.</li>';
+        $content .= '<li><b>Google Analytics</b>, sebuah alat milik Google untuk menganalisis situs Anda. Anda dapat menaruh kode unik dari Google untuk memakai layanan tersebut. Anda dapat merujuk ke halaman ini <a href="https://www.google.com/analytics/" target="_blank">Google Analytics</a> untuk mendapatkan kode uniknya atau serahkan kepada pengembang situs.</li>';
         $content .= '</ul>';
         $setSiteMedsos = Guide::create([
             'title' => 'SEO (Search Engine Optimization)',
