@@ -136,8 +136,8 @@
             let render = data + '<br>';
             render += 'oleh <b>' + row.author.fullname + '</b><br>';
             /* render += 'pada <b>' + row.published_string + '</b><br>'; */
-            render += '<a class="zetth-share-button" onclick="_open_window(\''+sharelink+'/facebook'+'\')"><i class="fa fa-facebook-square"></i> Share</a>&nbsp;'; 
-            render += '<a class="zetth-share-button" onclick="_open_window(\''+sharelink+'/twitter'+'\')"><i class="fa fa-twitter"></i> Tweet</a>&nbsp;';
+            render += '<a class="zetth-share-button" onclick="_open_window(\''+sharelink+'/facebook'+'\')"><i class="fa fa-facebook-square"></i> Facebook</a>&nbsp;'; 
+            render += '<a class="zetth-share-button" onclick="_open_window(\''+sharelink+'/twitter'+'\')"><i class="fa fa-twitter"></i> Twitter</a>&nbsp;';
             render += '<a class="zetth-share-button" onclick="_open_window(\''+sharelink+'/whatsapp'+'\')"><i class="fa fa-whatsapp"></i> WhatsApp</a>&nbsp;';
             render += '<a class="zetth-share-button" onclick="_open_window(\''+sharelink+'/telegram'+'\')"><i class="fa fa-telegram">T</i> Telegram</a>&nbsp;';
             render += '<a id="btn-short-url-'+row.id+'" class="zetth-share-button btn-short-url" data-toggle="modal" data-url="'+posturl+'" data-target="#zetth-modal"><i class="fa fa-link"></i> Salin</a>';
@@ -162,7 +162,7 @@
           "render": function (data, type, row, meta) {
             var actions = '';
             var url = ADMIN_URL + "/content/posts/" + data;
-            var del = "_delete('" + url + "')";
+            var del = "_delete('" + url + "', 'artikel \\'"+ row.title +"\\'')";
             {!! getAccessButtons() !!}
             $('[data-toggle="tooltip"]').tooltip();
 
@@ -239,7 +239,7 @@
             "render": function (data, type, row, meta) {
               let actions = '';
               let url = ADMIN_URL + "/content/posts/" + data;
-              let del = "_delete('" + url + "')";
+              let del = "_delete('" + url + "', 'artikel \\'"+ row.title +"\\'')";
               {!! getAccessButtons() !!}
               $('[data-toggle="tooltip"]').tooltip();
 
