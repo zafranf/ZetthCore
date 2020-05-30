@@ -48,6 +48,7 @@
     }
     #guide-content {
         font-size: 16px;
+        background: white;
     }
     #guide-content .section img {
       border: 1px solid #e5e5e5;
