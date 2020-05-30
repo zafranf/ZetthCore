@@ -63,7 +63,7 @@
           "render": function (data, type, row, meta) {
             var actions = '';
             var url = ADMIN_URL + "/content/gallery/photos/" + data;
-            var del = "_delete('" + url + "')";
+            var del = "_delete('" + url + "', 'album \\'"+ row.name +"\\'')";
             {!! getAccessButtons() !!}
             $('[data-toggle="tooltip"]').tooltip();
 
@@ -102,7 +102,7 @@
             "render": function (data, type, row, meta) {
               let actions = '';
               let url = ADMIN_URL + "/content/gallery/photos/" + data;
-              let del = "_delete('" + url + "')";
+              let del = "_delete('" + url + "', 'album \\'"+ row.name +"\\'')";
               {!! getAccessButtons() !!}
               $('[data-toggle="tooltip"]').tooltip();
 

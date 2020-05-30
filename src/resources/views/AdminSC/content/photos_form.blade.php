@@ -43,7 +43,7 @@
               <input type="hidden" id="input_tmp">
               {{ isset($data->id) ? method_field('PUT') : '' }}
               {{ csrf_field() }}
-              {{ getButtonPost($current_url, true, $data->id ?? '') }}
+              {{ getButtonPost($current_url, true, $data->id ?? '', isset($data) ? 'album \\\'' . $data->name . '\\\'' : null) }}
             </div>
           </div>
         </div>

@@ -738,9 +738,9 @@ class GuideSeeder extends Seeder
             'status' => 'active',
         ]);
 
-        $galOrder = 1;
-        /* Galeri */
-        $content = '<p>Grup menu foto dan video.</p>';
+        $contGalOrder = 1;
+        /* Konten - Galeri */
+        $content = '<p>Kelola album foto dan video Anda di sini.</p>';
         $contGal = Guide::create([
             'title' => 'Galeri',
             'slug' => 'konten-galeri',
@@ -751,27 +751,49 @@ class GuideSeeder extends Seeder
             'status' => 'active',
         ]);
 
+        $contGalPhotoOrder = 1;
         /* Konten - Galeri - Foto */
-        $content = '<p>Daftar album foto. Rinciannya adalah kolom <code>Photo</code> preview foto album, kolom <code>Album</code> adalah nama album, kolom <code>Photos</code> merupakan jumlah foto yang ada di dalam album, kolom <code>Status</code> memperlihatkan apakah album aktif atau tidak, serta kolom <code>Action</code> yang merupakan tombol untuk mengatur album-album tersebut. Tombol <a class="btn btn-default btn-xs"><span class="fa fa-edit"><span></a> <code>Edit</code> untuk mengedit album dan tombol <a class="btn btn-default btn-xs"><span class="fa fa-trash"><span></a> <code>Delete</code> untuk menghapus album. Anda dapat menambahkannya dengan menekan tombol <a class="btn btn-default btn-sm">+ ADD</a>.</p>';
-        $content .= '<h3 id="album-add-edit">Add & Edit</h3>';
-        $content .= '<p><center><a href="/themes/admin/AdminSC/images/guide/011 Photo - 02 Overview Edit.png" target="_blank"><img src="/themes/admin/AdminSC/images/guide/011 Photo - 02 Overview Edit.png" width="100%"></a></center></p>';
-        $content .= '<ul>';
-        $content .= '<li><b>Album Name</b>, nama album yang dibuat.</li>';
-        $content .= '<li><b>Description</b>, berikan penjelasan singkat mengenai album tersebut.</li>';
-        $content .= '<li><b>Active</b>, centang untuk mengaktifkan album.</li>';
-        $content .= '<li><b>Photo Section</b>, klik pada tombol <code>Add Photo</code> untuk menambahkan foto-foto untuk album tersebut.</li>';
-        $content .= '</ul>';
-        $content .= '<h3 id="album-delete">Delete</h3>';
-        $content .= '<p><center><a href="/themes/admin/AdminSC/images/guide/011 Photo - 03 Overview Delete.png" target="_blank"><img src="/themes/admin/AdminSC/images/guide/011 Photo - 03 Overview Delete.png" width="100%"></a></center></p>';
-        $content .= '<p>Saat Anda menekan tombol hapus pada salah satu daftar album, akan ada pop-up konfirmasi sebelum data dihapus. Di dalam konfirmasi terdapat fitur <code>Delete Permanently</code> yang fungsinya adalah untuk benar-benar menghapus data dari database. Jika Anda mencentang fitur ini, maka data tidak dapat dikembalikan sama sekali jika suatu saat dibutuhkan.</p>';
+        $content = '<p>Daftar album foto. Kolom <code>Nama</code> sebagai nama album, kolom <code>Status</code> memperlihatkan apakah album foto aktif atau tidak, serta kolom <code>Akses</code> yang merupakan tombol untuk mengatur data album foto tersebut. Tombol <a class="btn btn-default btn-xs"><span class="fa fa-edit"><span></a> <code>Edit</code> untuk mengedit album foto dan tombol <a class="btn btn-default btn-xs"><span class="fa fa-trash"><span></a> <code>Hapus</code> untuk menghapus album foto. Anda dapat menambahkan album foto dengan menekan tombol <a class="btn btn-default btn-xs"><span class="fa fa-plus"></span> TAMBAH</a>.</p>';
         $contGalPhoto = Guide::create([
-            'cover' => '/themes/admin/AdminSC/images/guide/011-Photo-00-Overview.png',
+            'cover' => '/themes/admin/AdminSC/images/guide/konten-galeri-foto.png',
             'title' => 'Foto',
             'slug' => 'konten-galeri-foto',
             'content' => $content,
             'roles' => 'super,admin',
-            'order' => $galOrder++,
+            'order' => $contOrder++,
             'parent_id' => $contGal->id,
+            'status' => 'active',
+        ]);
+
+        /* Konten - Galeri - Foto - Tambah & Edit */
+        $content = 'Halaman untuk menambahkan atau mengedit data album foto. Anda juga dapat menghapus data dari album foto ini jika dalam mode edit.';
+        $content .= '<ul>';
+        $content .= '<li><b>Judul</b>, judul dari album foto.</li>';
+        $content .= '<li><b>Tautan</b>, tautan untuk album foto akan otomatis terisi ketika Anda mengetik judul tetapi Anda juga dapat langsung mengubahnya. Tidak dapat diubah ketika mode edit.</li>';
+        $content .= '<li><b>Konten</b>, ketikkan konten album foto Anda di sini. Anda dapat menformatnya sesuai kebutuhan untuk membuat konten lebih menarik dengan menggunakan bilah alat yang terdapat di atas kolom konten.</li>';
+        $content .= '<li><b>Aktif</b>, centang untuk mengaktifkan album foto.</li>';
+        $content .= '</ul>';
+        $contGalPhotoAdd = Guide::create([
+            'cover' => '/themes/admin/AdminSC/images/guide/konten-galeri-foto-tambah.png',
+            'title' => 'Tambah & Edit',
+            'slug' => 'konten-galeri-foto-tambahedit',
+            'content' => $content,
+            'roles' => 'super,admin',
+            'order' => $contGalPhotoOrder++,
+            'parent_id' => $contGalPhoto->id,
+            'status' => 'active',
+        ]);
+
+        /* Konten - Galeri - Foto - Hapus */
+        $content = '<p>Saat Anda menekan tombol hapus pada salah satu daftar album foto, akan muncul konfirmasi sebelum data dihapus untuk mencegah terjadinya kesalahan hapus data.</p>';
+        $contGalPhotoDel = Guide::create([
+            'cover' => '/themes/admin/AdminSC/images/guide/konten-galeri-foto-hapus.png',
+            'title' => 'Hapus',
+            'slug' => 'konten-galeri-foto-hapus',
+            'content' => $content,
+            'roles' => 'super,admin',
+            'order' => $contGalPhotoOrder++,
+            'parent_id' => $contGalPhoto->id,
             'status' => 'active',
         ]);
 
@@ -794,7 +816,7 @@ class GuideSeeder extends Seeder
             'slug' => 'konten-galeri-video',
             'content' => $content,
             'roles' => 'super,admin',
-            'order' => $galOrder++,
+            'order' => $contGalOrder++,
             'parent_id' => $contGal->id,
             'status' => 'active',
         ]);
