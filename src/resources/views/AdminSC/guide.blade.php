@@ -145,7 +145,7 @@
         var scrollPos = $('body>#guide-section').find($(this).attr('href')).offset().top;
         $('body,html').animate({
           scrollTop: scrollPos - 70
-        }, 0);
+        }, 500);
 
         return false;
       });
