@@ -50,7 +50,7 @@ class PostController extends AdminController
             'image',
             'mimes:jpeg,png,svg,webp',
             'max:' . $this->weight,
-            'dimensions:max_width=' . $this->width . ',max_height=' . $this->height . ',ratio:' . $this->ratio,
+            'dimensions:max_width=' . $this->width . ',max_height=' . $this->height . ',ratio=' . $this->ratio,
         ];
     }
 

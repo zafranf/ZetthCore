@@ -49,7 +49,7 @@ class BannerController extends AdminController
             'image',
             'mimes:jpeg,png,svg,webp',
             'max:' . $this->weight,
-            'dimensions:max_width=' . $this->width . ',max_height=' . $this->height . ',ratio:' . $this->ratio,
+            'dimensions:max_width=' . $this->width . ',max_height=' . $this->height . ',ratio=' . $this->ratio,
         ];
     }
 
@@ -251,7 +251,7 @@ class BannerController extends AdminController
             // 'image' => 'required',
         ];
         if (bool($r->input('only_image'))) {
-            unset($this->image_rule['required']);
+            unset($this->image_rule[0]);
             $validate = [
                 'image' => $this->image_rule,
             ];
