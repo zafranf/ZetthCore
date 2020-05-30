@@ -337,7 +337,7 @@ class BannerController extends AdminController
     public function datatable(Request $r)
     {
         /* get data */
-        $data = Banner::select('id', 'title', 'description', 'image', 'order', 'status')->orderBy('order', 'asc');
+        $data = Banner::select('id', 'title', 'description', \DB::raw('CONCAT("/storage/assets/images/banners/", image) as image'), 'order', 'status')->orderBy('order', 'asc');
 
         /* generate datatable */
         if ($r->ajax()) {

@@ -188,7 +188,7 @@ class GuideSeeder extends Seeder
         ]);
 
         /* Pengaturan - (Grup) Menu */
-        $content = '<p>Pengaturan menu situs. Kolom <code>Grup</code> sebagai nama grup menu, kolom <code>Deskripsi</code> merupakan penjelasan singkat mengenai grup menu, kolom <code>Status</code> memperlihatkan apakah grup menu aktif atau tidak, serta kolom <code>Akses</code> yang merupakan tombol untuk mengatur grup menu tersebut. Tombol <a class="btn btn-default btn-xs"><span class="fa fa-edit"><span></a> <code>Edit</code> untuk mengedit grup menu dan tombol <a class="btn btn-default btn-xs"><span class="fa fa-trash"><span></a> <code>Hapus</code> untuk menghapus grup menu. Anda dapat menambahkan grup menu dengan menekan tombol <a class="btn btn-default btn-xs"><span class="fa fa-plus"></span> TAMBAH</a>.</p>';
+        $content = '<p>Pengaturan menu situs. Kolom <code>Grup</code> sebagai nama grup menu, kolom <code>Deskripsi</code> merupakan penjelasan singkat mengenai grup menu, kolom <code>Status</code> memperlihatkan apakah grup menu aktif atau tidak, serta kolom <code>Akses</code> yang merupakan tombol untuk mengatur data grup menu tersebut. Tombol <a class="btn btn-default btn-xs"><span class="fa fa-edit"><span></a> <code>Edit</code> untuk mengedit grup menu dan tombol <a class="btn btn-default btn-xs"><span class="fa fa-trash"><span></a> <code>Hapus</code> untuk menghapus grup menu. Anda dapat menambahkan grup menu dengan menekan tombol <a class="btn btn-default btn-xs"><span class="fa fa-plus"></span> TAMBAH</a>.</p>';
         $setMenu = Guide::create([
             'cover' => '/themes/admin/AdminSC/images/guide/pengaturan-grupmenu-daftar.png',
             'title' => 'Menu (Grup)',
@@ -323,7 +323,7 @@ class GuideSeeder extends Seeder
 
         $setRoleOrder = 1;
         /* Pengaturan - Peran & Akses */
-        $content = '<p>Daftar peran untuk pengelompokan akses pengguna. Kolom <code>Peran</code> sebagai nama peram, kolom <code>Deskripsi</code> merupakan penjelasan singkat mengenai peran tersebut, kolom <code>Status</code> memperlihatkan apakah peran aktif atau tidak, serta kolom <code>Akses</code> yang merupakan tombol untuk mengatur peran dan akses tersebut. Tombol <a class="btn btn-default btn-xs"><span class="fa fa-edit"><span></a> <code>Edit</code> untuk mengedit peran dan tombol <a class="btn btn-default btn-xs"><span class="fa fa-trash"><span></a> <code>Hapus</code> untuk menghapus peran. Anda dapat menambahkan peran dengan menekan tombol <a class="btn btn-default btn-xs"><span class="fa fa-plus"></span> TAMBAH</a>.</p>';
+        $content = '<p>Daftar peran untuk pengelompokan akses pengguna. Kolom <code>Peran</code> sebagai nama peram, kolom <code>Deskripsi</code> merupakan penjelasan singkat mengenai peran tersebut, kolom <code>Status</code> memperlihatkan apakah peran aktif atau tidak, serta kolom <code>Akses</code> yang merupakan tombol untuk mengatur data peran tersebut. Tombol <a class="btn btn-default btn-xs"><span class="fa fa-edit"><span></a> <code>Edit</code> untuk mengedit peran dan tombol <a class="btn btn-default btn-xs"><span class="fa fa-trash"><span></a> <code>Hapus</code> untuk menghapus peran. Anda dapat menambahkan peran dengan menekan tombol <a class="btn btn-default btn-xs"><span class="fa fa-plus"></span> TAMBAH</a>.</p>';
         $setRole = Guide::create([
             'cover' => '/themes/admin/AdminSC/images/guide/pengaturan-peran.png',
             'title' => 'Peran dan Akses',
@@ -413,7 +413,7 @@ class GuideSeeder extends Seeder
             'status' => 'active',
         ]);
 
-        /* Data - Pengguna - Detail*/
+        /* Data - Pengguna - Detail */
         $content = '<p><i>Sedang dalam pengembangan..</i></p>';
         $dataUserDetail = Guide::create([
             'title' => 'Detail',
@@ -488,7 +488,7 @@ class GuideSeeder extends Seeder
 
         $dataCategoryOrder = 1;
         /* Data - Kategori */
-        $content = '<p>Daftar kategori untuk dipakai di artikel. Kolom <code>Kategori</code> sebagai nama tampilan kategori, kolom <code>Deskripsi</code> merupakan penjelasan singkat mengenai kategori tersebut, kolom <code>Status</code> memperlihatkan apakah kategori aktif atau tidak, serta kolom <code>Akses</code> yang merupakan tombol untuk mengatur kategori tersebut. Tombol <a class="btn btn-default btn-xs"><span class="fa fa-edit"><span></a> <code>Edit</code> untuk mengedit kategori dan tombol <a class="btn btn-default btn-xs"><span class="fa fa-trash"><span></a> <code>Hapus</code> untuk menghapus kategori. Anda dapat menambahkan kategori dengan menekan tombol <a class="btn btn-default btn-xs"><span class="fa fa-plus"></span> TAMBAH</a>.</p>';
+        $content = '<p>Daftar kategori untuk dipakai di artikel. Kolom <code>Kategori</code> sebagai nama tampilan kategori, kolom <code>Deskripsi</code> merupakan penjelasan singkat mengenai kategori tersebut, kolom <code>Status</code> memperlihatkan apakah kategori aktif atau tidak, serta kolom <code>Akses</code> yang merupakan tombol untuk mengatur data kategori tersebut. Tombol <a class="btn btn-default btn-xs"><span class="fa fa-edit"><span></a> <code>Edit</code> untuk mengedit kategori dan tombol <a class="btn btn-default btn-xs"><span class="fa fa-trash"><span></a> <code>Hapus</code> untuk menghapus kategori. Anda dapat menambahkan kategori dengan menekan tombol <a class="btn btn-default btn-xs"><span class="fa fa-plus"></span> TAMBAH</a>.</p>';
         $dataCategory = Guide::create([
             'cover' => '/themes/admin/AdminSC/images/guide/data-kategori.png',
             'title' => 'Kategori',
@@ -534,7 +534,7 @@ class GuideSeeder extends Seeder
 
         $dataLabelOrder = 1;
         /* Data - Label */
-        $content = '<p>Daftar label untuk dipakai di artikel. Kolom <code>Kategori</code> sebagai nama tampilan label, kolom <code>Deskripsi</code> merupakan penjelasan singkat mengenai label tersebut, kolom <code>Status</code> memperlihatkan apakah label aktif atau tidak, serta kolom <code>Akses</code> yang merupakan tombol untuk mengatur label tersebut. Tombol <a class="btn btn-default btn-xs"><span class="fa fa-edit"><span></a> <code>Edit</code> untuk mengedit label dan tombol <a class="btn btn-default btn-xs"><span class="fa fa-trash"><span></a> <code>Hapus</code> untuk menghapus label. Anda dapat menambahkan label dengan menekan tombol <a class="btn btn-default btn-xs"><span class="fa fa-plus"></span> TAMBAH</a>.</p>';
+        $content = '<p>Daftar label untuk dipakai di artikel. Kolom <code>Kategori</code> sebagai nama tampilan label, kolom <code>Deskripsi</code> merupakan penjelasan singkat mengenai label tersebut, kolom <code>Status</code> memperlihatkan apakah label aktif atau tidak, serta kolom <code>Akses</code> yang merupakan tombol untuk mengatur data label tersebut. Tombol <a class="btn btn-default btn-xs"><span class="fa fa-edit"><span></a> <code>Edit</code> untuk mengedit label dan tombol <a class="btn btn-default btn-xs"><span class="fa fa-trash"><span></a> <code>Hapus</code> untuk menghapus label. Anda dapat menambahkan label dengan menekan tombol <a class="btn btn-default btn-xs"><span class="fa fa-plus"></span> TAMBAH</a>.</p>';
         $dataLabel = Guide::create([
             'cover' => '/themes/admin/AdminSC/images/guide/data-label.png',
             'title' => 'Label',
@@ -577,9 +577,9 @@ class GuideSeeder extends Seeder
             'status' => 'active',
         ]);
 
-        $contentOrder = 1;
+        $contOrder = 1;
         /* Konten */
-        $content = '<p>Atur konten situs Anda melalui grup menu ini.</p>';
+        $content = '<p>Kelola konten situs Anda melalui grup menu ini.</p>';
         $cont = Guide::create([
             'title' => 'Konten',
             'slug' => 'konten',
@@ -589,30 +589,53 @@ class GuideSeeder extends Seeder
             'status' => 'active',
         ]);
 
+        $contBannerOrder = 1;
         /* Konten - Spanduk */
-        $content = '<p>Daftar banner halaman depan situs. Rinciannya adalah kolom <code>Image</code> merupakan preview dari gambar banner, kolom <code>Banner Name</code> sebagai nama tampilan banner, kolom <code>URL</code> merupakan URL yang mengarahkan banner tersebut, kolom <code>Status</code> memperlihatkan apakah banner aktif atau tidak, serta kolom <code>Action</code> yang merupakan tombol untuk mengatur banner-banner tersebut. Tombol <a class="btn btn-default btn-xs"><span class="fa fa-edit"><span></a> <code>Edit</code> untuk mengedit banner dan tombol <a class="btn btn-default btn-xs"><span class="fa fa-trash"><span></a> <code>Delete</code> untuk menghapus banner. Anda dapat menambahkannya dengan menekan tombol <a class="btn btn-default btn-sm">+ ADD</a>.</p>';
-        $content .= '<h3 id="banner-add-edit">Add & Edit</h3>';
-        $content .= '<p><center><a href="/themes/admin/AdminSC/images/guide/008 Banner - 02 Overview Edit.png" target="_blank"><img src="/themes/admin/AdminSC/images/guide/008 Banner - 02 Overview Edit.png" width="100%"></a></center></p>';
-        $content .= '<ul>';
-        $content .= '<li><b>Banner Image</b>, upload gambar banner Anda di sini. Harap ukuran gambar disesuaikan terlebih dahulu sebelum diupload.</li>';
-        $content .= '<li><b>Title</b>, berikan judul banner.</li>';
-        $content .= '<li><b>Description</b>, berikan sedikit penjelasan mengenai banner tersebut.</li>';
-        $content .= '<li><b>URL</b>, sebagai penghubung banner tersebut. Terdapat pilihan dari daftar <code>Page</code> dan juga <code>Article</code>. Anda juga dapat menggunakan tautan luar dengan memilih <code>External Link</code>, jangan lupa untuk menggunakan <code>http://</code> di awal URL.</li>';
-        $content .= '<li><b>Target</b>, <code>_self</code> untuk membuka tautan pada tab browser yang sedang aktif. <code>_blank</code> untuk membuka tautan dengan tab browser yang baru. <code>_parent</code> dan <code>_top</code> dapat digunakan jika situs berada di dalam iframe.</li>';
-        $content .= '<li><b>Active</b>, centang untuk mengaktifkan banner.</li>';
-        $content .= '<li><b>Image Only</b>, centang apabila hanya ingin menampilkan gambar banner saja (tanpa judul dan keterangan).</li>';
-        $content .= '</ul>';
-        $content .= '<h3 id="banner-delete">Delete</h3>';
-        $content .= '<p><center><a href="/themes/admin/AdminSC/images/guide/008 Banner - 03 Overview Delete.png" target="_blank"><img src="/themes/admin/AdminSC/images/guide/007 Tag - 03 Overview Delete.png" width="100%"></a></center></p>';
-        $content .= '<p>Saat Anda menekan tombol hapus pada salah satu daftar banner, akan ada pop-up konfirmasi sebelum data dihapus. Di dalam konfirmasi terdapat fitur <code>Delete Permanently</code> yang fungsinya adalah untuk benar-benar menghapus data dari database. Jika Anda mencentang fitur ini, maka data tidak dapat dikembalikan sama sekali jika suatu saat dibutuhkan.</p>';
+        $content = '<p>Daftar spanduk halaman depan situs. Kolom <code>Gambar</code> merupakan cuplikan dari gambar spanduk, kolom <code>Judul</code> sebagai judul spanduk, kolom <code>Status</code> memperlihatkan apakah spanduk aktif atau tidak, serta kolom <code>Akses</code> yang merupakan tombol untuk mengatur data spanduk tersebut. Tombol <a class="btn btn-default btn-xs"><span class="fa fa-edit"><span></a> <code>Edit</code> untuk mengedit label dan tombol <a class="btn btn-default btn-xs"><span class="fa fa-trash"><span></a> <code>Hapus</code> untuk menghapus label. Anda dapat menambahkan spanduk dengan menekan tombol <a class="btn btn-default btn-xs"><span class="fa fa-plus"></span> TAMBAH</a>.</p>';
+        $content .= '<p>Jika templat hanya membutuhkan 1 (satu) spanduk saja, maka otomatis akan menampilkan halaman <a onclick="$(\'a[href=\\\'#konten-spanduk-tambahedit\\\']\').click()" style="cursor:pointer;">Tambah & Edit Spanduk</a></p>';
         $contBanner = Guide::create([
-            'cover' => '/themes/admin/AdminSC/images/guide/008-Banner-00-Overview.png',
-            'title' => 'Spanduk',
+            'cover' => '/themes/admin/AdminSC/images/guide/konten-spanduk.png',
+            'title' => 'Spaduk',
             'slug' => 'konten-spanduk',
             'content' => $content,
-            'roles' => 'super,admin',
-            'order' => $dataOrder++,
+            'roles' => 'all',
+            'order' => $contOrder++,
             'parent_id' => $cont->id,
+            'status' => 'active',
+        ]);
+
+        /* Konten - Spanduk - Tambah & Edit */
+        $content = 'Halaman untuk menambahkan atau mengedit data spanduk. Anda juga dapat menghapus data dari halaman ini jika dalam mode edit.';
+        $content .= '<ul>';
+        $content .= '<li><b>Gambar Spanduk</b>, gambar yang akan ditampilkan di situs. Ukuran tergantung pada templat situs yang digunakan.</li>';
+        $content .= '<li><b>Judul</b>, judul utama dari spanduk.</li>';
+        $content .= '<li><b>Subjudul</b>, judul tambahan atau deskripsi singkat untuk detail spanduk.</li>';
+        $content .= '<li><b>Tautan</b>, sebagai penghubung menu tersebut. Terdapat pilihan dari daftar <code>Halaman</code> dan <code>Artikel</code>. Anda juga dapat menggunakan tautan luar dengan memilih <code>Tautan Luar</code>, pastikan selalu menggunakan <code>http://</code> atau <code>http://</code> di awal tautan.</li>';
+        $content .= '<li><b>Urutan</b>, sesuaikan urutan spanduk.</li>';
+        $content .= '<li><b>Aktif</b>, centang untuk mengaktifkan label.</li>';
+        $content .= '<li><b>Hanya Gambar</b>, centang jika hanya ingin menampilkan gambar (misal gambar sudah dilengkapi keterangan sehingga tidak perlu tambahan judul maupun subjudul).</li>';
+        $content .= '</ul>';
+        $contBannerAdd = Guide::create([
+            'cover' => '/themes/admin/AdminSC/images/guide/konten-spanduk-tambah.png',
+            'title' => 'Tambah & Edit',
+            'slug' => 'konten-spanduk-tambahedit',
+            'content' => $content,
+            'roles' => 'all',
+            'order' => $contBannerOrder++,
+            'parent_id' => $contBanner->id,
+            'status' => 'active',
+        ]);
+
+        /* Konten - Spanduk - Hapus */
+        $content = '<p>Saat Anda menekan tombol hapus pada salah satu daftar spanduk, akan muncul konfirmasi sebelum data dihapus untuk mencegah terjadinya kesalahan hapus data.</p>';
+        $contBannerDel = Guide::create([
+            'cover' => '/themes/admin/AdminSC/images/guide/konten-spanduk-hapus.png',
+            'title' => 'Hapus',
+            'slug' => 'konten-spanduk-hapus',
+            'content' => $content,
+            'roles' => 'all',
+            'order' => $contBannerOrder++,
+            'parent_id' => $contBanner->id,
             'status' => 'active',
         ]);
 

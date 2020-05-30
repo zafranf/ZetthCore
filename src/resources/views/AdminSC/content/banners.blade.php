@@ -7,6 +7,7 @@
         <tr>
           <td>No.</td>
           @if (app('is_desktop'))
+            <td>Gambar</td>
             <td>Judul</td>
             <td>Status</td>
           @else
@@ -38,6 +39,7 @@
         ],
         "columns": [
           { "width": "30px" },
+          { "data": "image", "width": "80px" },
           { "data": "title" },
           { "data": "status", "width": "50px" },
           { "width": "40px" },
@@ -50,20 +52,27 @@
             return meta.row + meta.settings._iDisplayStart + 1;
           }
         }, {
-          "targets": 2,
+          "targets": 1,
+          "data": 'image',
+          "sortable": false,
+          "render": function (data, type, row, meta) {
+            return '<img src="'+(data ? data : '{!! _url(adminPath() . "/themes/admin/AdminSC/images/no-image.png") !!}')+'" width="80px">';
+          }
+        }, {
+          "targets": 3,
           "data": 'status',
           "sortable": false,
           "render": function (data, type, row, meta) {
             return _get_status_text(data);
           }
         }, {
-          "targets": 3,
+          "targets": 4,
           "data": 'id',
           "sortable": false,
           "render": function (data, type, row, meta) {
             var actions = '';
             var url = ADMIN_URL + "/content/banners/" + data;
-            var del = "_delete('" + url + "')";
+            var del = "_delete('" + url + "', 'spanduk \\'"+ row.title +"\\'')";
             {!! getAccessButtons() !!}
             $('[data-toggle="tooltip"]').tooltip();
 
@@ -102,7 +111,7 @@
             "render": function (data, type, row, meta) {
               let actions = '';
               let url = ADMIN_URL + "/content/banners/" + data;
-              let del = "_delete('" + url + "')";
+              let del = "_delete('" + url + "', 'spanduk \\'"+ row.title +"\\'')";
               {!! getAccessButtons() !!}
               $('[data-toggle="tooltip"]').tooltip();
 
