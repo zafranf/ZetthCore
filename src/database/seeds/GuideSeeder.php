@@ -591,14 +591,14 @@ class GuideSeeder extends Seeder
 
         $contBannerOrder = 1;
         /* Konten - Spanduk */
-        $content = '<p>Daftar spanduk untuk halaman depan situs. Kolom <code>Gambar</code> merupakan cuplikan dari gambar spanduk, kolom <code>Judul</code> sebagai judul spanduk, kolom <code>Status</code> memperlihatkan apakah spanduk aktif atau tidak, serta kolom <code>Akses</code> yang merupakan tombol untuk mengatur data spanduk tersebut. Tombol <a class="btn btn-default btn-xs"><span class="fa fa-edit"><span></a> <code>Edit</code> untuk mengedit label dan tombol <a class="btn btn-default btn-xs"><span class="fa fa-trash"><span></a> <code>Hapus</code> untuk menghapus label. Anda dapat menambahkan spanduk dengan menekan tombol <a class="btn btn-default btn-xs"><span class="fa fa-plus"></span> TAMBAH</a>.</p>';
+        $content = '<p>Daftar spanduk untuk halaman depan situs. Kolom <code>Gambar</code> merupakan cuplikan dari gambar spanduk, kolom <code>Judul</code> sebagai judul spanduk, kolom <code>Status</code> memperlihatkan apakah spanduk aktif atau tidak, serta kolom <code>Akses</code> yang merupakan tombol untuk mengatur data spanduk tersebut. Tombol <a class="btn btn-default btn-xs"><span class="fa fa-edit"><span></a> <code>Edit</code> untuk mengedit spanduk dan tombol <a class="btn btn-default btn-xs"><span class="fa fa-trash"><span></a> <code>Hapus</code> untuk menghapus spanduk. Anda dapat menambahkan spanduk dengan menekan tombol <a class="btn btn-default btn-xs"><span class="fa fa-plus"></span> TAMBAH</a>.</p>';
         $content .= '<p>Jika templat hanya membutuhkan 1 (satu) spanduk saja, maka otomatis akan menampilkan halaman <a onclick="$(\'a[href=\\\'#konten-spanduk-tambahedit\\\']\').click()" style="cursor:pointer;">Tambah & Edit Spanduk</a></p>';
         $contBanner = Guide::create([
             'cover' => '/themes/admin/AdminSC/images/guide/konten-spanduk.png',
             'title' => 'Spanduk',
             'slug' => 'konten-spanduk',
             'content' => $content,
-            'roles' => 'all',
+            'roles' => 'super,admin',
             'order' => $contOrder++,
             'parent_id' => $cont->id,
             'status' => 'active',
@@ -620,7 +620,7 @@ class GuideSeeder extends Seeder
             'title' => 'Tambah & Edit',
             'slug' => 'konten-spanduk-tambahedit',
             'content' => $content,
-            'roles' => 'all',
+            'roles' => 'super,admin',
             'order' => $contBannerOrder++,
             'parent_id' => $contBanner->id,
             'status' => 'active',
@@ -633,42 +633,62 @@ class GuideSeeder extends Seeder
             'title' => 'Hapus',
             'slug' => 'konten-spanduk-hapus',
             'content' => $content,
-            'roles' => 'all',
+            'roles' => 'super,admin',
             'order' => $contBannerOrder++,
             'parent_id' => $contBanner->id,
             'status' => 'active',
         ]);
 
+        $contPostOrder = 1;
         /* Konten - Artikel */
-        $content = '<p>Daftar artikel situs. Rinciannya adalah kolom <code>Cover</code> untuk preview gambar sampul artikel, kolom <code>Title</code> berisi judul artikel, nama penulis, kategori dan juga tombol share, kolom <code>Stats</code> merupakan statistik kunjungan, like, share dan komentar, kolom <code>Status</code> memperlihatkan apakah artikel aktif atau tidak, serta kolom <code>Action</code> yang merupakan tombol untuk mengatur artikel-artikel tersebut. Tombol <a class="btn btn-default btn-xs"><span class="fa fa-list"><span></a> <code>Detail</code> untuk melihat artikel secara keseluruhan, tombol <a class="btn btn-default btn-xs"><span class="fa fa-edit"><span></a> <code>Edit</code> untuk mengedit artikel dan tombol <a class="btn btn-default btn-xs"><span class="fa fa-trash"><span></a> <code>Delete</code> untuk menghapus artikel. Anda dapat menambahkannya dengan menekan tombol <a class="btn btn-default btn-sm">+ ADD</a>.</p>';
-        $content .= '<h3 id="posts-detail">Detail</h3>';
-        $content .= '<p><center><a href="/themes/admin/AdminSC/images/guide/009 Post - 01 Overview Detail.png" target="_blank"><img src="/themes/admin/AdminSC/images/guide/009 Post - 01 Overview Detail.png" width="100%"></a></center></p>';
-        $content .= '<p>Merupakan detail tampilan dari artikel yang dipilih. Di dalamnya terdapat <code>Judul</code>, <code>Tanggal</code>, <code>Kategori</code>, tombol <code>Share</code> yang disertai tombol <code>Action</code>, <code>Konten</code> dan juga <code>Tag</code>.</p>';
-        $content .= '<h3 id="posts-add-edit">Add & Edit</h3>';
-        $content .= '<p><center><a href="/themes/admin/AdminSC/images/guide/009 Post - 03 Overview Edit.png" target="_blank"><img src="/themes/admin/AdminSC/images/guide/009 Post - 03 Overview Edit.png" width="100%"></a></center></p>';
-        $content .= '<ul>';
-        $content .= '<li><b>Title</b>, judul artikel yang akan ditulis.</li>';
-        $content .= '<li><b>Friendly URL</b>, URL untuk menuju artikel yang ditulis. Kolom ini menyesuaikan dengan apa yang ada di kolom judul, Anda perlu mengklik 2 (dua) kali untuk mengubahnya.</li>';
-        $content .= '<li><b>Excerption</b>, tambahkan kutipan jika ada.</li>';
-        $content .= '<li><b>Content</b>, ketikkan tulisan Anda disini. Gunakan toolbar untuk mempercantik tulisan Anda.</li>';
-        $content .= '<li><b>Cover</b>, akan lebih baik jika Anda menambahkan gambar untuk sampul artikel tersebut. <code>No Cover</code> untuk membatalkan penggunaan cover di artikel.</li>';
-        $content .= '<li><b>Category</b>, tambahkan kategori untuk artike] tersebut. Sifatnya adalah wajib isi. Ketikkan minimal 1 (satu) huruf untuk menampilkan daftar kategori yang tersedia. Anda bisa menambahkannya dengan menekan tombol <a class="btn btn-default btn-xs">+ Add</a>.</li>';
-        $content .= '<li><b>Tag</b>, tambahkan tag untuk artikel tersebut. Sifatnya adalah wajib isi. Ketikkan minimal 1 (satu) huruf untuk menampilkan daftar tag yang tersedia. Atau langsung tekan enter untuk menambahkan tag baru.</li>';
-        $content .= '<li><b>Time</b>, tanggal dan jam. Tentukan waktu untuk publish artikel.</li>';
-        $content .= '<li><b>Visitor</b>, fitur tambahan untuk artikel yang ditujukan untuk pengunjung. Fitur ini terintegrasi dengan pengaturan <code>Site Config</code>. Apabila salah satu dari pengaturan ini dan <code>Site Config</code> tersebut tidak aktif maka fitur ini tidak akan tampil.</li>';
-        $content .= '<li><b>Publish</b>, pilih <code>Yes</code> untuk langsung mempublish artikel.</li>';
-        $content .= '</ul>';
-        $content .= '<h3 id="posts-delete">Delete</h3>';
-        $content .= '<p><center><a href="/themes/admin/AdminSC/images/guide/009 Post - 04 Overview Delete.png" target="_blank"><img src="/themes/admin/AdminSC/images/guide/009 Post - 04 Overview Delete.png" width="100%"></a></center></p>';
-        $content .= '<p>Saat Anda menekan tombol hapus pada salah satu daftar artikel, akan ada pop-up konfirmasi sebelum data dihapus. Di dalam konfirmasi terdapat fitur <code>Delete Permanently</code> yang fungsinya adalah untuk benar-benar menghapus data dari database. Jika Anda mencentang fitur ini, maka data tidak dapat dikembalikan sama sekali jika suatu saat dibutuhkan.</p>';
+        $content = '<p>Daftar artikel situs. Kolom <code>Sampul</code> merupakan cuplikan dari gambar sampul, kolom <code>Judul</code> berisi judul artikel, nama penulis, dan juga tombol untuk sebar ke media sosial, kolom <code>Status</code> memperlihatkan apakah artikel aktif atau tidak, serta kolom <code>Akses</code> yang merupakan tombol untuk mengatur data artikel tersebut. Tombol <a class="btn btn-default btn-xs"><span class="fa fa-edit"><span></a> <code>Edit</code> untuk mengedit artikel dan tombol <a class="btn btn-default btn-xs"><span class="fa fa-trash"><span></a> <code>Hapus</code> untuk menghapus artikel. Anda dapat menambahkan artikel dengan menekan tombol <a class="btn btn-default btn-xs"><span class="fa fa-plus"></span> TAMBAH</a>.</p>';
         $contPost = Guide::create([
-            'cover' => '/themes/admin/AdminSC/images/guide/009-Post-00-Overview.png',
+            'cover' => '/themes/admin/AdminSC/images/guide/konten-artikel.png',
             'title' => 'Artikel',
             'slug' => 'konten-artikel',
             'content' => $content,
             'roles' => 'all',
-            'order' => $dataOrder++,
+            'order' => $contOrder++,
             'parent_id' => $cont->id,
+            'status' => 'active',
+        ]);
+
+        /* Konten - Artikel - Tambah & Edit */
+        $content = 'Halaman untuk menambahkan atau mengedit data artikel. Anda juga dapat menghapus data dari halaman ini jika dalam mode edit.';
+        $content .= '<ul>';
+        $content .= '<li><b>Judul</b>, judul dari artikel.</li>';
+        $content .= '<li><b>Tautan otomatis</b>, tautan untuk artikel akan otomatis muncul ketika Anda mengetik judul. Anda juga dapat mengubahnya dengan menekan kolom tautan 2 (dua) kali. Tidak dapat diubah ketika mode edit.</li>';
+        $content .= '<li><b>Kutipan/deskripsi</b>, sebagai kalimat atau paragraf cuplikan untuk muncul di halaman daftar artikel atau ketika disebar ke media sosial. Jika tidak diisi maka kutipan akan mengambil data dari konten.</li>';
+        $content .= '<li><b>Konten/tulisan</b>, ketikkan tulisan artikel Anda di sini. Anda dapat menformatnya sesuai kebutuhan dengan menggunakan bilah alat yang terdapat di atas kolom konten.</li>';
+        $content .= '<li><b>Sampul</b>, gambar yang akan ditampilkan di situs. Ukuran tergantung pada templat situs yang digunakan.</li>';
+        $content .= '<li><b>Keterangan Sampul</b>, keterangan untuk menjelaskan sampul secara singkat.</li>';
+        $content .= '<li><b>Pelanggan Artikel</b>, untuk memberikan notifikasi kepada pelanggan info/artikel yang sudah terdaftar dan aktif.</li>';
+        $content .= '<li><b>Pengunjung</b>, pilihan fitur untuk mendapatkan interaksi dari pengunjung situs terutama pembaca artikel. Fitur ini berhubungan juga dengan <a onclick="$(\'a[href=\\\'#pengaturan-situs-infoutama\\\']\').click()" style="cursor:pointer;">Pengaturan -> Situs -> Akses Pengunjung</a>.</li>';
+        $content .= '<li><b>Terbitkan</b>, Anda dapat langsung menerbitkan tulisan artikel Anda atau menyesuaikan waktu untuk menampilkan artikel. Anda juga bisa menyimpannya sebagai draf atau bahkan hanya sekedar catatan tanpa ada tujuan untuk ditampilkan.</li>';
+        $content .= '<li><b>Kategori</b>, ketikkan nama kategori untuk mencarinya atau Anda dapat menambahkan kategori baru dengan menekan tombol <a class="btn btn-default btn-xs"><span class="fa fa-plus"></span></a> kemudian isi data di jendela yang muncul.</li>';
+        $content .= '<li><b>Label</b>, Anda dapat langsung mencari dan menambahkannya jika label tidak tersedia sebelumnya hanya dengan menekan tombol <i>enter</i>.</li>';
+        $content .= '</ul>';
+        $contPostAdd = Guide::create([
+            'cover' => '/themes/admin/AdminSC/images/guide/konten-artikel-tambah.png',
+            'title' => 'Tambah & Edit',
+            'slug' => 'konten-artikel-tambahedit',
+            'content' => $content,
+            'roles' => 'all',
+            'order' => $contPostOrder++,
+            'parent_id' => $contPost->id,
+            'status' => 'active',
+        ]);
+
+        /* Konten - Artikel - Hapus */
+        $content = '<p>Saat Anda menekan tombol hapus pada salah satu daftar artikel, akan muncul konfirmasi sebelum data dihapus untuk mencegah terjadinya kesalahan hapus data.</p>';
+        $contPostDel = Guide::create([
+            'cover' => '/themes/admin/AdminSC/images/guide/konten-artikel-hapus.png',
+            'title' => 'Hapus',
+            'slug' => 'konten-artikel-hapus',
+            'content' => $content,
+            'roles' => 'all',
+            'order' => $contPostOrder++,
+            'parent_id' => $contPost->id,
             'status' => 'active',
         ]);
 
