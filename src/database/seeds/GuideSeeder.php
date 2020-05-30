@@ -20,7 +20,7 @@ class GuideSeeder extends Seeder
         /* Dasbor */
         $content = '<p>Ini adalah halaman utama panel admin. Fungsi halaman ini adalah untuk memonitor lalu lintas situs Anda. Anda dapat mengakses beberapa halaman dengan cepat melalui tombol pintas yang tersedia, melihat grafik kunjungan, melihat artikel populer dan juga komentar terbaru dari pengunjung Anda.</p>';
         $dash = Guide::create([
-            'cover' => '/themes/admin/AdminSC/images/help/dasbor.png',
+            'cover' => '/themes/admin/AdminSC/images/guide/dasbor.png',
             'title' => 'Dasbor',
             'slug' => 'dasbor',
             'content' => $content,
@@ -112,7 +112,7 @@ class GuideSeeder extends Seeder
         /* Pengaturan - Situs */
         $content = '<p>Atur situs Anda melalui halaman ini.</p>';
         $setSite = Guide::create([
-            'cover' => '/themes/admin/AdminSC/images/help/pengaturan-situs.png',
+            'cover' => '/themes/admin/AdminSC/images/guide/pengaturan-situs.png',
             'title' => 'Situs',
             'slug' => 'pengaturan-situs',
             'content' => $content,
@@ -189,11 +189,8 @@ class GuideSeeder extends Seeder
 
         /* Pengaturan - (Grup) Menu */
         $content = '<p>Pengaturan menu situs. Kolom <code>Grup</code> sebagai nama grup menu, kolom <code>Deskripsi</code> merupakan penjelasan singkat mengenai grup menu, kolom <code>Status</code> memperlihatkan apakah grup menu aktif atau tidak, serta kolom <code>Akses</code> yang merupakan tombol untuk mengatur grup menu tersebut. Tombol <a class="btn btn-default btn-xs"><span class="fa fa-edit"><span></a> <code>Edit</code> untuk mengedit grup menu dan tombol <a class="btn btn-default btn-xs"><span class="fa fa-trash"><span></a> <code>Hapus</code> untuk menghapus grup menu. Anda dapat menambahkan grup menu dengan menekan tombol <a class="btn btn-default btn-xs"><span class="fa fa-plus"></span> TAMBAH</a>.</p>';
-        $content .= '<h3 id="menu-delete">Hapus</h3>';
-        $content .= '<p><center><a href="/themes/admin/AdminSC/images/help/pengaturan-grupmenu-hapus.png" target="_blank"><img src="/themes/admin/AdminSC/images/help/pengaturan-grupmenu-hapus.png" width="100%"></a></center></p>';
-        $content .= '<p>Saat Anda menekan tombol hapus pada salah satu daftar menu, akan muncul konfirmasi sebelum data dihapus. Di dalam konfirmasi terdapat fitur <code>Delete Permanently</code> yang fungsinya adalah untuk benar-benar menghapus data dari database. Jika Anda mencentang fitur ini, maka data tidak dapat dikembalikan sama sekali jika suatu saat dibutuhkan.</p>';
         $setMenu = Guide::create([
-            'cover' => '/themes/admin/AdminSC/images/help/pengaturan-grupmenu-daftar.png',
+            'cover' => '/themes/admin/AdminSC/images/guide/pengaturan-grupmenu-daftar.png',
             'title' => 'Menu (Grup)',
             'slug' => 'pengaturan-grupmenu',
             'content' => $content,
@@ -205,9 +202,9 @@ class GuideSeeder extends Seeder
 
         $setMenuOrder = 1;
         /* Pengaturan - (Grup) Menu - Tambah */
-        $content = 'Halaman untuk menambahkan data grup menu.';
+        $content = 'Halaman untuk menambahkan data grup menu. Ketika data berhasil tersimpan, Anda dapat langsung menambahkan daftar menu pada grup tersebut. Lihat bagian <a onclick="$(\'a[href=\\\'#pengaturan-grupmenu-edit\\\']\').click()" style="cursor:pointer;">Edit Menu (Grup)</a>.';
         $setMenuAdd = Guide::create([
-            'cover' => '/themes/admin/AdminSC/images/help/pengaturan-grupmenu-tambah.png',
+            'cover' => '/themes/admin/AdminSC/images/guide/pengaturan-grupmenu-tambah.png',
             'title' => 'Tambah',
             'slug' => 'pengaturan-grupmenu-tambah',
             'content' => $content,
@@ -237,7 +234,7 @@ class GuideSeeder extends Seeder
         /* Pengaturan - (Grup) Menu - Edit */
         $content = 'Halaman untuk mengedit data grup menu. Anda juga dapat menghapusnya di sini dengan menekan tombol <a class="btn btn-danger btn-xs">Hapus</a>.';
         $setMenuEdit = Guide::create([
-            'cover' => '/themes/admin/AdminSC/images/help/pengaturan-grupmenu-edit.png',
+            'cover' => '/themes/admin/AdminSC/images/guide/pengaturan-grupmenu-edit.png',
             'title' => 'Edit',
             'slug' => 'pengaturan-grupmenu-edit',
             'content' => $content,
@@ -288,7 +285,7 @@ class GuideSeeder extends Seeder
         $content .= '<li><b>Aktif</b>, centang untuk mengaktifkan menu.</li>';
         $content .= '</ul>';
         $setMenuEditMenuAdd = Guide::create([
-            'cover' => '/themes/admin/AdminSC/images/help/pengaturan-grupmenu-edit-tambah.png',
+            'cover' => '/themes/admin/AdminSC/images/guide/pengaturan-grupmenu-edit-tambah.png',
             'title' => 'Tambah & Edit',
             'slug' => 'pengaturan-grupmenu-edit-daftarmenu-tambahedit',
             'content' => $content,
@@ -301,7 +298,7 @@ class GuideSeeder extends Seeder
         /* Pengaturan - (Grup) Menu - Edit - Hapus */
         $content = '<p>Saat Anda menekan tombol hapus pada salah satu daftar menu, akan muncul konfirmasi sebelum data dihapus untuk mencegah terjadinya kesalahan hapus data.</p>';
         $setMenuEditMenuDel = Guide::create([
-            'cover' => '/themes/admin/AdminSC/images/help/pengaturan-grupmenu-edit-hapus.png',
+            'cover' => '/themes/admin/AdminSC/images/guide/pengaturan-grupmenu-edit-hapus.png',
             'title' => 'Hapus',
             'slug' => 'pengaturan-grupmenu-edit-daftarmenu-hapus',
             'content' => $content,
@@ -314,7 +311,7 @@ class GuideSeeder extends Seeder
         /* Pengaturan - (Grup) Menu - Hapus */
         $content = '<p>Saat Anda menekan tombol hapus pada salah satu daftar grup menu, akan muncul konfirmasi sebelum data dihapus untuk mencegah terjadinya kesalahan hapus data.</p>';
         $setMenuDel = Guide::create([
-            'cover' => '/themes/admin/AdminSC/images/help/pengaturan-grupmenu-hapus.png',
+            'cover' => '/themes/admin/AdminSC/images/guide/pengaturan-grupmenu-hapus.png',
             'title' => 'Hapus',
             'slug' => 'pengaturan-grupmenu-hapus',
             'content' => $content,
@@ -325,25 +322,68 @@ class GuideSeeder extends Seeder
         ]);
 
         /* Pengaturan - Peran & Akses */
-        $content = '<p>Daftar grup untuk user. Rinciannya adalah kolom <code>Group Name</code> sebagai nama tampilan grup (<code>admin</code>, <code>author</code>, <code>editor</code> dan <code>user</code> merupakan grup default), kolom <code>Description</code> merupakan penjelasan singkat mengenai grup tersebut, kolom <code>Status</code> memperlihatkan apakah grup aktif atau tidak, serta kolom <code>Action</code> yang merupakan tombol untuk mengatur grup-grup tersebut. Tombol <a class="btn btn-default btn-xs"><span class="fa fa-edit"><span></a> <code>Edit</code> untuk mengedit grup dan tombol <a class="btn btn-default btn-xs"><span class="fa fa-trash"><span></a> <code>Delete</code> untuk menghapus grup. Anda dapat menambahkannya dengan menekan tombol <a class="btn btn-default btn-sm">+ ADD</a>.</p>';
-        $content .= '<h3 id="group-add-edit">Add & Edit</h3>';
-        $content .= '<p><center><a href="/themes/admin/AdminSC/images/help/004 Group - 02 Overview Edit.png" target="_blank"><img src="/themes/admin/AdminSC/images/help/004 Group - 02 Overview Edit.png" width="100%"></a></center></p>';
-        $content .= '<ul>';
-        $content .= '<li><b>Group Name</b>, nama grup yang akan tampil di situs.</li>';
-        $content .= '<li><b>Description</b>, berikan sedikit penjelasan mengenai grup tersebut.</li>';
-        $content .= '<li><b>Active</b>, centang untuk mengaktifkan grup.</li>';
-        $content .= '</ul>';
-        $content .= '<h3 id="group-delete">Delete</h3>';
-        $content .= '<p><center><a href="/themes/admin/AdminSC/images/help/004 Group - 03 Overview Delete.png" target="_blank"><img src="/themes/admin/AdminSC/images/help/004 Group - 03 Overview Delete.png" width="100%"></a></center></p>';
-        $content .= '<p>Saat Anda menekan tombol hapus pada salah satu daftar grup, akan ada pop-up konfirmasi sebelum data dihapus. Di dalam konfirmasi terdapat fitur <code>Delete Permanently</code> yang fungsinya adalah untuk benar-benar menghapus data dari database. Jika Anda mencentang fitur ini, maka data tidak dapat dikembalikan sama sekali jika suatu saat dibutuhkan.</p>';
+        $content = '<p>Daftar peran untuk pengelompokan akses pengguna. Kolom <code>Peran</code> sebagai nama peram, kolom <code>Deskripsi</code> merupakan penjelasan singkat mengenai peran tersebut, kolom <code>Status</code> memperlihatkan apakah peran aktif atau tidak, serta kolom <code>Akses</code> yang merupakan tombol untuk mengatur peran dan akses tersebut. Tombol <a class="btn btn-default btn-xs"><span class="fa fa-edit"><span></a> <code>Edit</code> untuk mengedit peran dan tombol <a class="btn btn-default btn-xs"><span class="fa fa-trash"><span></a> <code>Hapus</code> untuk menghapus peran. Anda dapat menambahkan peran dengan menekan tombol <a class="btn btn-default btn-sm"><span class="fa fa-plus"></span> TAMBAH</a>.</p>';
         $setRole = Guide::create([
-            'cover' => '/themes/admin/AdminSC/images/help/004-Role-00-Overview.png',
-            'title' => 'Peran & Akses',
-            'slug' => 'pengaturan-peran-akses',
+            'cover' => '/themes/admin/AdminSC/images/guide/pengaturan-peran.png',
+            'title' => 'Peran dan Akses',
+            'slug' => 'pengaturan-peran',
             'content' => $content,
             'roles' => 'super,admin',
             'order' => $setOrder++,
             'parent_id' => $set->id,
+            'status' => 'active',
+        ]);
+
+        $setRoleOrder = 1;
+        /* Pengaturan - Peran & Akses - Tambah */
+        $content = '<p>Halaman untuk menambahkan data peran. Ketika data berhasil tersimpan, Anda dapat langsung menambahkan akses pada peran tersebut. Lihat bagian <a onclick="$(\'a[href=\\\'#pengaturan-peran-edit\\\']\').click()" style="cursor:pointer;">Edit Peran</a>.</p>';
+        $content .= '<ul>';
+        $content .= '<li><b>Nama Peran</b>, nama peran yang akan digunakan.</li>';
+        $content .= '<li><b>Deskripsi</b>, berikan sedikit penjelasan mengenai peran tersebut.</li>';
+        $content .= '<li><b>Grup Menu</b>, grup menu yang dapat dikelola oleh pengguna yang memiliki peran tersebut. Anda dapat menambahkannya lebih dari 1 (satu).</li>';
+        $content .= '<li><b>Aktif</b>, centang untuk mengaktifkan peran.</li>';
+        $content .= '</ul>';
+        $data = Guide::create([
+            'cover' => '/themes/admin/AdminSC/images/guide/pengaturan-peran-tambah.png',
+            'title' => 'Tambah',
+            'slug' => 'pengaturan-peran-tambah',
+            'content' => $content,
+            'roles' => 'super,admin',
+            'order' => $setRoleOrder++,
+            'parent_id' => $setRole->id,
+            'status' => 'active',
+        ]);
+
+        /* Pengaturan - Peran & Akses - Edit */
+        $content = '<p>Halaman untuk mengedit data peran. Anda juga dapat menghapusnya di sini dengan menekan tombol <a class="btn btn-danger btn-xs">Hapus</a></p>';
+        $content .= '<ul>';
+        $content .= '<li><b>Nama Peran</b>, nama peran yang akan digunakan.</li>';
+        $content .= '<li><b>Deskripsi</b>, berikan sedikit penjelasan mengenai peran tersebut.</li>';
+        $content .= '<li><b>Grup Menu</b>, grup menu yang dapat dikelola oleh pengguna yang memiliki peran tersebut. Anda dapat menambahkannya lebih dari 1 (satu).</li>';
+        $content .= '<li><b>Aktif</b>, centang untuk mengaktifkan peran.</li>';
+        $content .= '</ul>';
+        $content .= '<p>Anda dapat menentukan akses mana saja yang dapat diberikan kepada peran tersebut dengan mencentang daftar akses pada kolom <b>Akses</b>.</p>';
+        $data = Guide::create([
+            'cover' => '/themes/admin/AdminSC/images/guide/pengaturan-peran-edit.png',
+            'title' => 'Edit',
+            'slug' => 'pengaturan-peran-edit',
+            'content' => $content,
+            'roles' => 'super,admin',
+            'order' => $setRoleOrder++,
+            'parent_id' => $setRole->id,
+            'status' => 'active',
+        ]);
+
+        /* Pengaturan - Peran & Akses - Hapus */
+        $content = '<p>Saat Anda menekan tombol hapus pada salah satu daftar peran, akan muncul konfirmasi sebelum data dihapus untuk mencegah terjadinya kesalahan hapus data.</p>';
+        $data = Guide::create([
+            'cover' => '/themes/admin/AdminSC/images/guide/pengaturan-peran-hapus.png',
+            'title' => 'Hapus',
+            'slug' => 'pengaturan-peran-hapus',
+            'content' => $content,
+            'roles' => 'super,admin',
+            'order' => $setRoleOrder++,
+            'parent_id' => $setRole->id,
             'status' => 'active',
         ]);
 
@@ -362,7 +402,7 @@ class GuideSeeder extends Seeder
         /* Data - Pengguna*/
         $content = '<p>Daftar user situs baik pengurus maupun member. Rinciannya adalah kolom <code>Photo</code> untuk menampilkan foto user, <code>Username</code> menampilkan nama login user, kolom <code>Fullname</code> merupakan nama lengkap user, kolom <code>Email</code> merupakan alamat email user untuk kepentingan komunikasi melalui email, kolom <code>Status</code> memperlihatkan apakah user aktif atau tidak, serta kolom <code>Action</code> yang merupakan tombol untuk mengatur user-user tersebut. Tombol <a class="btn btn-default btn-xs"><span class="fa fa-edit"><span></a> <code>Edit</code> untuk mengedit user dan tombol <a class="btn btn-default btn-xs"><span class="fa fa-trash"><span></a> <code>Delete</code> untuk menghapus user. Anda dapat menambahkannya dengan menekan tombol <a class="btn btn-default btn-sm">+ ADD</a>.</p>';
         $content .= '<h3 id="user-add-edit">Add & Edit</h3>';
-        $content .= '<p><center><a href="/themes/admin/AdminSC/images/help/005 User - 02 Overview Edit.png" target="_blank"><img src="/themes/admin/AdminSC/images/help/005 User - 02 Overview Edit.png" width="100%"></a></center></p>';
+        $content .= '<p><center><a href="/themes/admin/AdminSC/images/guide/005 User - 02 Overview Edit.png" target="_blank"><img src="/themes/admin/AdminSC/images/guide/005 User - 02 Overview Edit.png" width="100%"></a></center></p>';
         $content .= '<h4 id="user-main-info">Main Info</h4>';
         $content .= '<ul>';
         $content .= '<li><b>Username</b>, nama yang akan digunakan untuk login. Maksimal 20 karakter dan tidak dapat diubah apabila data sudah disimpan.</li>';
@@ -378,10 +418,10 @@ class GuideSeeder extends Seeder
         $content .= '<h4 id="user-social-media">Social Media</h4>';
         $content .= 'Sebagai daftar akun social media user. Klik tombol <a class="btn btn-default btn-xs">+ Add</a> untuk menambahkan akun social media lainnya.';
         $content .= '<h3 id="user-delete">Delete</h3>';
-        $content .= '<p><center><a href="/themes/admin/AdminSC/images/help/005 User - 03 Overview Delete.png" target="_blank"><img src="/themes/admin/AdminSC/images/help/005 User - 03 Overview Delete.png" width="100%"></a></center></p>';
+        $content .= '<p><center><a href="/themes/admin/AdminSC/images/guide/005 User - 03 Overview Delete.png" target="_blank"><img src="/themes/admin/AdminSC/images/guide/005 User - 03 Overview Delete.png" width="100%"></a></center></p>';
         $content .= '<p>Saat Anda menekan tombol hapus pada salah satu daftar user, akan ada pop-up konfirmasi sebelum data dihapus. Di dalam konfirmasi terdapat fitur <code>Delete Permanently</code> yang fungsinya adalah untuk benar-benar menghapus data dari database. Jika Anda mencentang fitur ini, maka data tidak dapat dikembalikan sama sekali jika suatu saat dibutuhkan.</p>';
         $dataUser = Guide::create([
-            'cover' => '/themes/admin/AdminSC/images/help/005-User-00-Overview.png',
+            'cover' => '/themes/admin/AdminSC/images/guide/005-User-00-Overview.png',
             'title' => 'Pengguna',
             'slug' => 'data-pengguna',
             'content' => $content,
@@ -394,7 +434,7 @@ class GuideSeeder extends Seeder
         /* Data - Kategori */
         $content = '<p>Daftar kategori artikel. Rinciannya adalah kolom <code>Category</code> sebagai nama tampilan kategori (<code>Uncategorized</code> merupakan kategori default), kolom <code>Description</code> merupakan penjelasan singkat mengenai kategori tersebut, kolom <code>Parent</code> merupakan atasan dari (sub)kategori, kolom <code>Status</code> memperlihatkan apakah kategori aktif atau tidak, serta kolom <code>Action</code> yang merupakan tombol untuk mengatur kategori-kategori tersebut. Tombol <a class="btn btn-default btn-xs"><span class="fa fa-edit"><span></a> <code>Edit</code> untuk mengedit kategori dan tombol <a class="btn btn-default btn-xs"><span class="fa fa-trash"><span></a> <code>Delete</code> untuk menghapus kategori. Anda dapat menambahkannya dengan menekan tombol <a class="btn btn-default btn-sm">+ ADD</a>.</p>';
         $content .= '<h3 id="categories-add-edit">Add & Edit</h3>';
-        $content .= '<p><center><a href="/themes/admin/AdminSC/images/help/006 Category - 02 Overview Edit.png" target="_blank"><img src="/themes/admin/AdminSC/images/help/006 Category - 02 Overview Edit.png" width="100%"></a></center></p>';
+        $content .= '<p><center><a href="/themes/admin/AdminSC/images/guide/006 Category - 02 Overview Edit.png" target="_blank"><img src="/themes/admin/AdminSC/images/guide/006 Category - 02 Overview Edit.png" width="100%"></a></center></p>';
         $content .= '<ul>';
         $content .= '<li><b>Category Name</b>, nama kategori yang akan tampil di situs.</li>';
         $content .= '<li><b>Description</b>, berikan sedikit penjelasan mengenai kategori tersebut.</li>';
@@ -402,10 +442,10 @@ class GuideSeeder extends Seeder
         $content .= '<li><b>Active</b>, centang untuk mengaktifkan kategori.</li>';
         $content .= '</ul>';
         $content .= '<h3 id="categories-delete">Delete</h3>';
-        $content .= '<p><center><a href="/themes/admin/AdminSC/images/help/006 Category - 03 Overview Delete.png" target="_blank"><img src="/themes/admin/AdminSC/images/help/006 Category - 03 Overview Delete.png" width="100%"></a></center></p>';
+        $content .= '<p><center><a href="/themes/admin/AdminSC/images/guide/006 Category - 03 Overview Delete.png" target="_blank"><img src="/themes/admin/AdminSC/images/guide/006 Category - 03 Overview Delete.png" width="100%"></a></center></p>';
         $content .= '<p>Saat Anda menekan tombol hapus pada salah satu daftar kategori, akan ada pop-up konfirmasi sebelum data dihapus. Di dalam konfirmasi terdapat fitur <code>Delete Permanently</code> yang fungsinya adalah untuk benar-benar menghapus data dari database. Jika Anda mencentang fitur ini, maka data tidak dapat dikembalikan sama sekali jika suatu saat dibutuhkan.</p>';
         $dataCategory = Guide::create([
-            'cover' => '/themes/admin/AdminSC/images/help/006-Category-00-Overview.png',
+            'cover' => '/themes/admin/AdminSC/images/guide/006-Category-00-Overview.png',
             'title' => 'Kategori',
             'slug' => 'data-kategori',
             'content' => $content,
@@ -418,17 +458,17 @@ class GuideSeeder extends Seeder
         /* Data - Label */
         $content = '<p>Daftar tag artikel. Rinciannya adalah kolom <code>Tag</code> sebagai nama tampilan tag, kolom <code>Description</code> merupakan penjelasan singkat mengenai tag tersebut, kolom <code>Status</code> memperlihatkan apakah tag aktif atau tidak, serta kolom <code>Action</code> yang merupakan tombol untuk mengatur tag-tag tersebut. Tombol <a class="btn btn-default btn-xs"><span class="fa fa-edit"><span></a> <code>Edit</code> untuk mengedit tag dan tombol <a class="btn btn-default btn-xs"><span class="fa fa-trash"><span></a> <code>Delete</code> untuk menghapus tag. Anda dapat menambahkannya dengan menekan tombol <a class="btn btn-default btn-sm">+ ADD</a>.</p>';
         $content .= '<h3 id="tags-add-edit">Add & Edit</h3>';
-        $content .= '<p><center><a href="/themes/admin/AdminSC/images/help/007 Tag - 02 Overview Edit.png" target="_blank"><img src="/themes/admin/AdminSC/images/help/007 Tag - 02 Overview Edit.png" width="100%"></a></center></p>';
+        $content .= '<p><center><a href="/themes/admin/AdminSC/images/guide/007 Tag - 02 Overview Edit.png" target="_blank"><img src="/themes/admin/AdminSC/images/guide/007 Tag - 02 Overview Edit.png" width="100%"></a></center></p>';
         $content .= '<ul>';
         $content .= '<li><b>Tag Name</b>, nama tag yang akan tampil di situs.</li>';
         $content .= '<li><b>Description</b>, berikan sedikit penjelasan mengenai tag tersebut.</li>';
         $content .= '<li><b>Active</b>, centang untuk mengaktifkan tag.</li>';
         $content .= '</ul>';
         $content .= '<h3 id="tags-delete">Delete</h3>';
-        $content .= '<p><center><a href="/themes/admin/AdminSC/images/help/007 Tag - 03 Overview Delete.png" target="_blank"><img src="/themes/admin/AdminSC/images/help/007 Tag - 03 Overview Delete.png" width="100%"></a></center></p>';
+        $content .= '<p><center><a href="/themes/admin/AdminSC/images/guide/007 Tag - 03 Overview Delete.png" target="_blank"><img src="/themes/admin/AdminSC/images/guide/007 Tag - 03 Overview Delete.png" width="100%"></a></center></p>';
         $content .= '<p>Saat Anda menekan tombol hapus pada salah satu daftar tag, akan ada pop-up konfirmasi sebelum data dihapus. Di dalam konfirmasi terdapat fitur <code>Delete Permanently</code> yang fungsinya adalah untuk benar-benar menghapus data dari database. Jika Anda mencentang fitur ini, maka data tidak dapat dikembalikan sama sekali jika suatu saat dibutuhkan.</p>';
         $dataTag = Guide::create([
-            'cover' => '/themes/admin/AdminSC/images/help/007-Tag-00-Overview.png',
+            'cover' => '/themes/admin/AdminSC/images/guide/007-Tag-00-Overview.png',
             'title' => 'Label',
             'slug' => 'data-label',
             'content' => $content,
@@ -453,7 +493,7 @@ class GuideSeeder extends Seeder
         /* Konten - Spanduk */
         $content = '<p>Daftar banner halaman depan situs. Rinciannya adalah kolom <code>Image</code> merupakan preview dari gambar banner, kolom <code>Banner Name</code> sebagai nama tampilan banner, kolom <code>URL</code> merupakan URL yang mengarahkan banner tersebut, kolom <code>Status</code> memperlihatkan apakah banner aktif atau tidak, serta kolom <code>Action</code> yang merupakan tombol untuk mengatur banner-banner tersebut. Tombol <a class="btn btn-default btn-xs"><span class="fa fa-edit"><span></a> <code>Edit</code> untuk mengedit banner dan tombol <a class="btn btn-default btn-xs"><span class="fa fa-trash"><span></a> <code>Delete</code> untuk menghapus banner. Anda dapat menambahkannya dengan menekan tombol <a class="btn btn-default btn-sm">+ ADD</a>.</p>';
         $content .= '<h3 id="banner-add-edit">Add & Edit</h3>';
-        $content .= '<p><center><a href="/themes/admin/AdminSC/images/help/008 Banner - 02 Overview Edit.png" target="_blank"><img src="/themes/admin/AdminSC/images/help/008 Banner - 02 Overview Edit.png" width="100%"></a></center></p>';
+        $content .= '<p><center><a href="/themes/admin/AdminSC/images/guide/008 Banner - 02 Overview Edit.png" target="_blank"><img src="/themes/admin/AdminSC/images/guide/008 Banner - 02 Overview Edit.png" width="100%"></a></center></p>';
         $content .= '<ul>';
         $content .= '<li><b>Banner Image</b>, upload gambar banner Anda di sini. Harap ukuran gambar disesuaikan terlebih dahulu sebelum diupload.</li>';
         $content .= '<li><b>Title</b>, berikan judul banner.</li>';
@@ -464,10 +504,10 @@ class GuideSeeder extends Seeder
         $content .= '<li><b>Image Only</b>, centang apabila hanya ingin menampilkan gambar banner saja (tanpa judul dan keterangan).</li>';
         $content .= '</ul>';
         $content .= '<h3 id="banner-delete">Delete</h3>';
-        $content .= '<p><center><a href="/themes/admin/AdminSC/images/help/008 Banner - 03 Overview Delete.png" target="_blank"><img src="/themes/admin/AdminSC/images/help/007 Tag - 03 Overview Delete.png" width="100%"></a></center></p>';
+        $content .= '<p><center><a href="/themes/admin/AdminSC/images/guide/008 Banner - 03 Overview Delete.png" target="_blank"><img src="/themes/admin/AdminSC/images/guide/007 Tag - 03 Overview Delete.png" width="100%"></a></center></p>';
         $content .= '<p>Saat Anda menekan tombol hapus pada salah satu daftar banner, akan ada pop-up konfirmasi sebelum data dihapus. Di dalam konfirmasi terdapat fitur <code>Delete Permanently</code> yang fungsinya adalah untuk benar-benar menghapus data dari database. Jika Anda mencentang fitur ini, maka data tidak dapat dikembalikan sama sekali jika suatu saat dibutuhkan.</p>';
         $contBanner = Guide::create([
-            'cover' => '/themes/admin/AdminSC/images/help/008-Banner-00-Overview.png',
+            'cover' => '/themes/admin/AdminSC/images/guide/008-Banner-00-Overview.png',
             'title' => 'Spanduk',
             'slug' => 'konten-spanduk',
             'content' => $content,
@@ -480,10 +520,10 @@ class GuideSeeder extends Seeder
         /* Konten - Artikel */
         $content = '<p>Daftar artikel situs. Rinciannya adalah kolom <code>Cover</code> untuk preview gambar sampul artikel, kolom <code>Title</code> berisi judul artikel, nama penulis, kategori dan juga tombol share, kolom <code>Stats</code> merupakan statistik kunjungan, like, share dan komentar, kolom <code>Status</code> memperlihatkan apakah artikel aktif atau tidak, serta kolom <code>Action</code> yang merupakan tombol untuk mengatur artikel-artikel tersebut. Tombol <a class="btn btn-default btn-xs"><span class="fa fa-list"><span></a> <code>Detail</code> untuk melihat artikel secara keseluruhan, tombol <a class="btn btn-default btn-xs"><span class="fa fa-edit"><span></a> <code>Edit</code> untuk mengedit artikel dan tombol <a class="btn btn-default btn-xs"><span class="fa fa-trash"><span></a> <code>Delete</code> untuk menghapus artikel. Anda dapat menambahkannya dengan menekan tombol <a class="btn btn-default btn-sm">+ ADD</a>.</p>';
         $content .= '<h3 id="posts-detail">Detail</h3>';
-        $content .= '<p><center><a href="/themes/admin/AdminSC/images/help/009 Post - 01 Overview Detail.png" target="_blank"><img src="/themes/admin/AdminSC/images/help/009 Post - 01 Overview Detail.png" width="100%"></a></center></p>';
+        $content .= '<p><center><a href="/themes/admin/AdminSC/images/guide/009 Post - 01 Overview Detail.png" target="_blank"><img src="/themes/admin/AdminSC/images/guide/009 Post - 01 Overview Detail.png" width="100%"></a></center></p>';
         $content .= '<p>Merupakan detail tampilan dari artikel yang dipilih. Di dalamnya terdapat <code>Judul</code>, <code>Tanggal</code>, <code>Kategori</code>, tombol <code>Share</code> yang disertai tombol <code>Action</code>, <code>Konten</code> dan juga <code>Tag</code>.</p>';
         $content .= '<h3 id="posts-add-edit">Add & Edit</h3>';
-        $content .= '<p><center><a href="/themes/admin/AdminSC/images/help/009 Post - 03 Overview Edit.png" target="_blank"><img src="/themes/admin/AdminSC/images/help/009 Post - 03 Overview Edit.png" width="100%"></a></center></p>';
+        $content .= '<p><center><a href="/themes/admin/AdminSC/images/guide/009 Post - 03 Overview Edit.png" target="_blank"><img src="/themes/admin/AdminSC/images/guide/009 Post - 03 Overview Edit.png" width="100%"></a></center></p>';
         $content .= '<ul>';
         $content .= '<li><b>Title</b>, judul artikel yang akan ditulis.</li>';
         $content .= '<li><b>Friendly URL</b>, URL untuk menuju artikel yang ditulis. Kolom ini menyesuaikan dengan apa yang ada di kolom judul, Anda perlu mengklik 2 (dua) kali untuk mengubahnya.</li>';
@@ -497,10 +537,10 @@ class GuideSeeder extends Seeder
         $content .= '<li><b>Publish</b>, pilih <code>Yes</code> untuk langsung mempublish artikel.</li>';
         $content .= '</ul>';
         $content .= '<h3 id="posts-delete">Delete</h3>';
-        $content .= '<p><center><a href="/themes/admin/AdminSC/images/help/009 Post - 04 Overview Delete.png" target="_blank"><img src="/themes/admin/AdminSC/images/help/009 Post - 04 Overview Delete.png" width="100%"></a></center></p>';
+        $content .= '<p><center><a href="/themes/admin/AdminSC/images/guide/009 Post - 04 Overview Delete.png" target="_blank"><img src="/themes/admin/AdminSC/images/guide/009 Post - 04 Overview Delete.png" width="100%"></a></center></p>';
         $content .= '<p>Saat Anda menekan tombol hapus pada salah satu daftar artikel, akan ada pop-up konfirmasi sebelum data dihapus. Di dalam konfirmasi terdapat fitur <code>Delete Permanently</code> yang fungsinya adalah untuk benar-benar menghapus data dari database. Jika Anda mencentang fitur ini, maka data tidak dapat dikembalikan sama sekali jika suatu saat dibutuhkan.</p>';
         $contPost = Guide::create([
-            'cover' => '/themes/admin/AdminSC/images/help/009-Post-00-Overview.png',
+            'cover' => '/themes/admin/AdminSC/images/guide/009-Post-00-Overview.png',
             'title' => 'Artikel',
             'slug' => 'konten-artikel',
             'content' => $content,
@@ -513,7 +553,7 @@ class GuideSeeder extends Seeder
         /* Konten - Halaman */
         $content = '<p>Page merupakan halaman tambahan untuk pendukung situs. Rinciannya adalah kolom <code>Page Title</code> sebagai nama tampilan page (<code>About</code> merupakan page default), kolom <code>URL</code> merupakan URL yang mengarahkan page tersebut, kolom <code>Status</code> memperlihatkan apakah page aktif atau tidak, serta kolom <code>Action</code> yang merupakan tombol untuk mengatur page-page tersebut. Tombol <a class="btn btn-default btn-xs"><span class="fa fa-edit"><span></a> <code>Edit</code> untuk mengedit page dan tombol <a class="btn btn-default btn-xs"><span class="fa fa-trash"><span></a> <code>Delete</code> untuk menghapus page. Anda dapat menambahkannya dengan menekan tombol <a class="btn btn-default btn-sm">+ ADD</a>.</p>';
         $content .= '<h3 id="page-add-edit">Add & Edit</h3>';
-        $content .= '<p><center><a href="/themes/admin/AdminSC/images/help/010 Page - 02 Overview Edit.png" target="_blank"><img src="/themes/admin/AdminSC/images/help/010 Page - 02 Overview Edit.png" width="100%"></a></center></p>';
+        $content .= '<p><center><a href="/themes/admin/AdminSC/images/guide/010 Page - 02 Overview Edit.png" target="_blank"><img src="/themes/admin/AdminSC/images/guide/010 Page - 02 Overview Edit.png" width="100%"></a></center></p>';
         $content .= '<ul>';
         $content .= '<li><b>Page Title</b>, judul halaman yang dibuat.</li>';
         $content .= '<li><b>URL Name</b>, sebagai penghubung page tersebut. Ini akan muncul di daftar URL menu bagian Page.</li>';
@@ -521,10 +561,10 @@ class GuideSeeder extends Seeder
         $content .= '<li><b>Active</b>, centang untuk mengaktifkan page.</li>';
         $content .= '</ul>';
         $content .= '<h3 id="page-delete">Delete</h3>';
-        $content .= '<p><center><a href="/themes/admin/AdminSC/images/help/010 Page - 03 Overview Delete.png" target="_blank"><img src="/themes/admin/AdminSC/images/help/010 Page - 03 Overview Delete.png" width="100%"></a></center></p>';
+        $content .= '<p><center><a href="/themes/admin/AdminSC/images/guide/010 Page - 03 Overview Delete.png" target="_blank"><img src="/themes/admin/AdminSC/images/guide/010 Page - 03 Overview Delete.png" width="100%"></a></center></p>';
         $content .= '<p>Saat Anda menekan tombol hapus pada salah satu daftar page, akan ada pop-up konfirmasi sebelum data dihapus. Di dalam konfirmasi terdapat fitur <code>Delete Permanently</code> yang fungsinya adalah untuk benar-benar menghapus data dari database. Jika Anda mencentang fitur ini, maka data tidak dapat dikembalikan sama sekali jika suatu saat dibutuhkan.</p>';
         $contPage = Guide::create([
-            'cover' => '/themes/admin/AdminSC/images/help/010-Page-00-Overview.png',
+            'cover' => '/themes/admin/AdminSC/images/guide/010-Page-00-Overview.png',
             'title' => 'Halaman',
             'slug' => 'konten-halaman',
             'content' => $content,
@@ -550,7 +590,7 @@ class GuideSeeder extends Seeder
         /* Konten - Galeri - Foto */
         $content = '<p>Daftar album foto. Rinciannya adalah kolom <code>Photo</code> preview foto album, kolom <code>Album</code> adalah nama album, kolom <code>Photos</code> merupakan jumlah foto yang ada di dalam album, kolom <code>Status</code> memperlihatkan apakah album aktif atau tidak, serta kolom <code>Action</code> yang merupakan tombol untuk mengatur album-album tersebut. Tombol <a class="btn btn-default btn-xs"><span class="fa fa-edit"><span></a> <code>Edit</code> untuk mengedit album dan tombol <a class="btn btn-default btn-xs"><span class="fa fa-trash"><span></a> <code>Delete</code> untuk menghapus album. Anda dapat menambahkannya dengan menekan tombol <a class="btn btn-default btn-sm">+ ADD</a>.</p>';
         $content .= '<h3 id="album-add-edit">Add & Edit</h3>';
-        $content .= '<p><center><a href="/themes/admin/AdminSC/images/help/011 Photo - 02 Overview Edit.png" target="_blank"><img src="/themes/admin/AdminSC/images/help/011 Photo - 02 Overview Edit.png" width="100%"></a></center></p>';
+        $content .= '<p><center><a href="/themes/admin/AdminSC/images/guide/011 Photo - 02 Overview Edit.png" target="_blank"><img src="/themes/admin/AdminSC/images/guide/011 Photo - 02 Overview Edit.png" width="100%"></a></center></p>';
         $content .= '<ul>';
         $content .= '<li><b>Album Name</b>, nama album yang dibuat.</li>';
         $content .= '<li><b>Description</b>, berikan penjelasan singkat mengenai album tersebut.</li>';
@@ -558,10 +598,10 @@ class GuideSeeder extends Seeder
         $content .= '<li><b>Photo Section</b>, klik pada tombol <code>Add Photo</code> untuk menambahkan foto-foto untuk album tersebut.</li>';
         $content .= '</ul>';
         $content .= '<h3 id="album-delete">Delete</h3>';
-        $content .= '<p><center><a href="/themes/admin/AdminSC/images/help/011 Photo - 03 Overview Delete.png" target="_blank"><img src="/themes/admin/AdminSC/images/help/011 Photo - 03 Overview Delete.png" width="100%"></a></center></p>';
+        $content .= '<p><center><a href="/themes/admin/AdminSC/images/guide/011 Photo - 03 Overview Delete.png" target="_blank"><img src="/themes/admin/AdminSC/images/guide/011 Photo - 03 Overview Delete.png" width="100%"></a></center></p>';
         $content .= '<p>Saat Anda menekan tombol hapus pada salah satu daftar album, akan ada pop-up konfirmasi sebelum data dihapus. Di dalam konfirmasi terdapat fitur <code>Delete Permanently</code> yang fungsinya adalah untuk benar-benar menghapus data dari database. Jika Anda mencentang fitur ini, maka data tidak dapat dikembalikan sama sekali jika suatu saat dibutuhkan.</p>';
         $contGalPhoto = Guide::create([
-            'cover' => '/themes/admin/AdminSC/images/help/011-Photo-00-Overview.png',
+            'cover' => '/themes/admin/AdminSC/images/guide/011-Photo-00-Overview.png',
             'title' => 'Foto',
             'slug' => 'konten-galeri-foto',
             'content' => $content,
@@ -574,7 +614,7 @@ class GuideSeeder extends Seeder
         /* Konten - Galeri - Video */
         $content = '<p>Daftar video. Rinciannya adalah kolom <code>Photo</code> preview dari video, kolom <code>Video Title</code> adalah nama video, kolom <code>Views</code> merupakan jumlah kunjungan ke halaman video, kolom <code>Status</code> memperlihatkan apakah video aktif atau tidak, serta kolom <code>Action</code> yang merupakan tombol untuk mengatur video-video tersebut. Tombol <a class="btn btn-default btn-xs"><span class="fa fa-edit"><span></a> <code>Edit</code> untuk mengedit video dan tombol <a class="btn btn-default btn-xs"><span class="fa fa-trash"><span></a> <code>Delete</code> untuk menghapus video. Anda dapat menambahkannya dengan menekan tombol <a class="btn btn-default btn-sm">+ ADD</a>.</p>';
         $content .= '<h3 id="video-add-edit">Add & Edit</h3>';
-        $content .= '<p><center><a href="/themes/admin/AdminSC/images/help/012 Video - 02 Overview Edit.png" target="_blank"><img src="/themes/admin/AdminSC/images/help/012 Video - 02 Overview Edit.png" width="100%"></a></center></p>';
+        $content .= '<p><center><a href="/themes/admin/AdminSC/images/guide/012 Video - 02 Overview Edit.png" target="_blank"><img src="/themes/admin/AdminSC/images/guide/012 Video - 02 Overview Edit.png" width="100%"></a></center></p>';
         $content .= '<ul>';
         $content .= '<li><b>Youtube ID</b>, kode unik video youtube yang diambil dari URL Video Youtube. Contoh: <code>https://www.youtube.com/watch?v=<b>BUiEQyEtVmw</b></code>, copy kode unik yang bercetak tebal tersebut ke dalam kolom Youtube ID.</li>';
         $content .= '<li><b>Video Title</b>, berikan judul untuk video tersebut.</li>';
@@ -582,10 +622,10 @@ class GuideSeeder extends Seeder
         $content .= '<li><b>Active</b>, centang untuk mengaktifkan video.</li>';
         $content .= '</ul>';
         $content .= '<h3 id="video-delete">Delete</h3>';
-        $content .= '<p><center><a href="/themes/admin/AdminSC/images/help/012 Video - 03 Overview Delete.png" target="_blank"><img src="/themes/admin/AdminSC/images/help/012 Video - 03 Overview Delete.png" width="100%"></a></center></p>';
+        $content .= '<p><center><a href="/themes/admin/AdminSC/images/guide/012 Video - 03 Overview Delete.png" target="_blank"><img src="/themes/admin/AdminSC/images/guide/012 Video - 03 Overview Delete.png" width="100%"></a></center></p>';
         $content .= '<p>Saat Anda menekan tombol hapus pada salah satu daftar video, akan ada pop-up konfirmasi sebelum data dihapus. Di dalam konfirmasi terdapat fitur <code>Delete Permanently</code> yang fungsinya adalah untuk benar-benar menghapus data dari database. Jika Anda mencentang fitur ini, maka data tidak dapat dikembalikan sama sekali jika suatu saat dibutuhkan.</p>';
         $contGalVideo = Guide::create([
-            'cover' => '/themes/admin/AdminSC/images/help/012-Video-00-Overview.png',
+            'cover' => '/themes/admin/AdminSC/images/guide/012-Video-00-Overview.png',
             'title' => 'Video',
             'slug' => 'konten-galeri-video',
             'content' => $content,
@@ -610,13 +650,13 @@ class GuideSeeder extends Seeder
         /* Laporan - Kotak Masuk */
         $content = '<p>Inbox merupakan pesan masuk yang diinput dari halaman <code>Contact</code>. Rinciannya adalah kolom <code>Name</code> adalah nama pengirim, kolom <code>Email</code> adalah email pengirim, kolom <code>Message</code> merupakan isi pesan yang diberikan oleh pengirim, kolom <code>Status</code> memperlihatkan apakah inbox sudah dibaca atau belum, serta kolom <code>Action</code> yang merupakan tombol untuk mengatur pesan-pesan tersebut. Tombol <a class="btn btn-default btn-xs"><span class="fa fa-list"><span></a> <code>Detail</code> untuk melihat pesan secara keseluruhan dan tombol <a class="btn btn-default btn-xs"><span class="fa fa-trash"><span></a> <code>Delete</code> untuk menghapus inbox.</p>';
         $content .= '<h3 id="inbox-detail">Detail</h3>';
-        $content .= '<p><center><a href="/themes/admin/AdminSC/images/help/013 Inbox - 01 Overview Detail.png" target="_blank"><img src="/themes/admin/AdminSC/images/help/013 Inbox - 01 Overview Detail.png" width="100%"></a></center></p>';
+        $content .= '<p><center><a href="/themes/admin/AdminSC/images/guide/013 Inbox - 01 Overview Detail.png" target="_blank"><img src="/themes/admin/AdminSC/images/guide/013 Inbox - 01 Overview Detail.png" width="100%"></a></center></p>';
         $content .= '<p>Merupakan detail tampilan dari inbox yang dipilih.</p>';
         $content .= '<h3 id="inbox-delete">Delete</h3>';
-        $content .= '<p><center><a href="/themes/admin/AdminSC/images/help/013 Inbox - 02 Overview Delete.png" target="_blank"><img src="/themes/admin/AdminSC/images/help/013 Inbox - 02 Overview Delete.png" width="100%"></a></center></p>';
+        $content .= '<p><center><a href="/themes/admin/AdminSC/images/guide/013 Inbox - 02 Overview Delete.png" target="_blank"><img src="/themes/admin/AdminSC/images/guide/013 Inbox - 02 Overview Delete.png" width="100%"></a></center></p>';
         $content .= '<p>Saat Anda menekan tombol hapus pada salah satu daftar inbox, akan ada pop-up konfirmasi sebelum data dihapus. Di dalam konfirmasi terdapat fitur <code>Delete Permanently</code> yang fungsinya adalah untuk benar-benar menghapus data dari database. Jika Anda mencentang fitur ini, maka data tidak dapat dikembalikan sama sekali jika suatu saat dibutuhkan.</p>';
         $repInbox = Guide::create([
-            'cover' => '/themes/admin/AdminSC/images/help/013-Inbox-00-Overview.png',
+            'cover' => '/themes/admin/AdminSC/images/guide/013-Inbox-00-Overview.png',
             'title' => 'Kotak Masuk',
             'slug' => 'laporan-kotakmasuk',
             'content' => $content,
@@ -629,23 +669,23 @@ class GuideSeeder extends Seeder
         /* Laporan - Komentar */
         $content = '<p>Inbox merupakan pesan masuk yang diinput dari halaman <code>Contact</code>. Rinciannya adalah kolom <code>Name</code> berisi nama dan email pengirim, kolom <code>Comment</code> berisi potongan komentar dan judul artikel yang dikomentari, kolom <code>Approved By</code> nama user yang menyetujui komentar agar bisa ditampilkan di halaman artikel, kolom <code>Status</code> memperlihatkan apakah komentar sudah disetujui atau belum, serta kolom <code>Action</code> yang merupakan tombol untuk mengatur pesan-pesan tersebut. Tombol <a class="btn btn-default btn-xs"><span class="fa fa-reply"><span></a> <code>Reply</code> untuk membalas komentar, <a class="btn btn-default btn-xs"><span class="fa fa-list"><span></a> <code>Detail</code> untuk melihat komentar secara, <a class="btn btn-default btn-xs"><span class="fa fa-list"><span></a> <code>Edit</code> untuk mengedit pesan apabila ada kata yang perlu diubah dan tombol <a class="btn btn-default btn-xs"><span class="fa fa-trash"><span></a> <code>Delete</code> untuk menghapus komentar.</p>';
         $content .= '<h3 id="comments-detail">Reply</h3>';
-        $content .= '<p><center><a href="/themes/admin/AdminSC/images/help/014 Comment - 01 Overview Reply.png" target="_blank"><img src="/themes/admin/AdminSC/images/help/014 Comment - 01 Overview Reply.png" width="100%"></a></center></p>';
+        $content .= '<p><center><a href="/themes/admin/AdminSC/images/guide/014 Comment - 01 Overview Reply.png" target="_blank"><img src="/themes/admin/AdminSC/images/guide/014 Comment - 01 Overview Reply.png" width="100%"></a></center></p>';
         $content .= '<ul>';
         $content .= '<li><b>Reply To</b>, preview komentar yang akan dibalas.</li>';
         $content .= '<li><b>Content</b>, kolom untuk mengisi komentar balasan.</li>';
         $content .= '<li><b>Approve</b>, centang untuk langsung menyetujui komentar.</li>';
         $content .= '</ul>';
         $content .= '<h3 id="comments-detail">Detail</h3>';
-        $content .= '<p><center><a href="/themes/admin/AdminSC/images/help/014 Comment - 02 Overview Detail.png" target="_blank"><img src="/themes/admin/AdminSC/images/help/014 Comment - 02 Overview Detail.png" width="100%"></a></center></p>';
+        $content .= '<p><center><a href="/themes/admin/AdminSC/images/guide/014 Comment - 02 Overview Detail.png" target="_blank"><img src="/themes/admin/AdminSC/images/guide/014 Comment - 02 Overview Detail.png" width="100%"></a></center></p>';
         $content .= '<p>Merupakan detail tampilan dari komentar yang dipilih. Isinya terdiri dari <code>nama</code>, <code>email</code>, <code>situs</code>, <code>tanggal</code> dan juga <code>komentar</code> dari pengunjung.</p>';
         $content .= '<h3 id="comments-detail">Edit</h3>';
-        $content .= '<p><center><a href="/themes/admin/AdminSC/images/help/014 Comment - 03 Overview Edit.png" target="_blank"><img src="/themes/admin/AdminSC/images/help/014 Comment - 03 Overview Edit.png" width="100%"></a></center></p>';
+        $content .= '<p><center><a href="/themes/admin/AdminSC/images/guide/014 Comment - 03 Overview Edit.png" target="_blank"><img src="/themes/admin/AdminSC/images/guide/014 Comment - 03 Overview Edit.png" width="100%"></a></center></p>';
         $content .= '<p>Panel edit komentar, untuk mengubah nama ataupun isi dari komentar.</p>';
         $content .= '<h3 id="comments-delete">Delete</h3>';
-        $content .= '<p><center><a href="/themes/admin/AdminSC/images/help/014 Comment - 04 Overview Delete.png" target="_blank"><img src="/themes/admin/AdminSC/images/help/014 Comment - 04 Overview Delete.png" width="100%"></a></center></p>';
+        $content .= '<p><center><a href="/themes/admin/AdminSC/images/guide/014 Comment - 04 Overview Delete.png" target="_blank"><img src="/themes/admin/AdminSC/images/guide/014 Comment - 04 Overview Delete.png" width="100%"></a></center></p>';
         $content .= '<p>Saat Anda menekan tombol hapus pada salah satu daftar komentar, akan ada pop-up konfirmasi sebelum data dihapus. Di dalam konfirmasi terdapat fitur <code>Delete Permanently</code> yang fungsinya adalah untuk benar-benar menghapus data dari database. Jika Anda mencentang fitur ini, maka data tidak dapat dikembalikan sama sekali jika suatu saat dibutuhkan.</p>';
         $repComment = Guide::create([
-            'cover' => '/themes/admin/AdminSC/images/help/014-Comment-00-Overview.png',
+            'cover' => '/themes/admin/AdminSC/images/guide/014-Comment-00-Overview.png',
             'title' => 'Komentar',
             'slug' => 'laporan-komentar',
             'content' => $content,
@@ -658,7 +698,7 @@ class GuideSeeder extends Seeder
         /* Laporan - Kata Pencarian */
         $content = '<p>Incoming terms merupakan keyword yang masuk berdasarkan hasil pencarian dari mesin pencari atau dari fungsi pencarian di situs. Modul ini berguna sebagai analisis pencarian apa saja yang sering pengunjung lakukan. Rinciannya adalah kolom <code>Host</code> adalah nama mesin pencari yang digunakan, kolom <code>Text</code> adalah keyword yang digunakan pengunjung untuk mencari artikel/halaman, kolom <code>Count</code> untuk menghitung berapa banyak keyword itu digunakan, serta kolom <code>Action</code> yang merupakan tombol untuk mengatur keyword tersebut. Tombol <a class="btn btn-default btn-xs"><span class="fa fa-trash"><span></a> <code>Delete</code> untuk menghapus keyword.</p>';
         $repInterm = Guide::create([
-            'cover' => '/themes/admin/AdminSC/images/help/015-Interm-00-Overview.png',
+            'cover' => '/themes/admin/AdminSC/images/guide/015-Interm-00-Overview.png',
             'title' => 'Kata Pencarian',
             'slug' => 'laporan-katapencarian',
             'content' => $content,
@@ -671,13 +711,13 @@ class GuideSeeder extends Seeder
         /* Laporan - Pelanggan Info */
         $content = '<p>Daftar email pengunjung yang ingin berlangganan info terbaru. Rinciannya adalah kolom <code>Email</code> adalah email pengirim, kolom <code>Status</code> memperlihatkan apakah status masih berlangganan atau tidak, serta kolom <code>Action</code> yang merupakan tombol untuk mengatur email-email tersebut. Tombol <a class="btn btn-default btn-xs"><span class="fa fa-list"><span></a> <code>Edit</code> untuk mengedit email atau status dan tombol <a class="btn btn-default btn-xs"><span class="fa fa-trash"><span></a> <code>Delete</code> untuk menghapus email.</p>';
         $content .= '<h3 id="subscribers-detail">Edit</h3>';
-        $content .= '<p><center><a href="/themes/admin/AdminSC/images/help/015 Subscribe - 01 Overview Edit.png" target="_blank"><img src="/themes/admin/AdminSC/images/help/015 Subscribe - 01 Overview Edit.png" width="100%"></a></center></p>';
+        $content .= '<p><center><a href="/themes/admin/AdminSC/images/guide/015 Subscribe - 01 Overview Edit.png" target="_blank"><img src="/themes/admin/AdminSC/images/guide/015 Subscribe - 01 Overview Edit.png" width="100%"></a></center></p>';
         $content .= '<p>Panel edit email, untuk mengubah email atau status.</p>';
         $content .= '<h3 id="subscribers-delete">Delete</h3>';
-        $content .= '<p><center><a href="/themes/admin/AdminSC/images/help/015 Subscribe - 02 Overview Delete.png" target="_blank"><img src="/themes/admin/AdminSC/images/help/015 Subscribe - 02 Overview Delete.png" width="100%"></a></center></p>';
+        $content .= '<p><center><a href="/themes/admin/AdminSC/images/guide/015 Subscribe - 02 Overview Delete.png" target="_blank"><img src="/themes/admin/AdminSC/images/guide/015 Subscribe - 02 Overview Delete.png" width="100%"></a></center></p>';
         $content .= '<p>Saat Anda menekan tombol hapus pada salah satu daftar email, akan ada pop-up konfirmasi sebelum data dihapus. Di dalam konfirmasi terdapat fitur <code>Delete Permanently</code> yang fungsinya adalah untuk benar-benar menghapus data dari database. Jika Anda mencentang fitur ini, maka data tidak dapat dikembalikan sama sekali jika suatu saat dibutuhkan.</p>';
         $repSubscribers = Guide::create([
-            'cover' => '/themes/admin/AdminSC/images/help/016-Subscribers-00-Overview.png',
+            'cover' => '/themes/admin/AdminSC/images/guide/016-Subscribers-00-Overview.png',
             'title' => 'Pelanggan Info',
             'slug' => 'laporan-pelangganinfo',
             'content' => $content,
