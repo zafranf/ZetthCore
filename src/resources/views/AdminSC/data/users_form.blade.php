@@ -10,13 +10,13 @@
 					<div class="form-group">
 						<label for="name" class="col-md-4 control-label">Nama Akses</label>
 						<div class="col-md-8">
-							<input type="text" class="form-control autofocus" id="name" name="name" value="{{ isset($data) ? $data->name : old('name') }}" maxlength="30" placeholder="Nama akses.." {{ isset($data) ? 'readonly' : '' }}>
+							<input type="text" class="form-control autofocus" id="name" name="name" value="{{ $data->name ?? old('name') }}" maxlength="30" placeholder="Nama akses..">
 						</div>
 					</div>
 					<div class="form-group">
 						<label for="email" class="col-md-4 control-label">Surel</label>
 						<div class="col-md-8">
-							<input type="text" class="form-control" id="email" name="email" value="{{ isset($data) ? $data->email : old('email') }}" maxlength="100" placeholder="Alamat surel..">
+							<input type="text" class="form-control" id="email" name="email" value="{{ $data->email ?? old('email') }}" maxlength="100" placeholder="Alamat surel..">
 						</div>
 					</div>
 					<div class="form-group">
@@ -34,13 +34,13 @@
 					<div class="form-group">
 						<label for="fullname" class="col-md-4 control-label">Nama Lengkap</label>
 						<div class="col-md-8">
-							<input type="text" class="form-control" id="fullname" name="fullname" value="{{ isset($data) ? $data->fullname : old('fullname') }}" maxlength="50" placeholder="Nama lengkap.." }}>
+							<input type="text" class="form-control" id="fullname" name="fullname" value="{{ $data->fullname ?? old('fullname') }}" maxlength="50" placeholder="Nama lengkap.." }}>
 						</div>
 					</div>
 					<div class="form-group">
 						<label for="about" class="col-md-4 control-label">Tentang</label>
 						<div class="col-md-8">
-							<textarea id="about" name="about" class="form-control" placeholder="Tentang pengguna.." rows="4">{{ isset($data) ? $data->detail->about : old('about') }}</textarea>
+							<textarea id="about" name="about" class="form-control" placeholder="Tentang pengguna.." rows="4">{{ $data->detail->about ?? old('about') }}</textarea>
 						</div>
 					</div>
 					<div class="form-group">
@@ -88,7 +88,7 @@
 						<div class="col-md-offset-4 col-md-8">
 							<div class="checkbox">
 								<label>
-									<input type="checkbox" name="status" value="acrive" {{ (isset($data) && $data->status == 'inactive' ) ? '' : 'checked' }}> Aktif
+									<input type="checkbox" name="status" value="active" {{ (isset($data) && $data->status == 'inactive' ) ? '' : 'checked' }}> Aktif
 								</label>
 							</div>
 						</div>
