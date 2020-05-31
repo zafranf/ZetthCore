@@ -81,7 +81,7 @@
         {{-- Right Side Of Navbar --}}
         <ul class="nav navbar-nav navbar-right">
           <li data-toggle="tooltip" title="Panduan" data-placement="bottom">
-            <a href="{{ route('admin.guide') }}">
+            <a href="{{ route('admin.guide') }}" target="_blank">
               {!! app('is_mobile') ? 'Panduan&nbsp;<span class="pull-right"><i class="fa fa-question-circle-o"></i></span>' : '<i class="fa fa-question-circle-o"></i>' !!}
             </a>
           </li>
