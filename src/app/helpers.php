@@ -305,7 +305,7 @@ if (!function_exists('getMenu')) {
         /* get role name */
         $roleName = '';
         if (app('user')) {
-            $cacheRoleMenuName = 'cacheRoleMenuGroup.' . \Str::studly($group) . '.' . app('site')->id;
+            $cacheRoleMenuName = 'cacheRoleMenuGroup.' . \Str::studly($group) . '.' . app('user')->id . app('site')->id;
             $cacheRoleMenu = \Cache::remember($cacheRoleMenuName, getCacheTime(), function () use ($roleName) {
                 $roles = app('user')->roles;
                 foreach ($roles as $role) {
