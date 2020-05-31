@@ -115,7 +115,7 @@
     #table-log tr {
       cursor: pointer;
     }
-    #table-log tr:hover {
+    #table-log tr:not(:first-child):hover {
       background: #f5f5f5;
     }
     .sidebar {
