@@ -843,9 +843,9 @@ class GuideSeeder extends Seeder
             'status' => 'active',
         ]);
 
-        $repOrder = 1;
-        /* Data */
-        $content = '<p>Grup menu ini mengumpulkan data yang dihasilkan dari inputan user, seperti <code>komentar</code> dan juga <code>kontak (inbox)</code>.</p>';
+        $reportOrder = 1;
+        /* Laporan */
+        $content = '<p>Grup menu ini menampilkan data yang dihasilkan dari kiriman pengunjung, seperti <code>pesan</code>, <code>komentar</code> serta <code>langganan</code>.</p>';
         $report = Guide::create([
             'title' => 'Laporan',
             'slug' => 'laporan',
@@ -855,22 +855,43 @@ class GuideSeeder extends Seeder
             'status' => 'active',
         ]);
 
+        $reportInboxOrder = 1;
         /* Laporan - Kotak Masuk */
-        $content = '<p>Inbox merupakan pesan masuk yang diinput dari halaman <code>Contact</code>. Rinciannya adalah kolom <code>Name</code> adalah nama pengirim, kolom <code>Email</code> adalah email pengirim, kolom <code>Message</code> merupakan isi pesan yang diberikan oleh pengirim, kolom <code>Status</code> memperlihatkan apakah inbox sudah dibaca atau belum, serta kolom <code>Action</code> yang merupakan tombol untuk mengatur pesan-pesan tersebut. Tombol <a class="btn btn-default btn-xs"><span class="fa fa-list"><span></a> <code>Detail</code> untuk melihat pesan secara keseluruhan dan tombol <a class="btn btn-default btn-xs"><span class="fa fa-trash"><span></a> <code>Delete</code> untuk menghapus inbox.</p>';
-        $content .= '<h3 id="inbox-detail">Detail</h3>';
-        $content .= '<p><center><a href="/themes/admin/AdminSC/images/guide/013 Inbox - 01 Overview Detail.png" target="_blank"><img src="/themes/admin/AdminSC/images/guide/013 Inbox - 01 Overview Detail.png" width="100%"></a></center></p>';
-        $content .= '<p>Merupakan detail tampilan dari inbox yang dipilih.</p>';
-        $content .= '<h3 id="inbox-delete">Delete</h3>';
-        $content .= '<p><center><a href="/themes/admin/AdminSC/images/guide/013 Inbox - 02 Overview Delete.png" target="_blank"><img src="/themes/admin/AdminSC/images/guide/013 Inbox - 02 Overview Delete.png" width="100%"></a></center></p>';
-        $content .= '<p>Saat Anda menekan tombol hapus pada salah satu daftar inbox, akan ada pop-up konfirmasi sebelum data dihapus. Di dalam konfirmasi terdapat fitur <code>Delete Permanently</code> yang fungsinya adalah untuk benar-benar menghapus data dari database. Jika Anda mencentang fitur ini, maka data tidak dapat dikembalikan sama sekali jika suatu saat dibutuhkan.</p>';
-        $repInbox = Guide::create([
-            'cover' => '/themes/admin/AdminSC/images/guide/013-Inbox-00-Overview.png',
+        $content = '<p>Daftar pesan masuk yang dikirim oleh pengunjung. Kolom <code>Nama</code> merupakan nama pengirim pesan, kolom <code>Surel</code> alamat surel pengirim pesan, kolom <code>Pesan</code> cuplikan pesan yang dikirim, kolom <code>Status</code> memperlihatkan apakah pesan aktif atau tidak, serta kolom <code>Akses</code> yang merupakan tombol untuk mengatur data pesan tersebut. Tombol <a class="btn btn-default btn-xs"><span class="fa fa-eye"><span></a> <code>Detail</code> untuk membaca pesan secara lengkap dan tombol <a class="btn btn-default btn-xs"><span class="fa fa-trash"><span></a> <code>Hapus</code> untuk menghapus pesan.</p>';
+        $reportInbox = Guide::create([
+            'cover' => '/themes/admin/AdminSC/images/guide/laporan-kotakmasuk.png',
             'title' => 'Kotak Masuk',
             'slug' => 'laporan-kotakmasuk',
             'content' => $content,
             'roles' => 'super,admin',
-            'order' => $repOrder++,
+            'order' => $reportOrder++,
             'parent_id' => $report->id,
+            'status' => 'active',
+        ]);
+
+        /* Laporan - Kotak Masuk - Detail */
+        $content = 'Halaman untuk membaca pesan dari pengunjung. Anda juga dapat menghapus data dari halaman ini.';
+        $repInboxAdd = Guide::create([
+            'cover' => '/themes/admin/AdminSC/images/guide/laporan-kotakmasuk-detail.png',
+            'title' => 'Detail',
+            'slug' => 'laporan-kotakmasuk-detail',
+            'content' => $content,
+            'roles' => 'super,admin',
+            'order' => $reportInboxOrder++,
+            'parent_id' => $reportInbox->id,
+            'status' => 'active',
+        ]);
+
+        /* Laporan - Kotak Masuk - Hapus */
+        $content = '<p>Saat Anda menekan tombol hapus pada salah satu daftar pesan, akan muncul konfirmasi sebelum data dihapus untuk mencegah terjadinya kesalahan hapus data.</p>';
+        $reportInboxDel = Guide::create([
+            'cover' => '/themes/admin/AdminSC/images/guide/laporan-kotakmasuk-hapus.png',
+            'title' => 'Hapus',
+            'slug' => 'laporan-kotakmasuk-hapus',
+            'content' => $content,
+            'roles' => 'super,admin',
+            'order' => $reportInboxOrder++,
+            'parent_id' => $reportInbox->id,
             'status' => 'active',
         ]);
 
@@ -898,7 +919,7 @@ class GuideSeeder extends Seeder
             'slug' => 'laporan-komentar',
             'content' => $content,
             'roles' => 'super,admin,author',
-            'order' => $repOrder++,
+            'order' => $reportOrder++,
             'parent_id' => $report->id,
             'status' => 'active',
         ]);
@@ -911,7 +932,7 @@ class GuideSeeder extends Seeder
             'slug' => 'laporan-katapencarian',
             'content' => $content,
             'roles' => 'super,admin',
-            'order' => $repOrder++,
+            'order' => $reportOrder++,
             'parent_id' => $report->id,
             'status' => 'active',
         ]);
@@ -930,7 +951,7 @@ class GuideSeeder extends Seeder
             'slug' => 'laporan-pelangganinfo',
             'content' => $content,
             'roles' => 'super,admin',
-            'order' => $repOrder++,
+            'order' => $reportOrder++,
             'parent_id' => $report->id,
             'status' => 'active',
         ]);

@@ -67,7 +67,7 @@
           "render": function (data, type, row, meta) {
             let actions = '';
             let url = ADMIN_URL + "/report/inbox/" + data;
-            let del = "_delete('" + url + "')";
+            let del = "_delete('" + url + "', 'pesan dari \\'"+ row.email +"\\'')";
             {!! getAccessButtons() !!}
             $('[data-toggle="tooltip"]').tooltip();
 
@@ -106,7 +106,7 @@
             "render": function (data, type, row, meta) {
               let actions = '';
               let url = ADMIN_URL + "/report/inbox/" + data;
-              let del = "_delete('" + url + "')";
+              let del = "_delete('" + url + "', 'pesan dari \\'"+ row.email +"\\'')";
               {!! getAccessButtons() !!}
               $('[data-toggle="tooltip"]').tooltip();
 
