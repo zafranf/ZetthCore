@@ -32,6 +32,8 @@ return [
 
     'paths' => [
         storage_path('app/public/assets/images'),
+        resource_path('themes'),
+        base_path('vendor/zafranf/zetthcore/src/resources/themes'),
     ],
 
     /*

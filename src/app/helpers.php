@@ -617,8 +617,8 @@ if (!function_exists('generateDate')) {
     }
 }
 
-if (!function_exists('generateHelpMenu')) {
-    function generateHelpMenu($data, $level = 0)
+if (!function_exists('generateGuideMenu')) {
+    function generateGuideMenu($data, $level = 0)
     {
         foreach ($data as $key => $val) {
             $act = '';
@@ -645,7 +645,7 @@ if (!function_exists('generateHelpMenu')) {
                 echo '<li class="' . $act . '"><a href="#' . $val->slug . '" style="padding-left: ' . $pad . 'px"><i class="fa fa-' . $ico . '"></i> ' . $val->title . '</a>';
                 if (isset($val->subguide)) {
                     echo '<ul class="nav">';
-                    generateHelpMenu($val->subguide, $level + 1);
+                    generateGuideMenu($val->subguide, $level + 1);
                     echo '</ul>';
                 }
                 echo "</li>";
@@ -654,8 +654,8 @@ if (!function_exists('generateHelpMenu')) {
     }
 }
 
-if (!function_exists('generateHelpContent')) {
-    function generateHelpContent($data, $level = 0)
+if (!function_exists('generateGuideContent')) {
+    function generateGuideContent($data, $level = 0)
     {
         foreach ($data as $key => $val) {
             /* get user roles */
@@ -673,12 +673,12 @@ if (!function_exists('generateHelpContent')) {
                 echo '<div id="' . $val->slug . '" class="section">';
                 echo '<' . $h . '>' . $val->title . '</' . $h . '>';
                 if ($val->cover) {
-                    echo '<center><a href="' . adminPath() . $val->cover . '" target="_blank"><img src="' . adminPath() . $val->cover . '" width="100%"></a></center>';
+                    echo '<center><a href="' . $val->cover . '" target="_blank"><img src="' . $val->cover . '" width="100%"></a></center>';
                 }
                 echo str_replace('[~dates]', $dates, $val->content);
                 echo '</div>';
                 if (isset($val->subguide)) {
-                    generateHelpContent($val->subguide, $level + 1);
+                    generateGuideContent($val->subguide, $level + 1);
                 }
             }
         }
