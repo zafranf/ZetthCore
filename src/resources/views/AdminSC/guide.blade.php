@@ -69,9 +69,9 @@
     }
     /* hide inactive nested list */
     /* https://codepen.io/mhadaily/pen/dpdvwp */
-    #myScrollspy .nav ul.nav {
+    /* #myScrollspy .nav ul.nav {
         display: none;           
-    }
+    } */
     /* show active nested list */
     #myScrollspy .nav>.active>ul.nav {
         display: block;           
@@ -137,7 +137,7 @@
       
       $("#affixs").affix({
           offset: {
-            top: 80
+            top: 95
           }
       });
 
