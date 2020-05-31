@@ -13,6 +13,7 @@
 					@else
 						<td>Pelanggan</td>
 					@endif
+					<td>Akses</td>
 				</tr>
 			</thead>
 		</table>
@@ -41,6 +42,7 @@
           { "data": "email" },
           { "data": "created_at_tz", "width": "100px" },
           { "data": "status", "width": "50px" },
+          { "width": "40px" },
         ],
         "columnDefs": [{
           "targets": 0,
@@ -55,6 +57,19 @@
           "sortable": false,
           "render": function (data, type, row, meta) {
             return _get_status_text(data);
+          },
+        }, {
+          "targets": 4,
+          "data": 'id',
+          "sortable": false,
+          "render": function (data, type, row, meta) {
+            let actions = '';
+            let url = ADMIN_URL + "/report/subscribers/" + data;
+            let del = "_delete('" + url + "', 'pelanggan \\'"+ row.email +"\\'')";
+            {!! getAccessButtons() !!}
+            $('[data-toggle="tooltip"]').tooltip();
+
+            return actions;
           }
         }],
       };
@@ -81,7 +96,20 @@
 
               return render;
             }
+          }, {
+          "targets": 2,
+          "data": 'id',
+          "sortable": false,
+          "render": function (data, type, row, meta) {
+            let actions = '';
+            let url = ADMIN_URL + "/report/subscribers/" + data;
+            let del = "_delete('" + url + "', 'pelanggan \\'"+ row.email +"\\'')";
+            {!! getAccessButtons() !!}
+            $('[data-toggle="tooltip"]').tooltip();
+
+            return actions;
           }
+        }
         ];
       @endif
 

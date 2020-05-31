@@ -23,7 +23,7 @@ class CommentController extends AdminController
         $this->breadcrumbs[] = [
             'page' => 'Laporan',
             'icon' => '',
-            'url' => _url(adminPath() . '/report/comments'),
+            'url' => _url(adminPath() . '/report/inbox'),
         ];
         $this->breadcrumbs[] = [
             'page' => 'Komentar',

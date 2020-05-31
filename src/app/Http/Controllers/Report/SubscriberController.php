@@ -17,7 +17,7 @@ class SubscriberController extends AdminController
     public function __construct()
     {
         parent::__construct();
-        $this->current_url = _url(adminPath() . '/report/inbox');
+        $this->current_url = _url(adminPath() . '/report/subscribers');
         $this->page_title = 'Kelola Langganan Info';
         $this->breadcrumbs[] = [
             'page' => 'Laporan',
@@ -95,7 +95,22 @@ class SubscriberController extends AdminController
      */
     public function edit(Subscriber $subscriber)
     {
-        abort(403);
+        $this->breadcrumbs[] = [
+            'page' => 'Edit Pelanggan',
+            'icon' => '',
+            'url' => '',
+        ];
+
+        /* set variable for view */
+        $data = [
+            'current_url' => $this->current_url,
+            'breadcrumbs' => $this->breadcrumbs,
+            'page_title' => $this->page_title,
+            'page_subtitle' => 'Edit Pelanggan',
+            'data' => $subscriber,
+        ];
+
+        return view('zetthcore::AdminSC.report.subscriber_form', $data);
     }
 
     /**
@@ -107,7 +122,14 @@ class SubscriberController extends AdminController
      */
     public function update(Request $r, Subscriber $subscriber)
     {
-        abort(403);
+        /* save data */
+        $subscriber->status = $r->input('status') ?? 'inactive';
+        $subscriber->save();
+
+        /* save activity */
+        $this->activityLog('[~name] (' . $this->getUserRoles() . ') mengubah status pelanggan "' . $subscriber->email . '"');
+
+        return redirect($this->current_url)->with('success', 'Pelanggan berhasil disimpan!');
     }
 
     /**
@@ -133,7 +155,7 @@ class SubscriberController extends AdminController
     public function datatable(Request $r)
     {
         /* get data */
-        $data = Subscriber::select('id', 'email', 'status')->orderBy('created_at', 'desc');
+        $data = Subscriber::select('id', 'email', 'status', 'created_at')->orderBy('created_at', 'desc');
 
         /* generate datatable */
         if ($r->ajax()) {

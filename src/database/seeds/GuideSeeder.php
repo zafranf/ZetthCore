@@ -984,22 +984,47 @@ class GuideSeeder extends Seeder
             'status' => 'active',
         ]);
 
+        $reportSubscribeOrder = 1;
         /* Laporan - Pelanggan Info */
-        $content = '<p>Daftar email pengunjung yang ingin berlangganan info terbaru. Rinciannya adalah kolom <code>Email</code> adalah email pengirim, kolom <code>Status</code> memperlihatkan apakah status masih berlangganan atau tidak, serta kolom <code>Action</code> yang merupakan tombol untuk mengatur email-email tersebut. Tombol <a class="btn btn-default btn-xs"><span class="fa fa-list"><span></a> <code>Edit</code> untuk mengedit email atau status dan tombol <a class="btn btn-default btn-xs"><span class="fa fa-trash"><span></a> <code>Delete</code> untuk menghapus email.</p>';
-        $content .= '<h3 id="subscribers-detail">Edit</h3>';
-        $content .= '<p><center><a href="/themes/admin/AdminSC/images/guide/015 Subscribe - 01 Overview Edit.png" target="_blank"><img src="/themes/admin/AdminSC/images/guide/015 Subscribe - 01 Overview Edit.png" width="100%"></a></center></p>';
-        $content .= '<p>Panel edit email, untuk mengubah email atau status.</p>';
-        $content .= '<h3 id="subscribers-delete">Delete</h3>';
-        $content .= '<p><center><a href="/themes/admin/AdminSC/images/guide/015 Subscribe - 02 Overview Delete.png" target="_blank"><img src="/themes/admin/AdminSC/images/guide/015 Subscribe - 02 Overview Delete.png" width="100%"></a></center></p>';
-        $content .= '<p>Saat Anda menekan tombol hapus pada salah satu daftar email, akan ada pop-up konfirmasi sebelum data dihapus. Di dalam konfirmasi terdapat fitur <code>Delete Permanently</code> yang fungsinya adalah untuk benar-benar menghapus data dari database. Jika Anda mencentang fitur ini, maka data tidak dapat dikembalikan sama sekali jika suatu saat dibutuhkan.</p>';
-        $repSubscribers = Guide::create([
-            'cover' => '/themes/admin/AdminSC/images/guide/016-Subscribers-00-Overview.png',
+        $content = '<p>Daftar surel pengunjung yang ingin berlangganan berita terbaru. Kolom <code>Surel</code> alamat surel pelanggan, kolom <code>Tgl. Daftar</code> merupakan tanggal daftarnya pelanggan, kolom <code>Status</code> memperlihatkan apakah surel pelanggan aktif atau tidak, serta kolom <code>Akses</code> yang merupakan tombol untuk mengatur data pelanggan tersebut. Tombol <a class="btn btn-default btn-xs"><span class="fa fa-edit"><span></a> <code>Edit</code> untuk mengedit status pelanggan dan tombol <a class="btn btn-default btn-xs"><span class="fa fa-trash"><span></a> <code>Hapus</code> untuk menghapus pelanggan.</p>';
+        $reportSubscribe = Guide::create([
+            'cover' => '/themes/admin/AdminSC/images/guide/laporan-langganan.png',
             'title' => 'Pelanggan Info',
-            'slug' => 'laporan-pelangganinfo',
+            'slug' => 'laporan-langganan',
             'content' => $content,
             'roles' => 'super,admin',
             'order' => $reportOrder++,
             'parent_id' => $report->id,
+            'status' => 'active',
+        ]);
+
+        /* Laporan - Pelanggan Info - Edit */
+        $content = 'Halaman untuk mengedit status pelanggan. Anda juga dapat menghapus pelanggan dari halaman ini.';
+        $content .= '<ul>';
+        $content .= '<li><b>Surel</b>, alamat surel pelanggan.</li>';
+        $content .= '<li><b>Aktif</b>, centang untuk mengaktifkan pelanggan.</li>';
+        $content .= '</ul>';
+        $reportSubscribeEdit = Guide::create([
+            'cover' => '/themes/admin/AdminSC/images/guide/laporan-langganan-edit.png',
+            'title' => 'Edit',
+            'slug' => 'laporan-langganan-edit',
+            'content' => $content,
+            'roles' => 'super,admin',
+            'order' => $reportSubscribeOrder++,
+            'parent_id' => $reportSubscribe->id,
+            'status' => 'active',
+        ]);
+
+        /* Laporan - Pelanggan Info- Hapus */
+        $content = '<p>Saat Anda menekan tombol hapus pada salah satu daftar pelanggan, akan muncul konfirmasi sebelum data dihapus untuk mencegah terjadinya kesalahan hapus data.</p>';
+        $reportSubscribeDel = Guide::create([
+            'cover' => '/themes/admin/AdminSC/images/guide/laporan-langganan-hapus.png',
+            'title' => 'Hapus',
+            'slug' => 'laporan-langganan-hapus',
+            'content' => $content,
+            'roles' => 'super,admin',
+            'order' => $reportSubscribeOrder++,
+            'parent_id' => $reportSubscribe->id,
             'status' => 'active',
         ]);
     }
