@@ -50,11 +50,11 @@ class ErrorController extends AdminController
         /* folder & files */
         $folderFiles = [];
         if ($r->input('f')) {
-            $this->log_viewer->setFolder(_decrypt($r->input('f')));
+            $this->log_viewer->setFolder(urldecode(_decrypt($r->input('f'))));
             $folderFiles = $this->log_viewer->getFolderFiles(true);
         }
         if ($r->input('l')) {
-            $this->log_viewer->setFile(_decrypt($r->input('l')));
+            $this->log_viewer->setFile(urldecode(_decrypt($r->input('l'))));
         }
 
         if ($early_return = $this->earlyReturn($r)) {

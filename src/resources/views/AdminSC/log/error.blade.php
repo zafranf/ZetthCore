@@ -18,16 +18,16 @@
         <div class="list-group div-scroll">
           @foreach($folders as $folder)
             <div class="list-group-item">
-              <a href="?f={{ _encrypt($folder) }}">
+              <a href="?f={{ urlencode(_encrypt($folder)) }}">
                 <span class="fa fa-folder"></span> {{$folder}}
               </a>
               @if ($current_folder == $folder)
                 <div class="list-group folder">
                   @foreach($folder_files as $file)
-                    <span onclick="window.location='?l={{ _encrypt($file) }}'"
+                    <span onclick="window.location='?l={{ urlencode(_encrypt($file)) }}'"
                       class="list-group-item @if ($current_file == $file) llv-active @endif">
                       {{$file}}
-                      <a class="pull-right" href="?dl={{ _encrypt($current_file) }}{{ ($current_folder) ? '&f=' . _encrypt($current_folder) : '' }}" data-toggle="tooltip" data-original-title="Unduh berkas" data-placement="left">
+                      <a class="pull-right" href="?dl={{ urlencode(_encrypt($current_file)) }}{{ ($current_folder) ? '&f=' . urlencode(_encrypt($current_folder)) : '' }}" data-toggle="tooltip" data-original-title="Unduh berkas" data-placement="left">
                         <span class="fa fa-download"></span>
                       </a>
                     </span>
@@ -37,10 +37,10 @@
             </div>
           @endforeach
           @foreach($files as $file)
-            <span onclick="window.location='?l={{ _encrypt($file) }}'"
+            <span onclick="window.location='?l={{ urlencode(_encrypt($file) )}}'"
               class="list-group-item @if ($current_file == $file) llv-active @endif">
               {{$file}}
-              <a class="pull-right" href="?dl={{ _encrypt($current_file) }}{{ ($current_folder) ? '&f=' . _encrypt($current_folder) : '' }}" data-toggle="tooltip" data-original-title="Unduh berkas" data-placement="left">
+              <a class="pull-right" href="?dl={{ urlencode(_encrypt($current_file)) }}{{ ($current_folder) ? '&f=' . urlencode(_encrypt($current_folder)) : '' }}" data-toggle="tooltip" data-original-title="Unduh berkas" data-placement="left">
                 <span class="fa fa-download"></span>
               </a>
             </span>
@@ -51,7 +51,7 @@
         <br>
         @if ($logs === null)
           <div>
-            Log file >50M, please <a href="?dl={{ _encrypt($current_file) }}{{ ($current_folder) ? '&f=' . _encrypt($current_folder) : '' }}">
+            Log file >50M, please <a href="?dl={{ urlencode(_encrypt($current_file)) }}{{ ($current_folder) ? '&f=' . urlencode(_encrypt($current_folder)) : '' }}">
               <span class="fa fa-download"></span> download
             </a> it.
           </div>
@@ -144,7 +144,8 @@
       padding-top: 15px;
     }
     .div-scroll {
-      height: 100vh;
+      top: 80px;
+      height: 50vh;
       overflow: hidden auto;
     }
     .nowrap {
@@ -156,32 +157,39 @@
 @push('scripts')
   {!! _admin_js(adminPath() . '/themes/admin/AdminSC/plugins/DataTables/1.10.12/js/jquery.dataTables.min.js') !!}
   <script>
-        
-  $(document).ready(function () {
-    $('.table-container tr').on('click', function () {
-      $('#' + $(this).data('display')).toggle();
+    $(document).ready(function () {
+      let ds = $('.div-scroll').width();
+      $(".div-scroll").affix({
+          offset: {
+            top: 80
+          }
+      });
+      $('.div-scroll').on('affixed.bs.affix', function() {
+        $('.affix').width(ds ? ds : 205);
+      });
+      $('.table-container tr').on('click', function () {
+        $('#' + $(this).data('display')).toggle();
+      });
+      $('#table-log').DataTable({
+        "order": [$('#table-log').data('orderingIndex'), 'desc'],
+        "stateSave": true,
+        "stateSaveCallback": function (settings, data) {
+          window.localStorage.setItem("datatable", JSON.stringify(data));
+        },
+        "stateLoadCallback": function (settings) {
+          var data = JSON.parse(window.localStorage.getItem("datatable"));
+          if (data) data.start = 0;
+          return data;
+        },
+        "pageLength": 20,
+        "lengthMenu": [
+          [10, 20, 50, 100, -1], 
+          [10, 20, 50, 100, "All"]
+        ],
+      });
+      $('#delete-log, #clean-log, #delete-all-log').click(function () {
+        return confirm('Are you sure?');
+      });
     });
-    $('#table-log').DataTable({
-      "order": [$('#table-log').data('orderingIndex'), 'desc'],
-      "stateSave": true,
-      "stateSaveCallback": function (settings, data) {
-        window.localStorage.setItem("datatable", JSON.stringify(data));
-      },
-      "stateLoadCallback": function (settings) {
-        var data = JSON.parse(window.localStorage.getItem("datatable"));
-        if (data) data.start = 0;
-        return data;
-      },
-      "pageLength": 20,
-      "lengthMenu": [
-        [10, 20, 50, 100, -1], 
-        [10, 20, 50, 100, "All"]
-      ],
-    });
-    $('#delete-log, #clean-log, #delete-all-log').click(function () {
-      return confirm('Are you sure?');
-    });
-  });
-
   </script>
 @endpush
