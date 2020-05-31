@@ -6,10 +6,10 @@
       @if (isset($data))
         <input type="hidden" name="name_old" value="{{ isset($data) ? $data->name : '' }}">
         <input type="hidden" name="content_old" value="{{ isset($data) ? $data->content : '' }}">
-        <div class="form-group{{ isset($data) && $data->is_owner ? ' hide' : '' }}">
+        <div class="form-group{{ isset($data) && bool($data->is_owner) ? ' hide' : '' }}">
           <label for="name" class="col-sm-2 control-label">Nama</label>
           <div class="col-sm-10">
-            <input type="text" class="form-control" id="name" name="name" value="{{ $data->name ?? old('name') }}">
+            <input type="text" class="form-control" id="name" name="name" value="{{ $data->name ?? old('name') }}" readonly>
           </div>
         </div>
       @elseif (isset($reply))
@@ -42,7 +42,7 @@
         <div class="col-sm-offset-2 col-sm-10">
           {{ isset($data) ? method_field('PUT') : '' }}
           {{ csrf_field() }}
-          {{ getButtonPost($current_url, true, $data->id ?? '') }}
+          {{ getButtonPost($current_url, true, $data->id ?? '', isset($data) ? 'komentar dari \\\'' . $data->name . '\\\'' : null) }}
         </div>
       </div>
     </form>
@@ -55,7 +55,7 @@
 
 @push('styles')
   <style>
-    .panel-heading a.btn {
+    .panel>.panel-heading>.btn {
       display: none;
     }
   </style>

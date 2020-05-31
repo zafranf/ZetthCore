@@ -11,6 +11,10 @@
     {!! nl2br(e(strip_tags($data->content))) !!}
     <br>
     <br>
+    <a id="btn-back" class="share-button" href="{{ _url($current_url) }}">
+      <i class="fa fa-caret-left"></i> Kembali
+    </a>
+    &nbsp;
     @if ($data->status == 'inactive')
       <a id="btn-reply" class="share-button"  href="{{ _url($current_url . "/approve/" . $data->id) }}">
         <i class="fa fa-check"></i> Setujui
@@ -32,15 +36,14 @@
     <a id="btn-delete" class="share-button" onclick="_delete('{{ $data->id }}', '{{ $current_url }}');">
       <i class="fa fa-trash-o"></i> Hapus
     </a>
-    &nbsp;
-    <a id="btn-back" class="share-button" href="{{ _url($current_url) }}">
-      <i class="fa fa-caret-left"></i> Kembali
-    </a> 
   </div>
 @endsection
 
 @push('styles')
   <style>
+    .panel>.panel-heading>.btn {
+      display: none;
+    }
     .share-button {
       position: relative;
       height: 18px;

@@ -23,6 +23,11 @@
 
 @push('styles')
   {!! _admin_css(adminPath() . '/themes/admin/AdminSC/plugins/DataTables/1.10.12/css/jquery.dataTables.min.css') !!}
+  <style>
+    .panel>.panel-heading>.btn {
+      display: none;
+    }
+  </style>
 @endpush
 
 @push('scripts')
@@ -68,7 +73,7 @@
             let reply_to = row.parent_id ? row.parent_id : data;
             let actions = '';
             let url = ADMIN_URL + "/report/comments/" + data;
-            let del = "_delete('" + url + "')";
+            let del = "_delete('" + url + "', 'komentar dari \\'"+ row.name +"\\'')";
             actions += '<a href="' + ADMIN_URL + '/report/comments/create?cid=' + data + '&pid=' + row.post_id + '" class="btn btn-default btn-xs" data-toggle="tooltip" data-original-title="Balas"><i class="fa fa-reply"></i></a>';
             {!! getAccessButtons() !!}
             $('[data-toggle="tooltip"]').tooltip();
@@ -109,7 +114,7 @@
             let reply_to = row.parent_id ? row.parent_id : data;
               let actions = '';
               let url = ADMIN_URL + "/report/comments/" + data;
-              let del = "_delete('" + url + "')";
+              let del = "_delete('" + url + "', 'komentar dari \\'"+ row.name +"\\'')";
               actions += '<a href="' + ADMIN_URL + '/report/comments/create?cid=' + data + '&pid=' + row.post_id + '" class="btn btn-default btn-xs" data-toggle="tooltip" data-original-title="Balas"><i class="fa fa-reply"></i></a>';
               {!! getAccessButtons() !!}
               $('[data-toggle="tooltip"]').tooltip();

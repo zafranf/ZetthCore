@@ -871,7 +871,7 @@ class GuideSeeder extends Seeder
 
         /* Laporan - Kotak Masuk - Detail */
         $content = 'Halaman untuk membaca pesan dari pengunjung. Anda juga dapat menghapus data dari halaman ini.';
-        $repInboxAdd = Guide::create([
+        $reportInboxDetail = Guide::create([
             'cover' => '/themes/admin/AdminSC/images/guide/laporan-kotakmasuk-detail.png',
             'title' => 'Detail',
             'slug' => 'laporan-kotakmasuk-detail',
@@ -895,32 +895,79 @@ class GuideSeeder extends Seeder
             'status' => 'active',
         ]);
 
+        $reportCommentOrder = 1;
         /* Laporan - Komentar */
-        $content = '<p>Inbox merupakan pesan masuk yang diinput dari halaman <code>Contact</code>. Rinciannya adalah kolom <code>Name</code> berisi nama dan email pengirim, kolom <code>Comment</code> berisi potongan komentar dan judul artikel yang dikomentari, kolom <code>Approved By</code> nama user yang menyetujui komentar agar bisa ditampilkan di halaman artikel, kolom <code>Status</code> memperlihatkan apakah komentar sudah disetujui atau belum, serta kolom <code>Action</code> yang merupakan tombol untuk mengatur pesan-pesan tersebut. Tombol <a class="btn btn-default btn-xs"><span class="fa fa-reply"><span></a> <code>Reply</code> untuk membalas komentar, <a class="btn btn-default btn-xs"><span class="fa fa-list"><span></a> <code>Detail</code> untuk melihat komentar secara, <a class="btn btn-default btn-xs"><span class="fa fa-list"><span></a> <code>Edit</code> untuk mengedit pesan apabila ada kata yang perlu diubah dan tombol <a class="btn btn-default btn-xs"><span class="fa fa-trash"><span></a> <code>Delete</code> untuk menghapus komentar.</p>';
-        $content .= '<h3 id="comments-detail">Reply</h3>';
-        $content .= '<p><center><a href="/themes/admin/AdminSC/images/guide/014 Comment - 01 Overview Reply.png" target="_blank"><img src="/themes/admin/AdminSC/images/guide/014 Comment - 01 Overview Reply.png" width="100%"></a></center></p>';
-        $content .= '<ul>';
-        $content .= '<li><b>Reply To</b>, preview komentar yang akan dibalas.</li>';
-        $content .= '<li><b>Content</b>, kolom untuk mengisi komentar balasan.</li>';
-        $content .= '<li><b>Approve</b>, centang untuk langsung menyetujui komentar.</li>';
-        $content .= '</ul>';
-        $content .= '<h3 id="comments-detail">Detail</h3>';
-        $content .= '<p><center><a href="/themes/admin/AdminSC/images/guide/014 Comment - 02 Overview Detail.png" target="_blank"><img src="/themes/admin/AdminSC/images/guide/014 Comment - 02 Overview Detail.png" width="100%"></a></center></p>';
-        $content .= '<p>Merupakan detail tampilan dari komentar yang dipilih. Isinya terdiri dari <code>nama</code>, <code>email</code>, <code>situs</code>, <code>tanggal</code> dan juga <code>komentar</code> dari pengunjung.</p>';
-        $content .= '<h3 id="comments-detail">Edit</h3>';
-        $content .= '<p><center><a href="/themes/admin/AdminSC/images/guide/014 Comment - 03 Overview Edit.png" target="_blank"><img src="/themes/admin/AdminSC/images/guide/014 Comment - 03 Overview Edit.png" width="100%"></a></center></p>';
-        $content .= '<p>Panel edit komentar, untuk mengubah nama ataupun isi dari komentar.</p>';
-        $content .= '<h3 id="comments-delete">Delete</h3>';
-        $content .= '<p><center><a href="/themes/admin/AdminSC/images/guide/014 Comment - 04 Overview Delete.png" target="_blank"><img src="/themes/admin/AdminSC/images/guide/014 Comment - 04 Overview Delete.png" width="100%"></a></center></p>';
-        $content .= '<p>Saat Anda menekan tombol hapus pada salah satu daftar komentar, akan ada pop-up konfirmasi sebelum data dihapus. Di dalam konfirmasi terdapat fitur <code>Delete Permanently</code> yang fungsinya adalah untuk benar-benar menghapus data dari database. Jika Anda mencentang fitur ini, maka data tidak dapat dikembalikan sama sekali jika suatu saat dibutuhkan.</p>';
-        $repComment = Guide::create([
-            'cover' => '/themes/admin/AdminSC/images/guide/014-Comment-00-Overview.png',
+        $content = '<p>Daftar komentar artikel dari pengunjung. Kolom <code>Nama</code> merupakan nama pengirim komentar, kolom <code>Surel</code> alamat surel pengirim komentar, kolom <code>Komentar</code> cuplikan komentar yang dikirim, kolom <code>Status</code> memperlihatkan apakah komentar ditampilkan (aktif) atau tidak, serta kolom <code>Akses</code> yang merupakan tombol untuk mengatur data komentar tersebut. Tombol <a class="btn btn-default btn-xs"><span class="fa fa-reply"><span></a> <code>Balas</code> untuk membaca sekaligus membalas komentar pengunjung, tombol <a class="btn btn-default btn-xs"><span class="fa fa-eye"><span></a> <code>Detail</code> untuk membaca komentar secara lengkap, tombol <a class="btn btn-default btn-xs"><span class="fa fa-edit"><span></a> <code>Edit</code> untuk mengedit komentar agar lebih sesuai dengan peraturan yang berlaku (jika ada) dan tombol <a class="btn btn-default btn-xs"><span class="fa fa-trash"><span></a> <code>Hapus</code> untuk menghapus komentar.</p>';
+        $reportComment = Guide::create([
+            'cover' => '/themes/admin/AdminSC/images/guide/laporan-komentar.png',
             'title' => 'Komentar',
             'slug' => 'laporan-komentar',
             'content' => $content,
             'roles' => 'super,admin,author',
             'order' => $reportOrder++,
             'parent_id' => $report->id,
+            'status' => 'active',
+        ]);
+
+        /* Laporan - Komentar - Balas */
+        $content = 'Halaman untuk membaca sekaligus membalas komentar dari pengunjung.';
+        $content .= '<ul>';
+        $content .= '<li><b>Balas ke</b>, tujuan balasan komentar berisi nama dan komentar dari pengirim.</li>';
+        $content .= '<li><b>Balasan</b>, komentar balasan yang ingin disampaikan. Anda dapat menformatnya sesuai kebutuhan untuk membuat komentar lebih menarik dengan menggunakan bilah alat yang terdapat di atas kolom balasan.</li>';
+        $content .= '<li><b>Setujui komentar pengunjung</b>, centang untuk menyetujui komentar dari pelanggan muncul di halaman artikel.</li>';
+        $content .= '</ul>';
+        $reportCommentBalas = Guide::create([
+            'cover' => '/themes/admin/AdminSC/images/guide/laporan-komentar-balas.png',
+            'title' => 'Balas',
+            'slug' => 'laporan-komentar-balas',
+            'content' => $content,
+            'roles' => 'super,admin',
+            'order' => $reportCommentOrder++,
+            'parent_id' => $reportComment->id,
+            'status' => 'active',
+        ]);
+
+        /* Laporan - Komentar - Detail */
+        $content = 'Halaman untuk membaca komentar dari pengunjung secara lengkap. Anda juga dapat membalas, menyetujui, mengedit ataupun menghapus komentar dari halaman ini dengan menekan tombol yang dimaksud.';
+        $reportCommentDetail = Guide::create([
+            'cover' => '/themes/admin/AdminSC/images/guide/laporan-komentar-detail.png',
+            'title' => 'Detail',
+            'slug' => 'laporan-komentar-detail',
+            'content' => $content,
+            'roles' => 'super,admin',
+            'order' => $reportCommentOrder++,
+            'parent_id' => $reportComment->id,
+            'status' => 'active',
+        ]);
+
+        /* Laporan - Komentar - Edit */
+        $content = 'Halaman untuk mengedit komentar dari pengunjung. Anda juga dapat menghapus komentar dari halaman ini.';
+        $content .= '<ul>';
+        $content .= '<li><b>Nama</b>, nama pengirim komentar.</li>';
+        $content .= '<li><b>Komentar</b>, komentar yang dapat diedit sesuai dengan peraturan yang berlaku (jika ada).</li>';
+        $content .= '<li><b>Setujui</b>, centang untuk menyetujui komentar dari pelanggan muncul di halaman artikel.</li>';
+        $content .= '</ul>';
+        $reportCommentEdit = Guide::create([
+            'cover' => '/themes/admin/AdminSC/images/guide/laporan-komentar-edit.png',
+            'title' => 'Edit',
+            'slug' => 'laporan-komentar-edit',
+            'content' => $content,
+            'roles' => 'super,admin',
+            'order' => $reportCommentOrder++,
+            'parent_id' => $reportComment->id,
+            'status' => 'active',
+        ]);
+
+        /* Laporan - Komentar- Hapus */
+        $content = '<p>Saat Anda menekan tombol hapus pada salah satu daftar komentar, akan muncul konfirmasi sebelum data dihapus untuk mencegah terjadinya kesalahan hapus data.</p>';
+        $reportCommentDel = Guide::create([
+            'cover' => '/themes/admin/AdminSC/images/guide/laporan-komentar-hapus.png',
+            'title' => 'Hapus',
+            'slug' => 'laporan-komentar-hapus',
+            'content' => $content,
+            'roles' => 'super,admin',
+            'order' => $reportCommentOrder++,
+            'parent_id' => $reportComment->id,
             'status' => 'active',
         ]);
 
