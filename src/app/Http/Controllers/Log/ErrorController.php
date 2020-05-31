@@ -29,6 +29,8 @@ class ErrorController extends AdminController
             'icon' => '',
             'url' => $this->current_url,
         ];
+
+        $this->log_viewer = new \Rap2hpoutre\LaravelLogViewer\LaravelLogViewer();
     }
 
     /**
@@ -36,7 +38,7 @@ class ErrorController extends AdminController
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $r)
     {
         /* set breadcrumbs */
         $this->breadcrumbs[] = [
@@ -45,13 +47,46 @@ class ErrorController extends AdminController
             'url' => '',
         ];
 
+        /* folder & files */
+        $folderFiles = [];
+        if ($r->input('f')) {
+            $this->log_viewer->setFolder(_decrypt($r->input('f')));
+            $folderFiles = $this->log_viewer->getFolderFiles(true);
+        }
+        if ($r->input('l')) {
+            $this->log_viewer->setFile(_decrypt($r->input('l')));
+        }
+
+        if ($early_return = $this->earlyReturn($r)) {
+            return $early_return;
+        }
+
         /* set variable for view */
         $data = [
             'current_url' => $this->current_url,
             'breadcrumbs' => $this->breadcrumbs,
             'page_title' => $this->page_title,
             'page_subtitle' => 'Daftar Galat',
+
+            'logs' => $this->log_viewer->all(),
+            'folders' => $this->log_viewer->getFolders(),
+            'current_folder' => $this->log_viewer->getFolderName(),
+            'folder_files' => $folderFiles,
+            'files' => $this->log_viewer->getFiles(true),
+            'current_file' => $this->log_viewer->getFileName(),
+            'standardFormat' => true,
         ];
+
+        if ($r->wantsJson()) {
+            return $data;
+        }
+
+        if (is_array($data['logs']) && count($data['logs']) > 0) {
+            $firstLog = reset($data['logs']);
+            if (!$firstLog['context'] && !$firstLog['level']) {
+                $data['standardFormat'] = false;
+            }
+        }
 
         return view('zetthcore::AdminSC.log.error', $data);
     }
@@ -123,18 +158,69 @@ class ErrorController extends AdminController
     }
 
     /**
-     * Generate DataTables
+     * @return bool|mixed
+     * @throws \Exception
      */
-    public function datatable(Request $r)
+    private function earlyReturn(Request $r)
     {
-        /* get data */
-        $data = ErrorLog::select('message', \DB::raw("replace(file, '" . base_path() . "', '') as file"), 'line', 'count', 'updated_at')->orderBy('updated_at', 'desc');
-
-        /* generate datatable */
-        if ($r->ajax()) {
-            return $this->generateDataTable($data);
+        if ($r->input('f')) {
+            $this->log_viewer->setFolder(_decrypt($r->input('f')));
         }
 
-        abort(403);
+        if ($r->input('dl')) {
+            return $this->download($this->pathFromInput($r, 'dl'));
+        } elseif ($r->has('clean')) {
+            app('files')->put($this->pathFromInput($r, 'clean'), '');
+            return $this->redirect(url()->previous());
+        } elseif ($r->has('del')) {
+            app('files')->delete($this->pathFromInput($r, 'del'));
+            return $this->redirect($r->url());
+        } elseif ($r->has('delall')) {
+            $files = ($this->log_viewer->getFolderName())
+            ? $this->log_viewer->getFolderFiles(true)
+            : $this->log_viewer->getFiles(true);
+            foreach ($files as $file) {
+                app('files')->delete($this->log_viewer->pathToLogFile($file));
+            }
+            return $this->redirect($r->url());
+        }
+        return false;
+    }
+
+    /**
+     * @param string $input_string
+     * @return string
+     * @throws \Exception
+     */
+    private function pathFromInput(Request $r, $input_string)
+    {
+        return $this->log_viewer->pathToLogFile(_decrypt($r->input($input_string)));
+    }
+
+    /**
+     * @param $to
+     * @return mixed
+     */
+    private function redirect($to)
+    {
+        if (function_exists('redirect')) {
+            return redirect($to);
+        }
+
+        return app('redirect')->to($to);
+    }
+
+    /**
+     * @param string $data
+     * @return mixed
+     */
+    private function download($data)
+    {
+        if (function_exists('response')) {
+            return response()->download($data);
+        }
+
+        // For laravel 4.2
+        return app('\Illuminate\Support\Facades\Response')->download($data);
     }
 }

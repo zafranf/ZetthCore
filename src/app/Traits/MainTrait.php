@@ -38,61 +38,6 @@ trait MainTrait
         $act->save();
     }
 
-    public function errorLog($e)
-    {
-        $log = [
-            'code' => $e->getCode(),
-            'file' => $e->getFile(),
-            'line' => $e->getLine(),
-            'message' => substr($e->getMessage(), 0, 191),
-            'path' => !app()->runningInConsole() ? \Request::path() : null,
-            'params' => !app()->runningInConsole() ? json_encode(\Request::all()) : [],
-            'trace' => json_encode($e->getTrace()),
-        ];
-        if (isset($e->data)) {
-            $log['data'] = $e->data;
-        }
-
-        if ($e->getMessage() && $this->checkDBConnection() && (app()->bound('site') || class_exists('site'))) {
-            $date = carbon_query()->format('Y-m-d');
-            $err = \ZetthCore\Models\ErrorLog::updateOrCreate(
-                [
-                    'id' => md5($log['code'] . $log['file'] . $log['line'] . $log['path'] . $log['message'] . $date),
-                    'site_id' => app('site')->id ?? null,
-                ],
-                [
-                    'code' => $log['code'],
-                    'file' => $log['file'],
-                    'line' => $log['line'],
-                    'path' => $log['path'],
-                    'message' => $log['message'],
-                    'params' => $log['params'],
-                    'trace' => $log['trace'],
-                    'data' => $log['data'] ?? null,
-                    'count' => \DB::raw('count+1'),
-                ]
-            );
-
-            /* save time histories */
-            $histories = !empty($err->time_history) ? json_decode($err->time_history) : [];
-            $histories[] = date("Y-m-d H:i:s");
-            $err->time_history = json_encode($histories);
-            $err->save();
-        }
-
-        /* return error */
-        $error = ($e->getCode() != 0) ? $e->getMessage() : 'Error :(';
-        if (env('APP_DEBUG')) {
-            $error = [
-                'message' => $e->getMessage(),
-                'file' => $e->getFile(),
-                'line' => $e->getLine(),
-            ];
-        }
-
-        return $error;
-    }
-
     /**
      * [_upload_file description]
      * @param  array  $par [description]

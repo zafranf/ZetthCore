@@ -11,6 +11,7 @@
         "jenssegers/agent": "^2.6",
         "laravel/framework": "^6.0",
         "laravel/socialite": "^4.3",
+        "rap2hpoutre/laravel-log-viewer": "^1.6",
         "santigarcor/laratrust": "5.2.*",
         "spatie/laravel-translation-loader": "^2.6",
         "yajra/laravel-datatables-oracle": "~9.0",
