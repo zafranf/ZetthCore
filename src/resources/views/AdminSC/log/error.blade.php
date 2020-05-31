@@ -3,7 +3,7 @@
 @section('content')
   <div class="container-fluid">
     <div class="row">
-      <div class="col-md-2">
+      <div class="col-md-2 no-padding-right">
         {{-- <h1><i class="fa fa-calendar" aria-hidden="true"></i> Laravel Log Viewer</h1> --}}
         <br>
         <p class="text-muted">
@@ -14,8 +14,8 @@
           <input type="checkbox" class="custom-control-input" id="darkSwitch">
           <label class="custom-control-label" for="darkSwitch" style="margin-top: 6px;">Dark Mode</label>
         </div> --}}
-        <div id="affixs" style="top:80px;border:1px solid #ccc;border-radius:4px;">
-          <h4 style="border-bottom:2px solid #ccc;padding:0 10px;line-height:29px;margin-bottom:0;">Berkas</h4>
+        <div id="affixs">
+          <h4 id="list-group-title">Berkas</h4>
           <div class="list-group div-scroll">
             @foreach($folders as $folder)
               <div class="list-group-item">
@@ -109,6 +109,18 @@
 @push('styles')
   {!! _admin_css(adminPath() . '/themes/admin/AdminSC/plugins/DataTables/1.10.12/css/jquery.dataTables.min.css') !!}
   <style>
+    #affixs {
+      top: 80px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+    #list-group-title  {
+      border-bottom: 2px solid #ccc;
+      padding: 0 10px;
+      line-height: 39px;
+      margin-bottom: 0;
+      margin-top: 0;
+    }
     #table-log {
         /* font-size: 0.85rem; */
         border: 1px solid #ccc;
