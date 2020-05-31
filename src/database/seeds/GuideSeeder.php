@@ -921,7 +921,7 @@ class GuideSeeder extends Seeder
             'title' => 'Balas',
             'slug' => 'laporan-komentar-balas',
             'content' => $content,
-            'roles' => 'super,admin',
+            'roles' => 'super,admin,author',
             'order' => $reportCommentOrder++,
             'parent_id' => $reportComment->id,
             'status' => 'active',
@@ -934,7 +934,7 @@ class GuideSeeder extends Seeder
             'title' => 'Detail',
             'slug' => 'laporan-komentar-detail',
             'content' => $content,
-            'roles' => 'super,admin',
+            'roles' => 'super,admin,author',
             'order' => $reportCommentOrder++,
             'parent_id' => $reportComment->id,
             'status' => 'active',
@@ -952,7 +952,7 @@ class GuideSeeder extends Seeder
             'title' => 'Edit',
             'slug' => 'laporan-komentar-edit',
             'content' => $content,
-            'roles' => 'super,admin',
+            'roles' => 'super,admin,author',
             'order' => $reportCommentOrder++,
             'parent_id' => $reportComment->id,
             'status' => 'active',
@@ -965,16 +965,16 @@ class GuideSeeder extends Seeder
             'title' => 'Hapus',
             'slug' => 'laporan-komentar-hapus',
             'content' => $content,
-            'roles' => 'super,admin',
+            'roles' => 'super,admin,author',
             'order' => $reportCommentOrder++,
             'parent_id' => $reportComment->id,
             'status' => 'active',
         ]);
 
         /* Laporan - Kata Pencarian */
-        $content = '<p>Incoming terms merupakan keyword yang masuk berdasarkan hasil pencarian dari mesin pencari atau dari fungsi pencarian di situs. Modul ini berguna sebagai analisis pencarian apa saja yang sering pengunjung lakukan. Rinciannya adalah kolom <code>Host</code> adalah nama mesin pencari yang digunakan, kolom <code>Text</code> adalah keyword yang digunakan pengunjung untuk mencari artikel/halaman, kolom <code>Count</code> untuk menghitung berapa banyak keyword itu digunakan, serta kolom <code>Action</code> yang merupakan tombol untuk mengatur keyword tersebut. Tombol <a class="btn btn-default btn-xs"><span class="fa fa-trash"><span></a> <code>Delete</code> untuk menghapus keyword.</p>';
+        $content = '<p><b>Kata Pencarian</b> merupakan kata kunci yang digunakan pengunjung yang masuk berdasarkan hasil pencarian dari mesin pencari atau dari fungsi pencarian di situs. Fitur ini berguna sebagai analisis pencarian apa saja yang sering pengunjung lakukan. Kolom <code>Sumber</code> adalah nama mesin pencari atau situs yang digunakan, kolom <code>Kata Pencarian</code> adalah kata kunci yang digunakan pengunjung untuk mencari artikel/halaman di situ, serta kolom <code>Jumlah</code> untuk menghitung berapa banyak kata kunci itu digunakan.</p>';
         $repInterm = Guide::create([
-            'cover' => '/themes/admin/AdminSC/images/guide/015-Interm-00-Overview.png',
+            'cover' => '/themes/admin/AdminSC/images/guide/laporan-katapencarian.png',
             'title' => 'Kata Pencarian',
             'slug' => 'laporan-katapencarian',
             'content' => $content,
