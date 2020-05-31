@@ -14,37 +14,39 @@
           <input type="checkbox" class="custom-control-input" id="darkSwitch">
           <label class="custom-control-label" for="darkSwitch" style="margin-top: 6px;">Dark Mode</label>
         </div> --}}
-
-        <div class="list-group div-scroll">
-          @foreach($folders as $folder)
-            <div class="list-group-item">
-              <a href="?f={{ urlencode(_encrypt($folder)) }}">
-                <span class="fa fa-folder"></span> {{$folder}}
-              </a>
-              @if ($current_folder == $folder)
-                <div class="list-group folder">
-                  @foreach($folder_files as $file)
-                    <span onclick="window.location='?l={{ urlencode(_encrypt($file)) }}'"
-                      class="list-group-item @if ($current_file == $file) llv-active @endif">
-                      {{$file}}
-                      <a class="pull-right" href="?dl={{ urlencode(_encrypt($current_file)) }}{{ ($current_folder) ? '&f=' . urlencode(_encrypt($current_folder)) : '' }}" data-toggle="tooltip" data-original-title="Unduh berkas" data-placement="left">
-                        <span class="fa fa-download"></span>
-                      </a>
-                    </span>
-                  @endforeach
-                </div>
-              @endif
-            </div>
-          @endforeach
-          @foreach($files as $file)
-            <span onclick="window.location='?l={{ urlencode(_encrypt($file) )}}'"
-              class="list-group-item @if ($current_file == $file) llv-active @endif">
-              {{$file}}
-              <a class="pull-right" href="?dl={{ urlencode(_encrypt($current_file)) }}{{ ($current_folder) ? '&f=' . urlencode(_encrypt($current_folder)) : '' }}" data-toggle="tooltip" data-original-title="Unduh berkas" data-placement="left">
-                <span class="fa fa-download"></span>
-              </a>
-            </span>
-          @endforeach
+        <div id="affixs" style="top:80px;border:1px solid #ccc;border-radius:4px;">
+          <h4 style="border-bottom:2px solid #ccc;padding:0 10px;line-height:29px;margin-bottom:0;">Berkas</h4>
+          <div class="list-group div-scroll">
+            @foreach($folders as $folder)
+              <div class="list-group-item">
+                <a href="?f={{ urlencode(_encrypt($folder)) }}">
+                  <span class="fa fa-folder"></span> {{$folder}}
+                </a>
+                @if ($current_folder == $folder)
+                  <div class="list-group folder">
+                    @foreach($folder_files as $file)
+                      <span onclick="window.location='?l={{ urlencode(_encrypt($file)) }}'"
+                        class="list-group-item @if ($current_file == $file) llv-active @endif">
+                        {{$file}}
+                        <a class="pull-right" href="?dl={{ urlencode(_encrypt($current_file)) }}{{ ($current_folder) ? '&f=' . urlencode(_encrypt($current_folder)) : '' }}" data-toggle="tooltip" data-original-title="Unduh berkas" data-placement="left">
+                          <span class="fa fa-download"></span>
+                        </a>
+                      </span>
+                    @endforeach
+                  </div>
+                @endif
+              </div>
+            @endforeach
+            @foreach($files as $file)
+              <span onclick="window.location='?l={{ urlencode(_encrypt($file) )}}'"
+                class="list-group-item @if ($current_file == $file) llv-active @endif">
+                {{$file}}
+                <a class="pull-right" href="?dl={{ urlencode(_encrypt($current_file)) }}{{ ($current_folder) ? '&f=' . urlencode(_encrypt($current_folder)) : '' }}" data-toggle="tooltip" data-original-title="Unduh berkas" data-placement="left">
+                  <span class="fa fa-download"></span>
+                </a>
+              </span>
+            @endforeach
+          </div>
         </div>
       </div>
       <div class="col-md-10 table-container">
@@ -136,6 +138,10 @@
     .list-group-item {
       cursor: pointer;
       word-wrap: break-word;
+      border: 0;
+    }
+    .list-group-item:not(:first-child) {
+      border-top: 1px solid #ccc;
     }
     .list-group-item:hover {
       background:#f5f5f5;
@@ -147,6 +153,7 @@
       top: 80px;
       height: 50vh;
       overflow: hidden auto;
+      margin-bottom: 0;
     }
     .nowrap {
       white-space: nowrap;
@@ -159,14 +166,17 @@
   <script>
     $(document).ready(function () {
       let ds = $('.div-scroll').width();
-      $(".div-scroll").affix({
+      $("#affixs").affix({
           offset: {
             top: 80
           }
       });
-      $('.div-scroll').on('affixed.bs.affix', function() {
+      $('#affixs').on('affixed.bs.affix', function() {
         $('.affix').width(ds ? ds : 205);
       });
+      if ($('.affix').length) {
+        $('.affix').width(ds ? ds : 205);
+      }
       $('.table-container tr').on('click', function () {
         $('#' + $(this).data('display')).toggle();
       });
