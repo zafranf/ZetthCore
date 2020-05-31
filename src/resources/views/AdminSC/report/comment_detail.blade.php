@@ -2,15 +2,29 @@
 
 @section('content')
   <div class="panel-body">
-    Dari: {{ $data->name }} ({{ $data->email }}) <br>
-    No. Telp: {{ $data->phone ?? '-' }} <br>
-    Situs: {{ $data->site ?? '-' }} <br>
-    Waktu: {{ generateDate($data->created_at,'id', 'dddd, Do MMMM YYYY HH:mm') }} <br>
-    Artikel: <a style="text-decoration:none;">{{ $data->post->title }}</a> <br>
-    <br>
+    <div class="row">
+      <div class="col-md-1">Dari</div>
+      <div class="col-md-11">{{ $data->name }} ({{ $data->email }})</div>
+    </div>
+    <div class="row">
+      <div class="col-md-1">No. Telepon</div>
+      <div class="col-md-11">{{ $data->phone !='' ? $data->phone : '-' }}</div>
+    </div>
+    <div class="row">
+      <div class="col-md-1">Situs</div>
+      <div class="col-md-11">{{ $data->site ?? '-' }}</div>
+    </div>
+    <div class="row">
+      <div class="col-md-1">Waktu</div>
+      <div class="col-md-11">{{ generateDate($data->created_at,'id', 'dddd, Do MMMM YYYY HH:mm') }}</div>
+    </div>
+    <div class="row">
+      <div class="col-md-1">Subjek</div>
+      <div class="col-md-11"><a style="text-decoration:none;">{{ $data->post->title }}</a></div>
+    </div>
+    <hr>
     {!! nl2br(e(strip_tags($data->content))) !!}
-    <br>
-    <br>
+    <hr>
     <a id="btn-back" class="share-button" href="{{ _url($current_url) }}">
       <i class="fa fa-caret-left"></i> Kembali
     </a>

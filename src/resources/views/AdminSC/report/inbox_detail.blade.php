@@ -3,21 +3,24 @@
 @section('content')
   <div class="panel-body">
     <div class="row">
-      <div class="col-md-2">Dari</div>
-      <div class="col-md-10">{{ $data->name }} ({{ $data->email }})</div>
+      <div class="col-md-1">Dari</div>
+      <div class="col-md-11">{{ $data->name }} ({{ $data->email }})</div>
     </div>
     <div class="row">
-      <div class="col-md-2">No. Telepon</div>
-      <div class="col-md-10">{{ $data->phone!=""?$data->phone:'-' }}</div>
+      <div class="col-md-1">No. Telepon</div>
+      <div class="col-md-11">{{ $data->phone !='' ? $data->phone : '-' }}</div>
     </div>
     <div class="row">
-      <div class="col-md-2">Tanggal</div>
-      <div class="col-md-10">{{ generateDate($data->created_at) }}</div>
+      <div class="col-md-1">Waktu</div>
+      <div class="col-md-11">{{ generateDate($data->created_at,'id', 'dddd, Do MMMM YYYY HH:mm') }}</div>
+    </div>
+    <div class="row">
+      <div class="col-md-1">Subjek</div>
+      <div class="col-md-11">{{ $data->subject ?? '-' }}</div>
     </div>
     <hr>
     {{ $data->message }}
     <hr>
-    <!-- <a id="btn-delete" class="zetth-share-button" onclick="_delete('{{ $data->id }}', '{{ $current_url }}');"><i class="fa fa-envelope"></i> Mark as Unread</a> --> 
     <a id="btn-back" class="zetth-share-button" href="{{ _url($current_url) }}"><i class="fa fa-caret-left"></i> Kembali</a> 
     <a id="btn-delete" class="zetth-share-button" onclick="_delete('{{ $current_url . '/' . $data->id }}', 'pesan dari \'{{ $data->email }}\'');"><i class="fa fa-trash-o"></i> Hapus</a>
   </div>
