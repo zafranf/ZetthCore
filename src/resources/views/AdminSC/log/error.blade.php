@@ -131,7 +131,6 @@
       word-break: break-all;
     }
     span.llv-active {
-      z-index: 2;
       background-color: #f5f5f5;
       border-color: #777;
     }
