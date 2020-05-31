@@ -593,7 +593,7 @@ if (!function_exists('generateBreadcrumb')) {
 
         /* generate date */
         if ($with_date) {
-            echo '<span class="today pull-right">' . generateDate(carbon()->sub('2 day')) . '</span>';
+            echo '<span class="today pull-right">' . generateDate() . '</span>';
         }
 
         echo '</ol>';
