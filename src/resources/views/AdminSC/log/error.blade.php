@@ -113,6 +113,7 @@
       top: 80px;
       border: 1px solid #ccc;
       border-radius: 4px;
+      background: white;
     }
     #list-group-title  {
       border-bottom: 2px solid #ccc;
@@ -179,7 +180,7 @@
       let ds = $('.div-scroll').width();
       $("#affixs").affix({
           offset: {
-            top: 80
+            top: 180
           }
       });
       $('#affixs').on('affixed.bs.affix', function() {
