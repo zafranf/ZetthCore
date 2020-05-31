@@ -29,6 +29,23 @@ class GuideSeeder extends Seeder
             'status' => 'active',
         ]);
 
+        /* Dasbor - Navigasi */
+        $content = '<p>Paling atas tiap halaman terdapat bilah navigasi yang berfungsi untuk mengantarkan Anda ke halaman-halaman yang ingin dituju. Terdapat 3 bagian dalam bilah navigasi ini, yaitu:</p>';
+        $content .= '<ul>';
+        $content .= '<li><b>Logo</b>, menampilkan logo dari situs, jika tidak ada maka akan tampil logo bawaan pengembang.';
+        $content .= '<li><b>Menu utama</b>, terletak di samping Logo yang terdapat beberapa menu untuk mengelola situs ini.';
+        $content .= '<li><b>Menu akun</b>, terletak di paling kanan atas yang terdapat menu untuk menuju ke halaman <b>panduan</b>, <b>situs utama</b>, dan juga untuk mengelola akun.';
+        $content .= '</ul>';
+        $dashTanggal = Guide::create([
+            'title' => 'Navigasi',
+            'slug' => 'dasbor-navigasi',
+            'content' => $content,
+            'roles' => 'all',
+            'order' => $dashOrder++,
+            'parent_id' => $dash->id,
+            'status' => 'active',
+        ]);
+
         /* Dasbor - Atur Tanggal */
         $content = '<div id="date-range-guide" class="pull-right"><i class="fa fa-calendar"></i>&nbsp;<span>[~dates]</span> <b class="caret"></b></div><div id="btn-refresh-guide" title="Segarkan" class="pull-right"><i class="fa fa-refresh"></i></div>';
         $content .= '<p>Posisi tombol ini berada di sebelah kanan atas di bawah nama pengguna. Tombol atur tanggal ini dapat digunakan untuk melihat grafik, artikel favorit serta komentar terbaru berdasarkan tanggal. Anda dapat mengaturnya menjadi <code>Hari ini</code> untuk melihat grafik hari ini di mulai dari pukul 00:00 hingga saat diakses, <code>Kemarin</code> untuk melihat grafik kemarin, <code>Minggu ini</code> untuk melihat grafik minggu ini (bukan 7 hari sebelumnya) dimulai dari Senin - Minggu pada minggu ini, <code>Bulan ini</code> untuk melihat grafik bulan ini mulai dari tanggal 1 sampai saat diakses dan <code>Semua</code> untuk melihat grafik situs Anda dari pertama kali pasang atau Anda dapat menyesuaikan tanggal sesuai dengan keinginan Anda melalui pilihan <code>Atur tanggal</code>.</p>';
@@ -90,6 +107,18 @@ class GuideSeeder extends Seeder
         $dashTanggal = Guide::create([
             'title' => 'Komentar Terbaru',
             'slug' => 'dasbor-komentarterbaru',
+            'content' => $content,
+            'roles' => 'all',
+            'order' => $dashOrder++,
+            'parent_id' => $dash->id,
+            'status' => 'active',
+        ]);
+
+        /* Dasbor - Navigasi */
+        $content = '<p>Terletak di bagian paling bawah kanan yang menampilkan status koneksi internet dan juga nama pengembang situs.</p>';
+        $dashTanggal = Guide::create([
+            'title' => 'Pengembang',
+            'slug' => 'dasbor-pengembang',
             'content' => $content,
             'roles' => 'all',
             'order' => $dashOrder++,
