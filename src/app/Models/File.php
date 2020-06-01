@@ -12,6 +12,6 @@ class File extends Base
 
     public function albums()
     {
-        return $this->morphedByMany('ZetthCore\Models\Album', 'fileable');
+        return $this->morphedByMany('App\Models\Album', 'fileable');
     }
 }
