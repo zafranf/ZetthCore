@@ -103,7 +103,7 @@ class PageController extends AdminController
         $page->content = $r->input('content');
         $page->excerpt = substr(strip_tags($page->content), 0, 255);
         $page->type = 'page';
-        $page->status = bool($r->input('status')) ? 1 : 0;
+        $page->status = $r->input('status') ?? 'inactive';
         $page->created_by = app('user')->id;
         $page->published_at = now();
         $page->site_id = app('site')->id;
@@ -178,7 +178,7 @@ class PageController extends AdminController
         $page->content = $r->input('content');
         $page->excerpt = substr(strip_tags($page->content), 0, 255);
         $page->type = 'page';
-        $page->status = bool($r->input('status')) ? 1 : 0;
+        $page->status = $r->input('status') ?? 'inactive';
         $page->updated_by = app('user')->id;
         $page->save();
 
