@@ -101,7 +101,7 @@ class PageController extends AdminController
         $page->title = $r->input('title');
         $page->slug = $r->input('slug') ?? \Str::slug($page->title);
         $page->content = $r->input('content');
-        $page->excerpt = substr(strip_tags($page->content), 0, 255);
+        $page->excerpt = $r->input('excerpt') ?? substr(strip_tags($page->content), 0, 255);
         $page->type = 'page';
         $page->status = $r->input('status') ?? 'inactive';
         $page->created_by = app('user')->id;
@@ -176,7 +176,7 @@ class PageController extends AdminController
         $page->title = $r->input('title');
         // $page->slug = \Str::slug($r->input('slug'));
         $page->content = $r->input('content');
-        $page->excerpt = substr(strip_tags($page->content), 0, 255);
+        $page->excerpt = $r->input('excerpt') ?? substr(strip_tags($page->content), 0, 255);
         $page->type = 'page';
         $page->status = $r->input('status') ?? 'inactive';
         $page->updated_by = app('user')->id;
