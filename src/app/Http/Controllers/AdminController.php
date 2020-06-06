@@ -76,7 +76,7 @@ class AdminController extends BaseController
         /* save user detail */
         $detail = \ZetthCore\Models\UserDetail::updateOrCreate([
             'user_id' => $user->id,
-            'site_id' => app('user')->id,
+            'site_id' => app('site')->id,
         ], [
             'about' => $r->input('about'),
         ]);
