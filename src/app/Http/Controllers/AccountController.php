@@ -52,7 +52,7 @@ class AccountController extends AdminController
     {
         /* validation */
         $validation = [
-            'fullname' => 'required|max:100',
+            'fullname' => 'required',
             'email' => 'required|email',
             'image' => 'nullable|image|mimes:jpg,jpeg,png,svg|max:384|dimensions:min_width=128,min_height=128,max_width=512,max_height=512,ratio=1/1',
         ];

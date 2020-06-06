@@ -114,8 +114,8 @@ class UserController extends AdminController
         /* validation */
         $this->validate($r, [
             'name' => 'required|alpha_dash|min:2|max:30|unique:users',
-            'fullname' => 'required|max:100',
-            'email' => 'required|email:100',
+            'fullname' => 'required',
+            'email' => 'required|email',
             'image' => 'nullable|image|mimes:jpg,jpeg,png,svg|max:384|dimensions:min_width=128,min_height=128,max_width=512,max_height=512,ratio=1/1',
             'password' => 'required|min:6',
             'password_confirmation' => 'same:password',
@@ -238,8 +238,8 @@ class UserController extends AdminController
         /* validation */
         $validation = [
             'name' => 'required|alpha_dash|min:2|max:30|unique:users,name,' . $user->id . ',id',
-            'fullname' => 'required|max:100',
-            'email' => 'required|email:100',
+            'fullname' => 'required',
+            'email' => 'required|email',
             'image' => 'nullable|image|mimes:jpg,jpeg,png,svg|max:384|dimensions:min_width=128,min_height=128,max_width=512,max_height=512,ratio=1/1',
         ];
         if (!is_null($r->input('password')) || !is_null($r->input('password_confirmation'))) {
