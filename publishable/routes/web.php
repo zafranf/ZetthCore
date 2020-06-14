@@ -18,7 +18,7 @@ Route::name('web.')->middleware(['site'])->group(function () {
     Route::get('login/{driver}/callback', 'Auth\LoginController@handleProviderCallback')->name('login.driver.callback');
 
     /* Auth */
-    Route::middleware(['throttle:' . (env('APP_DEBUG') ? 60 : 10) . ',1'])->group(function () {
+    Route::middleware(['throttle:' . (config('app.debug') ? 60 : 10) . ',1'])->group(function () {
         Route::post('register', 'Auth\RegisterController@register')->name('register.post');
         Route::post('login', 'Auth\LoginController@login')->name('login.post');
         Route::post('verification', 'Auth\VerificationController@verify')->name('verify.post');
@@ -26,13 +26,13 @@ Route::name('web.')->middleware(['site'])->group(function () {
         Route::post('forgot-password', 'Auth\ForgotPasswordController@send')->name('forgot.post');
         Route::post('reset-password', 'Auth\ResetPasswordController@store')->name('reset.post');
     });
-    if (env('APP_DEBUG')) {
+    if (config('app.debug')) {
         Route::get('test', 'TestController@index')->name('test');
     }
 
     Route::middleware(['auth'])->group(function () {
         Route::post('logout', 'Auth\LoginController@logout')->name('logout.post');
-        if (env('APP_DEBUG')) {
+        if (config('app.debug')) {
             Route::get('logout', 'Auth\LoginController@logout')->name('logout');
         }
 

@@ -9,8 +9,8 @@ class TrimDomains extends PageSpeed
     public function apply($buffer)
     {
         $replace = [
-            '/\/\/' . env('APP_DOMAIN') . '\//' => '/',
-            '/\/\/' . env('APP_DOMAIN') . '/' => '/',
+            '/\/\/' . config('app.domain') . '\//' => '/',
+            '/\/\/' . config('app.domain') . '/' => '/',
         ];
 
         return $this->replace($replace, $buffer);
