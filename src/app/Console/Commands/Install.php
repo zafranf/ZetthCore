@@ -142,41 +142,7 @@ class Install extends Command
 
     public function linkFolders()
     {
-        $this->info('Link folders');
-
-        $this->info('Linking storage folder');
-        if (is_link(public_path('storage'))) {
-            $this->info('The [public/storage] directory already linked.');
-        } else {
-            $storage_path = storage_path('app/public');
-            $this->process('cd ' . public_path() . ' && ln -s ' . $storage_path . ' storage && cd ' . base_path());
-            $this->info('The [public/storage] directory has been linked.');
-        }
-
-        /* set filemanager root path */
-        $filemanager_path = dirname(__DIR__) . '/../../resources/assets/filemanager';
-
-        /* linking public/files to filemanager */
-        $this->info('Linking assets filemanager folder');
-        if (is_link($filemanager_path . '/upload')) {
-            $this->info('The [files] directory already linked.');
-        } else {
-            $files_path = storage_path('app/public/assets/images/upload');
-            $this->process('cd ' . $filemanager_path . ' && ln -s ' . $files_path . ' && cd ' . base_path());
-            $this->info('The [files] directory has been linked.');
-        }
-
-        /* linking public/thumbs to filemanager */
-        $this->info('Linking assets thumbs filemanager folder');
-        if (is_link($filemanager_path . '/thumbs')) {
-            $this->info('The [thumbs] directory already linked.');
-        } else {
-            $thumbs_path = storage_path('app/public/assets/thumbs');
-            $this->process('cd ' . $filemanager_path . ' && ln -s ' . $thumbs_path . ' && cd ' . base_path());
-            $this->info('The [thumbs] directory has been linked.');
-        }
-
-        $this->info('Link folders finished!');
+        $this->call('zetth:link');
     }
 
     public function process($command)

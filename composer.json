@@ -58,5 +58,10 @@
                 "Browser": "Jenssegers\\Agent\\Facades\\Agent"
             }
         }
+    },
+    "scripts": {
+        "post-update-cms": [
+            "@php artisan zetth:link"
+        ]
     }
 }

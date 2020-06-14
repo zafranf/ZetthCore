@@ -24,6 +24,7 @@ class AppServiceProvider extends ServiceProvider
             $this->commands([
                 \ZetthCore\Console\Commands\Install::class,
                 \ZetthCore\Console\Commands\Reinstall::class,
+                \ZetthCore\Console\Commands\Link::class,
             ]);
         } else {
             /* check config */
