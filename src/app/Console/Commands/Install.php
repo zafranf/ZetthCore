@@ -53,7 +53,7 @@ class Install extends Command
         if (!file_exists(base_path('.env'))) {
             throw new \Exception("Copy .env.example as .env and set the values first", 1);
         }
-        if (env('APP_DOMAIN') === null) {
+        if (config('app.domain') === null) {
             throw new \Exception("Please set APP_DOMAIN in .env file", 1);
         }
 
@@ -92,7 +92,7 @@ class Install extends Command
     {
         if ($this->option('fresh')) {
 
-            $colname = 'Tables_in_' . env('DB_DATABASE');
+            $colname = 'Tables_in_' . getDatabaseName();
             $tables = \DB::select('SHOW TABLES');
             $droplist = [];
             foreach ($tables as $table) {

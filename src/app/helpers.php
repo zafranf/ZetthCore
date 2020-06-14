@@ -2,14 +2,14 @@
 if (!function_exists('adminRoute')) {
     function adminRoute()
     {
-        return env('ADMIN_ROUTE', 'path');
+        return config('app.admin.route');
     }
 }
 
 if (!function_exists('isAdminPath')) {
     function isAdminPath()
     {
-        return request()->segment(1) == trim(env('ADMIN_PATH', 'manager'), '/');
+        return request()->segment(1) == trim(config('app.admin.path'), '/');
     }
 }
 
@@ -17,7 +17,7 @@ if (!function_exists('adminPath')) {
     function adminPath()
     {
         if (isAdminPath()) {
-            return '/' . env('ADMIN_PATH', 'manager');
+            return '/' . config('app.admin.path');
         }
 
         return null;
@@ -29,7 +29,7 @@ if (!function_exists('isAdminSubdomain')) {
     {
         $host = parse_url(_url('/'))['host'];
 
-        return in_array(env('ADMIN_SUBDOMAIN', 'manager'), explode(".", $host));
+        return in_array(config('app.admin.subdomain'), explode(".", $host));
     }
 }
 
@@ -37,7 +37,7 @@ if (!function_exists('adminSubdomain')) {
     function adminSubdomain()
     {
         if (isAdminSubdomain()) {
-            return env('ADMIN_SUBDOMAIN', 'manager');
+            return config('app.admin.subdomain');
         }
 
         return null;
@@ -199,7 +199,7 @@ if (!function_exists('getImage')) {
         $file = storage_path('app/public/' . $image);
         if (file_exists($file) && !is_dir($file)) {
             $image = str_replace('assets/images/', '', $image);
-            $mtime = filemtime($file) / env('DB_PORT', 3306);
+            $mtime = filemtime($file) / getDatabasePort();
 
             return _url('imache/' . $template . '/' . $image) . '?v=' . $mtime;
         } else {
@@ -262,7 +262,7 @@ if (!function_exists('getSiteURL')) {
     {
         $url = _url($path ?? '/');
         if (adminRoute() == 'subdomain') {
-            $url = _url(env('APP_URL') . '/' . ltrim($path, '/'));
+            $url = _url(config('app.url') . '/' . ltrim($path, '/'));
         }
 
         return $url;
@@ -272,7 +272,7 @@ if (!function_exists('getSiteURL')) {
 if (!function_exists('getCacheTime')) {
     function getCacheTime()
     {
-        $minutes = env('APP_ENV', 'production') == 'production' ? env('CACHE_TIME', 10) : 1;
+        $minutes = config('app.env') == 'production' ? config('cache.time') : 1;
 
         return now()->addMinutes($minutes);
     }
@@ -359,6 +359,22 @@ if (!function_exists('getTimezone')) {
         }
 
         return $timezone;
+    }
+}
+
+if (!function_exists('getDatabaseName')) {
+    function getDatabaseName()
+    {
+        $connection = config('database.default');
+        return config('database.connections.' . $connection . '.database');
+    }
+}
+
+if (!function_exists('getDatabasePort')) {
+    function getDatabasePort()
+    {
+        $connection = config('database.default');
+        return config('database.connections.' . $connection . '.port');
     }
 }
 
@@ -688,7 +704,7 @@ if (!function_exists('generateGuideContent')) {
 if (!function_exists('_url')) {
     function _url($url = null, $secure = false)
     {
-        if ($secure || bool(env('FORCE_HTTPS'))) {
+        if ($secure || bool(config('app.force_https'))) {
             return secure_url($url);
         }
 
@@ -765,7 +781,7 @@ if (!function_exists('_site_css')) {
     {
         $path = !$is_admin ? resource_path($file) : $file;
         if (File::exists($path)) {
-            $mtime = filemtime($path) / env('DB_PORT', 3306);
+            $mtime = filemtime($path) / getDatabasePort();
             $attr = ' rel="stylesheet" type="text/css"';
             if (!empty($attributes)) {
                 $attr = '';
@@ -793,7 +809,7 @@ if (!function_exists('_site_js')) {
     {
         $path = !$is_admin ? resource_path($file) : $file;
         if (File::exists($path)) {
-            $mtime = filemtime($path) / env('DB_PORT', 3306);
+            $mtime = filemtime($path) / getDatabasePort();
             $attr = ' type="text/javascript"';
             if (!empty($attributes)) {
                 $attr = '';
@@ -812,14 +828,14 @@ if (!function_exists('_site_js')) {
 if (!function_exists('_encrypt')) {
     function _encrypt($string, $salt = null)
     {
-        return openssl_encrypt($string, "AES-128-ECB", env('APP_NAME') . $salt);
+        return openssl_encrypt($string, "AES-128-ECB", config('app.name') . $salt);
     }
 }
 
 if (!function_exists('_decrypt')) {
     function _decrypt($string, $salt = null)
     {
-        return openssl_decrypt($string, "AES-128-ECB", env('APP_NAME') . $salt);
+        return openssl_decrypt($string, "AES-128-ECB", config('app.name') . $salt);
     }
 }
 

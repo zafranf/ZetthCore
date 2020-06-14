@@ -6,7 +6,7 @@ Route::middleware('web')->name('admin.')->group(function () {
             include __DIR__ . "/admin.php";
         });
     } else if (adminRoute() == 'subdomain') {
-        Route::domain(adminSubdomain() . '.' . env('APP_DOMAIN'))->group(function () {
+        Route::domain(adminSubdomain() . '.' . config('app.domain'))->group(function () {
             include __DIR__ . "/admin.php";
         });
     }

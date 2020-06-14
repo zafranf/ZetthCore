@@ -56,7 +56,7 @@ return [
         '*.m4v',
         '*.torrent',
         'larafile/*',
-        env('ADMIN_PATH') . '/*',
+        env('ADMIN_PATH', 'manager') . '/*',
         'themes/admin/*',
         'test',
         'test/*',

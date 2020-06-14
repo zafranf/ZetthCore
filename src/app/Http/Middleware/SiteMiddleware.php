@@ -25,7 +25,7 @@ class SiteMiddleware
         $status = app('site')->status;
 
         /* next on subscribe */
-        if (($request->isMethod('post') && $current == route('web.action.subscribe')) || (env('APP_ENV') != 'production' && $uri == 'test')) {
+        if (($request->isMethod('post') && $current == route('web.action.subscribe')) || (config('app.env') != 'production' && $uri == 'test')) {
             return $next($request);
         }
 

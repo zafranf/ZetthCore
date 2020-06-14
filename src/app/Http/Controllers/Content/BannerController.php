@@ -163,7 +163,7 @@ class BannerController extends AdminController
         if ($r->hasFile('image')) {
             $file = $r->file('image');
             $ext = $file->getClientOriginalExtension();
-            $name = 'banner-' . (md5($banner->id . env('DB_PORT', 3306))) . '.' . $ext;
+            $name = 'banner-' . (md5($banner->id . getDatabasePort())) . '.' . $ext;
 
             if ($this->uploadImage($file, '/assets/images/banners/', $name)) {
                 $banner->image = $name;
@@ -276,7 +276,7 @@ class BannerController extends AdminController
         if ($r->hasFile('image')) {
             $file = $r->file('image');
             $ext = $file->getClientOriginalExtension();
-            $name = 'banner-' . (md5($banner->id . env('DB_PORT', 3306))) . '.' . $ext;
+            $name = 'banner-' . (md5($banner->id . getDatabasePort())) . '.' . $ext;
 
             if ($this->uploadImage($file, '/assets/images/banners/', $name)) {
                 $banner->image = $name;

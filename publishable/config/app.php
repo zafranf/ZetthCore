@@ -53,6 +53,8 @@ return [
      */
 
     'url' => env('APP_URL', 'http://localhost'),
+    'domain' => env('APP_DOMAIN', 'localhost'),
+    'webmail_url' => env('APP_WEBMAIL_URL', '/webmail'),
 
     'asset_url' => env('ASSET_URL', null),
 
@@ -241,6 +243,18 @@ return [
             'password',
             'password_confirmation',
         ],
+    ],
+
+    /* Force using https */
+    'force_https' => env('FORCE_HTTPS', false),
+
+    /**
+     * Admin Route Path
+     */
+    'admin' => [
+        'route' => env('ADMIN_ROUTE', 'path'), // path|subdomain
+        'path' => env('ADMIN_PATH', 'manager'), // if admin_route = path
+        'subdomain' => env('ADMIN_SUBDOMAIN', 'manager'), // if admin_route = subdomain
     ],
 
 ];

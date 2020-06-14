@@ -65,7 +65,7 @@ class AccountController extends AdminController
 
         /* check old password */
         if (!is_null($r->input('password_old'))) {
-            if (!password_verify($r->input('password_old') . \Str::slug(env('APP_KEY')), app('user')->password)) {
+            if (!password_verify($r->input('password_old') . \Str::slug(config('app.key')), app('user')->password)) {
                 return redirect($this->current_url)->withErrors([
                     'The password old not match',
                 ]);

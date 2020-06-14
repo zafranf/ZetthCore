@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>@yield('title') - {{ env('APP_NAME') }}</title>
+    <title>@yield('title') - {{ config('app.name') }}</title>
     <link href="https://fonts.googleapis.com/css?family=Lato:100" rel="stylesheet" type="text/css">
     <link rel="shortcut icon" href="{{ getImageLogo(app('site')->icon) }}">
 

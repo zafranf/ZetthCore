@@ -14,8 +14,8 @@ class SiteTableSeeder extends Seeder
     public function run()
     {
         \ZetthCore\Models\Site::create([
-            'domain' => env('APP_DOMAIN', 'localhost'),
-            'name' => env('APP_NAME', 'localhost'),
+            'domain' => config('app.domain'),
+            'name' => config('app.name'),
             'language' => 'id_ID',
             'status' => 'active',
             'active_at' => now(),

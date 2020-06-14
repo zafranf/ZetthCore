@@ -159,7 +159,7 @@ class PostController extends AdminController
         if ($r->hasFile('cover')) {
             $file = $r->file('cover');
             $ext = $file->getClientOriginalExtension();
-            $name = 'post-' . (md5($post->id . env('DB_PORT', 3306))) . '.' . $ext;
+            $name = 'post-' . (md5($post->id . getDatabasePort())) . '.' . $ext;
 
             if ($this->uploadImage($file, '/assets/images/posts/', $name)) {
                 $post->cover = $name;
@@ -272,7 +272,7 @@ class PostController extends AdminController
         } else if ($r->hasFile('cover')) {
             $file = $r->file('cover');
             $ext = $file->getClientOriginalExtension();
-            $name = 'post-' . (md5($post->id . env('DB_PORT', 3306))) . '.' . $ext;
+            $name = 'post-' . (md5($post->id . getDatabasePort())) . '.' . $ext;
 
             if ($this->uploadImage($file, '/assets/images/posts/', $name)) {
                 $post->cover = $name;

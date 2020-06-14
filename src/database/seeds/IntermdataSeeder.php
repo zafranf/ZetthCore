@@ -14,7 +14,7 @@ class IntermdataSeeder extends Seeder
     public function run()
     {
         \ZetthCore\Models\Interm::create([
-            'host' => env('APP_DOMAIN', 'localhost'),
+            'host' => config('app.domain'),
             'param' => 'q',
             'status' => 'active',
             'created_at' => now(),

@@ -31,7 +31,7 @@ class Main extends Mailable
     public function build()
     {
         /* set variable */
-        $from = $this->data['from'] ?? env('MAIL_USERNAME', 'no-reply@' . env('APP_DOMAIN'));
+        $from = $this->data['from'] ?? config('mail.username');
 
         /* set view file */
         $view = getEmailFile($this->data['view']);

@@ -72,7 +72,7 @@ class LoginController extends AdminController
         /* merge encrypted username and password */
         $r->merge([
             $this->username() => _encrypt($r->input($this->username())),
-            'password' => $r->input('password') . \Str::slug(env('APP_KEY')),
+            'password' => $r->input('password') . \Str::slug(config('app.key')),
         ]);
 
         return $this->loginTrait($r);

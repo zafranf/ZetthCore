@@ -122,7 +122,9 @@ class AppServiceProvider extends ServiceProvider
             $publishable_path . '/config/laratrust.php' => config_path('laratrust.php'),
             $publishable_path . '/config/laravel-page-speed.php' => config_path('laravel-page-speed.php'),
             $publishable_path . '/config/logging.php' => config_path('logging.php'),
+            $publishable_path . '/config/mail.php' => config_path('mail.php'),
             $publishable_path . '/config/path.php' => config_path('path.php'),
+            $publishable_path . '/config/services.php' => config_path('services.php'),
             $publishable_path . '/config/translation-loader.php' => config_path('translation-loader.php'),
         ], 'zetthconfig');
 

@@ -5,14 +5,14 @@ Route::get('/', function () {
     return redirect(adminPath() . '/login');
 })->name('index');
 Route::get('/webmail', function () {
-    if (env('APP_WEBMAIL_URL')) {
-        return redirect(_url(env('APP_WEBMAIL_URL')));
+    if (config('app.webmail_url') != '/webmail') {
+        return redirect(_url(config('app.webmail_url')));
     }
 
     abort(404);
 })->name('webmail');
 
-Route::middleware(['throttle:' . (env('APP_DEBUG') ? 60 : 10) . ',1'])->group(function () use ($prefix) {
+Route::middleware(['throttle:' . (config('app.debug') ? 60 : 10) . ',1'])->group(function () use ($prefix) {
     Route::post('/login', $prefix . '\Auth\LoginController@login')->name('login.post');
 });
 
@@ -37,7 +37,7 @@ Route::middleware(['guest', 'visitor_log'])->group(function () use ($prefix) {
 
 Route::middleware('auth')->group(function () use ($prefix) {
     Route::post('/logout', $prefix . '\Auth\LoginController@logout')->name('logout.post');
-    if (env('APP_DEBUG')) {
+    if (config('app.debug')) {
         Route::get('/logout', $prefix . '\Auth\LoginController@logout')->name('logout.get');
     }
 

@@ -64,7 +64,7 @@ class LaratrustSeeder extends Seeder
             $user = \App\Models\User::create([
                 'name' => $key,
                 'fullname' => ucwords(str_replace('_', ' ', $key_fullname)),
-                'email' => $key . '@' . env('APP_DOMAIN', 'localhost'),
+                'email' => $key . '@' . config('app.domain'),
                 'password' => '123123',
                 'status' => 'active',
                 'created_at' => now(),
@@ -88,7 +88,7 @@ class LaratrustSeeder extends Seeder
                     $user = \App\Models\User::create([
                         'name' => $key,
                         'fullname' => ucwords(str_replace('_', ' ', $key_fullname)),
-                        'email' => $key . '@' . env('APP_DOMAIN', 'localhost'),
+                        'email' => $key . '@' . config('app.domain'),
                         'password' => '123123',
                         'status' => 'active',
                         'created_at' => now(),
