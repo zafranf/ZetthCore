@@ -24,20 +24,20 @@ function _doGetData($cache_name, $data, $limit = null, $pagename = 'page')
     return $data != '-' ? $data : null;
 }
 
-function _getBanners($limit = null)
+function _getBanners($limit = null, $pagename = 'page')
 {
     /* inisiasi query */
     $banners = \ZetthCore\Models\Banner::active()->orderBy('order', 'asc');
 
-    return _doGetData('getBanners', $banners, $limit);
+    return _doGetData('getBanners', $banners, $limit, $pagename);
 }
 
-function _getPost($slug, $type = 'complete')
+function _getPost($slug, $type = 'complete', $pagename = 'page')
 {
-    return _getPosts($type, 1, 'desc', $slug);
+    return _getPosts($type, 1, 'desc', $slug, $pagename);
 }
 
-function _getPosts($type = 'simple', $limit = null, $order = "desc", $slug = '')
+function _getPosts($type = 'simple', $limit = null, $order = 'desc', $slug = '', $pagename = 'page')
 {
     /* check it's complete request */
     $complete = $type == 'complete';
@@ -81,40 +81,40 @@ function _getPosts($type = 'simple', $limit = null, $order = "desc", $slug = '')
         $posts->orderBy('published_at', $order);
     }
 
-    return _doGetData($cache_name, $posts, $limit);
+    return _doGetData($cache_name, $posts, $limit, $pagename);
 }
 
-function _getPostsSimple($limit = null, $order = "desc")
+function _getPostsSimple($limit = null, $order = 'desc', $pagename = 'page')
 {
-    return _getPosts('simple', $limit, $order);
+    return _getPosts('simple', $limit, $order, '', $pagename);
 }
 
-function _getPostsComplete($limit = null, $order = "desc")
+function _getPostsComplete($limit = null, $order = 'desc', $pagename = 'page')
 {
-    return _getPosts('complete', $limit, $order);
+    return _getPosts('complete', $limit, $order, '', $pagename);
 }
 
-function _getCategoryPosts($slug, $limit = null, $order = 'desc')
+function _getCategoryPosts($slug, $limit = null, $order = 'desc', $pagename = 'page')
 {
-    return _getPosts('category', $limit, $order, $slug);
+    return _getPosts('category', $limit, $order, $slug, $pagename);
 }
 
-function _getTagPosts($slug, $limit = null, $order = 'desc')
+function _getTagPosts($slug, $limit = null, $order = 'desc', $pagename = 'page')
 {
-    return _getPosts('tag', $limit, $order, $slug);
+    return _getPosts('tag', $limit, $order, $slug, $pagename);
 }
 
-function _getAuthorPosts($slug, $limit = null, $order = 'desc')
+function _getAuthorPosts($slug, $limit = null, $order = 'desc', $pagename = 'page')
 {
-    return _getPosts('author', $limit, $order, $slug);
+    return _getPosts('author', $limit, $order, $slug, $pagename);
 }
 
-function _getSearchPosts($slug, $limit = null, $order = 'desc')
+function _getSearchPosts($slug, $limit = null, $order = 'desc', $pagename = 'page')
 {
-    return _getPosts('search', $limit, $order, $slug);
+    return _getPosts('search', $limit, $order, $slug, $pagename);
 }
 
-function _getTerms($type = 'category', $limit = null, $order = 'desc')
+function _getTerms($type = 'category', $limit = null, $order = 'desc', $pagename = 'page')
 {
     /* cache name */
     $cache_name = 'getTerms' . $type . $order;
@@ -129,35 +129,35 @@ function _getTerms($type = 'category', $limit = null, $order = 'desc')
         $terms->orderBy('name', $order);
     }
 
-    return _doGetData($cache_name, $terms, $limit);
+    return _doGetData($cache_name, $terms, $limit, $pagename);
 }
 
-function _getCategory()
+function _getCategory($pagename = 'page')
 {
-    return _getCategories(1);
+    return _getCategories(1, 'desc', $pagename);
 }
 
-function _getCategories($limit = null, $order = 'desc')
+function _getCategories($limit = null, $order = 'desc', $pagename = 'page')
 {
-    return _getTerms('category', $limit, $order);
+    return _getTerms('category', $limit, $order, $pagename);
 }
 
-function _getTag()
+function _getTag($pagename = 'page')
 {
-    return _getTags(1);
+    return _getTags(1, 'desc', $pagename);
 }
 
-function _getTags($limit = null, $order = 'desc')
+function _getTags($limit = null, $order = 'desc', $pagename = 'page')
 {
-    return _getTerms('tag', $limit, $order);
+    return _getTerms('tag', $limit, $order, $pagename);
 }
 
-function _getPage($slug)
+function _getPage($slug, $pagename = 'page')
 {
-    return _getPages(1, 'desc', $slug);
+    return _getPages(1, 'desc', $slug, $pagename);
 }
 
-function _getPages($limit = null, $order = 'desc', $slug = '')
+function _getPages($limit = null, $order = 'desc', $slug = '', $pagename = 'page')
 {
     /* cache name */
     $cache_name = 'getPages' . $order . $slug;
@@ -175,15 +175,15 @@ function _getPages($limit = null, $order = 'desc', $slug = '')
         $pages->orderBy('created_at', $order);
     }
 
-    return _doGetData($cache_name, $pages, $limit);
+    return _doGetData($cache_name, $pages, $limit, $pagename);
 }
 
-function _getAlbum($slug)
+function _getAlbum($slug, $pagename = 'page')
 {
-    return _getAlbums(1, 'desc', $slug);
+    return _getAlbums(1, 'desc', $slug, $pagename);
 }
 
-function _getAlbums($limit = null, $order = 'desc', $slug = '')
+function _getAlbums($limit = null, $order = 'desc', $slug = '', $pagename = 'page')
 {
     /* cache name */
     $cache_name = 'getAlbums' . $order . $slug;
@@ -209,10 +209,10 @@ function _getAlbums($limit = null, $order = 'desc', $slug = '')
         $albums->orderBy('created_at', $order);
     }
 
-    return _doGetData($cache_name, $albums, $limit);
+    return _doGetData($cache_name, $albums, $limit, $pagename);
 }
 
-function _getPhotos($limit = null, $order = 'desc')
+function _getPhotos($limit = null, $order = 'desc', $pagename = 'page')
 {
     /* cache name */
     $cache_name = 'getPhotos' . $order;
@@ -227,21 +227,24 @@ function _getPhotos($limit = null, $order = 'desc')
         $photos->orderBy('created_at', $order);
     }
 
-    return _doGetData($cache_name, $photos, $limit);
+    return _doGetData($cache_name, $photos, $limit, $pagename);
 }
 
-function _getVideo($slug = '')
+function _getVideo($slug = '', $pagename = 'page')
 {
-    return _getVideo(1, 'desc', $slug);
+    return _getVideo(1, 'desc', $slug, $pagename);
 }
 
-function _getVideos($limit = null, $order = 'desc', $slug = '')
+function _getVideos($limit = null, $order = 'desc', $slug = '', $pagename = 'page')
 {
     /* cache name */
     $cache_name = 'getVideos' . $order . $slug;
 
     /* inisiasi query */
     $videos = \App\Models\Post::active()->videos();
+    if (!empty($slug)) {
+        $videos->where('slug', $slug)->orWhere('name', 'like', '%' . $slug . '%');
+    }
 
     /* check order */
     if (in_array($order, ['rand', 'random'])) {
@@ -250,10 +253,10 @@ function _getVideos($limit = null, $order = 'desc', $slug = '')
         $videos->orderBy('created_at', $order);
     }
 
-    return _doGetData($cache_name, $videos, $limit);
+    return _doGetData($cache_name, $videos, $limit, $pagename);
 }
 
-function _getPopularPosts($limit = null, $start_date = null, $end_date = null)
+function _getPopularPosts($limit = null, $start_date = null, $end_date = null, $pagename = 'page')
 {
     /* cache name */
     $cache_name = 'getPopularPosts' . $start_date . $end_date;
@@ -275,10 +278,10 @@ function _getPopularPosts($limit = null, $start_date = null, $end_date = null)
         ->with('post.categories')
         ->groupBy(\DB::raw('SUBSTRING_INDEX(page, "/", -1)'));
 
-    return _doGetData($cache_name, $posts, $limit);
+    return _doGetData($cache_name, $posts, $limit, $pagename);
 }
 
-function _getComments($limit = null, $order = 'desc')
+function _getComments($limit = null, $order = 'desc', $pagename = 'page')
 {
     /* cache name */
     $cache_name = 'getComments' . $order;
@@ -293,5 +296,5 @@ function _getComments($limit = null, $order = 'desc')
         $comments->orderBy('created_at', $order);
     }
 
-    return _doGetData($cache_name, $comments, $limit);
+    return _doGetData($cache_name, $comments, $limit, $pagename);
 }
