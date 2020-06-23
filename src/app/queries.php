@@ -1,17 +1,17 @@
 <?php
-function _doGetData($cache_name, $data, $limit = null)
+function _doGetData($cache_name, $data, $limit = null, $pagename = 'page')
 {
     /* set page limit */
-    $page = \Request::input('page') ? \Request::input('page') : 1;
+    $page = \Request::input($pagename) ? \Request::input($pagename) : 1;
     $limit = $limit ?? app('site')->perpage;
 
     /* set cache */
     $cache_name .= $limit . $page . app('site')->id;
 
-    $data = \Cache::remember($cache_name, getCacheTime(), function () use ($data, $limit) {
+    $data = \Cache::remember($cache_name, getCacheTime(), function () use ($data, $limit, $pagename) {
         /* cek limit */
         if ($limit > 1) {
-            $data = $data->paginate($limit);
+            $data = $data->paginate($limit, '*', $pagename);
         } else if ($limit == 1) {
             $data = $data->first();
         } else {
