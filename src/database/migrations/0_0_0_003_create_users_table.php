@@ -20,6 +20,8 @@ class CreateUsersTable extends Migration
             $table->string('fullname');
             $table->string('password');
             $table->string('image')->nullable();
+            $table->string('timezone')->default('Asia/Jakarta');
+            $table->string('language')->default('id_ID');
             $table->enum('is_first_login', ['yes', 'no'])->default('yes');
             $table->enum('status', ['active', 'inactive', 'suspend', 'banned'])->default('inactive');
             $table->timestamps(6);

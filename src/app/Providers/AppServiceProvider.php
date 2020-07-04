@@ -55,6 +55,9 @@ class AppServiceProvider extends ServiceProvider
             });
         });
 
+        /* set locale */
+        \App::setLocale(app('user')->lang ?? app('site')->lang);
+
         /* set config template */
         $theme = $this->getTemplate();
         $themeConfig = resource_path('views/' . $theme . '/config.php');
