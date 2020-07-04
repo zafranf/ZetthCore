@@ -44,6 +44,7 @@ class User extends Authenticatable implements MustVerifyEmail
     ];
 
     protected $dateFormat = 'Y-m-d H:i:s.u';
+    public $appends = ['lang'];
 
     public function role_ids()
     {
@@ -73,6 +74,11 @@ class User extends Authenticatable implements MustVerifyEmail
     public function scopeActive($query)
     {
         return $query->where('status', 'active');
+    }
+
+    public function getLangAttribute()
+    {
+        return explode("_", $this->language ?? 'id_ID')[0];
     }
 
     public function getEmailAttribute($value)
