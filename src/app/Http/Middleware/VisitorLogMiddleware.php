@@ -83,7 +83,7 @@ class VisitorLogMiddleware
     {
         /* check referrer */
         $referrer = _server('HTTP_REFERER') ?? null;
-        if ($referrer) {
+        if ($referrer && !empty($r->query())) {
             /* get host from referrer */
             $host = parse_url($referrer)['host'];
 
