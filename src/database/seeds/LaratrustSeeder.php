@@ -24,7 +24,7 @@ class LaratrustSeeder extends Seeder
 
         foreach ($config as $key => $modules) {
             // Create a new role
-            $role = \ZetthCore\Models\Role::create([
+            $role = \ZetthCore\Models\Role::firstOrCreate([
                 'name' => $key,
                 'display_name' => ucwords(str_replace('_', ' ', $key)),
                 'description' => 'Peran sebagai ' . ucwords(str_replace('_', ' ', $key)),
