@@ -57,7 +57,9 @@ class Install extends Command
             throw new \Exception("Please set APP_DOMAIN in .env file", 1);
         }
 
-        $this->publishConfig();
+        if (!$this->option('fresh') || ($this->option('fresh') && $this->option('force'))) {
+            $this->publishConfig();
+        }
         $this->migratingTable();
         $this->seedingTable();
         $this->linkFolders();
