@@ -17,6 +17,7 @@ class CreateSubscribersTable extends Migration
             $table->increments('id');
             $table->string('email')->index();
             $table->string('token');
+            $table->enum('is_registered', ['yes', 'no'])->default('no')->comment('registered as user');
             $table->enum('status', ['active', 'inactive'])->default('inactive');
             $table->timestamps(6);
             $table->softDeletes('deleted_at', 6);

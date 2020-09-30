@@ -34,7 +34,7 @@ class NewPost implements ShouldQueue
     public function handle()
     {
         /* get subscribers */
-        $subscribers = \ZetthCore\Models\Subscriber::active()->get();
+        $subscribers = \ZetthCore\Models\Subscriber::active()->where('is_registered', 'no')->get();
 
         /* check subscribers */
         if (count($subscribers)) {

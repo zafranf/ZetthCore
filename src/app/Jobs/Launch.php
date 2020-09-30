@@ -29,7 +29,7 @@ class Launch implements ShouldQueue
     public function handle()
     {
         /* get subscribers */
-        $subscribers = \ZetthCore\Models\Subscriber::select('email')->active()->get();
+        $subscribers = \ZetthCore\Models\Subscriber::select('email')->active()->where('is_registered', 'no')->get();
 
         /* check subscribers */
         if (count($subscribers)) {
