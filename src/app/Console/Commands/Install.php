@@ -53,7 +53,7 @@ class Install extends Command
         if (!file_exists(base_path('.env'))) {
             throw new \Exception("Copy .env.example as .env and set the values first", 1);
         }
-        if (config('app.domain') === null) {
+        if (config('app.domain') === null && env('APP_DOMAIN') === null) {
             throw new \Exception("Please set APP_DOMAIN in .env file", 1);
         }
 
