@@ -261,7 +261,7 @@ if (!function_exists('getSiteURL')) {
     function getSiteURL($path = null)
     {
         $url = _url($path ?? '/');
-        if (adminRoute() == 'subdomain') {
+        if (adminRoute() == 'subdomain' && strpos($path, 'http') === false) {
             $url = _url(config('app.url') . '/' . ltrim($path, '/'));
         }
 
