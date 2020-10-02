@@ -35,7 +35,7 @@ class Launch implements ShouldQueue
         if (count($subscribers)) {
             foreach ($subscribers as $subscriber) {
                 /* send mail */
-                \Mail::to($subscriber->email)->queue(new \App\Mail\Launch());
+                \Mail::to($subscriber->email)->queue(new \App\Mail\Launch($subscriber->email));
 
                 /* delay */
                 sleep(1 / 60);
