@@ -30,18 +30,18 @@ class SiteMiddleware
         }
 
         /* check status */
-        if ($status == 'comingsoon') {
-            if ($uri != "comingsoon") {
+        if ($status == config('path.comingsoon')) {
+            if ($uri != config('path.comingsoon')) {
                 return redirect(route('web.comingsoon'));
             }
-        } else if ($status == 'maintenance') {
-            if ($uri != "maintenance") {
+        } else if ($status == config('path.maintenance')) {
+            if ($uri != config('path.maintenance')) {
                 return redirect(route('web.maintenance'));
             }
         } else if ($status == 'suspend') {
             return abort(503);
         } else {
-            if ($uri == "maintenance" || $uri == "comingsoon") {
+            if ($uri == config('path.maintenance') || $uri == config('path.maintenance')) {
                 return redirect(route('web.root'));
             }
         }
