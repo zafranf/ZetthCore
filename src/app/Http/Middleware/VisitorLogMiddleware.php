@@ -27,6 +27,11 @@ class VisitorLogMiddleware
 
     public function visitorLog()
     {
+        /* prevent log if not get && head */
+        if (!in_array(strtoupper(\Request::method()), ['GET', 'HEAD'])) {
+            return true;
+        }
+
         /* set variable */
         $ip = \Request::server('REMOTE_ADDR');
         $page = \Request::path() ?? '-';
