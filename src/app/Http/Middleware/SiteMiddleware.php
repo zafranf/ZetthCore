@@ -41,7 +41,7 @@ class SiteMiddleware
         } else if ($status == 'suspend') {
             return abort(503);
         } else {
-            if ($uri == config('path.maintenance') || $uri == config('path.maintenance')) {
+            if ($uri == config('path.comingsoon') || $uri == config('path.maintenance')) {
                 return redirect(route('web.root'));
             }
         }
