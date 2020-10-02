@@ -2,6 +2,7 @@
 
 namespace ZetthCore\Providers;
 
+use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -81,7 +82,26 @@ class AppServiceProvider extends ServiceProvider
         $this->loadViewsFrom($this->package_path . '/src/resources/views', 'zetthcore');
         $this->loadMigrationsFrom($this->package_path . '/src/database/migrations');
 
+        /* publish files */
         $this->publishAll();
+
+        /* check site status */
+        $this->callAfterResolving(Schedule::class, function (Schedule $schedule) {
+            $schedule->call(function () {
+                $site = \ZetthCore\Models\Site::first();
+                if (!in_array($site->status, ['active', 'suspend']) && now()->greaterThanOrEqualTo($site->active_at)) {
+                    /* set active */
+                    $site->status = 'active';
+                    $site->save();
+
+                    /* clear cache */
+                    \Cache::flush();
+
+                    /* send notif to subscriber */
+                    \ZetthCore\Jobs\Launch::dispatch();
+                }
+            })->everyMinute();
+        });
     }
 
     /**
