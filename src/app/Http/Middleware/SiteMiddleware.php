@@ -30,11 +30,11 @@ class SiteMiddleware
         }
 
         /* check status */
-        if ($status == config('path.comingsoon')) {
+        if ($status == 'comingsoon') {
             if ($uri != config('path.comingsoon')) {
                 return redirect(route('web.comingsoon'));
             }
-        } else if ($status == config('path.maintenance')) {
+        } else if ($status == 'maintenance') {
             if ($uri != config('path.maintenance')) {
                 return redirect(route('web.maintenance'));
             }
