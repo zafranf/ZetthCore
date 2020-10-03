@@ -26,6 +26,7 @@ class AppServiceProvider extends ServiceProvider
                 \ZetthCore\Console\Commands\Install::class,
                 \ZetthCore\Console\Commands\Reinstall::class,
                 \ZetthCore\Console\Commands\Link::class,
+                \ZetthCore\Console\Commands\Site::class,
             ]);
         } else {
             /* check config */
@@ -87,22 +88,7 @@ class AppServiceProvider extends ServiceProvider
 
         /* check site status */
         $this->callAfterResolving(Schedule::class, function (Schedule $schedule) {
-            $schedule->call(function () {
-                $site = \ZetthCore\Models\Site::first();
-                if (!in_array($site->status, ['active', 'suspend']) && now()->greaterThanOrEqualTo($site->active_at)) {
-                    $status = $site->status;
-
-                    /* set active */
-                    $site->status = 'active';
-                    $site->save();
-
-                    /* clear cache */
-                    \Cache::flush();
-
-                    /* send notif to subscriber */
-                    \ZetthCore\Jobs\Launch::dispatch($status);
-                }
-            })->everyMinute();
+            $schedule->command('site:check-status')->everyMinute();
         });
     }
 
