@@ -90,6 +90,8 @@ class AppServiceProvider extends ServiceProvider
             $schedule->call(function () {
                 $site = \ZetthCore\Models\Site::first();
                 if (!in_array($site->status, ['active', 'suspend']) && now()->greaterThanOrEqualTo($site->active_at)) {
+                    $status = $site->status;
+
                     /* set active */
                     $site->status = 'active';
                     $site->save();
@@ -98,7 +100,7 @@ class AppServiceProvider extends ServiceProvider
                     \Cache::flush();
 
                     /* send notif to subscriber */
-                    \ZetthCore\Jobs\Launch::dispatch();
+                    \ZetthCore\Jobs\Launch::dispatch($status);
                 }
             })->everyMinute();
         });

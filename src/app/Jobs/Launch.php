@@ -12,13 +12,16 @@ class Launch implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
+    protected $status;
+
     /**
      * Create a new job instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($status = 'comingsoon')
     {
+        $this->status = $status;
     }
 
     /**
@@ -35,7 +38,7 @@ class Launch implements ShouldQueue
         if (count($subscribers)) {
             foreach ($subscribers as $subscriber) {
                 /* send mail */
-                \Mail::to($subscriber->email)->queue(new \App\Mail\Launch($subscriber->email));
+                \Mail::to($subscriber->email)->queue(new \App\Mail\Launch($subscriber->email, $this->status));
 
                 /* delay */
                 sleep(1 / 60);
