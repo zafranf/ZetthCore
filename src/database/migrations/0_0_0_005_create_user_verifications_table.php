@@ -16,8 +16,8 @@ class CreateUserVerificationsTable extends Migration
         Schema::create('user_verifications', function (Blueprint $table) {
             $table->integer('user_id')->unsigned();
             $table->string('code');
-            $table->datetime('expired_at');
-            $table->timestamp('verified_at')->nullable();
+            $table->datetime('expired_at', 6);
+            $table->timestamp('verified_at', 6)->nullable();
             $table->integer('site_id')->unsigned()->default(1);
 
             $table->foreign('user_id')->references('id')->on('users')
