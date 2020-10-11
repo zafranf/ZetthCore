@@ -123,7 +123,7 @@ class UserController extends AdminController
 
         /* save data */
         $user = new User;
-        $user->name = $r->input('name');
+        $user->name = strtolower($r->input('name'));
         $user->fullname = $r->input('fullname');
         $user->email = $r->input('email');
         $user->password = $r->input('password');
@@ -249,7 +249,7 @@ class UserController extends AdminController
         $this->validate($r, $validation);
 
         /* save data */
-        $user->name = $r->input('name');
+        $user->name = strtolower($r->input('name'));
         $user->fullname = $r->input('fullname');
         $user->email = $r->input('email');
         if (!is_null($r->input('password'))) {
