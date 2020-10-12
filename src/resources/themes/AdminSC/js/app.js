@@ -12,11 +12,11 @@ $(document).ready(function () {
             e.preventDefault();
         });
 
-        $("body").on("click", function () {
-            if ($(".sub-menu").css("display") == "block") {
+        /* $("body").on("click", function () {
+            if ($(".sub-menu").css("display") != "none") {
                 $(".sub-menu").css("display", "none");
             }
-        });
+        }); */
     }
 
     $("a").on("click", function () {
@@ -127,7 +127,7 @@ function _delete(URL = "", text = null) {
     formDel += "</form>";
 
     swal({
-        title: "Hapus data" + (text ? ' ' + text : '') + "?",
+        title: "Hapus data" + (text ? " " + text : "") + "?",
         html: formDel,
         type: "warning",
         showCancelButton: true,
