@@ -46,7 +46,7 @@
         ],
         "columnDefs": [{
           "targets": 0,
-          "data": null,
+          "data": 'id',
           "sortable": false,
           "render": function (data, type, row, meta) {
             return meta.row + meta.settings._iDisplayStart + 1;
