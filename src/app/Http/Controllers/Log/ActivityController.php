@@ -85,7 +85,23 @@ class ActivityController extends AdminController
      */
     public function show(ActivityLog $activity)
     {
-        abort(403);
+        /* set breadcrumbs */
+        $this->breadcrumbs[] = [
+            'page' => 'Detail',
+            'icon' => '',
+            'url' => '',
+        ];
+
+        /* set variable for view */
+        $data = [
+            'current_url' => $this->current_url,
+            'breadcrumbs' => $this->breadcrumbs,
+            'page_title' => $this->page_title,
+            'page_subtitle' => 'Detail Aktifitas',
+            'act' => $activity,
+        ];
+
+        return view('zetthcore::AdminSC.log.activity_detail', $data);
     }
 
     /**
@@ -128,7 +144,7 @@ class ActivityController extends AdminController
     public function datatable(Request $r)
     {
         /* get data */
-        $data = ActivityLog::select('method', 'ip', 'description', 'path', 'created_at', 'user_id')->orderBy('created_at', 'desc')->with('user');
+        $data = ActivityLog::select('id', 'method', 'ip', 'description', 'path', 'created_at', 'user_id')->orderBy('created_at', 'desc')->with('user');
 
         /* generate datatable */
         if ($r->ajax()) {

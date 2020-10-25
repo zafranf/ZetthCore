@@ -6,9 +6,14 @@
 			<thead>
 				<tr>
           <td>No.</td>
-          <td>Waktu</td>
-          <td>IP</td>
-          <td>Aktifitas</td>
+          @if (app('is_desktop'))
+            <td>Waktu</td>
+            <td>IP</td>
+            <td>Aktifitas</td>
+          @else
+            <td>Aktifitas</td>
+          @endif
+          <td>Akses</td>
 				</tr>
 			</thead>
 		</table>
@@ -23,7 +28,7 @@
   {!! _admin_js(adminPath() . '/themes/admin/AdminSC/plugins/DataTables/1.10.12/js/jquery.dataTables.min.js') !!}
   <script>
     $(document).ready(function() {
-      var table = $('#table-data').DataTable({
+      let options = {
         "processing": true,
         "serverSide": true,
         "ajax": ADMIN_URL + "/log/activities/data",
@@ -34,7 +39,7 @@
         ],
         "columns": [
           { "width": "30px" },
-          { "data": "created_at_tz", "width": "120px" },
+          { "width": "120px" },
           { "data": "ip", "width": "100px" },
           { "data": "description" },
         ],
@@ -45,14 +50,77 @@
             return meta.row + meta.settings._iDisplayStart + 1;
           },
         }, {
+          "targets": 1,
+          "data": 'created_at',
+          "sortable": false,
+          "render": function (data, type, row, meta) {
+            return row.created_at_tz;
+          }
+        }, {
           "targets": 3,
           "data": 'description',
           "sortable": false,
           "render": function (data, type, row, meta) {
             return data.replace('[~name]', '<b>'+ (row.user != null ? row.user.fullname : '-' )+'</b>');
           }
+        }, {
+          "targets": 4,
+          "data": 'id',
+          "sortable": false,
+          "render": function (data, type, row, meta) {
+            let actions = '';
+            let url = ADMIN_URL + "/log/activities/" + data;
+            /* let del = "_delete('" + url + "', 'catatan dari \\'"+ row.email +"\\'')"; */
+            {!! getAccessButtons() !!}
+            $('[data-toggle="tooltip"]').tooltip();
+
+            return actions;
+          }
         }],
-      });
+      };
+
+      @if (!app('is_desktop'))
+        options.columns = [
+          { "width": "30px" },
+          { },
+          { "width": "40px" },
+        ];
+        options.columnDefs = [
+          {
+            "targets": 0,
+            "sortable": false,
+            "render": function (data, type, row, meta) {
+              return meta.row + meta.settings._iDisplayStart + 1;
+            }
+          }, {
+            "targets": 1,
+            "sortable": false,
+            "render": function (data, type, row, meta) {
+              let render = row.ip+'<br>';
+              render += row.description.replace('[~name]', '<b>'+ (row.user != null ? row.user.fullname : '-' )+'</b>')+'<br>';
+              render += '<small>'+row.created_at_tz+'</small><br>';
+              // render += _get_status_text(row.status);
+
+              return render;
+            }
+          }, {
+            "targets": 2,
+            "data": 'id',
+            "sortable": false,
+            "render": function (data, type, row, meta) {
+              let actions = '';
+              let url = ADMIN_URL + "/log/activities/" + data;
+              /* let del = "_delete('" + url + "', 'pesan dari \\'"+ row.email +"\\'')"; */
+              {!! getAccessButtons() !!}
+              $('[data-toggle="tooltip"]').tooltip();
+
+              return actions;
+            }
+          }
+        ];
+      @endif
+
+      var table = $('#table-data').DataTable(options);
     });
   </script>
 @endpush

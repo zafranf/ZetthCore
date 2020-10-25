@@ -6,10 +6,14 @@
 			<thead>
 				<tr>
           <td>No.</td>
-          <td>IP</td>
-          <td>Halaman</td>
-          <td>Referral</td>
-          <td>Jumlah</td>
+          @if (app('is_desktop'))
+            <td>IP</td>
+            <td>Halaman</td>
+            <td>Referral</td>
+            <td>Jumlah</td>
+          @else
+            <td>Kunjungan</td>
+          @endif
 				</tr>
 			</thead>
 		</table>
@@ -24,7 +28,7 @@
   {!! _admin_js(adminPath() . '/themes/admin/AdminSC/plugins/DataTables/1.10.12/js/jquery.dataTables.min.js') !!}
   <script>
     $(document).ready(function() {
-      var table = $('#table-data').DataTable({
+      let options = {
         "processing": true,
         "serverSide": true,
         "ajax": ADMIN_URL + "/log/visitors/data",
@@ -78,7 +82,36 @@
             return actions;
           }
         } */],
-      });
+      };
+
+    @if (!app('is_desktop'))
+      options.columns = [
+        { "width": "30px" },
+        { },
+      ];
+      options.columnDefs = [
+        {
+          "targets": 0,
+          "sortable": false,
+          "render": function (data, type, row, meta) {
+            return meta.row + meta.settings._iDisplayStart + 1;
+          }
+        }, {
+          "targets": 1,
+          "sortable": false,
+          "render": function (data, type, row, meta) {
+            let render = row.page+'<br>';
+            render += '<small>'+row.referral+'</small><br>';
+            render += row.ip + ' ('+ row.count + 'x)';
+            // render += _get_status_text(row.status);
+
+            return render;
+          }
+        }
+      ];
+    @endif
+
+      var table = $('#table-data').DataTable(options);
     });
   </script>
 @endpush

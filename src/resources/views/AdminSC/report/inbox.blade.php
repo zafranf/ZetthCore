@@ -4,17 +4,17 @@
 	<div class="panel-body no-padding-right-left">
 		<table id="table-data" class="row-border hover">
 			<thead>
-				<tr>
-					<td>No.</td>
-					@if (app('is_desktop'))
-						<td>Nama</td>
-						<td>Surel</td>
-						<td>Pesan</td>
-						<td>Status</td>
-					@else
-						<td>Pesan</td>
-					@endif
-					<td>Akses</td>
+        <tr>
+          <td>No.</td>
+          @if (app('is_desktop'))
+            <td>Nama</td>
+            <td>Surel</td>
+            <td>Pesan</td>
+            <td>Status</td>
+          @else
+            <td>Pesan</td>
+          @endif
+          <td>Akses</td>
 				</tr>
 			</thead>
 		</table>

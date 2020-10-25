@@ -61,7 +61,7 @@
           <table id="table-log" class="table table-striped" data-ordering-index="{{ $standardFormat ? 2 : 0 }}">
             <thead>
               <tr>
-                @if ($standardFormat)
+                @if ($standardFormat && app('is_desktop'))
                   <th>Status</th>
                   <th>Konteks</th>
                   <th>Tanggal</th>
@@ -74,7 +74,7 @@
             <tbody>
               @foreach($logs as $key => $log)
                 <tr data-display="stack{{{$key}}}">
-                  @if ($standardFormat)
+                  @if ($standardFormat && app('is_desktop'))
                     <td class="nowrap text-{{{$log['level_class']}}}">
                       <span class="fa fa-{{{$log['level_img']}}}" aria-hidden="true"></span>&nbsp;&nbsp;{{$log['level']}}
                     </td>

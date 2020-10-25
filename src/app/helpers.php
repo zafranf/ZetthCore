@@ -867,3 +867,13 @@ if (!function_exists('carbon_query')) {
         return carbon($carbon, null, 'store');
     }
 }
+
+if (!function_exists('print_json')) {
+    function print_json($json)
+    {
+        $json = json_decode($json);
+        echo "<pre>";
+        print_r($json);
+        echo "</pre>";
+    }
+}
