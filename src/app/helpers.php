@@ -317,7 +317,7 @@ if (!function_exists('getMenu')) {
         }
 
         /* get menu based on user role */
-        $cacheMenuName = 'cacheMenuGroup' . \Str::studly($group) . $roleName . '.' . app('user')->id . app('site')->id;
+        $cacheMenuName = 'cacheMenuGroup' . \Str::studly($group) . $roleName . '.' . (app('user')->id ?? '') . app('site')->id;
         $menus = \Cache::remember($cacheMenuName, getCacheTime(), function () use ($group) {
             $groupmenu = \ZetthCore\Models\MenuGroup::active()->where('slug', $group)->with('menu.submenu')->first();
             if (!$groupmenu) {
