@@ -75,10 +75,15 @@
             </div>
           </div>
           <div class="form-group">
-            <label for="info-subscriber">Pelanggan Artikel</label><br>
-            <div class="col-sm-12 col-xs-12 no-padding">
+            <label for="info-subscriber">Infokan Artikel</label><br>
+            <div class="col-sm-6 col-xs-6 no-padding">
               <label>
-                <input name="info_subscriber" type="checkbox" value="1" {{ bool(app('site')->enable_subscribe) ? 'checked' : '' }}> Infokan ke Pelanggan
+                <input name="info_subscriber" type="checkbox" value="yes" {{ (bool(app('site')->enable_subscribe) || bool(old('info_subscriber'))) ? 'checked' : '' }}> ke Pelanggan
+              </label>
+            </div>
+            <div class="col-sm-6 col-xs-6 no-padding">
+              <label>
+                <input name="info_user" type="checkbox" value="yes" {{ (bool(app('site')->enable_subscribe) || bool(old('info_user'))) ? 'checked' : '' }}> ke Pengguna
               </label>
             </div>
           </div>
@@ -124,10 +129,10 @@
           <div class="form-group">
             <label for="publish">Terbitkan</label><br>
             <select class="form-control custom-select2" id="status" name="status">
-              <option value="active" {{ (isset($data) && $data->status == 'actice') ? 'selected' : '' }}>Langsung</option>
-              <option value="set" {{ (isset($data) && $data->status == 'set') ? 'selected' : '' }}>Atur waktu</option>
-              <option value="draft" {{ (isset($data) && $data->status == 'draft') ? 'selected' : '' }}>Draf</option>
-              <option value="inactive" {{ (isset($data) && $data->status == 'inactive') ? 'selected' : '' }}>Sembunyikan</option>
+              <option value="active" {{ (isset($data) && $data->status == 'active') || old('status') == 'active' ? 'selected' : '' }}>Langsung</option>
+              <option value="set" {{ (isset($data) && $data->status == 'set') || old('status') == 'set' ? 'selected' : '' }}>Atur waktu</option>
+              <option value="draft" {{ (isset($data) && $data->status == 'draft') || old('status') == 'draft' ? 'selected' : '' }}>Draf</option>
+              <option value="inactive" {{ (isset($data) && $data->status == 'inactive') || old('status') == 'inactive' ? 'selected' : '' }}>Sembunyikan</option>
             </select>
           </div>
           <div class="form-group hide" id="d-publish-time">
