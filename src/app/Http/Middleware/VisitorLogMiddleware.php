@@ -34,7 +34,7 @@ class VisitorLogMiddleware
 
         /* set variable */
         $ip = \Request::server('REMOTE_ADDR');
-        $page = \Request::path() ?? '-';
+        $page = isAdminSubdomain() ? \Request::url() : (\Request::path() ?? '-');
         $referrer = \Request::server('HTTP_REFERER') ?? null;
         $referrer = str_replace(_url('/'), "", $referrer);
         $agent = new \Jenssegers\Agent\Agent();
