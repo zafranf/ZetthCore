@@ -247,6 +247,7 @@ class PostController extends AdminController
             'content' => 'required',
             'categories' => 'required',
             'tags' => 'required',
+            'cover' => $this->image_rule,
         ]);
 
         /* set variables */
