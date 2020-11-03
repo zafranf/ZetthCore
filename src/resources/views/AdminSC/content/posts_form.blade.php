@@ -38,10 +38,10 @@
             <label for="cover">
               Sampul
               <small class="help-block">Maksimal dimensi sampul adalah
-                {{ config('site.post.image.dimension.width') ?? 1280 }}px x 
-                {{ config('site.post.image.dimension.height') ?? 720 }}px dengan 
-                rasio {{ config('site.post.image.ratio') ?? '16:9' }} dan 
-                ukuran maksimal {{ (config('site.post.image.weight') > 512 ? 512 : config('site.post.image.weight')) ?? 256 }}KB</small>
+                {{ config('site.post.cover.dimension.width') ?? 1280 }}px x 
+                {{ config('site.post.cover.dimension.height') ?? 720 }}px dengan 
+                rasio {{ config('site.post.cover.ratio') ?? '16:9' }} dan 
+                ukuran maksimal {{ (config('site.post.cover.weight') > 512 ? 512 : config('site.post.cover.weight')) ?? 256 }}KB</small>
             </label>
             <div class="fileinput fileinput-new" data-provides="fileinput">
               <div class="fileinput-new thumbnail">

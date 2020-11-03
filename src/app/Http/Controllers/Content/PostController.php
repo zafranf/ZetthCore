@@ -37,11 +37,11 @@ class PostController extends AdminController
         ];
 
         /* validation */
-        $ratio = config('site.post.image.ratio') ?? '16:9';
-        $this->width = config('site.post.image.dimension.width') ?? 1280;
-        $this->height = config('site.post.image.dimension.height') ?? 720;
+        $ratio = config('site.post.cover.ratio') ?? '16:9';
+        $this->width = config('site.post.cover.dimension.width') ?? 1280;
+        $this->height = config('site.post.cover.dimension.height') ?? 720;
         $this->ratio = str_replace(':', '/', $ratio);
-        $this->weight = config('site.post.image.weight') ?? 256;
+        $this->weight = config('site.post.cover.weight') ?? 256;
         if ($this->weight > 512) {
             $this->weight = 512;
         }
