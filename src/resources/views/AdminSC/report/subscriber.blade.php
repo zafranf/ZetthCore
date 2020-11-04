@@ -40,7 +40,7 @@
         "columns": [
           { "width": "30px" },
           { "data": "email" },
-          { "data": "created_at_tz", "width": "100px" },
+          { "width": "100px" },
           { "data": "status", "width": "50px" },
           { "width": "40px" },
         ],
@@ -49,6 +49,13 @@
           "sortable": false,
           "render": function (data, type, row, meta) {
             return meta.row + meta.settings._iDisplayStart + 1;
+          }
+        }, {
+          "targets": 2,
+          "data": 'created_at',
+          "sortable": false,
+          "render": function (data, type, row, meta) {
+            return row.created_at_tz;
           }
         }, {
           "targets": 3,
