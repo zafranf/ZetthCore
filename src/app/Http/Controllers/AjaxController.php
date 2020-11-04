@@ -337,7 +337,7 @@ class AjaxController extends AdminController
                 $today = date("Y-m-d");
                 $post = app('is_desktop') ? \Str::limit($v->post->title, 60) : \Str::limit($v->post->title, 20);
                 $res['rows'][$k]['id'] = $v->id;
-                $res['rows'][$k]['text'] = app('is_desktop') ? \Str::limit(strip_tags($v->comment), 75) : \Str::limit(strip_tags($v->comment), 20);
+                $res['rows'][$k]['text'] = app('is_desktop') ? \Str::limit(strip_tags($v->content), 75) : \Str::limit(strip_tags($v->content), 20);
                 $res['rows'][$k]['name'] = $v->name;
                 $res['rows'][$k]['post'] = '<a style="text-decoration:none;">' . $post . '</a>';
                 $res['rows'][$k]['time'] = str_replace($today, "", carbon($v->created_at));
