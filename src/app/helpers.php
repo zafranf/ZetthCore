@@ -335,25 +335,25 @@ if (!function_exists('getTimezone')) {
     function getTimezone($type = null)
     {
         /* get env timezone */
-        $timezone = 'UTC';
+        $timezone = config('app.timezone');
         if ($type == 'env') {
             return $timezone;
-        }
+        } else
 
         /* get config site timezone */
-        if ((app()->bound('site') || class_exists('site')) && isset(app('site')->timezone)) {
-            $timezone = app('site')->timezone;
+        if ($type == 'site') {
+            if ((app()->bound('site') || class_exists('site')) && isset(app('site')->timezone)) {
+                $timezone = app('site')->timezone;
 
-            if ($type == 'site') {
                 return $timezone;
             }
-        }
+        } else
 
         /* get user timezone */
-        if ((app()->bound('user') || class_exists('user')) && isset(app('user')->detail)) {
-            $timezone = app('user')->detail->timezone;
+        if ($type == 'user') {
+            if ((app()->bound('user') || class_exists('user')) && isset(app('user')->detail)) {
+                $timezone = app('user')->detail->timezone;
 
-            if ($type == 'user') {
                 return $timezone;
             }
         }
@@ -865,6 +865,10 @@ if (!function_exists('carbon')) {
 if (!function_exists('carbon_query')) {
     function carbon_query($carbon = null)
     {
+        if (is_null($carbon)) {
+            return null;
+        }
+
         return carbon($carbon, null, 'store');
     }
 }
