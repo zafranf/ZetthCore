@@ -844,7 +844,7 @@ if (!function_exists('carbon')) {
     function carbon($carbon = null, $lang = 'id', $type = 'display')
     {
         /* get timezone */
-        $timezone = getTimezone();
+        $timezone = getTimezone('user');
 
         /* initialize new carbon */
         if (is_null($carbon)) {
