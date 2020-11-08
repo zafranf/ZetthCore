@@ -123,6 +123,6 @@ class Post extends Base
 
     public function getPublishedStringAttribute()
     {
-        return generateDate($this->published_at, app('site')->language, 'Do MMMM YYYY HH:mm');
+        return generateDate($this->published_at, 'Do MMMM YYYY HH:mm');
     }
 }

@@ -16,7 +16,7 @@
     </div>
     <div class="row">
       <div class="col-md-1">Waktu</div>
-      <div class="col-md-11">{{ generateDate($data->created_at,'id', 'dddd, Do MMMM YYYY HH:mm') }}</div>
+      <div class="col-md-11">{{ generateDate($data->created_at, 'dddd, Do MMMM YYYY HH:mm') }}</div>
     </div>
     <div class="row">
       <div class="col-md-1">Subjek</div>

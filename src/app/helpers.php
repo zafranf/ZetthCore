@@ -623,8 +623,9 @@ if (!function_exists('generateDate')) {
      * @param  [type] $lang [description]
      * @return [type]             [description]
      */
-    function generateDate($date = null, string $lang = 'id', string $format = null)
+    function generateDate($date = null, string $format = null, $lang = null)
     {
+        $lang = $lang ?? (app('user')->lang ?? app('site')->lang);
         if (is_null($format)) {
             $format = ($lang == 'id') ? 'dddd, Do MMMM YYYY' : 'dddd, MMMM Do YYYY';
         }
