@@ -343,7 +343,24 @@ class UserController extends AdminController
 
         /* generate datatable */
         if ($r->ajax()) {
-            return $this->generateDataTable($data);
+            return \DataTables::eloquent($data)->filter(function ($query) use ($r) {
+                $regex = $r->get('search')['value'];
+                if ($regex) {
+                    foreach ($r->input('columns') as $column) {
+                        if (filter_var($regex, FILTER_VALIDATE_EMAIL)) {
+                            $query->orWhere('email', _encrypt($regex));
+                        } else {
+                            if ($column['data'] == 'name') {
+                                $query->orWhere('name', _encrypt($regex));
+                            } else {
+                                $query->orWhere(\DB::raw('LOWER(' . $column['data'] . ')'), 'like', '%' . strtolower($regex) . '%');
+                            }
+                        }
+                    }
+
+                    return $query;
+                }
+            })->make();
         }
 
         abort(403);
