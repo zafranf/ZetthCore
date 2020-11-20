@@ -46,12 +46,14 @@ class NewPost implements ShouldQueue
             /* check subscribers */
             if (count($subscribers)) {
                 foreach ($subscribers as $subscriber) {
-                    /* send mail */
-                    \Mail::to($subscriber->email)->queue(new \App\Mail\NewPost($this->post));
-                    $sent[] = $subscriber->email;
+                    if (!in_array($subscriber->email, $sent)) {
+                        /* send mail */
+                        \Mail::to($subscriber->email)->queue(new \App\Mail\NewPost($this->post));
+                        $sent[] = $subscriber->email;
 
-                    /* delay */
-                    sleep(1 / 60);
+                        /* delay */
+                        sleep(1 / 60);
+                    }
                 }
             }
         }
@@ -63,7 +65,7 @@ class NewPost implements ShouldQueue
             /* check users */
             if (count($users)) {
                 foreach ($users as $user) {
-                    if (!in_array($user->email, $sent)) {
+                    if (!in_array($user->email, $sent) && !$user->is_admin) {
                         /* send mail */
                         \Mail::to($user->email)->queue(new \App\Mail\NewPost($this->post));
                         $sent[] = $user->email;
