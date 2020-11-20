@@ -3,7 +3,7 @@
 @section('content')
   <div class="container-fluid">
     <div class="row">
-      <div class="col-md-2 no-padding-right">
+      <div class="col-md-2 {{ !app('is_mobile') ? 'no-padding-right' : '' }}">
         {{-- <h1><i class="fa fa-calendar" aria-hidden="true"></i> Laravel Log Viewer</h1> --}}
         <br>
         <p class="text-muted">
@@ -178,17 +178,19 @@
   <script>
     $(document).ready(function () {
       let ds = $('.div-scroll').width();
-      $("#affixs").affix({
-          offset: {
-            top: 180
-          }
-      });
-      $('#affixs').on('affixed.bs.affix', function() {
-        $('.affix').width(ds ? ds : 205);
-      });
-      if ($('.affix').length) {
-        $('.affix').width(ds ? ds : 205);
-      }
+      @if (!app('is_mobile'))
+        $("#affixs").affix({
+            offset: {
+              top: 180
+            }
+        });
+        $('#affixs').on('affixed.bs.affix', function() {
+          $('.affix').width(ds ? ds : 205);
+        });
+        if ($('.affix').length) {
+          $('.affix').width(ds ? ds : 205);
+        }
+      @endif
       $('.table-container tr').on('click', function () {
         $('#' + $(this).data('display')).toggle();
       });
