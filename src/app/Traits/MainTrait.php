@@ -8,7 +8,7 @@ trait MainTrait
         return app('site')->template->slug ?? 'WebSC';
     }
 
-    public function activityLog($description)
+    public function activityLog($description, $user = null)
     {
         /* Filter password */
         $sensor = 'xxx';
@@ -33,7 +33,7 @@ trait MainTrait
         $act->get = json_encode($_GET);
         $act->post = json_encode($_POST);
         $act->files = json_encode($_FILES);
-        $act->user_id = app('user')->id ?? null;
+        $act->user_id = $user->id ?? (app('user')->id ?? null);
         $act->site_id = app('site')->id;
         $act->save();
     }
