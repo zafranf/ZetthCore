@@ -61,7 +61,6 @@ class AjaxController extends AdminController
         /* set start and end as carbon */
         $start = carbon_query($start_date . ' 00:00:00');
         $end = carbon_query($end_date . ' 23:59:59');
-        // dd($start, $end, $start_date, $end_date);
 
         switch ($range) {
             case 'hourly':
@@ -125,7 +124,7 @@ class AjaxController extends AdminController
 
             $time2 = '';
             foreach ($visits as $k => $v) {
-                $created = carbon($v->created_at)->format(str_replace("%", "", $df));
+                $created = carbon_query($v->created_at)->format(str_replace("%", "", $df));
                 if ($time2 != $created) {
                     $data_visit[$created]['visit'] = $v->count;
                     $data_visit[$created]['ip'] = 1;
@@ -162,7 +161,7 @@ class AjaxController extends AdminController
         }
 
         foreach ($visits as $k => $v) {
-            $created = carbon($v->created_at)->format(str_replace("%", "", $format));
+            $created = carbon_query($v->created_at)->format(str_replace("%", "", $format));
             if ($time != $created) {
                 $time_exist[] = $created;
             }
@@ -195,7 +194,7 @@ class AjaxController extends AdminController
         }
 
         foreach ($visits as $k => $v) {
-            $created = carbon($v->created_at)->format(str_replace("%", "", $format));
+            $created = carbon_query($v->created_at)->format(str_replace("%", "", $format));
             if ($time != $created) {
                 $time_exist[] = $created;
             }
@@ -204,11 +203,11 @@ class AjaxController extends AdminController
             $timee = carbon($v->created_at);
         }
 
-        $st = date("d", strtotime($start));
-        $max = date("d", strtotime($timee));
+        $st = carbon($start)->format('d'); //date("d", strtotime($start));
+        $max = carbon($timee)->format('d'); //date("d", strtotime($timee));
         for ($i = $st; $i <= $max; $i++) {
             $h = str_pad($i, 2, "0", STR_PAD_LEFT);
-            $time_from_max[] = date("Y-m-", strtotime($timee)) . $h;
+            $time_from_max[] = carbon($timee)->format('Y-m-') . $h; //date("Y-m-", strtotime($timee)) . $h;
         }
 
         $arr_diff = array_diff($time_from_max, $time_exist);
@@ -229,7 +228,7 @@ class AjaxController extends AdminController
         }
 
         foreach ($visits as $k => $v) {
-            $created = carbon($v->created_at)->format(str_replace("%", "", $format));
+            $created = carbon_query($v->created_at)->format(str_replace("%", "", $format));
             if ($time != $created) {
                 $time_exist[] = $created;
             }
@@ -238,11 +237,11 @@ class AjaxController extends AdminController
             $timee = carbon($v->created_at);
         }
 
-        $st = date("m", strtotime($start));
-        $max = date("m", strtotime($timee));
+        $st = carbon($start)->format('m'); //date("m", strtotime($start));
+        $max = carbon($timee)->format('m'); //date("m", strtotime($timee));
         for ($i = $st; $i <= $max; $i++) {
-            $h = str_pad($i, 2, "0", STR_PAD_LEFT);
-            $time_from_max[] = date("Y-", strtotime($timee)) . $h;
+            $m = str_pad($i, 2, "0", STR_PAD_LEFT);
+            $time_from_max[] = carbon($timee)->format('Y-') . $m; //date("Y-", strtotime($timee)) . $m;
         }
 
         $arr_diff = array_diff($time_from_max, $time_exist);
@@ -263,7 +262,7 @@ class AjaxController extends AdminController
         }
 
         foreach ($visits as $k => $v) {
-            $created = carbon($v->created_at)->format(str_replace("%", "", $format));
+            $created = carbon_query($v->created_at)->format(str_replace("%", "", $format));
             if ($time != $created) {
                 $time_exist[] = $created;
             }
@@ -272,10 +271,10 @@ class AjaxController extends AdminController
             $timee = carbon($v->created_at);
         }
 
-        $st = date("Y", strtotime($start));
-        $max = date("Y", strtotime($timee));
+        $st = carbon($start)->format('Y'); //date("Y", strtotime($start));
+        $max = carbon($timee)->format('Y'); //date("Y", strtotime($timee));
         for ($i = $st; $i <= $max; $i++) {
-            $time_from_max[] = date("Y", strtotime($timee));
+            $time_from_max[] = carbon($timee)->format('Y'); //date("Y", strtotime($timee));
         }
 
         $arr_diff = array_diff($time_from_max, $time_exist);

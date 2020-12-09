@@ -226,22 +226,24 @@
     $('#page-header').append(html);
 
       /* updating combobox */
-    function combobox(start, end, label) {
-      yr = start.format('YYYY');
-      mn = start.format('MM')-1;
-      dt = start.format('DD');
+    function combobox(start_date, end_date, label) {
+      start = start_date;
+      end = end_date;
+      yr = start_date.format('YYYY');
+      mn = start_date.format('MM')-1;
+      dt = start_date.format('DD');
       @if (app('is_desktop'))
-        var range = start.format('DD MMMM YYYY') + ' - ' + end.format('DD MMMM YYYY');
+        var range = start_date.format('DD MMMM YYYY') + ' - ' + end_date.format('DD MMMM YYYY');
       @else
         var range = label;
       @endif
       $('#z-date-range span').text(range);
 
-      if (start.format('YYYY-MM-DD') == end.format('YYYY-MM-DD')) {
+      if (start_date.format('YYYY-MM-DD') == end_date.format('YYYY-MM-DD')) {
         rangetype = 'hourly';
-      } else if (start.format('YYYY') != end.format('YYYY')){
+      } else if (start_date.format('YYYY') != end_date.format('YYYY')){
         rangetype = 'yearly';
-      } else if (start.format('YYYY-MM') != end.format('YYYY-MM')){
+      } else if (start_date.format('YYYY-MM') != end_date.format('YYYY-MM')){
         rangetype = 'monthly';
       } else {
         rangetype = 'daily';
@@ -260,8 +262,8 @@
           url: "{{ _url(adminPath() . '/ajax/pageview') }}",
           data: {
             range: rangetype,
-            start: start.format('YYYY-MM-DD'),
-            end: end.format('YYYY-MM-DD')
+            start: start_date.format('YYYY-MM-DD'),
+            end: end_date.format('YYYY-MM-DD')
           },
           cache: false
         }).done(function(data) {
@@ -276,8 +278,8 @@
         $.ajax({
           url: "{{ _url(adminPath() . '/ajax/popularpost') }}",
           data: {
-            start: start.format('YYYY-MM-DD'),
-            end: end.format('YYYY-MM-DD')
+            start: start_date.format('YYYY-MM-DD'),
+            end: end_date.format('YYYY-MM-DD')
           },
           cache: false
         }).done(function(data) {
@@ -292,8 +294,8 @@
         $.ajax({
           url: "{{ _url(adminPath() . '/ajax/recentcomment') }}",
           data: {
-            start: start.format('YYYY-MM-DD'),
-            end: end.format('YYYY-MM-DD')
+            start: start_date.format('YYYY-MM-DD'),
+            end: end_date.format('YYYY-MM-DD')
           },
           cache: false
         }).done(function(data) {
