@@ -80,13 +80,19 @@ class AjaxController extends AdminController
                 break;
         }
 
+        /* set timezone */
+        date_default_timezone_set(getTimezone('user'));
+
         /* query */
         $visits = VisitorLog::select('created_at', 'ip', DB::raw('date_format(created_at, \'' . $df . '\') as created'), DB::raw('sum(count) as count'))
             ->where('is_robot', 'no')
             ->whereBetween('created_at', [$start, $end])
             ->orderBy('created_at', 'ASC')
-            ->groupBy(DB::raw('date_format(CONVERT_TZ(created_at, \'+00:00\', \'+07:00\'), \'' . $df . '\')'), 'ip')
+            ->groupBy(DB::raw('date_format(CONVERT_TZ(created_at, \'+00:00\', \'' . date('P') . '\'), \'' . $df . '\')'), 'ip')
             ->get();
+
+        /* reset timezone */
+        date_default_timezone_set('UTC');
 
         if ($visits) {
             switch ($range) {
