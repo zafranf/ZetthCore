@@ -80,21 +80,13 @@ class AjaxController extends AdminController
                 break;
         }
 
-        /* disable strict */
-        config()->set('database.connections.mysql.strict', false);
-        \DB::reconnect();
-
         /* query */
         $visits = VisitorLog::select('created_at', 'ip', DB::raw('date_format(created_at, \'' . $df . '\') as created'), DB::raw('sum(count) as count'))
             ->where('is_robot', 'no')
             ->whereBetween('created_at', [$start, $end])
             ->orderBy('created_at', 'ASC')
-            ->groupBy(DB::raw('date_format(created_at, \'' . $df . '\')'), 'ip')
+            ->groupBy(DB::raw('date_format(CONVERT_TZ(created_at, \'+00:00\', \'+07:00\'), \'' . $df . '\')'), 'ip')
             ->get();
-
-        /* enable strict */
-        config()->set('database.connections.mysql.strict', true);
-        \DB::reconnect();
 
         if ($visits) {
             switch ($range) {
@@ -124,7 +116,7 @@ class AjaxController extends AdminController
 
             $time2 = '';
             foreach ($visits as $k => $v) {
-                $created = carbon_query($v->created_at)->format(str_replace("%", "", $df));
+                $created = carbon($v->created_at)->format(str_replace("%", "", $df));
                 if ($time2 != $created) {
                     $data_visit[$created]['visit'] = $v->count;
                     $data_visit[$created]['ip'] = 1;
@@ -161,7 +153,7 @@ class AjaxController extends AdminController
         }
 
         foreach ($visits as $k => $v) {
-            $created = carbon_query($v->created_at)->format(str_replace("%", "", $format));
+            $created = carbon($v->created_at)->format(str_replace("%", "", $format));
             if ($time != $created) {
                 $time_exist[] = $created;
             }
@@ -194,7 +186,7 @@ class AjaxController extends AdminController
         }
 
         foreach ($visits as $k => $v) {
-            $created = carbon_query($v->created_at)->format(str_replace("%", "", $format));
+            $created = carbon($v->created_at)->format(str_replace("%", "", $format));
             if ($time != $created) {
                 $time_exist[] = $created;
             }
@@ -228,7 +220,7 @@ class AjaxController extends AdminController
         }
 
         foreach ($visits as $k => $v) {
-            $created = carbon_query($v->created_at)->format(str_replace("%", "", $format));
+            $created = carbon($v->created_at)->format(str_replace("%", "", $format));
             if ($time != $created) {
                 $time_exist[] = $created;
             }
@@ -262,7 +254,7 @@ class AjaxController extends AdminController
         }
 
         foreach ($visits as $k => $v) {
-            $created = carbon_query($v->created_at)->format(str_replace("%", "", $format));
+            $created = carbon($v->created_at)->format(str_replace("%", "", $format));
             if ($time != $created) {
                 $time_exist[] = $created;
             }
