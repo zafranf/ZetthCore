@@ -342,19 +342,29 @@ if (!function_exists('getTimezone')) {
 
         /* get config site timezone */
         if ($type == 'site') {
-            if ((app()->bound('site') || class_exists('site')) && isset(app('site')->timezone)) {
-                $timezone = app('site')->timezone;
+            if (isset(app('site')->timezone)) {
+                if ((app()->bound('site') || class_exists('site'))) {
+                    $timezone = app('site')->timezone;
 
-                return $timezone;
+                    return $timezone;
+                }
+            } else {
+                /* if no user login, default use env timezone */
+                return getTimezone('env');
             }
         } else
 
         /* get user timezone */
         if ($type == 'user') {
-            if ((app()->bound('user') || class_exists('user')) && isset(app('user')->detail)) {
-                $timezone = app('user')->detail->timezone;
+            if (isset(app('user')->detail)) {
+                if ((app()->bound('user') || class_exists('user'))) {
+                    $timezone = app('user')->detail->timezone;
 
-                return $timezone;
+                    return $timezone;
+                }
+            } else {
+                /* if no user login, default use site timezone */
+                return getTimezone('site');
             }
         }
 
