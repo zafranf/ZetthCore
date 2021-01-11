@@ -39,25 +39,6 @@ class NewPost implements ShouldQueue
     {
         $sent = [];
 
-        /* get subscribers */
-        if ($this->to_subscribers) {
-            $subscribers = \ZetthCore\Models\Subscriber::active()->where('is_registered', 'no')->get();
-
-            /* check subscribers */
-            if (count($subscribers)) {
-                foreach ($subscribers as $subscriber) {
-                    if (!in_array($subscriber->email, $sent)) {
-                        /* send mail */
-                        \Mail::to($subscriber->email)->queue(new \App\Mail\NewPost($this->post));
-                        $sent[] = $subscriber->email;
-
-                        /* delay */
-                        sleep(1 / 60);
-                    }
-                }
-            }
-        }
-
         /* get usets */
         if ($this->to_users) {
             $users = \ZetthCore\Models\User::active()->get();
@@ -69,6 +50,25 @@ class NewPost implements ShouldQueue
                         /* send mail */
                         \Mail::to($user->email)->queue(new \App\Mail\NewPost($this->post));
                         $sent[] = $user->email;
+
+                        /* delay */
+                        sleep(1 / 60);
+                    }
+                }
+            }
+        }
+
+        /* get subscribers */
+        if ($this->to_subscribers) {
+            $subscribers = \ZetthCore\Models\Subscriber::active()->where('is_registered', 'no')->get();
+
+            /* check subscribers */
+            if (count($subscribers)) {
+                foreach ($subscribers as $subscriber) {
+                    if (!in_array($subscriber->email, $sent)) {
+                        /* send mail */
+                        \Mail::to($subscriber->email)->queue(new \App\Mail\NewPost($this->post, $subscriber));
+                        $sent[] = $subscriber->email;
 
                         /* delay */
                         sleep(1 / 60);
