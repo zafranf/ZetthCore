@@ -90,6 +90,11 @@ class AppServiceProvider extends ServiceProvider
         $this->callAfterResolving(Schedule::class, function (Schedule $schedule) {
             $schedule->command('site:check-status')->everyMinute();
         });
+
+        /* force https */
+        if (bool(config('app.force_https'))) {
+            \Illuminate\Support\Facades\URL::forceScheme('https');
+        }
     }
 
     /**
