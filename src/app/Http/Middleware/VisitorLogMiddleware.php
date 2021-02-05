@@ -115,17 +115,26 @@ class VisitorLogMiddleware
                     });
 
                     /* save keyword */
-                    \App\Models\IntermData::updateOrCreate([
-                        'host' => $host,
-                        'keyword' => $keyword,
-                        'post_id' => $post->id ?? null,
-                        'site_id' => app('site')->id,
-                    ], [
-                        'count' => \DB::raw('count+1'),
-                    ]);
+                    $this->saveInterm($host, urldecode($keyword), $post->id ?? null);
                 }
+
+                /* save keyword */
+                $this->saveInterm($host, $r->input('q'), $post->id ?? null);
             }
         }
+    }
+
+    private function saveInterm($host, $keyword, $post_id)
+    {
+        /* save keyword */
+        \App\Models\IntermData::updateOrCreate([
+            'host' => $host,
+            'keyword' => $keyword,
+            'post_id' => $post_id ?? null,
+            'site_id' => app('site')->id,
+        ], [
+            'count' => \DB::raw('count+1'),
+        ]);
     }
 
 }
