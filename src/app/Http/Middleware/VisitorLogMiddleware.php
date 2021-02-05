@@ -119,7 +119,9 @@ class VisitorLogMiddleware
                 }
 
                 /* save keyword */
-                $this->saveInterm($host, $r->input('q'), $post->id ?? null);
+                if ($r->input('q')) {
+                    $this->saveInterm($host, $r->input('q'), $post->id ?? null);
+                }
             }
         }
     }
