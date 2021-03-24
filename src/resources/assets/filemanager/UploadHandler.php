@@ -1455,7 +1455,7 @@ class UploadHandler
             $targetFile =  $targetPath. $res['files'][0]->name;
             $targetFileThumb =  $targetPathThumb. $res['files'][0]->name;
             if (!is_dir($targetPathThumb)) {
-                mkdir($targetPathThumb, $this->options['mkdir_mode'], true);
+                mkdir(__DIR__ . '/' . $targetPathThumb, $this->options['mkdir_mode'], true);
             }
             if(is_file($targetFile)) {
                 chmod($targetFile, $this->options['config']['filePermission']);

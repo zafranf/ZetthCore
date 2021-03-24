@@ -822,7 +822,7 @@ function fix_strtolower($str)
 function fix_path($path, $config)
 {
 	$info = pathinfo($path);
-	$tmp_path = $info['dirname'];
+	$tmp_path = dirname(__DIR__) . '/' . $info['dirname'];
 	$str = fix_filename($info['filename'], $config);
 	if ($tmp_path != "")
 	{
