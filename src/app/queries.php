@@ -165,7 +165,10 @@ function _getPages($limit = null, $order = 'desc', $slug = '', $pagename = 'page
     /* inisiasi query */
     $pages = \App\Models\Post::active()->pages();
     if (!empty($slug)) {
-        $pages->where('slug', $slug)->orWhere('title', 'like', '%' . $slug . '%');
+        $pages->where(function ($q) use ($slug) {
+            $q->where('slug', $slug);
+            $q->orWhere('title', 'like', '%' . $slug . '%');
+        });
     }
 
     /* check order */
