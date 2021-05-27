@@ -33,7 +33,7 @@ class VisitorLogMiddleware
         }
 
         /* set variable */
-        $ip = \Request::server('REMOTE_ADDR');
+        $ip = getUserIP();
         $page = isAdminSubdomain() ? \Request::url() : (\Request::path() ?? '-');
         $referrer = \Request::server('HTTP_REFERER') ?? null;
         $referrer = str_replace(_url('/'), "", $referrer);

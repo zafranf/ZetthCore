@@ -29,7 +29,7 @@ trait MainTrait
         $act->description = $description;
         $act->method = \Request::method();
         $act->path = \Request::path() ?? '-';
-        $act->ip = \Request::server('REMOTE_ADDR');
+        $act->ip = getUserIP();
         $act->get = json_encode($_GET);
         $act->post = json_encode($_POST);
         $act->files = json_encode($_FILES);
