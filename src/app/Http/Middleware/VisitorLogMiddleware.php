@@ -34,7 +34,7 @@ class VisitorLogMiddleware
 
         /* set variable */
         $ip = getUserIP();
-        $page = isAdminSubdomain() ? \Request::fullUrl() : (\Request::path() ?? '-');
+        $page = isAdminSubdomain() ? \Request::fullUrl() : (\Request::getRequestUri() ?? '-');
         $referrer = \Request::server('HTTP_REFERER') ?? null;
         $referrer = str_replace(_url('/'), "", $referrer);
         $agent = new \Jenssegers\Agent\Agent();
