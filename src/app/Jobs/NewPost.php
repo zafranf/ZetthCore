@@ -71,7 +71,7 @@ class NewPost implements ShouldQueue
                         $sent[] = $subscriber->email;
 
                         /* delay */
-                        sleep(1 / 60);
+                        sleep(1 / config('mail.mps', 1));
                     }
                 }
             }
