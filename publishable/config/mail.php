@@ -139,4 +139,6 @@ return [
 
     'log_channel' => env('MAIL_LOG_CHANNEL'),
 
+    /* mail per second */
+    'mps' => env('MAIL_PERSECOND', 1),
 ];
