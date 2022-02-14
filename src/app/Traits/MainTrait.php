@@ -14,16 +14,16 @@ trait MainTrait
         /* Filter password */
         $sensor = 'xxx';
         if (isset($_POST['password'])) {
-            $_POST['password'] = $sensor;
+            \Request::merge(['password' => $sensor]);
         }
         if (isset($_POST['password_confirmation'])) {
-            $_POST['password_confirmation'] = $sensor;
+            \Request::merge(['password_confirmation' => $sensor]);
         }
         if (isset($_POST['user_password'])) {
-            $_POST['user_password'] = $sensor;
+            \Request::merge(['user_password' => $sensor]);
         }
         if (isset($_POST['_token'])) {
-            $_POST['_token'] = $sensor;
+            \Request::merge(['_token' => $sensor]);
         }
 
         /* dont log robot */
