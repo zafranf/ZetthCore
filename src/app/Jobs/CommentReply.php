@@ -52,6 +52,9 @@ class CommentReply implements ShouldQueue
 
                     /* log sent mail */
                     $sent_mails[] = $subcomment->email;
+
+                    /* delay */
+                    sleep(1 / config('mail.mps', 1));
                 }
             }
         }

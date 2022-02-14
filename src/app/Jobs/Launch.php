@@ -41,7 +41,7 @@ class Launch implements ShouldQueue
                 \Mail::to($subscriber->email)->queue(new \App\Mail\Launch($subscriber->email, $this->status));
 
                 /* delay */
-                sleep(1 / 60);
+                sleep(1 / config('mail.mps', 1));
             }
         }
     }
