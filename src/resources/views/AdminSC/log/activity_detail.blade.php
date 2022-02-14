@@ -22,6 +22,10 @@
         <td>{{ $act->ip }}</td>
       </tr>
       <tr>
+        <td>HEADER Values</td>
+        <td>{{ print_json($act->headers) }}</td>
+      </tr>
+      <tr>
         <td>GET Values</td>
         <td>{{ print_json($act->get) }}</td>
       </tr>

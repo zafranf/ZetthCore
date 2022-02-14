@@ -19,6 +19,7 @@ class CreateActivityLogsTable extends Migration
             $table->string('method');
             $table->string('path');
             $table->ipAddress('ip');
+            $table->json('headers');
             $table->json('get');
             $table->json('post');
             $table->json('files');

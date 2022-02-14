@@ -1,4 +1,5 @@
 <?php
+
 namespace ZetthCore\Traits;
 
 trait MainTrait
@@ -25,13 +26,21 @@ trait MainTrait
             $_POST['_token'] = $sensor;
         }
 
+        /* dont log robot */
+        $agent = new \Jenssegers\Agent\Agent();
+        $is_robot = $agent->isRobot();
+        if ($is_robot) {
+            return true;
+        }
+
         $act = new \ZetthCore\Models\ActivityLog;
         $act->description = $description;
         $act->method = \Request::method();
         $act->path = \Request::path() ?? '-';
         $act->ip = getUserIP();
-        $act->get = json_encode($_GET);
-        $act->post = json_encode($_POST);
+        $act->headers = json_encode(\Request::header());
+        $act->get = json_encode(\Request::query());
+        $act->post = json_encode(\Request::post());
         $act->files = json_encode($_FILES);
         $act->user_id = $user->id ?? (app('user')->id ?? null);
         $act->site_id = app('site')->id;
@@ -229,8 +238,7 @@ trait MainTrait
                 $compimage->destroy();
             }
 
-            /* jika dimensinya sesuai, langsung pakai gambar utama */
-            else {
+            /* jika dimensinya sesuai, langsung pakai gambar utama */ else {
                 /* clone gambar utama untuk dijadikan output */
                 $mainimage->save($save, 70);
                 $mainimage->destroy();
