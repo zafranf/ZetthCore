@@ -14,15 +14,19 @@ trait MainTrait
         /* Filter password */
         $sensor = 'xxx';
         if (\Request::post('password')) {
+            $password = \Request::post('password');
             \Request::merge(['password' => $sensor]);
         }
         if (\Request::post('password_confirmation')) {
+            $passwordConfirmation = \Request::post('password_confirmation');
             \Request::merge(['password_confirmation' => $sensor]);
         }
         if (\Request::post('user_password')) {
+            $userPassword = \Request::post('user_password');
             \Request::merge(['user_password' => $sensor]);
         }
         if (\Request::post('_token')) {
+            $_token = \Request::post('_token');
             \Request::merge(['_token' => $sensor]);
         }
 
@@ -45,6 +49,20 @@ trait MainTrait
         $act->user_id = $user->id ?? (app('user')->id ?? null);
         $act->site_id = app('site')->id;
         $act->save();
+
+        /* rollback values */
+        if (\Request::post('password')) {
+            \Request::merge(['password' => $password]);
+        }
+        if (\Request::post('password_confirmation')) {
+            \Request::merge(['password_confirmation' => $passwordConfirmation]);
+        }
+        if (\Request::post('user_password')) {
+            \Request::merge(['user_password' => $userPassword]);
+        }
+        if (\Request::post('_token')) {
+            \Request::merge(['_token' => $_token]);
+        }
     }
 
     /**
