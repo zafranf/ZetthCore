@@ -214,7 +214,7 @@ $config = array(
     | in Megabytes
     |
      */
-    'MaxSizeUpload' => (1 * 3 / 4),
+    'MaxSizeUpload' => ini_get('upload_max_filesize'), //(1 * 3 / 4),
 
     'MaxNumberOfFiles' => 20,
 
