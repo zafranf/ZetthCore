@@ -37,18 +37,15 @@ trait MainTrait
             return true;
         }
 
-        $act = new \ZetthCore\Models\ActivityLog;
-        $act->description = $description;
-        $act->method = \Request::method();
-        $act->path = \Request::path() ?? '-';
-        $act->ip = getUserIP();
-        $act->headers = json_encode(\Request::header());
-        $act->get = json_encode(\Request::query());
-        $act->post = json_encode(\Request::post());
-        $act->files = json_encode($_FILES);
-        $act->user_id = $user->id ?? (app('user')->id ?? null);
-        $act->site_id = app('site')->id;
-        $act->save();
+        /* run job */
+        \ZetthCore\Jobs\ActivityLog::dispatch($description, $user ?? app('user'), [
+            'method' => \Request::method(),
+            'path' => \Request::path(),
+            'header' => \Request::header(),
+            'query' => \Request::query(),
+            'post' => \Request::post(),
+            'files' => \Request::file(),
+        ]);
 
         /* rollback values */
         if (\Request::post('password')) {
