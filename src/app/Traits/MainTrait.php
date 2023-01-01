@@ -43,8 +43,8 @@ trait MainTrait
             'path' => \Request::path(),
             'header' => \Request::header(),
             'query' => \Request::query(),
-            'post' => \Request::post(),
-            'files' => \Request::file(),
+            'post' => $_POST,
+            'files' => $_FILES,
         ], $_SERVER);
 
         /* rollback values */
