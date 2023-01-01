@@ -15,17 +15,19 @@ class ActivityLog implements ShouldQueue
     protected $description;
     protected $user;
     protected $req;
+    protected $serv;
 
     /**
      * Create a new job instance.
      *
      * @return void
      */
-    public function __construct($description, $user, $req)
+    public function __construct($description, $user, $req, $serv)
     {
         $this->description = $description;
         $this->user = $user;
         $this->req = $req;
+        $this->serv = $serv;
     }
 
     /**
@@ -39,7 +41,7 @@ class ActivityLog implements ShouldQueue
         $act->description = $this->description;
         $act->method = $this->req['method'];
         $act->path = $this->req['path'] ?? '-';
-        $act->ip = getUserIP();
+        $act->ip = getUserIP($this->serv);
         $act->headers = json_encode($this->req['header']);
         $act->get = json_encode($this->req['query']);
         $act->post = json_encode($this->req['post']);

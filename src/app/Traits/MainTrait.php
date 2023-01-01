@@ -45,7 +45,7 @@ trait MainTrait
             'query' => \Request::query(),
             'post' => \Request::post(),
             'files' => \Request::file(),
-        ]);
+        ], $_SERVER);
 
         /* rollback values */
         if (\Request::post('password')) {

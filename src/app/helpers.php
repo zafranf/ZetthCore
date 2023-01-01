@@ -79,10 +79,12 @@ if (!function_exists('getUserIP')) {
      *
      * @return string
      */
-    function getUserIP()
+    function getUserIP($server = null)
     {
+        $server = $server ?? $_SERVER;
+
         // cloudflare or forwarder or remote
-        return $_SERVER["HTTP_CF_CONNECTING_IP"] ?? ($_SERVER['HTTP_X_FORWARDED_FOR'] ?? $_SERVER['REMOTE_ADDR']);
+        return $server["HTTP_CF_CONNECTING_IP"] ?? ($server['HTTP_X_FORWARDED_FOR'] ?? ($server['REMOTE_ADDR']));
     }
 }
 
@@ -354,33 +356,33 @@ if (!function_exists('getTimezone')) {
             return $timezone;
         } else
 
-        /* get config site timezone */
-        if ($type == 'site') {
-            if (isset(app('site')->timezone)) {
-                if ((app()->bound('site') || class_exists('site'))) {
-                    $timezone = app('site')->timezone;
+            /* get config site timezone */
+            if ($type == 'site') {
+                if (isset(app('site')->timezone)) {
+                    if ((app()->bound('site') || class_exists('site'))) {
+                        $timezone = app('site')->timezone;
 
-                    return $timezone;
+                        return $timezone;
+                    }
+                } else {
+                    /* if no user login, default use env timezone */
+                    return getTimezone('env');
                 }
-            } else {
-                /* if no user login, default use env timezone */
-                return getTimezone('env');
-            }
-        } else
+            } else
 
-        /* get user timezone */
-        if ($type == 'user') {
-            if (isset(app('user')->detail)) {
-                if ((app()->bound('user') || class_exists('user'))) {
-                    $timezone = app('user')->detail->timezone;
+                /* get user timezone */
+                if ($type == 'user') {
+                    if (isset(app('user')->detail)) {
+                        if ((app()->bound('user') || class_exists('user'))) {
+                            $timezone = app('user')->detail->timezone;
 
-                    return $timezone;
+                            return $timezone;
+                        }
+                    } else {
+                        /* if no user login, default use site timezone */
+                        return getTimezone('site');
+                    }
                 }
-            } else {
-                /* if no user login, default use site timezone */
-                return getTimezone('site');
-            }
-        }
 
         return $timezone;
     }
