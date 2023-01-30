@@ -45,6 +45,11 @@ class AppServiceProvider extends ServiceProvider
             }
         }
 
+        /* check env is in production */
+        $this->app->singleton('is_production', function () {
+            return config('app.env') == 'production';
+        });
+
         /* set application setting to global */
         $this->app->singleton('site', function () use ($site) {
             return $site;
