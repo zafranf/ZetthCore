@@ -43,7 +43,7 @@ trait MainTrait
             'path' => \Request::path(),
             'header' => \Request::header(),
             'query' => \Request::query(),
-            'post' => $_POST,
+            'post' => \Request::post(),
             'files' => $_FILES,
         ], $_SERVER);
 
