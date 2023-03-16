@@ -43,7 +43,7 @@ trait MainTrait
             'path' => \Request::path(),
             'header' => \Request::header(),
             'query' => \Request::query(),
-            'post' => \Request::except('image'),
+            'post' => collect(\Request::post())->except('image')->toArray(),
             'files' => $_FILES,
         ], $_SERVER);
 
