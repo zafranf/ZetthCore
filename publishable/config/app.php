@@ -241,4 +241,7 @@ return [
         ],
     ],
 
+    /* Force using https */
+    'force_https' => env('FORCE_HTTPS', false),
+
 ];
