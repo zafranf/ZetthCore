@@ -19,7 +19,7 @@ class SiteController extends AdminController
     public function __construct()
     {
         parent::__construct();
-        $this->current_url = url(app('admin_path') . '/setting/site');
+        $this->current_url = _url(app('admin_path') . '/setting/site');
         $this->page_title = 'Kelola Situs';
         $this->breadcrumbs[] = [
             'page' => 'Pengaturan',

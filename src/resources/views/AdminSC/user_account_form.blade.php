@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="panel-body">
-        <form class="form-horizontal" action="{{ url($current_url) }}" method="post" enctype="multipart/form-data">
+        <form class="form-horizontal" action="{{ _url($current_url) }}" method="post" enctype="multipart/form-data">
             <div class="row">
                 <div class="col-md-6">
                     <h4>Informasi Utama</h4>
@@ -12,7 +12,7 @@
                         <div class="col-md-8">
                             <div class="fileinput fileinput-new" data-provides="fileinput">
                                 <div class="fileinput-new thumbnail">
-                                    <img src="{{ _get_image('/assets/images/users/' . (isset($data) ? $data->image : ''), url("themes/admin/AdminSC/images/no-image.png")) }}">
+                                    <img src="{{ _get_image('/assets/images/users/' . (isset($data) ? $data->image : ''), _url("themes/admin/AdminSC/images/no-image.png")) }}">
                                 </div>
                                 <div class="fileinput-preview fileinput-exists thumbnail"></div>
                                 <div>

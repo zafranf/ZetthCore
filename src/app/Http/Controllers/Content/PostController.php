@@ -19,12 +19,12 @@ class PostController extends AdminController
     public function __construct()
     {
         parent::__construct();
-        $this->current_url = url(app('admin_path') . '/content/posts');
+        $this->current_url = _url(app('admin_path') . '/content/posts');
         $this->page_title = 'Kelola Artikel';
         $this->breadcrumbs[] = [
             'page' => 'Konten',
             'icon' => '',
-            'url' => url(app('admin_path') . '/content/banners'),
+            'url' => _url(app('admin_path') . '/content/banners'),
         ];
         $this->breadcrumbs[] = [
             'page' => 'Artikel',
@@ -117,7 +117,7 @@ class PostController extends AdminController
         $tags = explode(",", $r->input('tags'));
         // $digit = 3;
         // $uniq = str_random($digit);
-        // $cover = str_replace(url('/'), '', $r->input('cover'));
+        // $cover = str_replace(_url('/'), '', $r->input('cover'));
         $date = $r->input('date') ?? carbon()->format("Y-m-d");
         $time = $r->input('time') ?? carbon()->format("H:i:s");
 
@@ -229,7 +229,7 @@ class PostController extends AdminController
         $tags = explode(",", $r->input('tags'));
         // $digit = 3;
         // $uniq = str_random($digit);
-        // $cover = str_replace(url('/'), '', $r->input('cover'));
+        // $cover = str_replace(_url('/'), '', $r->input('cover'));
         $date = $r->input('date') ?? carbon()->format("Y-m-d");
         $time = $r->input('time') ?? carbon()->format("H:i:s");
 
@@ -357,9 +357,7 @@ class PostController extends AdminController
     public function process_tags($tags, $pid)
     {
         foreach ($tags as $tag) {
-            $chkTag = Term::where('name', str_slug($tag))->
-                where('type', 'tag')->
-                first();
+            $chkTag = Term::where('name', str_slug($tag))->where('type', 'tag')->first();
 
             if (!$chkTag) {
                 $term = new Term;
@@ -393,5 +391,4 @@ class PostController extends AdminController
         $postrel->term_id = $tid;
         $postrel->save();
     }
-
 }

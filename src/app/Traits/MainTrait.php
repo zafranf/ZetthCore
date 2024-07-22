@@ -1,4 +1,5 @@
 <?php
+
 namespace ZetthCore\Traits;
 
 trait MainTrait
@@ -32,7 +33,7 @@ trait MainTrait
             [
                 'ip' => _server('REMOTE_ADDR') ?? '127.0.0.1',
                 'page' => _server('REQUEST_URI') ?? '/',
-                'referral' => str_replace(url('/'), "", $referrer),
+                'referral' => str_replace(_url('/'), "", $referrer),
                 'agent' => $agent->getUserAgent(),
                 'browser' => $browser,
                 'browser_version' => $agent->version($browser),
@@ -175,8 +176,7 @@ trait MainTrait
                             }
                         }
                     }
-                    /* Check if recipient only 1 and using name */
-                    else if (isset($par['to']['email'])) {
+                    /* Check if recipient only 1 and using name */ else if (isset($par['to']['email'])) {
                         $to_name = isset($par['to']['name']) ? $par['to']['name'] : '';
                         $mail->to($par['to']['email'], $to_name);
                     }
@@ -200,8 +200,7 @@ trait MainTrait
                             }
                         }
                     }
-                    /* Check if 'Cc' recipient only 1 and using name */
-                    else if (isset($par['cc']['email'])) {
+                    /* Check if 'Cc' recipient only 1 and using name */ else if (isset($par['cc']['email'])) {
                         $cc_name = isset($par['cc']['name']) ? $par['cc']['name'] : '';
                         $mail->cc($par['cc']['email'], $cc_name);
                     }
@@ -225,8 +224,7 @@ trait MainTrait
                             }
                         }
                     }
-                    /* Check if 'Bcc' recipient only 1 and using name */
-                    else if (isset($par['bcc']['email'])) {
+                    /* Check if 'Bcc' recipient only 1 and using name */ else if (isset($par['bcc']['email'])) {
                         $bcc_name = isset($par['bcc']['name']) ? $par['bcc']['name'] : '';
                         $mail->bcc($par['bcc']['email'], $bcc_name);
                     }
@@ -250,8 +248,7 @@ trait MainTrait
                             }
                         }
                     }
-                    /* Check if attachment only 1 and using name */
-                    else if (isset($par['attachments']['file'])) {
+                    /* Check if attachment only 1 and using name */ else if (isset($par['attachments']['file'])) {
                         $attachment_name = isset($par['attachments']['name']) ? $par['attachments']['name'] : '';
                         $mail->attach($par['attachments']['file'], $attachment_name);
                     }
@@ -439,8 +436,7 @@ trait MainTrait
                 $compimage->destroy();
             }
 
-            /* jika dimensinya sesuai, langsung pakai gambar utama */
-            else {
+            /* jika dimensinya sesuai, langsung pakai gambar utama */ else {
                 /* clone gambar utama untuk dijadikan output */
                 $mainimage->save($save, 70);
                 $mainimage->destroy();

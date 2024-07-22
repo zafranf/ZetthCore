@@ -21,12 +21,12 @@ class RoleController extends AdminController
     public function __construct()
     {
         parent::__construct();
-        $this->current_url = url(app('admin_path') . '/setting/roles');
+        $this->current_url = _url(app('admin_path') . '/setting/roles');
         $this->page_title = 'Kelola Peran dan Akses';
         $this->breadcrumbs[] = [
             'page' => 'Pengaturan',
             'icon' => '',
-            'url' => url(app('admin_path') . '/setting/application'),
+            'url' => _url(app('admin_path') . '/setting/application'),
         ];
         $this->breadcrumbs[] = [
             'page' => 'Peran dan Akses',

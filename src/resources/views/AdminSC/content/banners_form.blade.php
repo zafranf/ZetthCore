@@ -14,7 +14,7 @@ if (isset($data->id) && ($key = array_search($data->id, $orders)) !== false) {;
 
 @section('content')
 <div class="panel-body">
-  <form class="form-horizontal" action="{{ url($current_url) }}{{ isset($data->id) ? '/' . $data->id : '' }}"
+  <form class="form-horizontal" action="{{ _url($current_url) }}{{ isset($data->id) ? '/' . $data->id : '' }}"
     method="post" enctype="multipart/form-data">
     <div class="form-group">
       <label for="image" class="col-sm-2 control-label">
@@ -31,9 +31,9 @@ if (isset($data->id) && ($key = array_search($data->id, $orders)) !== false) {;
           </div>
           <div class="zetth-upload-exists thumbnail"></div>
           <div>
-            <a href="{{ url('larafile/dialog.php?type=1&field_id=image&relative_url=0&fldr=images') }}/"
+            <a href="{{ _url('larafile/dialog.php?type=1&field_id=image&relative_url=0&fldr=images') }}/"
               class="btn btn-default zetth-upload-new" id="btn-upload" type="button">Pilih</a>
-            <a href="{{ url('larafile/dialog.php?type=1&field_id=image&relative_url=0&fldr=images') }}/"
+            <a href="{{ _url('larafile/dialog.php?type=1&field_id=image&relative_url=0&fldr=images') }}/"
               class="btn btn-default zetth-upload-exists" id="btn-upload" type="button">Ganti</a>
             <a id="btn-remove" class="btn btn-default zetth-upload-exists" type="button">Batal</a>
             <input name="image" id="image" type="hidden">

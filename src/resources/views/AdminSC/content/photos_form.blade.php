@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="panel-body">
-        <form class="form-horizontal" action="{{ url($current_url) }}{{ isset($data) ? '/' . $data->id : '' }}" method="post" enctype="multipart/form-data">
+        <form class="form-horizontal" action="{{ _url($current_url) }}{{ isset($data) ? '/' . $data->id : '' }}" method="post" enctype="multipart/form-data">
             <div class="row">
                 <div id="div-album" class="col-md-2 col-sm-12">
                     <h4>Album</h4>
@@ -124,7 +124,7 @@
             swal('Maksimal ' + max_img + ' foto');
         } else {
             $.fancybox({
-                href : '{!! url('/larafile-standalone/dialog.php?type=1&field_id=input_tmp&lang=id&fldr=/images') !!}',
+                href : '{!! _url('/larafile-standalone/dialog.php?type=1&field_id=input_tmp&lang=id&fldr=/images') !!}',
                 type : 'iframe',
                 autoScale : false,
                 autoSize : true,

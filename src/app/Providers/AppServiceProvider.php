@@ -24,11 +24,11 @@ class AppServiceProvider extends ServiceProvider
             if (!$this->checkDBConnection()) {
                 /* sementara, nanti redirect ke halaman install */
                 throw new \Exception("You have to install this app first", 1);
-                // redirect(url('/install'))->send();
+                // redirect(_url('/install'))->send();
             }
 
             /* get application setting */
-            $host = parse_url(url('/'))['host'];
+            $host = parse_url(_url('/'))['host'];
             $site = \ZetthCore\Models\Site::where('domain', $host)->with('socmed_data', 'socmed_data.socmed')->first();
             if (!$site) {
                 throw new \Exception("Site config not found", 1);

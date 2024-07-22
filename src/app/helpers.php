@@ -16,7 +16,7 @@ if (!function_exists('adminPath')) {
 if (!function_exists('isAdminSubdomain')) {
     function isAdminSubdomain()
     {
-        $host = parse_url(url('/'))['host'];
+        $host = parse_url(_url('/'))['host'];
 
         return in_array(adminSubdomain(), explode(".", $host));
     }
@@ -115,7 +115,7 @@ if (!function_exists('_get_access_buttons')) {
 
         if ($btn == 'add') {
             if ($user->can($newname . '.create')) {
-                echo '<a href="' . url($url . '/create') . '" class="btn btn-default pull-right" data-toggle="tooltip" data-original-title="Tambah Data"><i class="fa fa-plus"></i>&nbsp;' . $add . '</a>';
+                echo '<a href="' . _url($url . '/create') . '" class="btn btn-default pull-right" data-toggle="tooltip" data-original-title="Tambah Data"><i class="fa fa-plus"></i>&nbsp;' . $add . '</a>';
             }
         } else {
             if ($user->can($newname . '.read')) {
@@ -141,9 +141,9 @@ if (!function_exists('_get_button_post')) {
     {
         echo '<div class="box-footer">';
         echo '<button type="submit" class="btn btn-warning">Simpan</button>';
-        echo ' &nbsp;<a class="btn btn-default" href="' . url($page) . '">Batal</a>';
+        echo ' &nbsp;<a class="btn btn-default" href="' . _url($page) . '">Batal</a>';
         if ($delete && $id != '') {
-            echo '<a class="btn btn-danger pull-right" onclick="_delete(\'' . url($page . '/' . $id) . '\')">Hapus</a>';
+            echo '<a class="btn btn-danger pull-right" onclick="_delete(\'' . _url($page . '/' . $id) . '\')">Hapus</a>';
         }
         echo '</div>';
     }
@@ -162,12 +162,12 @@ if (!function_exists('_get_image')) {
         $fm = base_path('vendor/zafranf/zetthcore/src/resources/themes/AdminSC/plugins/filemanager/source' . $image);
         if (file_exists($img) && !is_dir($img)) {
             $mtime = filemtime($img);
-            $img = url('/storage/' . $image) . '?v=' . $mtime;
+            $img = _url('/storage/' . $image) . '?v=' . $mtime;
         } else if (file_exists($fm) && !is_dir($fm)) {
             $mtime = filemtime($fm);
-            $img = url($image) . '?v=' . $mtime;
+            $img = _url($image) . '?v=' . $mtime;
         } else {
-            $img = !is_null($default) ? url($default) : null;
+            $img = !is_null($default) ? _url($default) : null;
         }
 
         return $img;
@@ -302,10 +302,10 @@ if (!function_exists('generateMenu')) {
             $link_additional = $params[$index]['link']['additional'] ?? null;
 
             /* set href */
-            $href = (!is_null($menu->route_name) ? route($menu->route_name) : url($menu->url));
+            $href = (!is_null($menu->route_name) ? route($menu->route_name) : _url($menu->url));
 
             /* set active */
-            $active = ($href == url()->current()) ? 'active' : '';
+            $active = ($href == _url()->current()) ? 'active' : '';
 
             /* check additional class for parent */
             if (count($menu->submenu)) {
@@ -425,7 +425,7 @@ if (!function_exists('generateBreadcrumb')) {
             if (empty($bread['url'])) {
                 echo '<li class="active">' . $bread['page'] . '</li>';
             } else {
-                echo '<li><a href="' . url($bread['url']) . '">';
+                echo '<li><a href="' . _url($bread['url']) . '">';
                 if (isset($bread['icon'])) {
                     echo '<i class="' . $bread['icon'] . '"></i> ';
                 }
@@ -458,6 +458,17 @@ if (!function_exists('generateDate')) {
         }
 
         return carbon(($date ?? date("Y-m-d")))->isoFormat($format);
+    }
+}
+
+if (!function_exists('_url')) {
+    function _url($url = null, $secure = false)
+    {
+        if ($secure || bool(config('app.force_https'))) {
+            return secure_url($url);
+        }
+
+        return url($url);
     }
 }
 

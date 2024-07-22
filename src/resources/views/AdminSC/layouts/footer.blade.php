@@ -19,9 +19,9 @@
   oleh <a href="https://porisweb.id" target="_blank">Porisweb</a>
 </div>
 <script>
-  var SITE_URL = '{{ url('/') }}';
-    var ADMIN_URL = '{{ url(app('admin_path')) }}';
-    var CURRENT_URL = '{{ url($current_url) }}';
+  var SITE_URL = '{{ _url('/') }}';
+    var ADMIN_URL = '{{ _url(app('admin_path')) }}';
+    var CURRENT_URL = '{{ _url($current_url) }}';
     var TOKEN = '{{ csrf_token() }}';
     var CONNECT = true;
     var IS_MOBILE = {{ app('is_mobile') ? 'true' : 'false' }};

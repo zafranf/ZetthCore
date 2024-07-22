@@ -12,8 +12,8 @@
       </button>
 
       {{-- Branding Image --}}
-      <a class="navbar-brand" href="{{ url(app('admin_path') . '/dashboard') }}">
-        <img src="{{ _get_image("assets/images/" . app('site')->logo, url("themes/admin/AdminSC/images/logo.v2.png")) }}">
+      <a class="navbar-brand" href="{{ _url(app('admin_path') . '/dashboard') }}">
+        <img src="{{ _get_image("assets/images/" . app('site')->logo, _url("themes/admin/AdminSC/images/logo.v2.png")) }}">
       </a>
     </div>
 
@@ -88,7 +88,7 @@
             {!! app('is_mobile') ? 'Kunjungi website&nbsp;<span class="pull-right"><i class="fa fa-external-link"></i></span>' : '<i class="fa fa-globe"></i>' !!}
           </a>
         </li>
-        {{-- <li><a href="{{ url('admin/help') }}" title="Help"><i class="fa fa-question-circle-o"></i></a></li> --}}
+        {{-- <li><a href="{{ _url('admin/help') }}" title="Help"><i class="fa fa-question-circle-o"></i></a></li> --}}
         {{-- <li><a href="#" title="Notifications"><i class="fa fa-bell-o"></i></a></li> --}}
         {{-- Authentication Links --}}
         @if (Auth::guest())

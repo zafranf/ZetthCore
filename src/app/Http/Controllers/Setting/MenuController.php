@@ -17,17 +17,17 @@ class MenuController extends AdminController
     public function __construct()
     {
         parent::__construct();
-        $this->current_url = url(app('admin_path') . '/setting/menus');
+        $this->current_url = _url(app('admin_path') . '/setting/menus');
         $this->page_title = 'Kelola Menu';
         $this->breadcrumbs[] = [
             'page' => 'Pengaturan',
             'icon' => '',
-            'url' => url(app('admin_path') . '/setting/application'),
+            'url' => _url(app('admin_path') . '/setting/application'),
         ];
         $this->breadcrumbs[] = [
             'page' => 'Menu',
             'icon' => '',
-            'url' => url(app('admin_path') . '/setting/menu-groups'),
+            'url' => _url(app('admin_path') . '/setting/menu-groups'),
         ];
 
         if (!request()->input('group') && !\App::runningInConsole()) {

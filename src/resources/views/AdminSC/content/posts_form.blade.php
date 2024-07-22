@@ -16,7 +16,7 @@
     }
   }
 
-  $urlFilemanager = url('/larafile/dialog.php?type=1&field_id=cover&lang=id&fldr=/images');
+  $urlFilemanager = _url('/larafile/dialog.php?type=1&field_id=cover&lang=id&fldr=/images');
 @endphp
 
 @extends('zetthcore::AdminSC.layouts.main')
@@ -24,12 +24,12 @@
 @section('content')
   <div class="panel-body no-padding-bottom">
     <div class="row" style="margin-top:-15px;">
-      <form id="form-post" action="{{ url($current_url) }}{{ isset($data) ? '/' . $data->id : '' }}" method="post"
+      <form id="form-post" action="{{ _url($current_url) }}{{ isset($data) ? '/' . $data->id : '' }}" method="post"
         enctype="multipart/form-data">
         <div class="col-sm-8 col-md-9 left-side no-padding">
           <input type="text" id="title" class="form-control {{ isset($data) ? '' : 'autofocus' }} no-border-top-right no-border-left no-radius input-lg" name="title" placeholder="Judul.." maxlength="100" value="{{ $data->title ?? old('title') }}">
           <div class="input-group">
-            <span class="input-group-addon no-border-top-right no-border-left no-radius input-sm" id="url_span">{{ url('/post/') }}/</span>
+            <span class="input-group-addon no-border-top-right no-border-left no-radius input-sm" id="url_span">{{ _url('/post/') }}/</span>
             <input type="text" id="slug" class="form-control no-border-top-right no-radius input-sm" name="slug" placeholder="Tautan otomatis.. (klik 2x untuk edit)" readonly value="{{ $data->slug ?? old('slug') }}">
           </div>
           <textarea id="excerpt" name="excerpt" class="form-control no-border-top-right no-border-left no-radius input-xlarge" placeholder="Kutipan/deskripsi singkat (opsional).." rows="3">{{ $data->excerpt ?? old('excerpt') }}</textarea>
@@ -138,7 +138,7 @@
             <br><br>
             <div class="btn-group btn-group-justified" role="group">
               <a onclick="$('#form-post').submit();" class="btn btn-warning"><i class="fa fa-edit"></i> Simpan</a>
-              <a href="{{ url($current_url) }}" class="btn btn-default"><i class="fa fa-times"></i> Batal</a>
+              <a href="{{ _url($current_url) }}" class="btn btn-default"><i class="fa fa-times"></i> Batal</a>
             </div>
           </div>
         </div>
@@ -475,7 +475,7 @@
           datumTokenizer: Bloodhound.tokenizers.obj.whitespace('name'),
           queryTokenizer: Bloodhound.tokenizers.whitespace,
           prefetch: {
-            url: "{{ url(app('admin_path') . '/ajax/term/categories') }}",
+            url: "{{ _url(app('admin_path') . '/ajax/term/categories') }}",
             cache: false,
             filter: function(list) {
               return $.map(list, function(category) {
@@ -514,7 +514,7 @@
           datumTokenizer: Bloodhound.tokenizers.obj.whitespace('name'),
           queryTokenizer: Bloodhound.tokenizers.whitespace,
           prefetch: {
-            url: "{{ url(app('admin_path') . '/ajax/term/tags') }}",
+            url: "{{ _url(app('admin_path') . '/ajax/term/tags') }}",
             cache: false,
             filter: function(list) {
             return $.map(list, function(tag) {

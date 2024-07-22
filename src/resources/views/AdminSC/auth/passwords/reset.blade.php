@@ -7,7 +7,7 @@
     <meta name="robots" content="noindex, nofollow">
 
     <title>Reset Password - {{ Session::get('app')->config->config_name }}</title>
-    <link rel="shortcut icon" href="{{ url('assets/images/'.Session::get('app')->config->config_icon) }}">
+    <link rel="shortcut icon" href="{{ _url('assets/images/'.Session::get('app')->config->config_icon) }}">
 
     {{-- Fonts --}}
     <link href="https://fonts.googleapis.com/css?family=Lato:100,200,300,400,500" rel='stylesheet' type='text/css'>
@@ -15,7 +15,7 @@
 
     {{-- Styles --}}
     {!! _load_bootstrap('css') !!}
-    <link href="{{ url('themes/admin/adminsc/css/adminsc.css')."?".strtotime(date('Y-m-d H:i:s')) }}" rel="stylesheet">
+    <link href="{{ _url('themes/admin/adminsc/css/adminsc.css')."?".strtotime(date('Y-m-d H:i:s')) }}" rel="stylesheet">
     <style>
         .panel-body img {
             margin: 20px 0;
@@ -32,8 +32,8 @@
             <div class="col-md-6 col-md-offset-3">
                 <div class="panel panel-default">
                     <div class="panel-body">
-                        <center><img src="{{ url('assets/images/n_'.Session::get('app')->config->config_logo) }}"></center>
-                        <form class="form-horizontal" role="form" method="POST" action="{{ url('/password/reset') }}">
+                        <center><img src="{{ _url('assets/images/n_'.Session::get('app')->config->config_logo) }}"></center>
+                        <form class="form-horizontal" role="form" method="POST" action="{{ _url('/password/reset') }}">
                             {!! csrf_field() !!} 
                             @if (session('status'))
                                 <div class="alert alert-success">

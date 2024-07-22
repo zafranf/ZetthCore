@@ -11,10 +11,10 @@ function sortMenu($data, $level = 0) {
       echo '<i class="' . $menu->icon . '"></i> ';
       }
       echo $menu->name;
-      echo '<a onclick="_delete(\'' . url($adminPath . '/setting/menus/'.$menu->id. '?group='.$menu->group_id).'\')"
+      echo '<a onclick="_delete(\'' . _url($adminPath . '/setting/menus/'.$menu->id. '?group='.$menu->group_id).'\')"
         class="btn btn-default btn-xs pull-right" data-toggle="tooltip" title="Hapus"><i
           class="fa fa-trash"></i></a>';
-      echo '<a href="' . url($adminPath . '/setting/menus/' . $menu->id . '/edit?group=' . $menu->group_id) . '"
+      echo '<a href="' . _url($adminPath . '/setting/menus/' . $menu->id . '/edit?group=' . $menu->group_id) . '"
         class="btn btn-default btn-xs pull-right" data-toggle="tooltip" title="Edit"><i class="fa fa-edit"></i></a>';
       echo '</span>';
     if (count($menu->submenu) > 0) {
@@ -31,7 +31,7 @@ function sortMenu($data, $level = 0) {
 
   @section('content')
   <div class="panel-body">
-    <form class="form-horizontal" action="{{ url($current_url) }}{{ isset($data) ? '/' . $data->id : '' }}"
+    <form class="form-horizontal" action="{{ _url($current_url) }}{{ isset($data) ? '/' . $data->id : '' }}"
       method="post" enctype="multipart/form-data">
       <div class="row">
         <div class="col-md-6">
@@ -66,7 +66,7 @@ function sortMenu($data, $level = 0) {
         <div class="col-md-6">
           @if (isset($data))
           <h4>Daftar Menu
-            <a href="{{ url(app('admin_path').'/setting/menus/create?group='.$data->id) }}"
+            <a href="{{ _url(app('admin_path').'/setting/menus/create?group='.$data->id) }}"
               class="btn btn-default btn-xs pull-right" data-toggle="tooltip" title="Tambah">
               <i class="fa fa-plus"></i>
             </a>

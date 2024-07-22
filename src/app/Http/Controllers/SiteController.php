@@ -19,7 +19,7 @@ class SiteController extends Controller
         $this->breadcrumbs[] = [
             'page' => 'Beranda',
             'icon' => '',
-            'url' => url('/'),
+            'url' => _url('/'),
         ];
     }
 
@@ -50,7 +50,7 @@ class SiteController extends Controller
     public function setSEO($title = '', $par = [])
     {
         $separator = config('seotools.meta.defaults.separator');
-        $url = url()->current();
+        $url = _url()->current();
         $sitename = app('site')->name;
         $title = !empty($title) ? $title . $separator . $sitename : $sitename;
         $tagline = app('site')->tagline;

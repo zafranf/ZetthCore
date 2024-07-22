@@ -6,7 +6,7 @@
       <div id="btn-quick-box" class="col-sm-12">
         @if (Auth::user()->can('admin.content.posts.create'))
         <div class="btn btn-default btn-quick">
-          <a href="{{ url(app('admin_path') . '/content/posts/create') }}">
+          <a href="{{ _url(app('admin_path') . '/content/posts/create') }}">
             <div class="row">
               <div class="col-sm-12" title="Create a new Post">
                 <i class="fa fa-edit"></i>
@@ -20,7 +20,7 @@
         @endif
         @if (Auth::user()->can('admin.content.pages.create'))
         <div class="btn btn-default btn-quick">
-          <a href="{{ url(app('admin_path') . '/content/pages/create') }}">
+          <a href="{{ _url(app('admin_path') . '/content/pages/create') }}">
             <div class="row">
               <div class="col-sm-12" title="Create a new Page">
                 <i class="fa fa-file-o"></i>
@@ -34,7 +34,7 @@
         @endif
         @if (Auth::user()->can('admin.report.comments.index'))
         <div class="btn btn-default btn-quick">
-          <a href="{{ url(app('admin_path') . '/report/comments') }}">
+          <a href="{{ _url(app('admin_path') . '/report/comments') }}">
             <div class="row">
               <div class="col-sm-12" title="Check for new comments">
                 <i class="fa fa-comment-o"></i>
@@ -49,7 +49,7 @@
         @endif
         @if (Auth::user()->can('admin.report.inbox.index'))
         <div class="btn btn-default btn-quick">
-          <a href="{{ url(app('admin_path') . '/report/inbox') }}">
+          <a href="{{ _url(app('admin_path') . '/report/inbox') }}">
             <div class="row">
               <div class="col-sm-12" title="Get inbox">
                 <i class="fa fa-envelope-o"></i>
@@ -67,7 +67,7 @@
     <hr>
     <div class="row">
       <div class="col-sm-12" id="box-pageview-chart">
-        <div class="loading">Memuat<img src="{{ url('themes/admin/AdminSC/images/loading-flat.gif') }}"></div>
+        <div class="loading">Memuat<img src="{{ _url('themes/admin/AdminSC/images/loading-flat.gif') }}"></div>
         <div id="pageview-chart" style="height:370px;"></div>
       </div>
     </div>
@@ -78,11 +78,11 @@
             <div class="panel-heading">
               Artikel Populer
               @if (Auth::user()->can('admin.content.pages.index'))
-              <a href="{{ url(app('admin_path') . '/content/posts') }}" class="btn btn-default btn-sm pull-right"><i class="fa fa-eye"></i> Semua</a>
+              <a href="{{ _url(app('admin_path') . '/content/posts') }}" class="btn btn-default btn-sm pull-right"><i class="fa fa-eye"></i> Semua</a>
               @endif
             </div>
             <div class="panel-body no-padding">
-              <div class="loading">Memuat<img src="{{ url('themes/admin/AdminSC/images/loading-flat.gif') }}"></div>
+              <div class="loading">Memuat<img src="{{ _url('themes/admin/AdminSC/images/loading-flat.gif') }}"></div>
               <table id="table-data-popular" class="table table-hover no-margin-bottom">
                 <thead>
                   <tr>
@@ -101,11 +101,11 @@
           <div class="panel-heading">
             Komentar Terbaru
             @if (Auth::user()->can('admin.report.comments.index'))
-            <a href="{{ url(app('admin_path') . '/report/comments') }}" class="btn btn-default btn-sm pull-right"><i class="fa fa-eye"></i> Semua</a>
+            <a href="{{ _url(app('admin_path') . '/report/comments') }}" class="btn btn-default btn-sm pull-right"><i class="fa fa-eye"></i> Semua</a>
             @endif
           </div>
           <div class="panel-body no-padding">
-            <div class="loading">Memuat<img src="{{ url('themes/admin/AdminSC/images/loading-flat.gif') }}"></div>
+            <div class="loading">Memuat<img src="{{ _url('themes/admin/AdminSC/images/loading-flat.gif') }}"></div>
             <table id="table-data-comment" class="table table-hover no-margin-bottom">
               <thead>
                 <tr>
@@ -244,14 +244,14 @@
         rangetype = 'daily';
       }
 
-      /* $('#pageview-chart').html("Memuat<img src=\"{{ url('themes/admin/AdminSC/images/loading-flat.gif') }}\">");
+      /* $('#pageview-chart').html("Memuat<img src=\"{{ _url('themes/admin/AdminSC/images/loading-flat.gif') }}\">");
       $('#box-popular-post').addClass('hide');
       $('#box-recent-comment').addClass('hide'); */
       $('.loading').removeClass('hide');
       if (CONNECT){
         /* get data pageview */
         $.ajax({
-          url: "{{ url(app('admin_path') . '/ajax/pageview') }}",
+          url: "{{ _url(app('admin_path') . '/ajax/pageview') }}",
           data: {
             range: rangetype,
             start: start.format('YYYY-MM-DD'),
@@ -267,7 +267,7 @@
 
         /* get data popular post */
         $.ajax({
-          url: "{{ url(app('admin_path') . '/ajax/popularpost') }}",
+          url: "{{ _url(app('admin_path') . '/ajax/popularpost') }}",
           data: {
             start: start.format('YYYY-MM-DD'),
             end: end.format('YYYY-MM-DD')
@@ -282,7 +282,7 @@
 
         /* get data recent comment */
         $.ajax({
-          url: "{{ url(app('admin_path') . '/ajax/recentcomment') }}",
+          url: "{{ _url(app('admin_path') . '/ajax/recentcomment') }}",
           data: {
             start: start.format('YYYY-MM-DD'),
             end: end.format('YYYY-MM-DD')

@@ -17,12 +17,12 @@ class CategoryController extends AdminController
     public function __construct()
     {
         parent::__construct();
-        $this->current_url = url(app('admin_path') . '/data/categories');
+        $this->current_url = _url(app('admin_path') . '/data/categories');
         $this->page_title = 'Kelola Kategori';
         $this->breadcrumbs[] = [
             'page' => 'Data',
             'icon' => '',
-            'url' => url(app('admin_path') . '/data/users'),
+            'url' => _url(app('admin_path') . '/data/users'),
         ];
         $this->breadcrumbs[] = [
             'page' => 'Kategori',

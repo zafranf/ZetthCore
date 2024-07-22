@@ -11,7 +11,7 @@
 
 @section('content')
     <div class="panel-body">
-        <form class="form-horizontal" action="{{ url($current_url) }}{{ isset($comment->comment_id)?'/'.$comment->comment_id:'' }}" method="post">
+        <form class="form-horizontal" action="{{ _url($current_url) }}{{ isset($comment->comment_id)?'/'.$comment->comment_id:'' }}" method="post">
             {{ isset($comment->comment_id)?method_field('PUT'):'' }}
             {{ csrf_field() }}
             @if (isset($comment->comment_id))
@@ -88,9 +88,9 @@ $(document).ready(function(){
        toolbar1: "undo redo | bullist numlist blockquote | link unlink | youtube image table | styleselect fontselect fontsizeselect code | fullscreen",
        image_advtab: true ,
        menubar : false,
-       external_filemanager_path:"{{ url('assets/plugins/filemanager/') }}/",
+       external_filemanager_path:"{{ _url('assets/plugins/filemanager/') }}/",
        filemanager_title:"Filemanager" ,
-       external_plugins: { "filemanager" : "{{ url('assets/plugins/filemanager/plugin.min.js') }}" },
+       external_plugins: { "filemanager" : "{{ _url('assets/plugins/filemanager/plugin.min.js') }}" },
        /*extended_valid_elements : "script[language|type]"*/
         setup : function(ed) {
             ed.on('init', function() 

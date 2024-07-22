@@ -18,17 +18,17 @@ class PhotoController extends AdminController
     public function __construct()
     {
         parent::__construct();
-        $this->current_url = url(app('admin_path') . '/content/gallery/photos');
+        $this->current_url = _url(app('admin_path') . '/content/gallery/photos');
         $this->page_title = 'Kelola Foto';
         $this->breadcrumbs[] = [
             'page' => 'Konten',
             'icon' => '',
-            'url' => url(app('admin_path') . '/content/banners'),
+            'url' => _url(app('admin_path') . '/content/banners'),
         ];
         $this->breadcrumbs[] = [
             'page' => 'Galeri',
             'icon' => '',
-            'url' => url(app('admin_path') . '/content/gallery/photos'),
+            'url' => _url(app('admin_path') . '/content/gallery/photos'),
         ];
         $this->breadcrumbs[] = [
             'page' => 'Foto',
@@ -262,5 +262,4 @@ class PhotoController extends AdminController
 
         return $save;
     }
-
 }

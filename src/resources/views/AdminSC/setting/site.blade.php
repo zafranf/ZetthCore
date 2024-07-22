@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="panel-body">
-  <form class="form-horizontal" action="{{ url($current_url) }}/{{ app('site')->id ?? '' }}" method="post"
+  <form class="form-horizontal" action="{{ _url($current_url) }}/{{ app('site')->id ?? '' }}" method="post"
     enctype="multipart/form-data">
     <div class="row">
       <div class="col-md-6">
@@ -18,7 +18,7 @@
             <div class="fileinput fileinput-new" data-provides="fileinput">
               <div class="fileinput-new thumbnail">
                 <img
-                  src="{{ _get_image("assets/images/" . app('site')->logo, url("themes/admin/AdminSC/images/logo.v2.png")) }}">
+                  src="{{ _get_image("assets/images/" . app('site')->logo, _url("themes/admin/AdminSC/images/logo.v2.png")) }}">
               </div>
               <div class="fileinput-preview fileinput-exists thumbnail"></div>
               <div>
@@ -51,7 +51,7 @@
                 <div class="fileinput-new thumbnail"
                   style="width:20px!important;padding:0;margin-bottom:8px;position:absolute;left:5px;">
                   <img
-                    src="{{ _get_image("assets/images/" . app('site')->icon, url("themes/admin/AdminSC/images/logo.v2.png")) }}"
+                    src="{{ _get_image("assets/images/" . app('site')->icon, _url("themes/admin/AdminSC/images/logo.v2.png")) }}"
                     width="20">
                 </div>
                 <div class="fileinput-preview fileinput-exists thumbnail"
@@ -291,7 +291,7 @@
       <div class="col-md-offset-2 col-md-10">
         {{ isset(app('site')->id) ? method_field('PUT') : '' }}
         {{ csrf_field() }}
-        {{ _get_button_post(url(app('admin_path') . '/dashboard')) }}
+        {{ _get_button_post(_url(app('admin_path') . '/dashboard')) }}
       </div>
     </div>
   </form>

@@ -17,12 +17,12 @@ class VideoController extends AdminController
     public function __construct()
     {
         parent::__construct();
-        $this->current_url = url(app('admin_path') . '/content/gallery/videos');
+        $this->current_url = _url(app('admin_path') . '/content/gallery/videos');
         $this->page_title = 'Kelola Video';
         $this->breadcrumbs[] = [
             'page' => 'Konten',
             'icon' => '',
-            'url' => url(app('admin_path') . '/content/banners'),
+            'url' => _url(app('admin_path') . '/content/banners'),
         ];
         $this->breadcrumbs[] = [
             'page' => 'Video',
@@ -229,5 +229,4 @@ class VideoController extends AdminController
 
         abort(403);
     }
-
 }

@@ -17,7 +17,7 @@ class AdminController extends BaseController
         $this->breadcrumbs[] = [
             'page' => '',
             'icon' => 'fa fa-home',
-            'url' => url(app('admin_path')),
+            'url' => _url(app('admin_path')),
         ];
     }
 

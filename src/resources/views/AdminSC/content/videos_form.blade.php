@@ -2,12 +2,12 @@
 
 @section('content')
 	<div class="panel-body">
-		<form class="form-horizontal" action="{{ url($current_url) }}{{ isset($data) ? '/' . $data->id : '' }}" method="post">
+		<form class="form-horizontal" action="{{ _url($current_url) }}{{ isset($data) ? '/' . $data->id : '' }}" method="post">
 			<div class="form-group">
 				<label for="cover" class="col-sm-2 control-label">Kode Youtube</label>
 				<div class="col-sm-10">
 					<div class="input-group">
-						<span class="input-group-addon" id="slug_span">{{ url("https://youtube.com/watch?v=") }}</span>
+						<span class="input-group-addon" id="slug_span">{{ _url("https://youtube.com/watch?v=") }}</span>
 						<input type="text" id="cover" class="form-control autofocus" name="cover" placeholder="Kode video youtube.." value="{{ isset($data) ? $data->cover : old('cover') }}">
 					</div>
 				</div>

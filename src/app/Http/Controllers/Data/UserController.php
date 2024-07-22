@@ -20,12 +20,12 @@ class UserController extends AdminController
     public function __construct()
     {
         parent::__construct();
-        $this->current_url = url(app('admin_path') . '/data/users');
+        $this->current_url = _url(app('admin_path') . '/data/users');
         $this->page_title = 'Kelola Pengguna';
         $this->breadcrumbs[] = [
             'page' => 'Data',
             'icon' => '',
-            'url' => url(app('admin_path') . '/data/users'),
+            'url' => _url(app('admin_path') . '/data/users'),
         ];
         $this->breadcrumbs[] = [
             'page' => 'Pengguna',
@@ -359,7 +359,7 @@ class UserController extends AdminController
         }
 
         /* get data */
-        $data = User::select('id', 'name', 'fullname', /* 'image', 'email', */'status')->where($whrRole)->orderBy('fullname');
+        $data = User::select('id', 'name', 'fullname', /* 'image', 'email', */ 'status')->where($whrRole)->orderBy('fullname');
 
         /* generate datatable */
         if ($r->ajax()) {

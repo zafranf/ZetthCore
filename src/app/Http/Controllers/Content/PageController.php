@@ -17,12 +17,12 @@ class PageController extends AdminController
     public function __construct()
     {
         parent::__construct();
-        $this->current_url = url(app('admin_path') . '/content/pages');
+        $this->current_url = _url(app('admin_path') . '/content/pages');
         $this->page_title = 'Kelola Halaman';
         $this->breadcrumbs[] = [
             'page' => 'Konten',
             'icon' => '',
-            'url' => url(app('admin_path') . '/content/pages'),
+            'url' => _url(app('admin_path') . '/content/pages'),
         ];
         $this->breadcrumbs[] = [
             'page' => 'Halaman',
@@ -216,7 +216,7 @@ class PageController extends AdminController
     public function datatable(Request $r)
     {
         /* get data */
-        $data = Post::select('id', 'title', /* 'slug', */'status')->where('type', 'page')->orderBy('created_at', 'desc');
+        $data = Post::select('id', 'title', /* 'slug', */ 'status')->where('type', 'page')->orderBy('created_at', 'desc');
 
         /* generate datatable */
         if ($r->ajax()) {

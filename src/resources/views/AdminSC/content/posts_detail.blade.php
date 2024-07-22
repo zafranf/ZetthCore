@@ -56,7 +56,7 @@
 @endsection
 
 @section('content')
-    @php $link = url('post/'.$post->post_slug); @endphp
+    @php $link = _url('post/'.$post->post_slug); @endphp
     {{-- @if (Session::get('app')->app_id==1 || Session::get('app')->app_id==2)
         @php $link = 'http://zafran.id/'.$post->url_code; @endphp
     @endif --}}
@@ -81,17 +81,17 @@
             <a class="zetth-share-button" onclick="_open_window('https://twitter.com/intent/tweet?text={{ $post->post_title.' '.$link }}')"><i class="fa fa-twitter"></i> Tweet</a>
             <a class="zetth-share-button" onclick="_open_window('https://plus.google.com/share?url={{ $link }}')"><i class="fa fa-google-plus"></i> Share</a>
             <a id="btn-short-url" class="zetth-share-button btn-short-url" data-toggle="modal" data-target="#zetth-modal"><i class="fa fa-link"></i> {{ $link }}</a>
-            <a id="btn-edit" class="zetth-share-button" href="{{ url($current_url.'/'.$post->post_id.'/edit') }}"><i class="fa fa-edit"></i> Edit</a>
+            <a id="btn-edit" class="zetth-share-button" href="{{ _url($current_url.'/'.$post->post_id.'/edit') }}"><i class="fa fa-edit"></i> Edit</a>
             <a id="btn-delete" class="zetth-share-button" onclick="_delete('{{ $post->post_id }}', '{{ $current_url }}');"><i class="fa fa-trash-o"></i> Delete</a>
-            <a id="btn-back" class="zetth-share-button" href="{{ url($current_url) }}"><i class="fa fa-caret-left"></i> Back</a> 
+            <a id="btn-back" class="zetth-share-button" href="{{ _url($current_url) }}"><i class="fa fa-caret-left"></i> Back</a> 
         @else
             <a class="zetth-share-button" onclick="_open_window('https://www.facebook.com/sharer/sharer.php?u={{ $link }}&amp;src=sdkpreparse')"><i class="fa fa-facebook-square"></i></a>
             <a class="zetth-share-button" onclick="_open_window('https://twitter.com/intent/tweet?text={{ $post->post_title.' '.$link }}')"><i class="fa fa-twitter"></i></a>
             <a class="zetth-share-button" onclick="_open_window('https://plus.google.com/share?url={{ $link }}')"><i class="fa fa-google-plus"></i></a>
             <a id="btn-short-url" class="zetth-share-button btn-short-url" data-toggle="modal" data-target="#zetth-modal"><i class="fa fa-link"></i> <span class="hide">{{ $link }}</span></a>
-            <a id="btn-edit" class="zetth-share-button" href="{{ url($current_url.'/'.$post->post_id.'/edit') }}"><i class="fa fa-edit"></i></a>
+            <a id="btn-edit" class="zetth-share-button" href="{{ _url($current_url.'/'.$post->post_id.'/edit') }}"><i class="fa fa-edit"></i></a>
             <a id="btn-delete" class="zetth-share-button" onclick="_delete('{{ $post->post_id }}', '{{ $current_url }}');"><i class="fa fa-trash-o"></i></a>
-            <a id="btn-back" class="zetth-share-button" href="{{ url($current_url) }}"><i class="fa fa-caret-left"></i> Back</a> 
+            <a id="btn-back" class="zetth-share-button" href="{{ _url($current_url) }}"><i class="fa fa-caret-left"></i> Back</a> 
         @endif
         <br>
         <br>
