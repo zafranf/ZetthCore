@@ -538,7 +538,7 @@ if (!function_exists('_site_css')) {
                 }
             }
 
-            return '<link href="' . url($file) . '?' . $mtime . '"' . $attr . '>';
+            return '<link href="' . _url($file) . '?' . $mtime . '"' . $attr . '>';
         }
 
         return null;
@@ -566,7 +566,7 @@ if (!function_exists('_site_js')) {
                 }
             }
 
-            return '<script src="' . url($file) . '?' . $mtime . '"' . $attr . '></script>';
+            return '<script src="' . _url($file) . '?' . $mtime . '"' . $attr . '></script>';
         }
 
         return null;
