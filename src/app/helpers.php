@@ -82,7 +82,7 @@ if (!function_exists('getUserIP')) {
     function getUserIP()
     {
         // cloudflare or forwarder or remote
-        return $_SERVER["HTTP_CF_CONNECTING_IP"] ?? ($_SERVER['HTTP_X_FORWARDED_FOR'] ?? $_SERVER['REMOTE_ADDR']);
+        return $_SERVER["HTTP_CF_CONNECTING_IP"] ?? ($_SERVER['HTTP_X_FORWARDED_FOR'] ?? $_SERVER['REMOTE_ADDR'] ?? 'cli');
     }
 }
 
