@@ -6,12 +6,13 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Laratrust\Traits\LaratrustUserTrait;
+use Laratrust\Contracts\LaratrustUser;
+use Laratrust\Traits\HasRolesAndPermissions;
 use ZetthCore\Models\Scopes\SiteScope;
 
-class User extends Authenticatable implements MustVerifyEmail
+class User extends Authenticatable implements LaratrustUser
 {
-    use LaratrustUserTrait;
+    use HasRolesAndPermissions;
     use Notifiable;
     use SoftDeletes;
 
