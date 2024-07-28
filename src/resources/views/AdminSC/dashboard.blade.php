@@ -4,7 +4,7 @@
   <div class="container-fluid">
     <div class="row">
       <div id="btn-quick-box" class="col-sm-12">
-        @if (Auth::user()->can('admin.content.posts.create'))
+        @if (Auth::user()->isAbleTo('admin.content.posts.create'))
         <div class="btn btn-default btn-quick">
           <a href="{{ _url(adminPath() . '/content/posts/create') }}">
             <div class="row">
@@ -18,7 +18,7 @@
           </a>
         </div>
         @endif
-        @if (Auth::user()->can('admin.content.pages.create'))
+        @if (Auth::user()->isAbleTo('admin.content.pages.create'))
         <div class="btn btn-default btn-quick">
           <a href="{{ _url(adminPath() . '/content/pages/create') }}">
             <div class="row">
@@ -32,7 +32,7 @@
           </a>
         </div>
         @endif
-        @if (Auth::user()->can('admin.report.comments.index'))
+        @if (Auth::user()->isAbleTo('admin.report.comments.index'))
         <div class="btn btn-default btn-quick">
           <a href="{{ _url(adminPath() . '/report/comments') }}">
             <div class="row">
@@ -47,7 +47,7 @@
           </a>
         </div>
         @endif
-        @if (Auth::user()->can('admin.report.inbox.index'))
+        @if (Auth::user()->isAbleTo('admin.report.inbox.index'))
         <div class="btn btn-default btn-quick">
           <a href="{{ _url(adminPath() . '/report/inbox') }}">
             <div class="row">
@@ -77,7 +77,7 @@
           <div class="panel panel-default">
             <div class="panel-heading">
               Artikel Populer
-              @if (Auth::user()->can('admin.content.pages.index'))
+              @if (Auth::user()->isAbleTo('admin.content.pages.index'))
               <a href="{{ _url(adminPath() . '/content/posts') }}" class="btn btn-default btn-sm pull-right"><i class="fa fa-eye"></i> Semua</a>
               @endif
             </div>
@@ -100,7 +100,7 @@
         <div class="panel panel-default">
           <div class="panel-heading">
             Komentar Terbaru
-            @if (Auth::user()->can('admin.report.comments.index'))
+            @if (Auth::user()->isAbleTo('admin.report.comments.index'))
             <a href="{{ _url(adminPath() . '/report/comments') }}" class="btn btn-default btn-sm pull-right"><i class="fa fa-eye"></i> Semua</a>
             @endif
           </div>

@@ -1,4 +1,5 @@
 <?php
+
 namespace ZetthCore\Http\Middleware;
 
 use Closure;
@@ -42,7 +43,7 @@ class AccessMiddleware
             return true;
         }
 
-        // return $user->can($name);
+        // return $user->isAbleTo($name);
 
         /* check access */
         $access = null;
@@ -69,7 +70,6 @@ class AccessMiddleware
             }
         }
 
-        return $user->can($newname . '.' . $access);
+        return $user->isAbleTo($newname . '.' . $access);
     }
-
 }

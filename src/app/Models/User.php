@@ -68,7 +68,7 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function getIsAdminAttribute()
     {
-        return $this->can('admin.dashboard.index');
+        return $this->isAbleTo('admin.dashboard.index');
     }
 
     public function scopeActive($query)
@@ -105,5 +105,4 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         $this->attributes['password'] = bcrypt($value . \Str::slug(config('app.key')));
     }
-
 }

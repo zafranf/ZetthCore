@@ -22,7 +22,7 @@
                   <input type="name" class="form-control" name="name" value="{{ old('name') }}" placeholder="Nama atau surel.." autofocus>
                   @if (isset($errors) && ($errors->has('name') || $errors->has('email')))
                     <span class="help-block">
-                      <strong>{{ $errors->first() }}</strong>
+                      <strong>{!! $errors->first() !!}</strong>
                     </span>
                   @endif
                 </div>
