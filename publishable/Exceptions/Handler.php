@@ -2,9 +2,13 @@
 
 namespace App\Exceptions;
 
-use Exception;
+use Throwable;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Validation\ValidationException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Request;
 
 class Handler extends ExceptionHandler
 {
@@ -25,6 +29,7 @@ class Handler extends ExceptionHandler
      * @var array
      */
     protected $dontFlash = [
+        'current_password',
         'password',
         'password_confirmation',
     ];
@@ -34,12 +39,37 @@ class Handler extends ExceptionHandler
      *
      * This is a great spot to send exceptions to Sentry, Bugsnag, etc.
      *
-     * @param  \Exception  $e
+     * @param  \Throwable  $e
      * @return void
      */
-    public function report(Exception $e)
+    public function report(Throwable $e)
     {
+        $code = $e->getCode() ?? null;
+        if ($e instanceof \Symfony\Component\HttpKernel\Exception\HttpExceptionInterface) {
+            $code = $e->getStatusCode();
+        }
+
         // $this->errorLog($e);
+        if ($e->getMessage() != 'Unauthenticated.') {
+            Log::debug([
+                'code' => $code,
+                'ip' => getUserIP(),
+                'user' => [
+                    'id' => Auth::user()->id ?? null,
+                    'name' => Auth::user()->fullname ?? null
+                ],
+                'method' => Request::method(),
+                'url' => Request::fullUrl() ?? null,
+                'input' => Request::except(['password', 'password_confirmation', 'captured']) ?? null,
+                'files' => Request::allFiles() ?? null,
+                'exception_message' => $e->getMessage()
+            ]);
+        }
+
+        /* redirect telescope to 404 */
+        if (req()->path() == 'telescope' && $code == 403) {
+            abort(404, 'The route telescope could not be found.');
+        }
 
         parent::report($e);
     }
@@ -48,34 +78,39 @@ class Handler extends ExceptionHandler
      * Render an exception into an HTTP response.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \Exception  $e
+     * @param  \Throwable  $e
      * @return \Illuminate\Http\Response
      */
-    public function render($request, Exception $e)
+    public function render($request, Throwable $e)
     {
-        if ($this->isHttpException($e)) {
+        if ($e instanceof ModelNotFoundException) {
+            abort(404);
+        } else if ($this->isHttpException($e)) {
+            $code = $this->isHttpException($e) ? $e->getStatusCode() : $e->getCode();
+            if ($code == 0) {
+                $code = 500;
+            }
+
             $theme = $this->getTemplate();
             if (!app()->runningInConsole() && isAdminPanel()) {
                 $theme = 'zetthcore::AdminSC';
             }
-            if (view()->exists($theme . '.errors.' . $e->getStatusCode())) {
-                return response()->view($theme . '.errors.' . $e->getStatusCode(), [
+            if (view()->exists($theme . '.errors.' . $code)) {
+                return response()->view($theme . '.errors.' . $code, [
                     'breadcrumbs' => [
                         [
                             'page' => 'Beranda',
                             'icon' => '',
                             'url' => _url('/'),
                         ], [
-                            'page' => $e->getStatusCode(),
+                            'page' => $code,
                             'icon' => '',
                             'url' => '',
                         ],
                     ],
-                    'status_code' => $e->getStatusCode(),
-                ], $e->getStatusCode());
+                    'status_code' => $code,
+                ], $code);
             }
-        } else if ($e instanceof ModelNotFoundException) {
-            abort(404);
         }
 
         return parent::render($request, $e);

@@ -83,6 +83,11 @@ if (!function_exists('getUserIP')) {
     {
         $server = $server ?? $_SERVER;
 
+        /* check cli */
+        if (PHP_SAPI == 'cli') {
+            return 'cli';
+        }
+
         // cloudflare or forwarder or remote
         return $server["HTTP_CF_CONNECTING_IP"] ?? ($server['HTTP_X_FORWARDED_FOR'] ?? ($server['REMOTE_ADDR']));
     }
@@ -372,9 +377,9 @@ if (!function_exists('getTimezone')) {
 
                 /* get user timezone */
                 if ($type == 'user') {
-                    if (isset(app('user')->detail)) {
+                    if (isset(app('user')->timezone)) {
                         if ((app()->bound('user') || class_exists('user'))) {
-                            $timezone = app('user')->detail->timezone;
+                            $timezone = app('user')->timezone;
 
                             return $timezone;
                         }

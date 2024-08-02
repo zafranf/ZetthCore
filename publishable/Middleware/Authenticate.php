@@ -16,10 +16,10 @@ class Authenticate extends Middleware
     {
         if (!$request->expectsJson()) {
             if (isAdminPanel()) {
-                return route('admin.login.form');
+                return _url(route('admin.login.form'));
             }
 
-            return route('web.login');
+            return _url(route('web.login'));
         }
     }
 }

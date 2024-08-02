@@ -19,13 +19,15 @@ class RedirectIfAuthenticated
     {
         if (Auth::guard($guard)->check()) {
             if (Auth::user()->is_admin && isAdminPanel()) {
-                return redirect(route('admin.dashboard.index'));
+                return redirect(_url(route('admin.dashboard.index')));
             }
             if (bool(Auth::user()->is_first_login)) {
-                return redirect(route('web.profile.edit'));
+                return redirect(_url(route('web.user.edit-profile', ['user' => Auth::user()->name])));
+            } else {
+                return redirect(_url(route('web.user.index', ['user' => Auth::user()->name])));
             }
 
-            return redirect(route('web.root'));
+            return redirect(_url(route('web.root')));
         }
 
         return $next($request);

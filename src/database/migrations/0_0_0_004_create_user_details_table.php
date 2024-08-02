@@ -28,8 +28,6 @@ class CreateUserDetailsTable extends Migration
             $table->string('town')->nullable();
             $table->string('zipcode')->nullable();
             $table->string('country')->default('Indonesia');
-            $table->string('timezone')->default('Asia/Jakarta');
-            $table->string('language')->default('id_ID');
             $table->string('phone')->nullable();
             $table->string('company')->nullable();
             $table->string('website')->nullable();
