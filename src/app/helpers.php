@@ -83,6 +83,11 @@ if (!function_exists('getUserIP')) {
     {
         $server = $server ?? $_SERVER;
 
+        /* check cli */
+        if (PHP_SAPI == 'cli') {
+            return 'cli';
+        }
+
         // cloudflare or forwarder or remote
         return $server["HTTP_CF_CONNECTING_IP"] ?? ($server['HTTP_X_FORWARDED_FOR'] ?? ($server['REMOTE_ADDR']));
     }

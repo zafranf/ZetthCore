@@ -148,6 +148,7 @@ class LoginController extends AdminController
      */
     protected function authenticated(Request $r, $user)
     {
+        dd(app('user')->is_admin);
         if (!app('user')->is_admin) {
             \Auth::logout();
 
