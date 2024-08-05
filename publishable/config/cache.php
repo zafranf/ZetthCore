@@ -39,18 +39,21 @@ return [
 
         'array' => [
             'driver' => 'array',
+            'serialize' => false,
         ],
 
         'database' => [
             'driver' => 'database',
-            'table' => 'cache',
-            'connection' => null,
+            'connection' => env('DB_CACHE_CONNECTION'),
+            'table' => env('DB_CACHE_TABLE', 'cache'),
+            'lock_connection' => env('DB_CACHE_LOCK_CONNECTION'),
+            'lock_table' => env('DB_CACHE_LOCK_TABLE'),
         ],
 
         'file' => [
             'driver' => 'file',
             'path' => storage_path('framework/cache/data'),
-            'permission' => 0664,
+            'lock_path' => storage_path('framework/cache/data'),
         ],
 
         'memcached' => [
@@ -74,7 +77,8 @@ return [
 
         'redis' => [
             'driver' => 'redis',
-            'connection' => 'cache',
+            'connection' => env('REDIS_CACHE_CONNECTION', 'cache'),
+            'lock_connection' => env('REDIS_CACHE_LOCK_CONNECTION', 'default'),
         ],
 
         'dynamodb' => [
@@ -83,6 +87,11 @@ return [
             'secret' => env('AWS_SECRET_ACCESS_KEY'),
             'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
             'table' => env('DYNAMODB_CACHE_TABLE', 'cache'),
+            'endpoint' => env('DYNAMODB_ENDPOINT'),
+        ],
+
+        'octane' => [
+            'driver' => 'octane',
         ],
 
     ],

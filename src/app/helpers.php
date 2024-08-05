@@ -377,9 +377,9 @@ if (!function_exists('getTimezone')) {
 
                 /* get user timezone */
                 if ($type == 'user') {
-                    if (isset(app('user')->detail)) {
+                    if (isset(app('user')->timezone)) {
                         if ((app()->bound('user') || class_exists('user'))) {
-                            $timezone = app('user')->detail->timezone;
+                            $timezone = app('user')->timezone;
 
                             return $timezone;
                         }

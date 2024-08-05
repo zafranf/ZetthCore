@@ -50,13 +50,10 @@ class Reinstall extends Command
 
         /* execute reinstall */
         $force = $this->option('force') ? ' --force' : '';
-        $process = new Process('php artisan zetth:install --fresh' . $force);
-        $process->setTimeout($this->timeout);
-        $process->run(function ($type, $buffer) {
-            echo $buffer;
+        Process::run('php artisan zetth:install --fresh' . $force, function (string $type, string $output) {
+            echo $output;
         });
 
         $this->info('Reinstall finished!');
     }
-
 }

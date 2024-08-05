@@ -1,5 +1,7 @@
 <?php
 
+namespace ZetthCore\Seeder;
+
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
@@ -32,11 +34,12 @@ class LaratrustSeeder extends Seeder
             $role = \ZetthCore\Models\Role::firstOrCreate([
                 'name' => $key,
                 'display_name' => ucwords(str_replace('_', ' ', $key)),
-                'description' => ucwords(str_replace('_', ' ', $key))
+                'description' => 'Peran sebagai ' . ucwords(str_replace('_', ' ', $key)),
+                'status' => 'active',
             ]);
             $permissions = [];
 
-            $this->command->info('Creating Role '. strtoupper($key));
+            $this->command->info('Creating Role ' . strtoupper($key));
 
             // Reading role permission modules
             foreach ($modules as $module => $value) {
@@ -46,29 +49,37 @@ class LaratrustSeeder extends Seeder
                     $permissionValue = $mapPermission->get($perm);
 
                     $permissions[] = \ZetthCore\Models\Permission::firstOrCreate([
-                        'name' => $module . '-' . $permissionValue,
+                        'name' => $module . '.' . $permissionValue,
                         'display_name' => ucfirst($permissionValue) . ' ' . ucfirst($module),
                         'description' => ucfirst($permissionValue) . ' ' . ucfirst($module),
                     ])->id;
 
-                    $this->command->info('Creating Permission to '.$permissionValue.' for '. $module);
+                    $this->command->info('Creating Permission to ' . $permissionValue . ' for ' . $module);
                 }
             }
 
             // Attach all permissions to the role
             $role->permissions()->sync($permissions);
 
+            /* custom super username */
+            $key_info = ($key == 'super') ? 'sa' : $key;
+            $key_fullname = ($key == 'super') ? 'Superadmin' : $key;
+            $key = ($key == 'super') ? 'sa' : $key;
+
             if (Config::get('laratrust_seeder.create_users')) {
-                $this->command->info("Creating '{$key}' user");
+                $this->command->info("Creating '{$key_info}' user");
                 // Create default user for each role
                 $user = \App\Models\User::create([
-                    'name' => ucwords(str_replace('_', ' ', $key)),
-                    'email' => $key.'@app.com',
-                    'password' => bcrypt('password')
+                    'name' => $key,
+                    'fullname' => ucwords(str_replace('_', ' ', $key_fullname)),
+                    'email' => $key . '@' . config('app.domain'),
+                    'password' => '123123',
+                    'status' => 'active',
+                    'created_at' => now(),
+                    'updated_at' => now(),
                 ]);
-                $user->attachRole($role);
+                $user->addRole($role);
             }
-
         }
     }
 
@@ -89,7 +100,7 @@ class LaratrustSeeder extends Seeder
         if (Config::get('laratrust_seeder.truncate_tables')) {
             DB::table('roles')->truncate();
             DB::table('permissions')->truncate();
-            
+
             if (Config::get('laratrust_seeder.create_users')) {
                 $usersTable = (new \App\Models\User)->getTable();
                 DB::table($usersTable)->truncate();

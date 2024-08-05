@@ -3,7 +3,7 @@
 namespace ZetthCore\Console\Commands;
 
 use Illuminate\Console\Command;
-use Symfony\Component\Process\Process;
+use Illuminate\Support\Facades\Process;
 
 class Install extends Command
 {
@@ -144,15 +144,13 @@ class Install extends Command
 
     public function linkFolders()
     {
-        $this->call('zetth:link');
+        $this->process('php artisan zetth:link');
     }
 
     public function process($command)
     {
-        $process = new Process($command);
-        $process->setTimeout($this->timeout);
-        $process->run(function ($type, $buffer) {
-            echo $buffer;
+        Process::run($command, function (string $type, string $output) {
+            echo $output;
         });
     }
 }

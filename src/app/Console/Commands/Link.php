@@ -3,7 +3,7 @@
 namespace ZetthCore\Console\Commands;
 
 use Illuminate\Console\Command;
-use Symfony\Component\Process\Process;
+use Illuminate\Support\Facades\Process;
 
 class Link extends Command
 {
@@ -59,37 +59,35 @@ class Link extends Command
         }
 
         /* set filemanager root path */
-        $filemanager_path = dirname(__DIR__) . '/../../resources/assets/filemanager';
+        // $filemanager_path = dirname(__DIR__) . '/../../resources/assets/filemanager';
 
         /* linking public/files to filemanager */
-        $this->info('Linking assets files filemanager folder');
+        /* $this->info('Linking assets files filemanager folder');
         if (is_link($filemanager_path . '/upload')) {
             $this->info('The [files] directory already linked.');
         } else {
             $files_path = storage_path('app/public/assets/images/upload');
             $this->process('cd ' . $filemanager_path . ' && ln -s ' . $files_path . ' && cd ' . base_path());
             $this->info('The [files] directory has been linked.');
-        }
+        } */
 
         /* linking public/thumbs to filemanager */
-        $this->info('Linking assets thumbs filemanager folder');
+        /* $this->info('Linking assets thumbs filemanager folder');
         if (is_link($filemanager_path . '/thumbs')) {
             $this->info('The [thumbs] directory already linked.');
         } else {
             $thumbs_path = storage_path('app/public/assets/thumbs');
             $this->process('cd ' . $filemanager_path . ' && ln -s ' . $thumbs_path . ' && cd ' . base_path());
             $this->info('The [thumbs] directory has been linked.');
-        }
+        } */
 
         $this->info('Link folders finished!');
     }
 
     public function process($command)
     {
-        $process = new Process($command);
-        $process->setTimeout($this->timeout);
-        $process->run(function ($type, $buffer) {
-            echo $buffer;
+        Process::run($command, function (string $type, string $output) {
+            echo $output;
         });
     }
 }
