@@ -4,6 +4,7 @@ namespace App\Exceptions;
 
 use Throwable;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Validation\ValidationException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
@@ -38,10 +39,10 @@ class Handler extends ExceptionHandler
      *
      * This is a great spot to send exceptions to Sentry, Bugsnag, etc.
      *
-     * @param  \Exception  $e
+     * @param  \Throwable  $e
      * @return void
      */
-    public function report(Exception $e)
+    public function report(Throwable $e)
     {
         $code = $e->getCode() ?? null;
         if ($e instanceof \Symfony\Component\HttpKernel\Exception\HttpExceptionInterface) {
@@ -80,7 +81,7 @@ class Handler extends ExceptionHandler
      * @param  \Throwable  $e
      * @return \Illuminate\Http\Response
      */
-    public function render($request, Exception $e)
+    public function render($request, Throwable $e)
     {
         if ($e instanceof ModelNotFoundException) {
             abort(404);
