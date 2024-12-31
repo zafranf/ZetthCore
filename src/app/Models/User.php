@@ -6,12 +6,13 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Laratrust\Traits\LaratrustUserTrait;
+use Laratrust\Contracts\LaratrustUser;
+use Laratrust\Traits\HasRolesAndPermissions;
 use ZetthCore\Models\Scopes\SiteScope;
 
-class User extends Authenticatable implements MustVerifyEmail
+class User extends Authenticatable implements LaratrustUser
 {
-    use LaratrustUserTrait;
+    use HasRolesAndPermissions;
     use Notifiable;
     use SoftDeletes;
 
@@ -68,7 +69,7 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function getIsAdminAttribute()
     {
-        return $this->can('admin.dashboard.index');
+        return $this->isAbleTo('admin.dashboard.index');
     }
 
     public function scopeActive($query)
@@ -105,5 +106,4 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         $this->attributes['password'] = bcrypt($value . \Str::slug(config('app.key')));
     }
-
 }

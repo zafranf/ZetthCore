@@ -17,6 +17,9 @@ Route::name('web.')->middleware(['site'])->group(function () {
     Route::get('login/{driver}', 'Auth\LoginController@redirectToProvider')->name('login.driver');
     Route::get('login/{driver}/callback', 'Auth\LoginController@handleProviderCallback')->name('login.driver.callback');
 
+    /* image cache */
+    Route::get(config('imagecache.route') . '/{template}/{file}', 'Site\MainController@imache')->where('file', '.*')->name('imache');
+
     /* Auth */
     Route::middleware(['throttle:' . (config('app.debug') ? 60 : 10) . ',1'])->group(function () {
         Route::post('register', 'Auth\RegisterController@register')->name('register.post');

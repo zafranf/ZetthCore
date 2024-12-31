@@ -1,4 +1,5 @@
 <?php
+
 namespace ZetthCore\Http\Middleware;
 
 use Closure;
@@ -61,10 +62,8 @@ class VisitorLogMiddleware
         $id = md5(session()->getId() . $ip . $page . $referrer . $ua . $browser . $browser_version . $device . $device_name . $os . $os_version . $is_robot . $robot_name . $time . $site_id);
 
         /* save log */
-        \ZetthCore\Models\VisitorLog::updateOrCreate(
-            [
-                'id' => $id,
-            ],
+        \ZetthCore\Jobs\VisitorLog::dispatch(
+            $id,
             [
                 'ip' => $ip,
                 'page' => $page,
@@ -138,5 +137,4 @@ class VisitorLogMiddleware
             'count' => \DB::raw('count+1'),
         ]);
     }
-
 }

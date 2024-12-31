@@ -17,7 +17,7 @@ class Like extends Base
      * @param  \Illuminate\Database\Eloquent\Builder  $query
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    protected function setKeysForSaveQuery(Builder $query)
+    /* protected function setKeysForSaveQuery(Builder $query)
     {
         $keys = $this->getKeyName();
         if (!is_array($keys)) {
@@ -29,7 +29,7 @@ class Like extends Base
         }
 
         return $query;
-    }
+    } */
 
     /**
      * Get the primary key value for a save query.
@@ -37,7 +37,7 @@ class Like extends Base
      * @param mixed $keyName
      * @return mixed
      */
-    protected function getKeyForSaveQuery($keyName = null)
+    /* protected function getKeyForSaveQuery($keyName = null)
     {
         if (is_null($keyName)) {
             $keyName = $this->getKeyName();
@@ -48,5 +48,5 @@ class Like extends Base
         }
 
         return $this->getAttribute($keyName);
-    }
+    } */
 }

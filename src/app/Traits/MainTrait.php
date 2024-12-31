@@ -14,15 +14,19 @@ trait MainTrait
         /* Filter password */
         $sensor = 'xxx';
         if (\Request::post('password')) {
+            $password = \Request::post('password');
             \Request::merge(['password' => $sensor]);
         }
         if (\Request::post('password_confirmation')) {
+            $passwordConfirmation = \Request::post('password_confirmation');
             \Request::merge(['password_confirmation' => $sensor]);
         }
         if (\Request::post('user_password')) {
+            $userPassword = \Request::post('user_password');
             \Request::merge(['user_password' => $sensor]);
         }
         if (\Request::post('_token')) {
+            $_token = \Request::post('_token');
             \Request::merge(['_token' => $sensor]);
         }
 
@@ -33,18 +37,29 @@ trait MainTrait
             return true;
         }
 
-        $act = new \ZetthCore\Models\ActivityLog;
-        $act->description = $description;
-        $act->method = \Request::method();
-        $act->path = \Request::path() ?? '-';
-        $act->ip = getUserIP();
-        $act->headers = json_encode(\Request::header());
-        $act->get = json_encode(\Request::query());
-        $act->post = json_encode(\Request::post());
-        $act->files = json_encode($_FILES);
-        $act->user_id = $user->id ?? (app('user')->id ?? null);
-        $act->site_id = app('site')->id;
-        $act->save();
+        /* run job */
+        \ZetthCore\Jobs\ActivityLog::dispatch($description, $user ?? app('user'), [
+            'method' => \Request::method(),
+            'path' => \Request::path(),
+            'header' => \Request::header(),
+            'query' => \Request::query(),
+            'post' => $_POST,
+            'files' => $_FILES,
+        ], $_SERVER);
+
+        /* rollback values */
+        if (\Request::post('password')) {
+            \Request::merge(['password' => $password]);
+        }
+        if (\Request::post('password_confirmation')) {
+            \Request::merge(['password_confirmation' => $passwordConfirmation]);
+        }
+        if (\Request::post('user_password')) {
+            \Request::merge(['user_password' => $userPassword]);
+        }
+        if (\Request::post('_token')) {
+            \Request::merge(['_token' => $_token]);
+        }
     }
 
     /**
@@ -230,7 +245,7 @@ trait MainTrait
                 /* gabungkan semua gambar menjadi satu */
                 $compimage->insert($bgimage, 'center');
                 $compimage->insert($mainimage, 'center');
-                $compimage->save($save, 70);
+                $compimage->save($save, 75);
 
                 /* destroy */
                 $mainimage->destroy();
@@ -240,7 +255,7 @@ trait MainTrait
 
             /* jika dimensinya sesuai, langsung pakai gambar utama */ else {
                 /* clone gambar utama untuk dijadikan output */
-                $mainimage->save($save, 70);
+                $mainimage->save($save, 75);
                 $mainimage->destroy();
             }
         }

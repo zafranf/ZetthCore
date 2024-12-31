@@ -36,15 +36,15 @@ class Kernel extends HttpKernel
             \App\Http\Middleware\VerifyCsrfToken::class,
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
 
-            \RenatoMarinho\LaravelPageSpeed\Middleware\InlineCss::class,
-            \RenatoMarinho\LaravelPageSpeed\Middleware\ElideAttributes::class,
-            \RenatoMarinho\LaravelPageSpeed\Middleware\InsertDNSPrefetch::class,
-            \RenatoMarinho\LaravelPageSpeed\Middleware\RemoveComments::class,
-            \RenatoMarinho\LaravelPageSpeed\Middleware\TrimUrls::class,
-            \RenatoMarinho\LaravelPageSpeed\Middleware\RemoveQuotes::class,
-            \RenatoMarinho\LaravelPageSpeed\Middleware\CollapseWhitespace::class,
+            // \RenatoMarinho\LaravelPageSpeed\Middleware\InlineCss::class,
+            // \RenatoMarinho\LaravelPageSpeed\Middleware\ElideAttributes::class,
+            // \RenatoMarinho\LaravelPageSpeed\Middleware\InsertDNSPrefetch::class,
+            // \RenatoMarinho\LaravelPageSpeed\Middleware\RemoveComments::class,
+            // \RenatoMarinho\LaravelPageSpeed\Middleware\TrimUrls::class,
+            // \RenatoMarinho\LaravelPageSpeed\Middleware\RemoveQuotes::class,
+            // \RenatoMarinho\LaravelPageSpeed\Middleware\CollapseWhitespace::class,
 
-            \App\Http\Middleware\TrimDomains::class,
+            // \App\Http\Middleware\TrimDomains::class,
         ],
 
         'api' => [
@@ -60,7 +60,7 @@ class Kernel extends HttpKernel
      *
      * @var array
      */
-    protected $routeMiddleware = [
+    protected $middlewareAliases = [
         'auth' => \App\Http\Middleware\Authenticate::class,
         'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
         'bindings' => \Illuminate\Routing\Middleware\SubstituteBindings::class,

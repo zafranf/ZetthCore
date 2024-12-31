@@ -1,4 +1,5 @@
 <?php
+
 namespace ZetthCore\Http\Controllers;
 
 use DB;
@@ -179,7 +180,7 @@ class AjaxController extends AdminController
         return $arr_diff;
     }
 
-    public function pageview_daily($visits = [], $start, $format = 'Y-m-d H')
+    public function pageview_daily($visits = [], $start = null, $format = 'Y-m-d H')
     {
         $time = '';
         $timee = '';
@@ -213,7 +214,7 @@ class AjaxController extends AdminController
         return $arr_diff;
     }
 
-    public function pageview_monthly($visits = [], $start, $format = 'Y-m-d H')
+    public function pageview_monthly($visits = [], $start = null, $format = 'Y-m-d H')
     {
         $time = '';
         $timee = '';
@@ -247,7 +248,7 @@ class AjaxController extends AdminController
         return $arr_diff;
     }
 
-    public function pageview_yearly($visits = [], $start, $format = 'Y-m-d H')
+    public function pageview_yearly($visits = [], $start = null, $format = 'Y-m-d H')
     {
         $time = '';
         $timee = '';

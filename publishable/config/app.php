@@ -1,5 +1,8 @@
 <?php
 
+use Illuminate\Support\Facades\Facade;
+use Illuminate\Support\ServiceProvider;
+
 return [
 
     /*
@@ -39,7 +42,7 @@ return [
     |
      */
 
-    'debug' => env('APP_DEBUG', false),
+    'debug' => (bool) env('APP_DEBUG', false),
 
     /*
     |--------------------------------------------------------------------------
@@ -53,6 +56,7 @@ return [
      */
 
     'url' => env('APP_URL', 'http://localhost'),
+    'short_url' => env('APP_SHORTURL', 'http://loc.al'),
     'domain' => env('APP_DOMAIN', 'localhost'),
     'webmail_url' => env('APP_WEBMAIL_URL', '/webmail'),
 
@@ -69,7 +73,7 @@ return [
     |
      */
 
-    'timezone' => 'UTC',
+    'timezone' => env('APP_TIMEZONE', 'UTC'),
 
     /*
     |--------------------------------------------------------------------------
@@ -95,7 +99,7 @@ return [
     |
      */
 
-    'fallback_locale' => 'en',
+    'fallback_locale' => env('APP_FALLBACK_LOCALE', 'en'),
 
     /*
     |--------------------------------------------------------------------------
@@ -108,7 +112,7 @@ return [
     |
      */
 
-    'faker_locale' => 'en_US',
+    'faker_locale' => env('APP_FAKER_LOCALE', 'en_US'),
 
     /*
     |--------------------------------------------------------------------------
@@ -136,7 +140,7 @@ return [
     |
      */
 
-    'providers' => [
+    'providers' => ServiceProvider::defaultProviders()->merge([
 
         /*
          * Laravel Framework Service Providers...
@@ -179,7 +183,7 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
 
-    ],
+    ])->toArray(),
 
     /*
     |--------------------------------------------------------------------------
@@ -192,7 +196,7 @@ return [
     |
      */
 
-    'aliases' => [
+    'aliases' => Facade::defaultAliases()->merge([
 
         'App' => Illuminate\Support\Facades\App::class,
         'Arr' => Illuminate\Support\Arr::class,
@@ -230,7 +234,7 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
 
-    ],
+    ])->toArray(),
 
     /**
      * Mask values
@@ -253,8 +257,8 @@ return [
      */
     'admin' => [
         'route' => env('ADMIN_ROUTE', 'path'), // path|subdomain
-        'path' => env('ADMIN_PATH', 'manager'), // if admin_route = path
-        'subdomain' => env('ADMIN_SUBDOMAIN', 'manager'), // if admin_route = subdomain
+        'path' => env('ADMIN_PATH', 'manager'), // if admin.route = path
+        'subdomain' => env('ADMIN_SUBDOMAIN', 'manager'), // if admin.route = subdomain
     ],
 
 ];

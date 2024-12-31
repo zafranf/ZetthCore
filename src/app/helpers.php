@@ -79,10 +79,17 @@ if (!function_exists('getUserIP')) {
      *
      * @return string
      */
-    function getUserIP()
+    function getUserIP($server = null)
     {
+        $server = $server ?? $_SERVER;
+
+        /* check cli */
+        if (PHP_SAPI == 'cli') {
+            return 'cli';
+        }
+
         // cloudflare or forwarder or remote
-        return $_SERVER["HTTP_CF_CONNECTING_IP"] ?? ($_SERVER['HTTP_X_FORWARDED_FOR'] ?? $_SERVER['REMOTE_ADDR']);
+        return $server["HTTP_CF_CONNECTING_IP"] ?? ($server['HTTP_X_FORWARDED_FOR'] ?? ($server['REMOTE_ADDR']));
     }
 }
 
@@ -164,17 +171,17 @@ if (!function_exists('getAccessButtons')) {
         $newname = implode(".", $sliced);
 
         if ($btn == 'add') {
-            if ($user->can($newname . '.create')) {
+            if ($user->isAbleTo($newname . '.create')) {
                 echo '<a href="' . _url($url . '/create') . '" class="btn btn-default pull-right" data-toggle="tooltip" data-original-title="Tambah Data"><i class="fa fa-plus"></i>&nbsp;' . $add . '</a>';
             }
         } else {
-            if ($user->can($newname . '.read')) {
+            if ($user->isAbleTo($newname . '.read')) {
                 echo "actions += '&nbsp;<a href=\"' + url + '\" class=\"btn btn-default btn-xs\" data-toggle=\"tooltip\" data-original-title=\"Detail\"><i class=\"fa fa-eye\"></i></a>';";
             }
-            if ($user->can($newname . '.update')) {
+            if ($user->isAbleTo($newname . '.update')) {
                 echo "actions += '&nbsp;<a href=\"' + url + '/edit\" class=\"btn btn-default btn-xs\" data-toggle=\"tooltip\" data-original-title=\"Edit\"><i class=\"fa fa-edit\"></i></a>';";
             }
-            if ($user->can($newname . '.delete')) {
+            if ($user->isAbleTo($newname . '.delete')) {
                 echo "actions += '&nbsp;<a href=\"#\" onclick=\"' + del + '\" class=\"btn btn-default btn-xs\" data-toggle=\"tooltip\" data-original-title=\"Hapus\"><i class=\"fa fa-trash\"></i></a>';";
             }
         }
@@ -354,33 +361,33 @@ if (!function_exists('getTimezone')) {
             return $timezone;
         } else
 
-        /* get config site timezone */
-        if ($type == 'site') {
-            if (isset(app('site')->timezone)) {
-                if ((app()->bound('site') || class_exists('site'))) {
-                    $timezone = app('site')->timezone;
+            /* get config site timezone */
+            if ($type == 'site') {
+                if (isset(app('site')->timezone)) {
+                    if ((app()->bound('site') || class_exists('site'))) {
+                        $timezone = app('site')->timezone;
 
-                    return $timezone;
+                        return $timezone;
+                    }
+                } else {
+                    /* if no user login, default use env timezone */
+                    return getTimezone('env');
                 }
-            } else {
-                /* if no user login, default use env timezone */
-                return getTimezone('env');
-            }
-        } else
+            } else
 
-        /* get user timezone */
-        if ($type == 'user') {
-            if (isset(app('user')->detail)) {
-                if ((app()->bound('user') || class_exists('user'))) {
-                    $timezone = app('user')->detail->timezone;
+                /* get user timezone */
+                if ($type == 'user') {
+                    if (isset(app('user')->timezone)) {
+                        if ((app()->bound('user') || class_exists('user'))) {
+                            $timezone = app('user')->timezone;
 
-                    return $timezone;
+                            return $timezone;
+                        }
+                    } else {
+                        /* if no user login, default use site timezone */
+                        return getTimezone('site');
+                    }
                 }
-            } else {
-                /* if no user login, default use site timezone */
-                return getTimezone('site');
-            }
-        }
 
         return $timezone;
     }
@@ -412,7 +419,7 @@ if (!function_exists('menuFilterPermission')) {
 
         /* filter by permission */
         $menus = $menus->filter(function ($menu) use ($user) {
-            return $user->can($menu->route_name);
+            return $user->isAbleTo($menu->route_name);
         });
 
         /* filter submenu by permission */

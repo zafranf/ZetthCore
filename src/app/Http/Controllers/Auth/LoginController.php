@@ -66,13 +66,14 @@ class LoginController extends AdminController
      */
     public function login(Request $r)
     {
+        $password = $r->input('password');
         /* save activity */
-        $this->activityLog('<b>' . $r->input($this->username(true)) . '</b> mencoba masuk halaman admin');
+        $this->activityLog('<b>' . $r->input($this->username(true)) . '</b> mencoba masuk ke halaman admin');
 
-        /* merge encrypted username and password */
+        /* merge password */
         $r->merge([
             $this->username() => _encrypt($r->input($this->username())),
-            'password' => $r->input('password') . \Str::slug(config('app.key')),
+            'password' => $password . \Str::slug(config('app.key')),
         ]);
 
         return $this->loginTrait($r);
@@ -94,7 +95,7 @@ class LoginController extends AdminController
         ]);
 
         throw ValidationException::withMessages([
-            $this->username() => [trans('auth.failed')],
+            $this->username() => [trans('auth.failed-admin')],
         ]);
     }
 
@@ -135,7 +136,7 @@ class LoginController extends AdminController
         $this->clearLoginAttempts($r);
 
         return $this->authenticated($r, $this->guard()->user())
-        ?: redirect()->intended($this->redirectPath());
+            ?: redirect()->intended($this->redirectPath());
     }
 
     /**
@@ -150,8 +151,13 @@ class LoginController extends AdminController
         if (!app('user')->is_admin) {
             \Auth::logout();
 
+            /* rollback, merge decrypted username */
+            $r->merge([
+                $this->username() => _decrypt($r->input($this->username())),
+            ]);
+
             return redirect(adminPath() . '/login')->withInput()->withErrors([
-                $this->username() => trans('auth.failed'),
+                $this->username() => trans('auth.failed-notadmin'),
             ]);
         }
 

@@ -3,7 +3,7 @@
 namespace ZetthCore\Models;
 
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Laratrust\Models\LaratrustRole;
+use Laratrust\Models\Role as LaratrustRole;
 
 class Role extends LaratrustRole
 {
