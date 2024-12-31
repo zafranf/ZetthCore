@@ -245,7 +245,7 @@ trait MainTrait
                 /* gabungkan semua gambar menjadi satu */
                 $compimage->insert($bgimage, 'center');
                 $compimage->insert($mainimage, 'center');
-                $compimage->save($save, 70);
+                $compimage->save($save, 75);
 
                 /* destroy */
                 $mainimage->destroy();
@@ -255,7 +255,7 @@ trait MainTrait
 
             /* jika dimensinya sesuai, langsung pakai gambar utama */ else {
                 /* clone gambar utama untuk dijadikan output */
-                $mainimage->save($save, 70);
+                $mainimage->save($save, 75);
                 $mainimage->destroy();
             }
         }
