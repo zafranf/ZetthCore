@@ -2,6 +2,8 @@
 
 namespace ZetthCore\Traits;
 
+use Intervention\Image\Laravel\Facades\Image;
+
 trait MainTrait
 {
     public function getTemplate()
@@ -139,7 +141,7 @@ trait MainTrait
         }
 
         /* preparing image file */
-        $img = \Image::make($file);
+        $img = Image::make($file);
 
         /* save image */
         $saveas = $folder . '/' . ($name ?? ($filename . '.' . $ext));
@@ -212,7 +214,7 @@ trait MainTrait
 
             /* clone objek gambar dasar untuk dijadikan gambar utama,
             lalu ubah ukurannya */
-            $mainimage = \Image::make($file);
+            $mainimage = Image::make($file);
             $mainimage->resize($config['w'], $config['h'], function ($constraint) {
                 $constraint->aspectRatio();
             });
@@ -224,7 +226,7 @@ trait MainTrait
             kita bisa membuat gambar latar blur untuk mengisi ruang kosong di sekitar gambar */
             if ($r != $or) {
                 /* buat kanvas baru */
-                $compimage = \Image::canvas($config['w'], $config['h'], '#fff');
+                $compimage = Image::canvas($config['w'], $config['h'], '#fff');
                 $compimage->encode('jpg');
 
                 /* Ambil dimensi baru dari gambar utama yang telah diubah ukurannya */
@@ -237,7 +239,7 @@ trait MainTrait
 
                 /* Lalu clone gambar dasar untuk dijadikan gambar latar,
                 ubah ukurannya, lalu blur dan set opacity-nya */
-                $bgimage = \Image::make($file);
+                $bgimage = Image::make($file);
                 $bgimage->resize($bgw, $bgh);
                 $bgimage->blur($config['b']);
                 $bgimage->opacity(50);

@@ -2,7 +2,7 @@
 
 namespace ZetthCore\Vendor\ImageCache;
 
-use Intervention\Image\Image;
+use Intervention\Image\Laravel\Facades\Image;
 
 class Base
 {
@@ -22,7 +22,7 @@ class Base
         /* check ratio */
         if ($ratio != $ratio_real) {
             /* create background canvas */
-            $canvas = \Image::canvas($width, $height, '#fff');
+            $canvas = Image::canvas($width, $height, '#fff');
 
             /* set background size */
             $bgw = $ratio_real < $ratio ? $width : ceil($height * $ratio_real);
