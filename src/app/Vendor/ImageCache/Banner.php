@@ -3,7 +3,7 @@
 namespace ZetthCore\Vendor\ImageCache;
 
 use Intervention\Image\Filters\FilterInterface;
-use Intervention\Image\Image;
+use Intervention\Image\Laravel\Facades\Image;
 
 class Banner implements FilterInterface
 {
