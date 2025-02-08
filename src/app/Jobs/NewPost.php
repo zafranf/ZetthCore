@@ -52,7 +52,8 @@ class NewPost implements ShouldQueue
                         $sent[] = $user->email;
 
                         /* delay */
-                        sleep(1 / config('mail.mps', 1));
+                        $mps = 1 / config('mail.mps', 1) * 1000000;
+                        usleep($mps);
                     }
                 }
             }
@@ -71,7 +72,8 @@ class NewPost implements ShouldQueue
                         $sent[] = $subscriber->email;
 
                         /* delay */
-                        sleep(1 / config('mail.mps', 1));
+                        $mps = 1 / config('mail.mps', 1) * 1000000;
+                        usleep($mps);
                     }
                 }
             }
