@@ -8,7 +8,10 @@ class Post extends Base
 {
     use SoftDeletes;
 
-    protected $dates = ['published_at', 'deleted_at'];
+    protected $casts = [
+        'published_at' => 'datetime',
+        'deleted_at' => 'datetime',
+    ];
     public $appends = ['published_string'];
 
     public function terms()

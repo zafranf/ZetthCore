@@ -7,7 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 class Site extends Model
 {
     protected $dateFormat = 'Y-m-d H:i:s.u';
-    protected $dates = ['active_at'];
+    protected $casts = [
+        'active_at' => 'datetime',
+    ];
     public $appends = ['lang'];
 
     public function socmed()

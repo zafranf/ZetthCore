@@ -4,7 +4,9 @@ namespace ZetthCore\Models;
 
 class UserVerification extends Base
 {
-    protected $dates = ['verified_at'];
+    protected $casts = [
+        'verified_at' => 'datetime',
+    ];
     protected $primaryKey = 'user_id';
     protected $guarded = [];
     public $incrementing = false;
