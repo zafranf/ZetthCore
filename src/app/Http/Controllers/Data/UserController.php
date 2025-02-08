@@ -373,10 +373,10 @@ class UserController extends AdminController
     {
         /* hapus role sebelumnya */
         foreach ($user->roles as $role) {
-            $user->detachRole($role->id);
+            $user->removeRole($role->id);
         }
 
         /* tambah role baru */
-        $user->attachRole($newRole);
+        $user->addRole($newRole);
     }
 }
