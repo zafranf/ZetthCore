@@ -8,7 +8,9 @@ class PasswordReset extends Base
     protected $fillable = [
         'email', 'token', 'created_at',
     ];
-    protected $dates = ['created_at'];
+    protected $casts = [
+        'created_at' => 'datetime',
+    ];
     public $timestamps = false;
     public $incrementing = false;
 
