@@ -23,7 +23,7 @@ Route::get('/test/connection', function () {
 /* template admin route */
 Route::get('/themes/admin/{path}', $prefix . '\AdminController@themes')->where('path', '.*')->name('themes.admin');
 
-Route::middleware(['guest', 'visitor_log'])->group(function () use ($prefix) {
+Route::middleware(['guest'])->group(function () use ($prefix) {
     Route::get('/login', $prefix . '\Auth\LoginController@showLoginForm')->name('login.form');
     Route::get('/forgot-password', function () {
         $route = route('web.forgot.password');
@@ -201,7 +201,6 @@ Route::middleware('auth')->group(function () use ($prefix) {
                 '/visitors' => $prefix . '\Log\VisitorController',
             ]);
         });
-
     });
 });
 
