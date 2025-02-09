@@ -56,7 +56,7 @@ Route::domain(config('app.domain'))->group(function () {
         });
 
         /* Log all visits */
-        Route::middleware(['visitor_log'])->group(function () {
+        Route::middleware([])->group(function () {
             /* check login status */
             Route::middleware(['guest'])->group(function () {
                 Route::get(config('path.register'), 'Auth\LoginController@showRegistrationForm')->name('register');
@@ -105,7 +105,7 @@ Route::domain(config('app.domain'))->group(function () {
         }
 
         /* Log all visits */
-        Route::middleware(['visitor_log'])->group(function () {
+        Route::middleware([])->group(function () {
             /* Page Route */
             Route::get('{slug}', 'Site\PageController@index')->where('slug', '.*')->name('page');
         });
