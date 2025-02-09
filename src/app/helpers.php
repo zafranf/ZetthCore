@@ -222,9 +222,9 @@ if (!function_exists('getImage')) {
             $image = str_replace('assets/images/', '', $image);
             $mtime = filemtime($file) / getDatabasePort();
 
-            return _url('imache/' . $template . '/' . $image) . '?v=' . $mtime;
+            return getSiteURL('imache/' . $template . '/' . $image) . '?v=' . $mtime;
         } else {
-            return _url($default ?? adminPath() . '/themes/admin/AdminSC/images/no-image.png');
+            return getSiteURL($default ?? adminPath() . '/themes/admin/AdminSC/images/no-image.png');
         }
 
         return null;
