@@ -77,7 +77,7 @@ trait MainTrait
         /* checking folder */
         if (!is_dir($folder)) {
             $folder = storage_path('app/public');
-            $folders = explode('/', trim($par['folder'], '/'));
+            $folders = explode('/', trim($path, '/'));
             foreach ($folders as $foldr) {
                 $folder .= '/' . $foldr;
                 if (!is_dir($folder)) {
@@ -90,11 +90,11 @@ trait MainTrait
         $filename = $file->getFileName();
         $type = $file->getClientMimeType();
         $ext = $file->getClientOriginalExtension();
-        $size = $file->getClientSize();
+        $size = $file->getSize();
 
         /* process upload */
         if (strpos($type, 'image') !== false) {
-            return $this->uploadImage($par);
+            return $this->uploadImage($file, $path, $name);
         } else {
             /* save file */
             $file->move($folder, ($name ?? ($filename . "." . $ext)));
@@ -137,20 +137,20 @@ trait MainTrait
             $filename = $file->getFileName();
             $type = $file->getClientMimeType();
             $ext = $file->getClientOriginalExtension();
-            $size = $file->getClientSize();
+            $size = $file->getSize();
         }
 
         /* preparing image file */
-        $img = Image::make($file);
+        $img = Image::read($file);
 
         /* save image */
         $saveas = $folder . '/' . ($name ?? ($filename . '.' . $ext));
         $img->save($saveas);
 
         /* image optimation */
-        if ($optimation) {
+        /* if ($optimation) {
             $this->uploadImageOptimation($par);
-        }
+        } */
 
         return $saveas;
     }
@@ -214,7 +214,7 @@ trait MainTrait
 
             /* clone objek gambar dasar untuk dijadikan gambar utama,
             lalu ubah ukurannya */
-            $mainimage = Image::make($file);
+            $mainimage = Image::read($file);
             $mainimage->resize($config['w'], $config['h'], function ($constraint) {
                 $constraint->aspectRatio();
             });
@@ -226,7 +226,7 @@ trait MainTrait
             kita bisa membuat gambar latar blur untuk mengisi ruang kosong di sekitar gambar */
             if ($r != $or) {
                 /* buat kanvas baru */
-                $compimage = Image::canvas($config['w'], $config['h'], '#fff');
+                $compimage = Image::create($config['w'], $config['h'], '#fff');
                 $compimage->encode('jpg');
 
                 /* Ambil dimensi baru dari gambar utama yang telah diubah ukurannya */
@@ -239,7 +239,7 @@ trait MainTrait
 
                 /* Lalu clone gambar dasar untuk dijadikan gambar latar,
                 ubah ukurannya, lalu blur dan set opacity-nya */
-                $bgimage = Image::make($file);
+                $bgimage = Image::read($file);
                 $bgimage->resize($bgw, $bgh);
                 $bgimage->blur($config['b']);
                 $bgimage->opacity(50);
