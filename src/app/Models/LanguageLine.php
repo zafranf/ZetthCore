@@ -14,11 +14,17 @@ class LanguageLine extends BaseLanguageLine
      *
      * @return void
      */
-    public static function boot()
+    public static function boot(): void
     {
         parent::boot();
 
         static::addGlobalScope(new SiteScope);
-    }
 
+        $flushGroupCache = function (self $languageLine) {
+            $languageLine->flushGroupCache();
+        };
+
+        static::saved($flushGroupCache);
+        static::deleted($flushGroupCache);
+    }
 }

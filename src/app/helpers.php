@@ -77,19 +77,34 @@ if (!function_exists('getUserIP')) {
      * Get user's real IP address
      * https://stackoverflow.com/a/13646735
      *
+     * Updated by suggest from ChatGPT
      * @return string
      */
     function getUserIP($server = null)
     {
         $server = $server ?? $_SERVER;
 
-        /* check cli */
-        if (PHP_SAPI == 'cli') {
-            return 'cli';
+        $ip = $server["HTTP_CF_CONNECTING_IP"]
+            ?? $server['HTTP_X_FORWARDED_FOR']
+            ?? $server['REMOTE_ADDR']
+            ?? (PHP_SAPI == 'cli' ? 'cli' : '-');
+
+        // force IPv4 only
+        if (filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4)) {
+            return $ip;
         }
 
-        // cloudflare or forwarder or remote
-        return $server["HTTP_CF_CONNECTING_IP"] ?? ($server['HTTP_X_FORWARDED_FOR'] ?? ($server['REMOTE_ADDR']));
+        // fallback: parse if X-Forwarded-For contains multiple IPs
+        if (str_contains($ip, ',')) {
+            foreach (explode(',', $ip) as $possible) {
+                $possible = trim($possible);
+                if (filter_var($possible, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4)) {
+                    return $possible;
+                }
+            }
+        }
+
+        return $ip;
     }
 }
 
