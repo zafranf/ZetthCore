@@ -46,7 +46,7 @@ trait MainTrait
             'header' => \Request::header(),
             'query' => \Request::query(),
             'post' =>  \Request::post(),
-            'files' => \Request::allFiles(),
+            'files' => $_FILES, //\Request::allFiles(), bawaah laravel gak bisa masuk jobs
         ], $_SERVER);
 
         /* rollback values */
