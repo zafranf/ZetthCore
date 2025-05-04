@@ -31,7 +31,12 @@
       let options = {
         "processing": true,
         "serverSide": true,
-        "ajax": ADMIN_URL + "/log/activities/data",
+        "ajax": {
+            url: ADMIN_URL + "/log/activities/data",
+            data: function (d) {
+                d.user_id = {{ request()->get('user_id') }};
+            }
+        },
         "pageLength": 20,
         "lengthMenu": [
           [10, 20, 50, 100, -1], 

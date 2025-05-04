@@ -144,11 +144,27 @@ class ActivityController extends AdminController
     public function datatable(Request $r)
     {
         /* get data */
-        $data = ActivityLog::select('id', 'method', 'ip', 'description', 'path', 'created_at', 'user_id')->orderBy('created_at', 'desc')->with('user');
+        $data = ActivityLog::select('id', 'method', 'ip', 'description', 'path', 'created_at', 'user_id')->orderBy('created_at', 'desc')->with('user:id,fullname');
 
         /* generate datatable */
         if ($r->ajax()) {
-            return $this->generateDataTable($data, ['description']);
+            // return $this->generateDataTable($data, ['description']);
+            return \DataTables::eloquent($data)->filter(function ($query) use ($r) {
+                $columns = ['description'];
+                $regex = $r->get('search')['value'];
+                if ($regex) {
+                    $query->where(function ($q) use ($columns, $regex) {
+                        foreach ($columns as $column) {
+                            $q->orWhere($column, 'like', '%' . strtolower($regex) . '%');
+                        }
+                    });
+                }
+                if ($r->get('user_id')) {
+                    $query->where('user_id', $r->get('user_id'));
+                }
+
+                return $query;
+            })->make();
         }
 
         abort(403);

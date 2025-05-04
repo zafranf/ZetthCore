@@ -352,8 +352,9 @@ class UserController extends AdminController
                         } else {
                             if ($column['data'] == 'name') {
                                 $query->orWhere('name', _encrypt($regex));
+                                $query->orWhere('fullname', _encrypt($regex));
                             } else {
-                                $query->orWhere(\DB::raw('LOWER(' . $column['data'] . ')'), 'like', '%' . strtolower($regex) . '%');
+                                $query->orWhere(\DB::raw('LOWER(' . $column['data'] . ')'), 'like', strtolower($regex) . '%');
                             }
                         }
                     }

@@ -19,8 +19,8 @@ class CreatePasswordResetsTable extends Migration
             $table->timestamp('created_at', 6)->nullable();
             $table->integer('site_id')->unsigned()->default(1);
 
-            $table->foreign('email')->references('email')->on('users')
-                ->onUpdate('cascade')->onDelete('cascade');
+            /* $table->foreign('email')->references('email')->on('users')
+                ->onUpdate('cascade')->onDelete('cascade'); */
             $table->foreign('site_id')->references('id')->on('sites')
                 ->onUpdate('cascade')->onDelete('cascade');
         });
