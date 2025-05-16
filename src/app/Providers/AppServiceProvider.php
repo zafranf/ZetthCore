@@ -27,6 +27,9 @@ class AppServiceProvider extends ServiceProvider
                 \ZetthCore\Console\Commands\Reinstall::class,
                 \ZetthCore\Console\Commands\Link::class,
                 \ZetthCore\Console\Commands\Site::class,
+                \ZetthCore\Console\Commands\CheckLogPartitionStatus::class,
+                \ZetthCore\Console\Commands\ExtendLogPartitions::class,
+                \ZetthCore\Console\Commands\PruneLogPartitions::class,
             ]);
         } else {
             /* check config */
@@ -58,7 +61,7 @@ class AppServiceProvider extends ServiceProvider
         });
 
         /* set locale */
-        \App::setLocale(app('user')->lang ?? (app('site')->lang ?? 'id'));
+        \App::setLocale(app('user')->lang ?? (app('site')->lang ?? 'en'));
 
         /* set config template */
         $theme = $this->getTemplate();
@@ -89,6 +92,30 @@ class AppServiceProvider extends ServiceProvider
         /* check site status */
         $this->callAfterResolving(Schedule::class, function (Schedule $schedule) {
             $schedule->command('site:check-status')->everyMinute();
+
+            // Prune visitor_logs setiap tanggal 1 jam 01:00
+            $schedule->command('zetth:prune-partition visitor_logs --months=12')
+                ->monthlyOn(1, '1:00')
+                ->runInBackground()
+                ->withoutOverlapping();
+
+            // Extend visitor_logs setiap tanggal 1 jam 01:01
+            $schedule->command('zetth:extend-partition visitor_logs --years=1')
+                ->yearlyOn(12, 31, '01:01')
+                ->runInBackground()
+                ->withoutOverlapping();
+
+            // Prune activity_logs setiap tanggal 1 jam 01:10
+            $schedule->command('zetth:prune-partition activity_logs --months=12')
+                ->monthlyOn(1, '1:10')
+                ->runInBackground()
+                ->withoutOverlapping();
+
+            // Extend activity_logs setiap tanggal 1 jam 01:11
+            $schedule->command('zetth:extend-partition activity_logs --years=1')
+                ->yearlyOn(12, 31, '01:11')
+                ->runInBackground()
+                ->withoutOverlapping();
         });
 
         /* force https */

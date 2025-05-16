@@ -28,10 +28,23 @@
   {!! _admin_js(adminPath() . '/themes/admin/AdminSC/plugins/DataTables/1.10.12/js/jquery.dataTables.min.js') !!}
   <script>
     $(document).ready(function() {
+      let currentXHR = null;
       let options = {
         "processing": true,
         "serverSide": true,
-        "ajax": ADMIN_URL + "/log/visitors/data",
+        "ajax": function (data, callback, settings) {
+          if (currentXHR) currentXHR.abort();
+
+          data.is_robot = '{{ request()->get('is_robot') }}';
+          data.from = '{{ request()->get('from') }}';
+          data.to = '{{ request()->get('to') }}';
+          currentXHR = $.ajax({
+            url: ADMIN_URL + "/log/visitors/data",
+            data: data,
+            timeout: 5000,
+            success: callback
+          });
+        },
         "pageLength": 20,
         "lengthMenu": [
           [10, 20, 50, 100, -1], 

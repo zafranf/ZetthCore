@@ -339,29 +339,11 @@ class UserController extends AdminController
         }
 
         /* get data */
-        $data = User::select('id', 'name', 'fullname', 'image', 'email', 'status')->where($whrRole)->orderBy('fullname');
+        $data = User::select('id', 'name', 'fullname', 'image', 'email', 'status', \DB::raw('created_at as tanggal'))->where($whrRole);
 
         /* generate datatable */
         if ($r->ajax()) {
-            return \DataTables::eloquent($data)->filter(function ($query) use ($r) {
-                $regex = $r->get('search')['value'];
-                if ($regex) {
-                    foreach ($r->input('columns') as $column) {
-                        if (filter_var($regex, FILTER_VALIDATE_EMAIL)) {
-                            $query->orWhere('email', _encrypt($regex));
-                        } else {
-                            if ($column['data'] == 'name') {
-                                $query->orWhere('name', _encrypt($regex));
-                                $query->orWhere('fullname', _encrypt($regex));
-                            } else {
-                                $query->orWhere(\DB::raw('LOWER(' . $column['data'] . ')'), 'like', strtolower($regex) . '%');
-                            }
-                        }
-                    }
-
-                    return $query;
-                }
-            })->make();
+            return $this->generateDataTable($data, ['email', 'name', 'fullname']);
         }
 
         abort(403);

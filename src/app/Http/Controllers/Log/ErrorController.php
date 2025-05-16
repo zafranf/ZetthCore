@@ -10,6 +10,7 @@ class ErrorController extends AdminController
 {
     private $current_url;
     private $page_title;
+    private $log_viewer;
 
     /**
      * Constructor
@@ -61,6 +62,13 @@ class ErrorController extends AdminController
             return $early_return;
         }
 
+        $limit = (int) $r->get('limit', 10000);
+        $page = max((int) $r->get('page', 1), 1);
+        $offset = ($page - 1) * $limit;
+        $logs = $this->log_viewer->all();
+        $total = count($logs);
+        $logs = array_slice($logs, $offset, $limit);
+
         /* set variable for view */
         $data = [
             'current_url' => $this->current_url,
@@ -68,13 +76,15 @@ class ErrorController extends AdminController
             'page_title' => $this->page_title,
             'page_subtitle' => 'Daftar Galat',
 
-            'logs' => $this->log_viewer->all(),
             'folders' => $this->log_viewer->getFolders(),
             'current_folder' => $this->log_viewer->getFolderName(),
             'folder_files' => $folderFiles,
             'files' => $this->log_viewer->getFiles(true),
             'current_file' => $this->log_viewer->getFileName(),
+            'logs' => $logs,
             'standardFormat' => true,
+            'next_offset' => $offset + $limit,
+            'has_more' => ($offset + $limit) < $total,
         ];
 
         if ($r->wantsJson()) {
@@ -177,8 +187,8 @@ class ErrorController extends AdminController
             return $this->redirect($r->url());
         } elseif ($r->has('delall')) {
             $files = ($this->log_viewer->getFolderName())
-            ? $this->log_viewer->getFolderFiles(true)
-            : $this->log_viewer->getFiles(true);
+                ? $this->log_viewer->getFolderFiles(true)
+                : $this->log_viewer->getFiles(true);
             foreach ($files as $file) {
                 app('files')->delete($this->log_viewer->pathToLogFile($file));
             }

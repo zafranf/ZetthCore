@@ -27,15 +27,34 @@
 @push('scripts')
   {!! _admin_js(adminPath() . '/themes/admin/AdminSC/plugins/DataTables/1.10.12/js/jquery.dataTables.min.js') !!}
   <script>
+    function debounce(fn, delay) {
+      let timeout;
+      return function () {
+        clearTimeout(timeout);
+        timeout = setTimeout(() => {
+          fn.apply(this, arguments);
+        }, delay);
+      };
+    }
+
     $(document).ready(function() {
+      let currentXHR = null;
       let options = {
         "processing": true,
         "serverSide": true,
-        "ajax": {
-            url: ADMIN_URL + "/log/activities/data",
-            data: function (d) {
-                d.user_id = {{ request()->get('user_id') }};
-            }
+        "ajax": function (data, callback, settings) {
+          if (currentXHR) currentXHR.abort();
+
+          data.club_id = '{{ request()->get('club_id') }}';
+          data.user_id = '{{ request()->get('user_id') }}';
+          data.from = '{{ request()->get('from') }}';
+          data.to = '{{ request()->get('to') }}';
+          currentXHR = $.ajax({
+            url: ADMIN_URL + '/log/activities/data',
+            data: data,
+            timeout: 5000,
+            success: callback
+          });
         },
         "pageLength": 20,
         "lengthMenu": [
@@ -66,7 +85,7 @@
           "data": 'description',
           "sortable": false,
           "render": function (data, type, row, meta) {
-            return data.replace('[~name]', '<b>'+ (row.user != null ? row.user.fullname : '-' )+'</b>');
+            return data.replace('[~name]', '<b>'+ (row.user != null ? row.user.fullname : '-' )+'</b>').replace('[~page]', '<br>['+row.path+']');
           }
         }, {
           "targets": 4,
@@ -126,6 +145,11 @@
       @endif
 
       var table = $('#table-data').DataTable(options);
+      // $('#table-data_filter input')
+      //   .off() // remove default
+      //   .on('input', debounce(function () {
+      //     table.search(this.value).draw();
+      //   }, 300));
     });
   </script>
 @endpush

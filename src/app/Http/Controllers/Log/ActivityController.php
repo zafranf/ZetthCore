@@ -143,28 +143,26 @@ class ActivityController extends AdminController
      */
     public function datatable(Request $r)
     {
+        $from = $r->get('from') ?? now()->subDays(7);
+        $to = $r->get('to');
+        if ($from) {
+            $r->merge([
+                'created_at' => $to ? [$from, $to] : $from,
+            ]);
+        }
+
         /* get data */
-        $data = ActivityLog::select('id', 'method', 'ip', 'description', 'path', 'created_at', 'user_id')->orderBy('created_at', 'desc')->with('user:id,fullname');
+        $data = ActivityLog::select('id', 'method', 'ip', 'description', 'path', 'created_at', 'user_id')
+            ->orderBy('created_at', 'desc')
+            ->with('user:id,fullname');
 
         /* generate datatable */
         if ($r->ajax()) {
-            // return $this->generateDataTable($data, ['description']);
-            return \DataTables::eloquent($data)->filter(function ($query) use ($r) {
-                $columns = ['description'];
-                $regex = $r->get('search')['value'];
-                if ($regex) {
-                    $query->where(function ($q) use ($columns, $regex) {
-                        foreach ($columns as $column) {
-                            $q->orWhere($column, 'like', '%' . strtolower($regex) . '%');
-                        }
-                    });
-                }
-                if ($r->get('user_id')) {
-                    $query->where('user_id', $r->get('user_id'));
-                }
-
-                return $query;
-            })->make();
+            return $this->generateDataTable($data, ['description', 'path'], [
+                'user_id' => 'equal',
+                'club_id' => 'equal',
+                'created_at' => $from && $to ? 'between' : 'gte',
+            ]);
         }
 
         abort(403);

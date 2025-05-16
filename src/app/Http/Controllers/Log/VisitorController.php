@@ -127,12 +127,29 @@ class VisitorController extends AdminController
      */
     public function datatable(Request $r)
     {
+        $from = $r->get('from') ?? now()->subDays(7);
+        $to = $r->get('to');
+        if ($from) {
+            $r->merge([
+                'updated_at' => $to ? [$from, $to] : $from,
+            ]);
+        }
+
         /* get data */
-        $data = VisitorLog::select('ip', 'page', \DB::raw("if(referral='', '-', referral) as referral"), 'count', 'updated_at')->orderBy('updated_at', 'desc');
+        $data = VisitorLog::select('ip', 'page', \DB::raw("if(referral='', '-', referral) as referral"), 'count', 'updated_at')
+            ->orderBy('updated_at', 'desc');
 
         /* generate datatable */
         if ($r->ajax()) {
-            return $this->generateDataTable($data);
+            return $this->generateDataTable($data, [
+                'page',
+                'browser',
+                'device',
+                'os',
+            ], [
+                'is_robot' => 'equal',
+                'updated_at' => $from && $to ? 'between' : 'gte',
+            ]);
         }
 
         abort(403);

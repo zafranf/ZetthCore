@@ -128,13 +128,12 @@ class VisitorLogMiddleware
     private function saveInterm($host, $keyword, $post_id)
     {
         /* save keyword */
-        \App\Models\IntermData::updateOrCreate([
+        \App\Models\IntermData::create([
             'host' => $host,
             'keyword' => $keyword,
             'post_id' => $post_id ?? null,
             'site_id' => app('site')->id,
-        ], [
-            'count' => \DB::raw('count+1'),
+            'count' => 1,
         ]);
     }
 }

@@ -42,7 +42,7 @@ trait MainTrait
         /* run job */
         \ZetthCore\Jobs\ActivityLog::dispatch($description, $user ?? app('user'), [
             'method' => \Request::method(),
-            'path' => \Request::path(),
+            'path' => \Request::getRequestUri(),
             'header' => \Request::header(),
             'query' => \Request::query(),
             'post' =>  \Request::post(),
@@ -272,7 +272,7 @@ trait MainTrait
      * @param [type] $collection
      * @return void
      */
-    protected function generateDataTable($builder, array $raw_columns = [])
+    /* protected function generateDataTable($builder, array $raw_columns = [])
     {
         $dt = \DataTables::eloquent($builder);
         if (!empty($raw_columns)) {
@@ -281,6 +281,91 @@ trait MainTrait
         $dt = $dt->make();
 
         return $dt;
+    } */
+
+    protected function generateDataTable($builder, array $searchable = [], array $filters = [], array $escapes = [])
+    {
+        $r = request();
+        // ambil semua kolom yang searchable
+        $searchableColumns = [];/* collect($r->input('columns'))
+            ->filter(fn($col) => $col['searchable'] === 'true' && $col['data'] !== '0' && $col['data'] !== 'created_at')
+            ->pluck('data')
+            ->toArray(); */
+        $searchable = array_merge($searchableColumns, $searchable);
+
+        return \DataTables::eloquent($builder)
+            ->filter(function ($query) use ($r, $searchable, $filters) {
+                $regex = $r->get('search')['value'];
+
+                // Global search
+                if ($regex && count($searchable)) {
+                    $query->where(function ($q) use ($searchable, $regex) {
+                        foreach ($searchable as $column) {
+                            if ($column == 'email') {
+                                $q->orWhere('email', _encrypt($regex));
+                            } else if ($column == 'name') {
+                                $q->orWhere('name', _encrypt($regex));
+                            } else {
+                                $q->orWhere($column, 'like', $regex . '%');
+                            }
+                        }
+                    });
+                }
+
+                // Extra filters
+                foreach ($filters as $field => $type) {
+                    $value = $r->get($field);
+
+                    if ($value === null || $value === '') {
+                        continue;
+                    }
+
+                    switch ($type) {
+                        case 'equal':
+                            $query->where($field, $value);
+                            break;
+
+                        case 'gt':
+                            $query->where($field, '>', $value);
+                            break;
+
+                        case 'gte':
+                            $query->where($field, '>=', $value);
+                            break;
+
+                        case 'lt':
+                            $query->where($field, '<', $value);
+                            break;
+
+                        case 'lte':
+                            $query->where($field, '<=', $value);
+                            break;
+
+                        case 'between':
+                            if (is_array($value) && count($value) === 2) {
+                                $query->whereBetween($field, $value);
+                            }
+                            break;
+
+                        case 'date_range':
+                            $from = $r->get("{$field}_from");
+                            $to = $r->get("{$field}_to");
+
+                            if ($from && $to) {
+                                $query->whereBetween($field, [$from, $to]);
+                            }
+                            break;
+
+                        case 'like':
+                            $query->where($field, 'like', "$value%");
+                            break;
+
+                            // add more cases as needed
+                    }
+                }
+            })
+            ->rawColumns($escapes) // Optional: if any column contains HTML
+            ->make();
     }
 
     public function checkDBConnection($driver = 'mysql')

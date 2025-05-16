@@ -10,6 +10,7 @@
 						<td>Nama Akses</td>
 						<td>Nama Lengkap</td>
 						<td>Status</td>
+						<td>Tanggal</td>
 					@else
 						<td>User</td>
 					@endif
@@ -42,6 +43,7 @@
           { "data": "name", "width": "250px" },
           { "data": "fullname" },
           { "data": "status", "width": "50px" },
+          { "data": "tanggal", "width": "50px" },
           { "width": "70px" },
         ],
         "columnDefs": [{
@@ -58,7 +60,7 @@
             return _get_status_text(data);
           }
         }, {
-          "targets": 4,
+          "targets": 5,
           "data": 'id',
           "sortable": false,
           "render": function (data, type, row, meta) {

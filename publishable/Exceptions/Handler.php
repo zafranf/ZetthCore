@@ -51,9 +51,15 @@ class Handler extends ExceptionHandler
 
         // $this->errorLog($e);
         if ($e->getMessage() != 'Unauthenticated.') {
+            $agent = new \Jenssegers\Agent\Agent();
+            $is_robot = $agent->isRobot() ? 'yes' : 'no';
+
             Log::debug([
                 'code' => $code,
                 'ip' => getUserIP(),
+                'is_robot' => $is_robot,
+                'robot_name' => bool($is_robot) ? $agent->robot() : null,
+                'browser' => $agent->browser() ?? null,
                 'user' => [
                     'id' => Auth::user()->id ?? null,
                     'name' => Auth::user()->fullname ?? null
@@ -102,7 +108,8 @@ class Handler extends ExceptionHandler
                             'page' => 'Beranda',
                             'icon' => '',
                             'url' => _url('/'),
-                        ], [
+                        ],
+                        [
                             'page' => $code,
                             'icon' => '',
                             'url' => '',
