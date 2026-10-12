@@ -284,7 +284,7 @@ if (!function_exists('getSiteConfig')) {
         if (isWWW($host)) {
             $host = str_replace('www.', '', $host);
         } else if (adminRoute() == 'subdomain' && isAdminSubdomain()) {
-            $host = str_replace(adminSubdomain() . '.', '', $host);
+            $host = config('app.domain');
         }
 
         return \Cache::remember('site_config.' . $host, getCacheTime(), function () use ($host) {
