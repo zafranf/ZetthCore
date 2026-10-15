@@ -54,6 +54,16 @@ class Handler extends ExceptionHandler
             $agent = new \Jenssegers\Agent\Agent();
             $is_robot = $agent->isRobot() ? 'yes' : 'no';
 
+            /* resolve the current user defensively: report() must never throw on its own, because
+               a throw here masks the exception that is actually being reported. There is no
+               authenticated user in console/queue context, and a guard may not be resolvable. */
+            $currentUser = null;
+            try {
+                $currentUser = Auth::user();
+            } catch (\Throwable $ex) {
+                // log context only - never let this hide the real exception
+            }
+
             Log::debug([
                 'code' => $code,
                 'ip' => getUserIP(),
@@ -61,8 +71,8 @@ class Handler extends ExceptionHandler
                 'robot_name' => bool($is_robot) ? $agent->robot() : null,
                 'browser' => $agent->browser() ?? null,
                 'user' => [
-                    'id' => Auth::user()->id ?? null,
-                    'name' => Auth::user()->fullname ?? null
+                    'id' => $currentUser?->id,
+                    'name' => $currentUser?->fullname
                 ],
                 'method' => Request::method(),
                 'url' => Request::fullUrl() ?? null,
