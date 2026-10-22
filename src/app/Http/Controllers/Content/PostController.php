@@ -48,7 +48,7 @@ class PostController extends AdminController
         $this->image_rule = [
             'nullable',
             'image',
-            'mimes:jpeg,png,svg,webp',
+            'mimes:jpeg,png,webp',
             'max:' . $this->weight,
             'dimensions:max_width=' . $this->width . ',max_height=' . $this->height . ',ratio=' . $this->ratio,
         ];
