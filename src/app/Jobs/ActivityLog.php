@@ -12,6 +12,42 @@ class ActivityLog implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
+    /**
+     * Header request yang layak disimpan untuk audit. Sisanya dibuang:
+     * cookie & authorization/php-auth-* berisi token/password, sedangkan
+     * cf-*, host, connection, accept-encoding hanya duplikat/derau
+     * (terukur: 75% byte headers berasal dari key yang tak dibutuhkan).
+     */
+    public const KEPT_HEADERS = [
+        'user-agent',
+        'referer',
+        'accept',
+        'accept-language',
+        'content-type',
+        'x-requested-with',
+        'origin',
+        'sec-ch-ua',
+    ];
+
+    /**
+     * Saring header request menjadi key yang diizinkan saja (case-insensitive).
+     */
+    public static function filterHeaders($headers): array
+    {
+        $kept = array_flip(self::KEPT_HEADERS);
+        $result = [];
+
+        foreach ((array) $headers as $key => $value) {
+            $lower = strtolower((string) $key);
+
+            if (isset($kept[$lower])) {
+                $result[$lower] = $value;
+            }
+        }
+
+        return $result;
+    }
+
     protected $description;
     protected $user;
     protected $req;
@@ -42,7 +78,7 @@ class ActivityLog implements ShouldQueue
         $act->method = $this->req['method'];
         $act->path = $this->req['path'] ?? '-';
         $act->ip = getUserIP($this->serv);
-        $act->headers = json_encode($this->req['header']);
+        $act->headers = json_encode(self::filterHeaders($this->req['header'] ?? []));
         $act->get = json_encode($this->req['query']);
         $act->post = json_encode($this->req['post']);
         $act->files = json_encode($this->req['files']);

@@ -31,6 +31,7 @@ class AppServiceProvider extends ServiceProvider
                 \ZetthCore\Console\Commands\ExtendLogPartitions::class,
                 \ZetthCore\Console\Commands\PruneLogPartitions::class,
                 \ZetthCore\Console\Commands\TrimLogPartitions::class,
+                \ZetthCore\Console\Commands\TrimActivityHeaders::class,
             ]);
         } else {
             /* check config */
