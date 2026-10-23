@@ -41,7 +41,7 @@
           currentXHR = $.ajax({
             url: ADMIN_URL + "/log/visitors/data",
             data: data,
-            timeout: 5000,
+            timeout: 30000,
             success: callback
           });
         },

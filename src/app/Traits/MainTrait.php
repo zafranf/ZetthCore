@@ -283,7 +283,7 @@ trait MainTrait
         return $dt;
     } */
 
-    protected function generateDataTable($builder, array $searchable = [], array $filters = [], array $escapes = [])
+    protected function generateDataTable($builder, array $searchable = [], array $filters = [], array $escapes = [], bool $skipTotalRecords = false)
     {
         $r = request();
         // ambil semua kolom yang searchable dari request, tapi batasi ke kolom tabel
@@ -311,7 +311,7 @@ trait MainTrait
 
         $searchable = array_values(array_unique(array_merge($searchableColumns, $searchable)));
 
-        return \DataTables::eloquent($builder)
+        $dt = \DataTables::eloquent($builder)
             ->filter(function ($query) use ($r, $searchable, $filters) {
                 $regex = trim((string) $r->input('search.value'));
 
@@ -384,8 +384,15 @@ trait MainTrait
                     }
                 }
             })
-            ->rawColumns($escapes) // Optional: if any column contains HTML
-            ->make();
+            ->rawColumns($escapes); // Optional: if any column contains HTML
+
+        // Halaman log selalu memakai rentang tanggal, sehingga hitungan "total
+        // seluruh riwayat" hanya memicu full index scan tanpa guna di UI.
+        if ($skipTotalRecords) {
+            $dt->skipTotalRecords();
+        }
+
+        return $dt->make();
     }
 
     public function checkDBConnection($driver = 'mysql')
