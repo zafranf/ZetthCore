@@ -51,6 +51,16 @@
       </div>
       <div class="col-md-10 table-container">
         <br>
+        @if (!empty($tail_mode))
+          <div class="alert alert-warning" style="margin-bottom:10px;">
+            <span class="fa fa-info-circle"></span>
+            File log besar ({{ round(($file_size ?? 0) / 1048576, 1) }} MB) — hanya menampilkan
+            <b>{{ round(($tail_bytes ?? 1048576) / 1048576, 1) }} MB terakhir</b> supaya halaman tidak kehabisan memori.
+            <a href="?dl={{ urlencode(_encrypt($current_file)) }}{{ ($current_folder) ? '&f=' . urlencode(_encrypt($current_folder)) : '' }}">
+              <span class="fa fa-download"></span> download file penuh
+            </a>
+          </div>
+        @endif
         @if ($logs === null)
           <div>
             Log file >50M, please <a href="?dl={{ urlencode(_encrypt($current_file)) }}{{ ($current_folder) ? '&f=' . urlencode(_encrypt($current_folder)) : '' }}">
