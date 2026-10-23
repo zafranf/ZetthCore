@@ -12,6 +12,12 @@ class ErrorController extends AdminController
     private $page_title;
     private $log_viewer;
 
+    /* Batas aman parse, terukur di memory_limit 128 MB:
+       10 MB -> ~91 MB RAM, 15 MB -> ~123 MB. Di atas ambang ini file dibaca
+       dari ekornya saja. */
+    const LOG_TAIL_THRESHOLD = 5 * 1024 * 1024;
+    const LOG_TAIL_BYTES = 1024 * 1024;
+
     /**
      * Constructor
      */
@@ -65,7 +71,32 @@ class ErrorController extends AdminController
         $limit = (int) $r->get('limit', 10000);
         $page = max((int) $r->get('page', 1), 1);
         $offset = ($page - 1) * $limit;
+
+        /* all() menyalin setiap entri log ke array: terukur 10 MB -> ~91 MB RAM,
+           15 MB -> ~123 MB, sementara memory_limit PHP 128 MB. File besar dibaca
+           dari ekornya supaya halaman tetap terbuka (bukan fatal 500). */
+        $currentName = $this->log_viewer->getFileName();
+        $currentLog = $currentName ? $this->log_viewer->pathToLogFile($currentName) : null;
+        $fileSize = ($currentLog && is_file($currentLog)) ? filesize($currentLog) : 0;
+
+        $tailMode = false;
+        $tailTemp = null;
+
+        if ($fileSize > self::LOG_TAIL_THRESHOLD) {
+            $tailTemp = $this->tailCopy($currentLog, self::LOG_TAIL_BYTES);
+
+            if ($tailTemp) {
+                $this->log_viewer->setFile($tailTemp);
+                $tailMode = true;
+            }
+        }
+
         $logs = $this->log_viewer->all();
+
+        if ($tailTemp) {
+            @unlink($tailTemp);
+            $this->log_viewer->setFile($currentName); // kembalikan label + link download ke file asli
+        }
 
         /* all() mengembalikan null bila file log melebihi batas (default 50 MB).
            View sudah menangani null dengan pesan + link download, jadi jangan
@@ -89,6 +120,9 @@ class ErrorController extends AdminController
             'standardFormat' => true,
             'next_offset' => $offset + $limit,
             'has_more' => ($offset + $limit) < $total,
+            'tail_mode' => $tailMode,
+            'tail_bytes' => self::LOG_TAIL_BYTES,
+            'file_size' => $fileSize,
         ];
 
         if ($r->wantsJson()) {
@@ -209,6 +243,54 @@ class ErrorController extends AdminController
     private function pathFromInput(Request $r, $input_string)
     {
         return $this->log_viewer->pathToLogFile(_decrypt($r->input($input_string)));
+    }
+
+    /**
+     * Salin sebagian ekor file log ke file sementara (di folder logs) agar bisa
+     * diparse tanpa menghabiskan memori. Return path sementara atau null.
+     *
+     * @param string $file
+     * @param int $bytes
+     * @return string|null
+     */
+    private function tailCopy($file, $bytes)
+    {
+        if (!$file || !is_file($file) || !is_readable($file)) {
+            return null;
+        }
+
+        $size = filesize($file);
+        $handle = @fopen($file, 'rb');
+
+        if (!$handle) {
+            return null;
+        }
+
+        $start = max(0, $size - $bytes);
+        fseek($handle, $start);
+        $data = fread($handle, $bytes);
+        fclose($handle);
+
+        if ($data === false || $data === '') {
+            return null;
+        }
+
+        /* baris pertama hampir pasti terpotong kalau file lebih besar dari ekor */
+        if ($start > 0) {
+            $newline = strpos($data, PHP_EOL);
+
+            if ($newline !== false) {
+                $data = substr($data, $newline + strlen(PHP_EOL));
+            }
+        }
+
+        $temp = storage_path('logs/.tail-' . \Illuminate\Support\Str::random(12) . '.log');
+
+        if (@file_put_contents($temp, $data) === false) {
+            return null;
+        }
+
+        return $temp;
     }
 
     /**
