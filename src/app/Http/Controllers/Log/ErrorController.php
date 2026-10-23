@@ -66,8 +66,12 @@ class ErrorController extends AdminController
         $page = max((int) $r->get('page', 1), 1);
         $offset = ($page - 1) * $limit;
         $logs = $this->log_viewer->all();
-        $total = count($logs);
-        $logs = array_slice($logs, $offset, $limit);
+
+        /* all() mengembalikan null bila file log melebihi batas (default 50 MB).
+           View sudah menangani null dengan pesan + link download, jadi jangan
+           dipaksa jadi array di sini. */
+        $total = is_array($logs) ? count($logs) : 0;
+        $logs = is_array($logs) ? array_slice($logs, $offset, $limit) : null;
 
         /* set variable for view */
         $data = [
