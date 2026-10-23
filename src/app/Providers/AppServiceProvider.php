@@ -30,6 +30,8 @@ class AppServiceProvider extends ServiceProvider
                 \ZetthCore\Console\Commands\CheckLogPartitionStatus::class,
                 \ZetthCore\Console\Commands\ExtendLogPartitions::class,
                 \ZetthCore\Console\Commands\PruneLogPartitions::class,
+                \ZetthCore\Console\Commands\TrimLogPartitions::class,
+                \ZetthCore\Console\Commands\TrimActivityHeaders::class,
             ]);
         } else {
             /* check config */
@@ -99,9 +101,9 @@ class AppServiceProvider extends ServiceProvider
                 ->runInBackground()
                 ->withoutOverlapping();
 
-            // Extend visitor_logs setiap tanggal 1 jam 01:01
-            $schedule->command('zetth:extend-partition visitor_logs --years=1')
-                ->yearlyOn(12, 31, '01:01')
+            // Extend visitor_logs setiap tanggal 1 jam 01:01 (rolling 3 bulan ke depan)
+            $schedule->command('zetth:extend-partition visitor_logs --months=3')
+                ->monthlyOn(1, '01:01')
                 ->runInBackground()
                 ->withoutOverlapping();
 
@@ -111,9 +113,9 @@ class AppServiceProvider extends ServiceProvider
                 ->runInBackground()
                 ->withoutOverlapping();
 
-            // Extend activity_logs setiap tanggal 1 jam 01:11
-            $schedule->command('zetth:extend-partition activity_logs --years=1')
-                ->yearlyOn(12, 31, '01:11')
+            // Extend activity_logs setiap tanggal 1 jam 01:11 (rolling 3 bulan ke depan)
+            $schedule->command('zetth:extend-partition activity_logs --months=3')
+                ->monthlyOn(1, '01:11')
                 ->runInBackground()
                 ->withoutOverlapping();
         });

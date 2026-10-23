@@ -149,7 +149,7 @@ class VisitorController extends AdminController
             ], [
                 'is_robot' => 'equal',
                 'updated_at' => $from && $to ? 'between' : 'gte',
-            ]);
+            ], [], true);
         }
 
         abort(403);
