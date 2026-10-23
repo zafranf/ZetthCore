@@ -47,7 +47,13 @@ class ActivityLog implements ShouldQueue
         $act->post = json_encode($this->req['post']);
         $act->files = json_encode($this->req['files']);
         $act->user_id = $this->user->id ?? (app('user')->id ?? null);
-        $act->site_id = app('site')->id;
+        $site = \app('site');
+        if (!$site && !empty($this->serv['HTTP_HOST'])) {
+            $host = strtolower($this->serv['HTTP_HOST']);
+            $site = \App\Models\Site::where('domain', $host)->first()
+                ?? \App\Models\Site::where('domain', preg_replace('/^[^.]+\./', '', $host))->first();
+        }
+        $act->site_id = $site?->id ?? 1;
         $act->save();
     }
 }
