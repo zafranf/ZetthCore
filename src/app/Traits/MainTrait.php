@@ -283,30 +283,50 @@ trait MainTrait
         return $dt;
     } */
 
-    protected function generateDataTable($builder, array $searchable = [], array $filters = [], array $escapes = [])
+    protected function generateDataTable($builder, array $searchable = [], array $filters = [], array $escapes = [], bool $skipTotalRecords = false)
     {
         $r = request();
-        // ambil semua kolom yang searchable
-        $searchableColumns = [];/* collect($r->input('columns'))
-            ->filter(fn($col) => $col['searchable'] === 'true' && $col['data'] !== '0' && $col['data'] !== 'created_at')
+        // ambil semua kolom yang searchable dari request, tapi batasi ke kolom tabel
+        // yang benar-benar ada (buang alias/kolom virtual seperti '0' atau 'author.fullname')
+        $searchableColumns = collect($r->input('columns', []))
+            ->filter(function ($col) {
+                return is_array($col)
+                    && ($col['searchable'] ?? 'false') === 'true'
+                    && is_string($col['data'] ?? null)
+                    && preg_match('/^[A-Za-z0-9_]+$/', $col['data'])
+                    && !in_array($col['data'], ['0', 'created_at', 'updated_at'], true);
+            })
             ->pluck('data')
-            ->toArray(); */
-        $searchable = array_merge($searchableColumns, $searchable);
+            ->unique()
+            ->values()
+            ->all();
 
-        return \DataTables::eloquent($builder)
+        if (count($searchableColumns)) {
+            $table = method_exists($builder, 'getModel') ? $builder->getModel()->getTable() : null;
+
+            $searchableColumns = $table
+                ? array_values(array_intersect($searchableColumns, \Schema::getColumnListing($table)))
+                : [];
+        }
+
+        $searchable = array_values(array_unique(array_merge($searchableColumns, $searchable)));
+
+        $dt = \DataTables::eloquent($builder)
             ->filter(function ($query) use ($r, $searchable, $filters) {
-                $regex = $r->get('search')['value'];
+                $regex = trim((string) $r->input('search.value'));
 
                 // Global search
-                if ($regex && count($searchable)) {
-                    $query->where(function ($q) use ($searchable, $regex) {
+                if ($regex !== '' && count($searchable)) {
+                    $term = str_replace(["\\", "%", "_"], ["\\\\", "\\%", "\\_"], $regex);
+
+                    $query->where(function ($q) use ($searchable, $regex, $term) {
                         foreach ($searchable as $column) {
                             if ($column == 'email') {
                                 $q->orWhere('email', _encrypt($regex));
                             } else if ($column == 'name') {
                                 $q->orWhere('name', _encrypt($regex));
                             } else {
-                                $q->orWhere($column, 'like', $regex . '%');
+                                $q->orWhere($column, 'like', '%' . $term . '%');
                             }
                         }
                     });
@@ -364,8 +384,15 @@ trait MainTrait
                     }
                 }
             })
-            ->rawColumns($escapes) // Optional: if any column contains HTML
-            ->make();
+            ->rawColumns($escapes); // Optional: if any column contains HTML
+
+        // Halaman log selalu memakai rentang tanggal, sehingga hitungan "total
+        // seluruh riwayat" hanya memicu full index scan tanpa guna di UI.
+        if ($skipTotalRecords) {
+            $dt->skipTotalRecords();
+        }
+
+        return $dt->make();
     }
 
     public function checkDBConnection($driver = 'mysql')

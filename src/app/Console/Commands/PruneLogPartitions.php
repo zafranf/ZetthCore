@@ -4,63 +4,75 @@ namespace ZetthCore\Console\Commands;
 
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
-use Carbon\Carbon;
 
 class PruneLogPartitions extends Command
 {
-    protected $signature = 'zetth:prune-partition {table} {--months=6}';
+    protected $signature = 'zetth:prune-partition {table} {--months=6 : Simpan data N bulan terakhir} {--dry-run : Tampilkan rencana tanpa mengeksekusi}';
+
     protected $description = 'Drop old partitions from a log table based on created_at monthly partitioning';
 
     public function handle()
     {
         $table = $this->argument('table');
         $months = (int) $this->option('months');
+        $dryRun = (bool) $this->option('dry-run');
 
-        // Cek apakah table ada dan ter-partisi
-        $partitioned = DB::table('information_schema.PARTITIONS')
-            ->where('TABLE_SCHEMA', DB::getDatabaseName())
-            ->where('TABLE_NAME', $table)
-            ->limit(1)
-            ->exists();
+        /* daftar partisi NYATA dari information_schema — jangan menebak label bulan */
+        $partitions = DB::select(
+            'select PARTITION_NAME name from information_schema.PARTITIONS
+             where TABLE_SCHEMA = database() and TABLE_NAME = ? and PARTITION_NAME is not null
+             order by PARTITION_ORDINAL_POSITION',
+            [$table]
+        );
 
-        if (!$partitioned) {
+        if (empty($partitions)) {
             $this->warn("⚠️  Table '{$table}' does not exist or is not partitioned. Skipping.");
             return 1;
         }
 
-        // Hitung cutoff bulan
-        $cutoff = Carbon::now()->subMonths($months)->startOfMonth();
-        $yearMonthLimit = (int) $cutoff->format('Ym');
+        $cutoff = now()->subMonths($months)->startOfMonth()->format('Ym');
+        $drop = [];
 
-        $partitionsToDrop = [];
+        foreach ($partitions as $partition) {
+            if ($partition->name === 'pmax') {
+                continue;
+            }
 
-        $currentYear = (int) now()->format('Y');
-        $startYear = 2024;
-        $endYear = $currentYear + 1; // biar jangkau partisi tahun depan
-        for ($y = $startYear; $y <= $endYear; $y++) {
-            for ($m = 1; $m <= 12; $m++) {
-                $label = sprintf('p%04d%02d', $y, $m);
-                $compare = (int) ($y . str_pad($m, 2, '0', STR_PAD_LEFT));
+            /* label partisi: p202611 -> 202611 */
+            $label = substr($partition->name, 1);
 
-                if ($compare < $yearMonthLimit) {
-                    $partitionsToDrop[] = $label;
-                }
+            if ($label < $cutoff) {
+                $drop[] = $partition->name;
             }
         }
 
-        if (empty($partitionsToDrop)) {
-            $this->info("✅ No partitions to drop.");
+        if (empty($drop)) {
+            $this->info("✅ {$table}: tidak ada partisi lebih lama dari {$cutoff} (simpan {$months} bulan).");
             return 0;
         }
 
-        $sql = "ALTER TABLE {$table} DROP PARTITION " . implode(', ', $partitionsToDrop) . ";";
-        $this->line("🛠️ Executing: {$sql}");
+        /* jangan pernah menyisakan tabel tanpa partisi */
+        if (count($drop) === count($partitions)) {
+            $this->error("❌ {$table}: semua partisi akan terhapus, dibatalkan.");
+            return 1;
+        }
+
+        $sql = "ALTER TABLE {$table} DROP PARTITION " . implode(', ', $drop) . ";";
+        $this->line("🛠️ {$table}: drop " . count($drop) . " partisi (< {$cutoff})");
+        $this->line("   {$sql}");
+
+        if ($dryRun) {
+            $this->comment('Dry-run, tidak dieksekusi.');
+            return 0;
+        }
 
         try {
+            $started = microtime(true);
             DB::statement($sql);
-            $this->info("✅ Dropped partitions: " . implode(', ', $partitionsToDrop));
+            $this->info(sprintf('✅ Dropped partitions: %s (%.1fs)', implode(', ', $drop), microtime(true) - $started));
         } catch (\Exception $e) {
             $this->error("❌ Failed to drop partitions: " . $e->getMessage());
+            return 1;
         }
 
         return 0;

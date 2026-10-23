@@ -162,7 +162,7 @@ class ActivityController extends AdminController
                 'user_id' => 'equal',
                 'club_id' => 'equal',
                 'created_at' => $from && $to ? 'between' : 'gte',
-            ]);
+            ], [], true);
         }
 
         abort(403);
