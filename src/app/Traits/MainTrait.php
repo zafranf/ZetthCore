@@ -304,9 +304,24 @@ trait MainTrait
         if (count($searchableColumns)) {
             $table = method_exists($builder, 'getModel') ? $builder->getModel()->getTable() : null;
 
-            $searchableColumns = $table
-                ? array_values(array_intersect($searchableColumns, \Schema::getColumnListing($table)))
-                : [];
+            if ($table) {
+                $columns = \Schema::getColumnListing($table);
+
+                /*
+                 * Kualifikasi dengan nama tabel dasar. Query list admin hampir selalu
+                 * JOIN tabel lain yang punya kolom bernama sama (name, initial, status),
+                 * sehingga where('name', ...) tanpa prefix berakhir
+                 * "Column 'name' in WHERE is ambiguous" alias tabel kosong + pesan error.
+                 */
+                $searchableColumns = collect($searchableColumns)
+                    ->filter(fn($col) => in_array($col, $columns, true))
+                    ->map(fn($col) => $table . '.' . $col)
+                    ->unique()
+                    ->values()
+                    ->all();
+            } else {
+                $searchableColumns = [];
+            }
         }
 
         $searchable = array_values(array_unique(array_merge($searchableColumns, $searchable)));
@@ -318,13 +333,22 @@ trait MainTrait
                 // Global search
                 if ($regex !== '' && count($searchable)) {
                     $term = str_replace(["\\", "%", "_"], ["\\\\", "\\%", "\\_"], $regex);
+                    $baseTable = method_exists($query, 'getModel') ? $query->getModel()->getTable() : null;
 
-                    $query->where(function ($q) use ($searchable, $regex, $term) {
+                    $query->where(function ($q) use ($searchable, $regex, $term, $baseTable) {
                         foreach ($searchable as $column) {
-                            if ($column == 'email') {
-                                $q->orWhere('email', _encrypt($regex));
-                            } else if ($column == 'name') {
-                                $q->orWhere('name', _encrypt($regex));
+                            $plain = str_contains($column, '.') ? substr($column, strrpos($column, '.') + 1) : $column;
+
+                            /*
+                             * users.name / users.email dienkripsi (_encrypt), jadi hanya bisa
+                             * dicocokkan sebagai nilai terenkripsi — dan hanya untuk kolom milik
+                             * tabel dasar. Tabel lain (pigeon_types.name, clubs.name) plain text.
+                             */
+                            $isBase = $baseTable && str_starts_with($column, $baseTable . '.');
+                            if ($baseTable === 'users' && $isBase && in_array($plain, ['email', 'name'], true)) {
+                                /* hanya users.name & users.email yang dienkripsi _encrypt;
+                                   kolom name di tabel lain (clubs, lofts, races) plain text */
+                                $q->orWhere($column, _encrypt($regex));
                             } else {
                                 $q->orWhere($column, 'like', '%' . $term . '%');
                             }
